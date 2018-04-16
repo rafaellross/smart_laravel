@@ -9,4 +9,5 @@ class Day extends Model
     public function dayJobs(){
         return $this->hasMany('App\DayJob');
     }
+    
 }

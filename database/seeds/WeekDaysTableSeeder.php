@@ -15,37 +15,44 @@ class WeekDaysTableSeeder extends Seeder
             [
                 'number' => 2,
                 'description' => 'Monday',
-                'short' => 'mon',                
+                'short' => 'mon', 
+                'days_to_end' => 6,                               
             ],
             [
                 'number' => 3,
                 'description' => 'Tuesday',
-                'short' => 'tue',                
+                'short' => 'tue', 
+                'days_to_end' => 5,                               
             ],
             [
                 'number' => 4,
                 'description' => 'Wednesday',
-                'short' => 'wed',                
+                'short' => 'wed', 
+                'days_to_end' => 4,                               
             ],
             [
                 'number' => 5,
                 'description' => 'Thursday',
-                'short' => 'thu',                
+                'short' => 'thu', 
+                'days_to_end' => 3,                               
             ],
             [
                 'number' => 6,
                 'description' => 'Friday',
-                'short' => 'fri',                
+                'short' => 'fri', 
+                'days_to_end' => 2,                               
             ],
             [
                 'number' => 7,
                 'description' => 'Saturday',
                 'short' => 'sat',                
+                'days_to_end' => 1,                
             ],
             [
                 'number' => 8,
                 'description' => 'Sunday',
                 'short' => 'sun',                
+                'days_to_end' => 0,                
             ],            
         ]);        
     }

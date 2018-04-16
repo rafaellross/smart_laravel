@@ -13,7 +13,9 @@
     <!-- Scripts -->
     
     
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>    
+    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>    
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
     
     <!-- Fonts -->
@@ -22,6 +24,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
 </head>
 <body>
     <div id="app">
@@ -49,7 +52,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ URL::to('/jobs') }}">Jobs</a>
                         </li>
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Modules
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Time Sheets</a>
+                                <div class="dropdown-divider"></div>                                
+                                <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Employee Application</a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

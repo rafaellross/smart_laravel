@@ -15,8 +15,8 @@ class CreateTimeSheetsTable extends Migration
     {
         Schema::create('time_sheets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('status');
-            $table->binary('emp_signature');
+            $table->string('status')->default('P');
+            $table->binary('emp_signature')->nullable();
             $table->unsignedInteger('employee_id');
             $table->date('week_end');
             $table->integer('rdo');

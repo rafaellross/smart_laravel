@@ -13,7 +13,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <form method="post" action="{{ route('timesheets.store') }}">
                   @csrf
-                <input type="hidden" name="employee" value="{{ $employee->id }}">
+                <input type="hidden" name="employee_id" value="{{ $employee->id }}">
                 <div class="form-group">
                     <label for="empname">
                         <h5>Name:</h5>
@@ -24,7 +24,7 @@
                     <label for="empname">
                         <h5>Week End:</h5>
                     </label>
-                    <input type="text" class="form-control form-control-lg date-picker" name="weestart" data-date-days-of-week-disabled="1,2,3,4,5,6" id="weestart" required="" value="">
+                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="">
                 </div>
                 @include('timesheet.partial.autofill')                
                 <!-- Start Group Monday-->
@@ -50,7 +50,7 @@
                                 <script type="text/javascript" src="js/flashcanvas.js"></script>
                                 <![endif]-->
                                 
-                                <input type="hidden" name="empSign" id="output" value="">
+                                <input type="hidden" name="emp_signature" id="output" value="">
                                 <div id="signature"><div style="padding:0 !important;margin:0 !important;width: 100% !important; height: 0 !important;margin-top:-1em !important;margin-bottom:1em !important;"></div><canvas class="jSignature" width="1038" height="260" style="margin: 0px; padding: 0px; border: none; height: 260px; width: 100%;"></canvas><div style="padding:0 !important;margin:0 !important;width: 100% !important; height: 0 !important;margin-top:-1.5em !important;margin-bottom:1.5em !important;"></div></div><input type="button" value="Clear" id="btnClearSign" class="btn btn-danger">                                <script>
                                     $(document).ready(function() {
                                         var $sigdiv = $("#signature")
