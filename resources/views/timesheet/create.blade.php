@@ -27,6 +27,7 @@
                     <input type="text" class="form-control form-control-lg date-picker" name="weestart" data-date-days-of-week-disabled="1,2,3,4,5,6" id="weestart" required="" value="">
                 </div>
                 @include('timesheet.partial.autofill')                
+                
                 <!-- Start Group Monday-->
                 @each('timesheet.partial.day', $days, 'day')
                 <!--End Group Monday -->

@@ -29,7 +29,7 @@
                             <input type="checkbox" id="chkRow-{{ $user->id }}">
                         </th>
                         <td>{{ $user->username }}</td>
-                        <td>{{ $user->created_at }}</td>
+                        <td>{{  Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
                         <td>{{$user->administrator ? "Yes" : "No"}}</td>
                         <td style="text-align: center;">
                             <div class="dropdown">
