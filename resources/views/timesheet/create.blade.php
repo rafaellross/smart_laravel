@@ -107,7 +107,5 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript">
-        $('.date-picker').datepicker();
-    </script>
+    <script src="{{ asset('js/custom.js') }}"></script>        
 @endsection
