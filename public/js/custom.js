@@ -76,13 +76,16 @@ module.exports = __webpack_require__(45);
 /***/ 45:
 /***/ (function(module, exports) {
 
-//Setup datepicker
-$('.date-picker').datepicker();
+$(document).ready(function () {
 
-showExtra = function showExtra(btn, extra_inputs) {
-    $(extra_inputs).css('display', 'block');
-    $(btn).fadeOut();
-};
+	//Setup datepicker
+	$('.date-picker').datepicker();
+
+	showExtra = function showExtra(btn, extra_inputs) {
+		$(extra_inputs).css('display', 'block');
+		$(btn).fadeOut();
+	};
+});
 
 /***/ })
 

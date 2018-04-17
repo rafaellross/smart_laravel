@@ -34,6 +34,7 @@ class TimeSheetController extends Controller
     {
         $days = WeekDay::where('number', '<', 8)->get();        
         $employee = \App\Employee::find(1);
+        
         return view('timesheet.create', ['days' => $days, 'employee' => $employee]);
     }
 

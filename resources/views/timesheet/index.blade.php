@@ -37,7 +37,7 @@
             <tr>
             </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
                 <td>{{$timesheet->user()->username}}</td>
-                <td class="mobile"{{$timesheet->created_at}}</td>
+                <td class="mobile"{{Carbon::createFromFormat('m/d/Y', $timesheet->created_at)}}</td>
                 <td>{{$timesheet->employee()->name}}</td>
                 <td>{{$timesheet->week_end}}</td><td>{{$timesheet->status}}</td><td style="text-align: center;">
                     <div class="dropdown">
