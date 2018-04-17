@@ -95,17 +95,19 @@
                             </div>
                         </div>
                 </div>
-
                 <!--End Group Total -->
                 <div class="form-row" style="text-align: center;">
-                            <div class="col-md-6 mb-3">
-                                <a href="view.php?type=TimeSheet.php" class="btn btn-secondary btn-lg btn-block">Cancel</a>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-                            </div>
-                        </div>
-                </form>
+                    <div class="col-md-6 mb-3">
+                        <a href="view.php?type=TimeSheet.php" class="btn btn-secondary btn-lg btn-block">Cancel</a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.date-picker').datepicker();
+    </script>
 @endsection
