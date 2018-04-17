@@ -40,26 +40,7 @@ $(document).ready(function(){
 	    $(btn).fadeOut();
 	}
 
-	//Update option list for end time
-    $('.hour-start').change(function(){
-      let day = $(this).attr('id').split('_');
-      let row = day[2];
-      let destination = $('#' + day[0] + "_end_" + row);
-
-      //Enable and empty select list for end of the row
-      destination.prop('disabled', false).empty();
-      let option = '<option value="">-</option>';
-      destination.append(option);
-
-      //Get the seleted value to be used as minimum for end
-      var startHour = $(this).val();
-      for (var hour = Number(startHour)+15; hour <= (24*60)-15; hour += 15) {
-          let option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
-          $(destination).append(option);
-      }
-      
-    });
-
+console.log("Test");
 
 
 });

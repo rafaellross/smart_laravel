@@ -113,24 +113,7 @@ $(document).ready(function () {
         $(btn).fadeOut();
     };
 
-    //Update option list for end time
-    $('.hour-start').change(function () {
-        var day = $(this).attr('id').split('_');
-        var row = day[2];
-        var destination = $('#' + day[0] + "_end_" + row);
-
-        //Enable and empty select list for end of the row
-        destination.prop('disabled', false).empty();
-        var option = '<option value="">-</option>';
-        destination.append(option);
-
-        //Get the seleted value to be used as minimum for end
-        var startHour = $(this).val();
-        for (var hour = Number(startHour) + 15; hour <= 24 * 60 - 15; hour += 15) {
-            var _option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
-            $(destination).append(_option);
-        }
-    });
+    console.log("Test");
 });
 
 /***/ })
