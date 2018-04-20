@@ -46,14 +46,23 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
         $timeSheet = new TimeSheet();
         $timeSheet->emp_signature   = $request->get('emp_signature');
         $timeSheet->employee_id     = $request->get('employee_id');
-        $timeSheet->week_end        = Carbon::parse($request->get('week_end'));
+        $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
         $timeSheet->rdo             = $request->get('rdo');
         $timeSheet->pld             = $request->get('pld');
         $timeSheet->anl             = $request->get('anl');
+
+        $totals = $request->get('totals');
+        $timeSheet->total           = $totals['total'];
+        $timeSheet->normal          = $totals['normal'];
+        $timeSheet->total_15        = $totals['1.5'];
+        $timeSheet->total_20        = $totals['2.0'];
+
         $timeSheet->user_id         = Auth::id();
+        $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
 
 
@@ -62,17 +71,23 @@ class TimeSheetController extends Controller
             $dayTimeSheet                   = new Day();
             $dayTimeSheet->week_day         = $weekDay->number;
             $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);  
+
+            $dayTimeSheet->total           = $day['total']['total'];
+            $dayTimeSheet->normal          = $day['total']['normal'];
+            $dayTimeSheet->total_15        = $day['total']['1.5'];
+            $dayTimeSheet->total_20        = $day['total']['2.0'];
             
             $dayTimeSheet->time_sheet_id    = $timeSheet->id;
             $dayTimeSheet->save();
             
             foreach ($day as $key => $job) {
+                
                 if (intval($key)) {
                     $dayJob         = new DayJob();
-                    $dayJob->job_id = Job::where("code", $job["job"])->value('id');
+                    $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
                     $dayJob->day_id = $dayTimeSheet->id;
-                    $dayJob->start  = $job["start"];
-                    $dayJob->end    = $job["end"];
+                    $dayJob->start  = !isset($job["start"]) ? null : $job["start"];
+                    $dayJob->end    = !isset($job["end"]) ? null : $job["end"];
                     $dayJob->save();
                 }
             }
@@ -90,7 +105,11 @@ class TimeSheetController extends Controller
      */
     public function show($id)
     {
-        //
+        $timesheet = TimeSheet::find($id);
+        
+        
+        $pdf = TimeSheet::pdf($timesheet);
+        $pdf->output();
     }
 
     /**

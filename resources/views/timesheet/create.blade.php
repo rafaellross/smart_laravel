@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
         <!-- Logo -->
             <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center">
@@ -11,9 +13,9 @@
             <h2>Time Sheet</h2>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <form method="post" action="{{ route('timesheets.store') }}">
-                  @csrf
-                <input type="hidden" name="employee_id" value="{{ $employee->id }}">
+            <form method="POST" action="{{action('TimeSheetController@store')}}">
+                {{csrf_field()}}                
+                {{ Form::hidden('employee_id', $employee->id) }}
                 <div class="form-group">
                     <label for="empname">
                         <h5>Name:</h5>
@@ -46,13 +48,13 @@
                     <h4 style="text-align: center;">Signature</h4>
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 mb-3">
-                                <!-- you load jquery somewhere above here ... -->
-                                <!--[if lt IE 9]>
-                                <script type="text/javascript" src="js/flashcanvas.js"></script>
-                                <![endif]-->
-                                
+
                                 <input type="hidden" name="emp_signature" id="output" value="">
-                                <div id="signature"><div style="padding:0 !important;margin:0 !important;width: 100% !important; height: 0 !important;margin-top:-1em !important;margin-bottom:1em !important;"></div><canvas class="jSignature" width="1038" height="260" style="margin: 0px; padding: 0px; border: none; height: 260px; width: 100%;"></canvas><div style="padding:0 !important;margin:0 !important;width: 100% !important; height: 0 !important;margin-top:-1.5em !important;margin-bottom:1.5em !important;"></div></div><input type="button" value="Clear" id="btnClearSign" class="btn btn-danger">                                <script>
+                                <div id="signature"></div>
+
+                                <input type="button" value="Clear" id="btnClearSign" class="btn btn-danger" >
+
+                                <script>
                                     $(document).ready(function() {
                                         var $sigdiv = $("#signature")
                                         $sigdiv.jSignature() // inits the jSignature widget.
@@ -75,7 +77,7 @@
 
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 mb-3">
-                                <input type="text" class="form-control form-control-lg date-picker" name="empDate" id="empDate" required="" value="04/04/2018">
+                                <input type="text" class="form-control form-control-lg date-picker" name="empDate" id="empDate" required value="{{Carbon::now()->format('d/m/Y')}}">
                             </div>
                         </div>
                 </div>

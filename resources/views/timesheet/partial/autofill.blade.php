@@ -12,7 +12,7 @@
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-6 col-12 mb-3">
                                 <label>Start</label>
-                                <select class="hour-start form-control form-control-lg custom-select " id="preStart" onchange="calc(preStart, preEnd, preHours, Pre15, Pre20, PreNormal)" disable>
+                                <select class="hour-start form-control form-control-lg custom-select " id="preStart" disable>
                                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
                                         <option value="{{$i}}">{{ date('i:s', $i)}}</option>
                                     @endfor                                                
@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-md-6 col-12 mb-3">
                                 <label>End</label>
-                                <select class="hour-start form-control form-control-lg custom-select " id="preEnd" onchange="calc(preStart, preEnd, preHours, Pre15, Pre20, PreNormal)">
+                                <select class="hour-start form-control form-control-lg custom-select " id="preEnd">
                                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
                                         <option value="{{$i}}">{{ date('i:s', $i)}}</option>
                                     @endfor                                                

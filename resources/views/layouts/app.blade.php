@@ -18,7 +18,7 @@
     <script src="{{ asset('js/app.js') }}"></script>    
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
-    
+    <script src="{{ asset('js/custom.js') }}"></script>    
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

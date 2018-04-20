@@ -19,9 +19,13 @@ class CreateTimeSheetsTable extends Migration
             $table->binary('emp_signature')->nullable();
             $table->unsignedInteger('employee_id');
             $table->date('week_end');
-            $table->integer('rdo');
-            $table->integer('pld');
-            $table->integer('anl');
+            $table->integer('rdo')->nullable();
+            $table->integer('pld')->nullable();
+            $table->integer('anl')->nullable();
+            $table->string('total')->nullable();
+            $table->string('normal')->nullable();
+            $table->string('total_15')->nullable();
+            $table->string('total_20')->nullable();
             $table->unsignedInteger('user_id');
             $table->timestamps();
             

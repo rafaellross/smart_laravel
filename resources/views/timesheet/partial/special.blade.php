@@ -5,21 +5,31 @@
                             <div class="col-md-12 col-12 mb-3">
                                 <label><strong>PLD</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="pld">
-                                    <option value="0">00:00</option><option value="60">01:00</option><option value="120">02:00</option><option value="180">03:00</option><option value="240">04:00</option><option value="300">05:00</option><option value="360">06:00</option><option value="420">07:00</option><option value="480">08:00</option><option value="540">09:00</option><option value="600">10:00</option><option value="660">11:00</option><option value="720">12:00</option><option value="780">13:00</option><option value="840">14:00</option><option value="900">15:00</option><option value="960">16:00</option><option value="1020">17:00</option><option value="1080">18:00</option><option value="1140">19:00</option><option value="1200">20:00</option><option value="1260">21:00</option><option value="1320">22:00</option><option value="1380">23:00</option><option value="1440">24:00</option><option value="1500">25:00</option><option value="1560">26:00</option><option value="1620">27:00</option><option value="1680">28:00</option><option value="1740">29:00</option><option value="1800">30:00</option><option value="1860">31:00</option><option value="1920">32:00</option><option value="1980">33:00</option><option value="2040">34:00</option><option value="2100">35:00</option><option value="2160">36:00</option><option value="2220">37:00</option><option value="2280">38:00</option><option value="2340">39:00</option><option value="2400">40:00</option>                                </select>
+                                    @for ($i = 0; $i <= (40*60); $i += 60)        
+                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                    @endfor                                                
+
+                                </select>
                             </div>
                         </div>
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 col-12 mb-3">
                                 <label><strong>RDO</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="rdo">
-                                    <option value="0">00:00</option><option value="60">01:00</option><option value="120">02:00</option><option value="180">03:00</option><option value="240">04:00</option><option value="300">05:00</option><option value="360">06:00</option><option value="420">07:00</option><option value="480">08:00</option><option value="540">09:00</option><option value="600">10:00</option><option value="660">11:00</option><option value="720">12:00</option><option value="780">13:00</option><option value="840">14:00</option><option value="900">15:00</option><option value="960">16:00</option><option value="1020">17:00</option><option value="1080">18:00</option><option value="1140">19:00</option><option value="1200">20:00</option><option value="1260">21:00</option><option value="1320">22:00</option><option value="1380">23:00</option><option value="1440">24:00</option><option value="1500">25:00</option><option value="1560">26:00</option><option value="1620">27:00</option><option value="1680">28:00</option><option value="1740">29:00</option><option value="1800">30:00</option><option value="1860">31:00</option><option value="1920">32:00</option><option value="1980">33:00</option><option value="2040">34:00</option><option value="2100">35:00</option><option value="2160">36:00</option><option value="2220">37:00</option><option value="2280">38:00</option><option value="2340">39:00</option><option value="2400">40:00</option>                                </select>
+                                    @for ($i = 0; $i <= (40*60); $i += 60)        
+                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                    @endfor                                                
+                                </select>
                             </div>
                         </div>
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 col-12 mb-3">
                                 <label><strong>Annual Leave</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="anl">
-                                    <option value="0">00:00</option><option value="60">01:00</option><option value="120">02:00</option><option value="180">03:00</option><option value="240">04:00</option><option value="300">05:00</option><option value="360">06:00</option><option value="420">07:00</option><option value="480">08:00</option><option value="540">09:00</option><option value="600">10:00</option><option value="660">11:00</option><option value="720">12:00</option><option value="780">13:00</option><option value="840">14:00</option><option value="900">15:00</option><option value="960">16:00</option><option value="1020">17:00</option><option value="1080">18:00</option><option value="1140">19:00</option><option value="1200">20:00</option><option value="1260">21:00</option><option value="1320">22:00</option><option value="1380">23:00</option><option value="1440">24:00</option><option value="1500">25:00</option><option value="1560">26:00</option><option value="1620">27:00</option><option value="1680">28:00</option><option value="1740">29:00</option><option value="1800">30:00</option><option value="1860">31:00</option><option value="1920">32:00</option><option value="1980">33:00</option><option value="2040">34:00</option><option value="2100">35:00</option><option value="2160">36:00</option><option value="2220">37:00</option><option value="2280">38:00</option><option value="2340">39:00</option><option value="2400">40:00</option>                                </select>
+                                    @for ($i = 0; $i <= (40*60); $i += 60)        
+                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                    @endfor                                                                                    
+                                </select>
                             </div>
                         </div>
 

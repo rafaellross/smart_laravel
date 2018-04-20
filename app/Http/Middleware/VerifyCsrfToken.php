@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'users.store',
-        'timesheet.store',
+        'timesheets'
     ];
 }

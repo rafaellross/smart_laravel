@@ -17,6 +17,10 @@ class CreateDaysTable extends Migration
             $table->increments('id');
             $table->date('day_dt');
             $table->integer('week_day');
+            $table->string('total')->nullable();
+            $table->string('normal')->nullable();
+            $table->string('total_15')->nullable(); 
+            $table->string('total_20')->nullable();
             $table->unsignedInteger('time_sheet_id');            
             $table->timestamps();
             $table->foreign('time_sheet_id')->references('id')->on('time_sheets');

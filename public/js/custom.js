@@ -60,20 +60,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 44:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(45);
-
-
-/***/ }),
-
-/***/ 45:
+/***/ "./resources/assets/js/custom.js":
 /***/ (function(module, exports) {
 
 
@@ -105,7 +97,9 @@ $(document).ready(function () {
     }
 
     //Setup datepicker
-    $('.date-picker').datepicker();
+    $('.date-picker').datepicker({
+        format: 'dd/mm/yyyy'
+    });
 
     //Show extra jobs for selected day
     showExtra = function showExtra(btn, extra_inputs) {
@@ -113,8 +107,167 @@ $(document).ready(function () {
         $(btn).fadeOut();
     };
 
-    console.log("Test");
+    //Update list of hours in accord with current selection
+    $('.hour-start').change(function () {
+        var day = $(this).attr('id').split('_');
+        var row = day[2];
+        var destination = $('#' + day[0] + "_end_" + row);
+
+        //Enable and empty select list for end of the row
+        destination.prop('disabled', false).empty();
+        var option = '<option value="">-</option>';
+        destination.append(option);
+
+        //Get the seleted value to be used as minimum for end
+        var startHour = $(this).val();
+        for (var hour = Number(startHour) + 15; hour <= 24 * 60 - 15; hour += 15) {
+            var _option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
+            $(destination).append(_option);
+        }
+    });
+
+    $('.hour-end').change(function () {
+
+        var day = $(this).attr('id').split('_');
+        var row = Number(day[2]);
+
+        var next_row = row + 1;
+
+        var next_row_el = $('#' + day[0] + "_start_" + next_row);
+
+        if (next_row_el.length > 0) {
+
+            //Clear next row
+            next_row_el.prop('disabled', false).empty();
+            var next_duration = $('#' + day[0] + '_hours_' + next_row);
+            next_duration.val("");
+            var next_end = $('#' + day[0] + '_end_' + next_row);
+            next_end.val("");
+
+            var option = '<option value="">-</option>';
+            next_row_el.append(option);
+
+            //Get the seleted value to be used as minimum for start on next row
+            var startHour = $(this).val();
+            //Populate select with times
+            for (var hour = Number(startHour); hour <= 24 * 60 - 15; hour += 15) {
+                var _option2 = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
+                next_row_el.append(_option2);
+            }
+        }
+
+        //Clear next day
+        var duration = $('#' + day[0] + '_hours_' + row);
+        var start = Number($('#' + day[0] + "_start_" + row).val());
+        var end = Number($(this).val());
+        var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
+        duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
+
+        var hours_job1 = $('#' + day[0] + '_hours_1').val();
+        var hours_job2 = $('#' + day[0] + '_hours_2').val();
+        var hours_job3 = $('#' + day[0] + '_hours_3').val();
+        var hours_job4 = $('#' + day[0] + '_hours_4').val();
+
+        hours_job1 = hourToMinutes(hours_job1);
+        hours_job2 = hourToMinutes(hours_job2);
+        hours_job3 = hourToMinutes(hours_job3);
+        hours_job4 = hourToMinutes(hours_job4);
+
+        //Calculate total hours
+
+        //Clear 1.5 and 2.0 fields
+        $('#' + day[0] + '_15').val('');
+        $('#' + day[0] + '_20').val('');
+
+        //Declare total hours
+        var totalHours = hours_job1 + hours_job2 + hours_job3 + hours_job4;
+        $('#' + day[0] + '_total').val(minutesToHour(totalHours));
+
+        var hours_15 = 0;
+        var hours_20 = 0;
+        var hours_nor = 0;
+
+        var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
+
+        if (totalHours > 8 * 60 && day[0] !== "sat") {
+            //If total hours is bigger than 08:00 and day different than sat set 1.5
+            hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
+        }
+
+        //If total hours is bigger than 10:00 or day equal sat set 1.5
+        if (totalHours > 10 * 60 || day[0] == "sat") {
+            if (day[0] == "sat") {
+                hours_20 = totalHours;
+            } else if (job_number !== "pld") {
+                hours_20 = totalHours - 8 * 60 - 2 * 60;
+            }
+        }
+
+        hours_nor = totalHours - hours_15 - hours_20;
+
+        $('#' + day[0] + '_15').val(minutesToHour(hours_15));
+        $('#' + day[0] + '_20').val(minutesToHour(hours_20));
+        $('#' + day[0] + '_nor').val(minutesToHour(hours_nor));
+
+        calcTotal();
+    });
+
+    calcTotal = function calcTotal() {
+
+        //Calculate total of normal hours
+        var normalTotal = 0;
+        $('.horNormal').each(function () {
+            normalTotal += hourToMinutes($(this).val());
+        });
+        $('#totalNormal').val(minutesToHour(normalTotal));
+
+        //Calculate total of hours
+        var hoursTotal = 0;
+        $('.hours-total').each(function () {
+            hoursTotal += hourToMinutes($(this).val());
+        });
+        $('#totalWeek').val(minutesToHour(hoursTotal));
+
+        //Calculate total of hours 1.5
+        var hours15 = 0;
+        $('.hor15').each(function () {
+            hours15 += hourToMinutes($(this).val());
+        });
+        $('#total15').val(minutesToHour(hours15));
+
+        //Calculate total of hours 2.0
+        var hours20 = 0;
+        $('.hor20').each(function () {
+            hours20 += hourToMinutes($(this).val());
+        });
+        $('#total20').val(minutesToHour(hours20));
+    };
+
+    //Define actions on click button Autofill
+    $('#btnPreFill').click(function () {
+        //Clear all inputs
+        $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear').val('');
+
+        var preEnd = $('#preEnd').val();
+        $('.end-1').not('#sat_end_1').val(preEnd);
+
+        var preStart = $('#preStart').val();
+        $('.start-1').not('#sat_start_1').val(preStart);
+
+        var preJob = $('#preJob').val();
+        $('.job-1').not('#sat_job_1').val(preJob);
+
+        $(".end-1").not('#sat_end_1').trigger("change");
+    });
 });
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("./resources/assets/js/custom.js");
+
 
 /***/ })
 

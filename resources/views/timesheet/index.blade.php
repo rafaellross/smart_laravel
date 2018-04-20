@@ -36,17 +36,18 @@
         @foreach ($timesheets as $timesheet)
             <tr>
             </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
-                <td>{{$timesheet->user()->username}}</td>
-                <td class="mobile"{{Carbon::createFromFormat('m/d/Y', $timesheet->created_at)}}</td>
-                <td>{{$timesheet->employee()->name}}</td>
-                <td>{{$timesheet->week_end}}</td><td>{{$timesheet->status}}</td><td style="text-align: center;">
+                <td>{{$timesheet->user->username}}</td>
+                <td class="mobile">{{ Carbon::parse($timesheet->created_at)->format('d/m/Y') }}</td>
+                <td>{{$timesheet->employee->name}}</td>
+                <td>{{Carbon::parse($timesheet->week_end)->format('d/m/Y')}}</td>
+                <td>{{$timesheet->status}}</td><td style="text-align: center;">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="pdf.php?id=1" target="_blank">View</a>
-                            <a class="dropdown-item" href="?controller=timesheets&action=edit&id={{$timesheet->id}}" style="">Edit</a>                    
+                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}" target="_blank">View</a>
+                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}" style="">Edit</a>                    
                             <a href="#" id="{{$timesheet->id}}" class="dropdown-item delete" style="">Delete</a>
                         </div>
                     </div>        
