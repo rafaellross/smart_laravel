@@ -12,8 +12,13 @@ class EmployeeTableSeeder extends Seeder
     public function run()
     {
         DB::table('employees')->insert([
-        	"name" => "Rafael Ross",
-        	"phone" => "0434352407"
+            [
+                "name" => "Ross de Moura, Rafael Luiz",
+                "phone" => "0434352407",
+                "travel" => true,
+                "rdo" => true
+            ],
+
         ]);
 
     }

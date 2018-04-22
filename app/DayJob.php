@@ -10,4 +10,8 @@ class DayJob extends Model
         return $this->belongsTo('App\Job');
     }
 
+    public function hours(){
+
+    	return $this->end - $this->start < 0 ? 0 :$this->end - $this->start;
+    }        
 }

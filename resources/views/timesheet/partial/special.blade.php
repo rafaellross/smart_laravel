@@ -6,7 +6,7 @@
                                 <label><strong>PLD</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="pld">
                                     @for ($i = 0; $i <= (40*60); $i += 60)        
-                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                        <option value="{{$i}}" {{isset($timesheet) && $timesheet->pld == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                                     @endfor                                                
 
                                 </select>

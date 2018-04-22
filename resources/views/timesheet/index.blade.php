@@ -47,7 +47,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}" target="_blank">View</a>
-                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}" style="">Edit</a>                    
+                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}/edit" style="">Edit</a>                    
                             <a href="#" id="{{$timesheet->id}}" class="dropdown-item delete" style="">Delete</a>
                         </div>
                     </div>        

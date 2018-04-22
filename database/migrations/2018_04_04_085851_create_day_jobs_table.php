@@ -20,8 +20,8 @@ class CreateDayJobsTable extends Migration
             $table->integer('start')->nullable();
             $table->integer('end')->nullable();
             $table->timestamps();
-            $table->foreign('job_id')->references('id')->on('jobs');
-            $table->foreign('day_id')->references('id')->on('days');
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade');
         });
     }
 

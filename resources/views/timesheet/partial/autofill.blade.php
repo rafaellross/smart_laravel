@@ -14,7 +14,7 @@
                                 <label>Start</label>
                                 <select class="hour-start form-control form-control-lg custom-select " id="preStart" disable>
                                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                        <option value="{{$i}}" {{$i == (7*60) ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                                     @endfor                                                
                                 </select>
                             </div>
@@ -22,7 +22,7 @@
                                 <label>End</label>
                                 <select class="hour-start form-control form-control-lg custom-select " id="preEnd">
                                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                        <option value="{{$i}}" {{$i == (15.25*60) ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                                     @endfor                                                
                                 </select>
                             </div>
@@ -33,7 +33,7 @@
                                 <select class="form-control form-control-lg custom-select " id="preJob">
                                     <option value="">Select Job</option>
                                     @foreach (App\Job::all() as $job)
-                                        <option value="{{$job->code}}">{{$job->description}}</option>
+                                        <option value="{{$job->code}}" {{$job->code == '001' ? 'selected' : ''}}>{{$job->description}}</option>
                                     @endforeach                                                                
                                 </select>
                             </div>

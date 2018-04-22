@@ -13,7 +13,7 @@ class JobTableSeeder extends Seeder
     {
         DB::table('jobs')->insert([
         	"code" => "001",
-        	"description" => "Office"
+        	"description" => "001 - Office"
         ]);
     }
 }
