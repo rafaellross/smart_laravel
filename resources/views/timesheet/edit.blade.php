@@ -30,17 +30,18 @@
                 </div>
                 @include('timesheet.partial.autofill')                
                 
+                
                 <!-- Start Group Monday-->
-                @each('timesheet.partial.day', $timesheet->days, 'day')
+                @each('timesheet.partial.edit.day', $timesheet->days, 'day')
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
                 
                 
                 <!-- Group Special Request -->
-                @include('timesheet.partial.special')                
+                @include('timesheet.partial.edit.special')                
                 <!-- End Group Special Request -->
                 <!-- Start Group Total-->
-                @include('timesheet.partial.total')                
+                @include('timesheet.partial.edit.total')                
                 <!--End Group Total -->
 
                 <!-- Start Group Signature-->

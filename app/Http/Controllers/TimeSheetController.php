@@ -86,15 +86,15 @@ class TimeSheetController extends Controller
                     $dayJob         = new DayJob();
                     $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
                     $dayJob->day_id = $dayTimeSheet->id;
+                    $dayJob->number = $key;
                     $dayJob->start  = !isset($job["start"]) ? null : $job["start"];
                     $dayJob->end    = !isset($job["end"]) ? null : $job["end"];
                     $dayJob->save();
                 }
             }
         }
-
-        //return $request;
-        return view('timesheet.index');
+            
+        return redirect('/timesheets')->with('success', 'Time Sheet has been added');
     }
 
     /**
@@ -164,8 +164,7 @@ class TimeSheetController extends Controller
             $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
             $dayTimeSheet                   = new Day();
             $dayTimeSheet->week_day         = $weekDay->number;
-            $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);  
-            return $day;
+            $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);              
             $dayTimeSheet->total           = $day['total']['total'];
             $dayTimeSheet->normal          = $day['total']['normal'];
             $dayTimeSheet->total_15        = $day['total']['1.5'];
@@ -177,18 +176,21 @@ class TimeSheetController extends Controller
             foreach ($day as $key => $job) {
                 
                 if (intval($key)) {
+                    //return $job;
                     $dayJob         = new DayJob();
                     $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
                     $dayJob->day_id = $dayTimeSheet->id;
-                    $dayJob->start  = !isset($job["start"]) ? null : $job["start"];
-                    $dayJob->end    = !isset($job["end"]) ? null : $job["end"];
+                    $dayJob->number = $key;
+                    $dayJob->start  = $job["start"];
+                    $dayJob->end    = $job["end"];
                     $dayJob->save();
                 }
             }
         }
 
         //return $request;
-        return view('timesheet.index');
+        return redirect('/timesheets')->with('success', 'Time Sheet has been added');
+        
         
     }
 
@@ -200,6 +202,15 @@ class TimeSheetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $timesheet = TimeSheet::find($id);
+
+        foreach ($timeSheet->days as $day) {
+                foreach ($day->dayJobs as $job) {
+                    $job->delete();
+                }
+                $day->delete();
+        }            
+        
+        $timesheet->delete();
     }
 }

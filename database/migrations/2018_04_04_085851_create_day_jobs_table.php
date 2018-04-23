@@ -18,6 +18,7 @@ class CreateDayJobsTable extends Migration
             $table->unsignedInteger('job_id')->nullable();
             $table->unsignedInteger('day_id')->nullable();
             $table->integer('start')->nullable();
+            $table->integer('number');
             $table->integer('end')->nullable();
             $table->timestamps();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');

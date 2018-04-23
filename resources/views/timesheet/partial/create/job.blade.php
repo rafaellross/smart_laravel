@@ -9,29 +9,17 @@
             @else
                 <select class="hour-start form-control form-control-lg custom-select start" id="{{$day}}_start_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][start]">
             @endif            
-                @if (!isset($job))
                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
                         <option value="{{$i}}">{{ date('i:s', $i)}}</option>
                     @endfor                                                
-                @else                
-                    @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                        <option value="{{$i}}" {{ $job->start == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
-                    @endfor                                                                
-                @endif            
             </select>
         </div>
         <div class="col-md-6 col-12 mb-3">
             <label>End</label>
             <select class="hour-end end-{{$job_curr}} form-control form-control-lg custom-select end" id="{{$day}}_end_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][end]">
-                @if (!isset($job))
                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
                         <option value="{{$i}}">{{ date('i:s', $i)}}</option>
                     @endfor                                                
-                @else                
-                    @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                        <option value="{{$i}}" {{ $job->end == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
-                    @endfor                                                                
-                @endif            
             </select>
         </div>
     </div>
@@ -43,28 +31,16 @@
                 <select class="form-control form-control-lg custom-select job job-1" id="{{$day}}_job_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][job]">
             @else
                 <select class="form-control form-control-lg custom-select job" id="{{$day}}_job_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][job]">
-            @endif         
-                @if (!isset($job))
-                    <option value="">Select Job</option>
-                    @foreach (App\Job::all() as $job)
-                        <option value="{{$job->code}}">{{$job->description}}</option>
-                    @endforeach                                                                
-                @else                
-                    <option value="">Select Job</option>
-                    @foreach (App\Job::all() as $jobList)
-                        <option value="{{$jobList->code}}" {{$job->job_id == $jobList->id ? 'selected' : ''}}>{{$jobList->description}}</option>
-                    @endforeach                                                                
-
-                @endif                        
+            @endif                         
+                <option value="">Select Job</option>
+                @foreach (App\Job::all() as $job)
+                    <option value="{{$job->code}}">{{$job->description}}</option>
+                @endforeach                                                                
             </select>
         </div>
         <div class="col-md-6 mb-3">
             <label>Hours</label>
-            @if(!isset($job->job_id))
                 <input readonly="" type="text" class="form-control form-control-lg time job1 hours" id="{{$day}}_hours_{{$job_curr}}" value="" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">
-            @else
-                <input readonly="" type="text" class="form-control form-control-lg time job1 hours" id="{{$day}}_hours_{{$job_curr}}" value="{{date('i:s', $job->hours())}}" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">    
-            @endif             
         </div>        
         @if ($first)
             <button type="button" class="btn btn-secondary btn-sm" id="btnShowExtra" onclick="showExtra(this, extraJobs{{$day}})">Show More Jobs</button>
