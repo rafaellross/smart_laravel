@@ -184,7 +184,7 @@ $(document).ready(function(){
     //Define actions on click button Autofill
     $('#btnPreFill').click(function(){
       //Clear all inputs
-      $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear').val('');
+      $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden]').val('');
 
       let preEnd = $('#preEnd').val();
       $('.end-1').not('#sat_end_1').val(preEnd);
@@ -197,4 +197,12 @@ $(document).ready(function(){
 
         $( ".end-1" ).not('#sat_end_1').trigger( "change" );
     });
+
+    $('.btnClear').click(function(){
+        $(this).parent().children().children('select, input').val('');
+        $(this).parent().prev().children().children('select').val('');
+        var hourSelect = $(this).parent().prev().children().children('select');
+        $( hourSelect ).trigger( "change" );
+    });
+    
 });

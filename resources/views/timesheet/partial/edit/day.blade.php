@@ -1,7 +1,8 @@
 <div class="form-group alert alert-success" role="alert" id="groupMonday">
     <?php
-        $weekDay = App\WeekDay::where("number", "=", $day->week_day)->get()->first();
-        $jobDB = App\Job::all();
+        $weekDay = App\WeekDay::select('number','description', 'short')->where("number", "=", $day->week_day)->get()->first();
+        
+        
     ?>
     
     <h4 style="text-align: center;">{{ $weekDay->description }}</h4>    

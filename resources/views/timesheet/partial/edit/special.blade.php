@@ -1,4 +1,4 @@
-<div class="form-group alert alert-info" role="alert" id="groupPre">
+<div class="form-group alert alert-info" role="alert" >
                     <h4 style="text-align: center;">Special Requests</h4>
                     <br>
                         <div class="form-row" style="text-align: center;">
@@ -17,7 +17,7 @@
                                 <label><strong>RDO</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="rdo">
                                     @for ($i = 0; $i <= (40*60); $i += 60)        
-                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                                        <option value="{{$i}}" {{isset($timesheet) && $timesheet->rdo == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                                     @endfor                                                
                                 </select>
                             </div>
@@ -27,8 +27,8 @@
                                 <label><strong>Annual Leave</strong></label>
                                 <select class="form-control form-control-lg custom-select " name="anl">
                                     @for ($i = 0; $i <= (40*60); $i += 60)        
-                                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
-                                    @endfor                                                                                    
+                                        <option value="{{$i}}" {{isset($timesheet) && $timesheet->anl == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
+                                    @endfor                                                
                                 </select>
                             </div>
                         </div>

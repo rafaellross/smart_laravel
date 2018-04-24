@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TimeSheet;
 use App\WeekDay;
+use App\Employee;
 use App\Day;
 use App\DayJob;
 use App\Job;
@@ -33,7 +34,7 @@ class TimeSheetController extends Controller
     public function create()
     {
         $days = WeekDay::where('number', '<', 8)->get();        
-        $employee = \App\Employee::find(1);
+        $employee = Employee::find(1);
         
         return view('timesheet.create', ['days' => $days, 'employee' => $employee]);
     }
@@ -159,8 +160,9 @@ class TimeSheetController extends Controller
                 }
                 $day->delete();
         }    
-
+            
         foreach ($request->get('days') as $key => $day) {
+
             $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
             $dayTimeSheet                   = new Day();
             $dayTimeSheet->week_day         = $weekDay->number;
@@ -203,14 +205,7 @@ class TimeSheetController extends Controller
     public function destroy($id)
     {
         $timesheet = TimeSheet::find($id);
-
-        foreach ($timeSheet->days as $day) {
-                foreach ($day->dayJobs as $job) {
-                    $job->delete();
-                }
-                $day->delete();
-        }            
-        
         $timesheet->delete();
+        return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
     }
 }

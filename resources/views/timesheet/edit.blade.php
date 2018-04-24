@@ -28,11 +28,16 @@
                     </label>
                     <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{ Carbon::parse($timesheet->week_end)->format('d/m/Y') }}">
                 </div>
+                <?php
+                    $jobDB = App\Job::select('id', 'code','description')->get();            
+                ?>                
+
                 @include('timesheet.partial.autofill')                
-                
-                
+
                 <!-- Start Group Monday-->
-                @each('timesheet.partial.edit.day', $timesheet->days, 'day')
+                @foreach($timesheet->days as $day)
+                    @include('timesheet.partial.edit.day', ['day'=>$day])
+                @endforeach                                 
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
                 

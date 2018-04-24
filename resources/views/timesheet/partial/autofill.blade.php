@@ -32,7 +32,7 @@
                                 <label>Job</label>
                                 <select class="form-control form-control-lg custom-select " id="preJob">
                                     <option value="">Select Job</option>
-                                    @foreach (App\Job::all() as $job)
+                                    @foreach ($jobDB as $job)
                                         <option value="{{$job->code}}" {{$job->code == '001' ? 'selected' : ''}}>{{$job->description}}</option>
                                     @endforeach                                                                
                                 </select>

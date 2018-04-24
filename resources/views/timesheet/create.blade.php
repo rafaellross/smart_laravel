@@ -28,10 +28,17 @@
                     </label>
                     <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="">
                 </div>
+                <?php
+                    $jobDB = App\Job::select('code','description')->get();            
+                ?>                
+                
                 @include('timesheet.partial.autofill')                
                 
-                <!-- Start Group Monday-->
-                @each('timesheet.partial.create.day', $days, 'day')
+                <!-- Start Group Monday-->                
+                @foreach($days as $day)
+                    @include('timesheet.partial.create.day', ['day'=>$day])
+                @endforeach                                 
+
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
                 

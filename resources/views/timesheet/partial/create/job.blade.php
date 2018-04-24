@@ -33,8 +33,14 @@
                 <select class="form-control form-control-lg custom-select job" id="{{$day}}_job_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][job]">
             @endif                         
                 <option value="">Select Job</option>
-                @foreach (App\Job::all() as $job)
-                    <option value="{{$job->code}}">{{$job->description}}</option>
+                @foreach ($jobDB as $job)
+                    @if ($day != "sat")
+                        <option value="{{$job->code}}">{{$job->description}}</option>
+                    @else
+                        @if (!in_array($job->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
+                            <option value="{{$job->code}}">{{$job->description}}</option>
+                        @endif                
+                    @endif
                 @endforeach                                                                
             </select>
         </div>

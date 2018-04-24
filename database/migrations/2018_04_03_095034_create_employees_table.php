@@ -18,6 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->boolean('rdo')->default(true);
             $table->boolean('travel')->default(true);
+            $table->boolean('site_allow')->default(true);
             $table->float('bonus')->default(0);
             $table->string('phone')->unique();
             $table->timestamps();

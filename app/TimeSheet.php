@@ -154,16 +154,65 @@ class TimeSheet extends Model
     	$pdf->SetFont('Arial','',$font_sm+2);
 	    $pdf->Cell($tb_left_width,5,'JOB',1,0,'C');
 	    $pdf->Cell($tb_left_width,5,'HOURS',1,0,'C');
+	    $getYtitle = $pdf->GetY();
 	    $pdf->Ln();
 
 	    //Write left table
-	    foreach ($timeSheet->listHours() as $job => $hours) {
+	    $listHours = $timeSheet->listHours();
+	    arsort($listHours);
+
+
+	    //Sum tafe, sick and public holiday to the main job
+	    if (isset($listHours["tafe"])) {
+	    	$listHours[key($listHours)] += $listHours["tafe"];
+	    	unset($listHours["tafe"]);
+	    }
+
+	    if (isset($listHours["sick"])) {
+	    	$listHours[key($listHours)] += $listHours["sick"];
+	    	unset($listHours["sick"]);
+	    }
+
+	    if (isset($listHours["holiday"])) {
+	    	$listHours[key($listHours)] += $listHours["holiday"];
+	    	unset($listHours["holiday"]);
+	    }
+
+	    if ($timeSheet->pldTaken()->integer > 0) {
+	    	if (isset($listHours["001"])) {
+	    		$listHours["001"] += $timeSheet->pldTaken()->integer;
+	    	} else {
+	    		$listHours["001"] = $timeSheet->pldTaken()->integer;
+	    	}
+	    }
+
+	    if (isset($listHours["rdo"])) {
+	    	unset($listHours["rdo"]);
+	    }
+
+	    if ($timeSheet->rdoTaken()->integer > 0) {
+	    	if (isset($listHours["001"])) {
+	    		$listHours["001"] += $timeSheet->rdoTaken()->integer;
+	    	} else {
+	    		$listHours["001"] = $timeSheet->rdoTaken()->integer;
+	    	}
+	    }
+
+	    if ($timeSheet->anlTaken()->integer > 0) {
+	    	if (isset($listHours["001"])) {
+	    		$listHours["001"] += $timeSheet->anlTaken()->integer;
+	    	} else {
+	    		$listHours["001"] = $timeSheet->anlTaken()->integer;
+	    	}
+	    }
+
+	    foreach ($listHours as $job => $hours) {
 		    $pdf->Cell($tb_left_width,5, $job,1,0,'C');
 		    $pdf->Cell($tb_left_width,5, Hour::convertToDecimal($hours),1,0,'C');	    	
 		    $pdf->Ln();
 	    }
 
-	    $pdf->SetY($pdf->GetY()-15);
+	    $pdf->SetY($getYtitle, false);
 	    $pdf->SetX($pdf->GetX()+45);
 	    
 	    $tb_center_width = 17;
@@ -215,12 +264,12 @@ class TimeSheet extends Model
 		$pdf->Cell($special_request_width,5, 'Annual Leave',1,0,'C');
 
 		$pdf->SetY($pdf->GetY()-(10), false);
-		$pdf->Cell($special_request_width,5, $timeSheet->pld,1,2,'C');
+		$pdf->Cell($special_request_width,5, $timeSheet->pld <= 0 ? null : $timeSheet->pld/60,1,2,'C');
 		
 		
-		$pdf->Cell($special_request_width,5, $timeSheet->pld,1,2,'C');
+		$pdf->Cell($special_request_width,5, $timeSheet->rdo <= 0 ? null : $timeSheet->rdo/60,1,2,'C');
 		
-		$pdf->Cell($special_request_width,5, $timeSheet->pld,1,2,'C');
+		$pdf->Cell($special_request_width,5, $timeSheet->anl <= 0 ? null : $timeSheet->anl/60,1,2,'C');
 
 		$tb_right_width = 60;
 		$pdf->SetX($pdf->GetX()+128);
@@ -235,19 +284,27 @@ class TimeSheet extends Model
 		$pdf->Cell($tb_right_width,5,'TOTAL TRAVEL DAYS',1,2,'R');
 		$pdf->Cell($tb_right_width,5,'TOTAL SITE ALLOW.',1,2,'R');
 		$pdf->Cell($tb_right_width,5,'',0,2,'R');
-		$pdf->Cell($tb_right_width,5,'BONUS',1,0,'R');
+		if ($timeSheet->employee->bonus > 0) {
+			$pdf->Cell($tb_right_width,5,'BONUS',1,0,'R');
+		} else {
+			$pdf->Cell($tb_right_width,5,'',0,0,'R');
+		}
 		$pdf->SetY($pdf->GetY()-(50), false);
 		$pdf->Cell(10,5, $timeSheet->normalLessRdo(),1,2,'C', true);
 		$pdf->Cell(10,5, Hour::convertToDecimal($timeSheet->total_15) == 0 ? null : Hour::convertToDecimal($timeSheet->total_15),1,2,'C', true);
 		$pdf->Cell(10,5, Hour::convertToDecimal($timeSheet->total_20) == 0 ? null : Hour::convertToDecimal($timeSheet->total_20),1,2,'C', true);
-		$pdf->Cell(10,5, $timeSheet->pldTaken()->decimal,1,2,'C', true);
-		$pdf->Cell(10,5, $timeSheet->rdoTaken()->decimal,1,2,'C', true);
-		$pdf->Cell(10,5, $timeSheet->sickTaken() ,1,2,'C', true);
-		$pdf->Cell(10,5, $timeSheet->anlTaken()->decimal,1,2,'C', true);
+		$pdf->Cell(10,5, $timeSheet->pldTaken()->decimal == 0 ? null : $timeSheet->pldTaken()->decimal,1,2,'C', true);
+		$pdf->Cell(10,5, $timeSheet->rdoTaken()->decimal == 0 ? null : $timeSheet->rdoTaken()->decimal,1,2,'C', true);
+
+		$pdf->Cell(10,5, $timeSheet->sickTaken() == 0 ? null : $timeSheet->sickTaken() ,1,2,'C', true);
+		$pdf->Cell(10,5, $timeSheet->anlTaken()->decimal == 0 ? null : $timeSheet->anlTaken()->decimal,1,2,'C', true);
 		$pdf->Cell(10,5, $timeSheet->travelDays(),1,2,'C', true);
-		$pdf->Cell(10,5, $timeSheet->siteAllow(),1,2,'C', true);
+		$pdf->Cell(10,5, $timeSheet->siteAllow() == 0 ? null : $timeSheet->siteAllow()/60,1,2,'C', true);
 		$pdf->Cell(10,5, "",0,2,'C', false);
-		$pdf->Cell(10,5, "",1,2,'C', true);
+		if ($timeSheet->employee->bonus > 0) {
+			$pdf->Cell(10,5, $timeSheet->employee->bonus == 0 ? null : $timeSheet->employee->bonus,1,2,'C', true);
+		}
+		
 
         return $pdf;
 	}
@@ -291,15 +348,26 @@ class TimeSheet extends Model
 
 	public function sickTaken(){
 		if (isset($this->listHours()["sick"])) {
-			return $this->listHours()["sick"];
+			return $this->listHours()["sick"] > 0 ? $this->listHours()["sick"]/60 : null;
 		} else {
 			return "";	
 		}				
 	}
 
 	public function normalLessRdo(){
-		$result = (Hour::convertToInteger($this->normal) - (4 * 60))/60.0;
-		return $result < 0 ? "" : $result;
+		if ($this->employee->rdo) {
+			$deduction = 0;
+			$deductCodes = array("sick", "rdo", "anl", "pld");
+			foreach ($this->listHours() as $job => $time) {
+				if (in_array($job, $deductCodes)) {
+					$deduction += $time;
+				}
+			}
+			$result = (Hour::convertToInteger($this->normal) - (4 * 60) - $deduction)/60.0;
+			return $result < 0 ? "" : $result;
+		} else {
+			return Hour::convertToInteger($this->normal) == 0 ? null : Hour::convertToInteger($this->normal)/60;
+		}
 	}
 
 	public function anlTaken(){
@@ -311,11 +379,32 @@ class TimeSheet extends Model
 	}
 
 	public function travelDays(){
-		return "";
+		if ($this->employee->travel) {
+            $travelDays = 0;		
+            foreach ($this->days as $day) {
+                if ($day->work()) {
+                        $travelDays++;
+                }                        
+            }
+            return $travelDays;
+        } else {
+        	return null;
+        }
 	}
 
 	public function siteAllow(){
-		return "";
-	}
+		if ($this->employee->site_allow) {
+	        $siteAllow = 0;
+	        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday", "rdo");
+	        foreach ($this->listHours() as $job => $hours){                
+	            if (!in_array($job, $deductCodes)) {
+	                $siteAllow += $hours;
+	            }                
+	        }
+	        return $siteAllow;			
+		} else {
+			return 0;
+		}
 
+	}
 }

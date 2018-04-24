@@ -10,8 +10,15 @@ class DayJob extends Model
         return $this->belongsTo('App\Job');
     }
 
-    public function hours(){
+    public function day(){
+        return $this->belongsTo('App\Day');
+    }
 
-    	return $this->end - $this->start < 0 ? 0 :$this->end - $this->start;
+    public function hours(){
+    	if ($this->number == 1 && $this->day->week_day !== 7) {
+    		return ($this->end - $this->start)-15 < 0 ? 0 : ($this->end - $this->start)-15;
+    	} else {
+    		return $this->end - $this->start < 0 ? 0 :$this->end - $this->start;
+    	}    	
     }        
 }

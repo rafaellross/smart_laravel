@@ -5,9 +5,9 @@
             <label>Start</label>
             
             @if ($job->number === 1)
-                <select class="hour-start start-{{$job->number}} form-control form-control-lg custom-select start" id="{{$weekDay->short}}_start_{{$job->number}}" name="daysjob [{{ $weekDay->short}}][{{$job->number}}][start]">
+                <select class="hour-start start-{{$job->number}} form-control form-control-lg custom-select start" id="{{$weekDay->short}}_start_{{$job->number}}" name="days[{{ $weekDay->short}}][{{$job->number}}][start]">
             @else
-                <select class="hour-start form-control form-control-lg custom-select start" id="{{$day}}_start_{{$job->number}}" name="daysjob [{{ $weekDay->short}}][{{$job->number}}][start]">
+                <select class="hour-start form-control form-control-lg custom-select start" id="{{$weekDay->short}}_start_{{$job->number}}" name="days[{{ $weekDay->short}}][{{$job->number}}][start]">
             @endif            
                 @for ($i = 0; $i <= (24*60)-15; $i += 15)        
                     <option value="{{$i}}" {{ $job->start == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
@@ -33,9 +33,16 @@
                 <select class="form-control form-control-lg custom-select job" id="{{$weekDay->short}}_job_{{$job->number}}" name="days[{{$weekDay->short}}][{{$job->number}}][job]">
             @endif         
                     <option value="">Select Job</option>
-                    @foreach ($jobDB as $jobList)
+                @foreach ($jobDB as $jobList)
+                    @if ($weekDay->short != "sat")
                         <option value="{{$jobList->code}}" {{$job->job_id == $jobList->id ? 'selected' : ''}}>{{$jobList->description}}</option>
-                    @endforeach                                                                
+                    @else
+                        @if (!in_array($jobList->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
+                            <option value="{{$jobList->code}}" {{$job->job_id == $jobList->id ? 'selected' : ''}}>{{$jobList->description}}</option>
+                        @endif                
+                    @endif
+                @endforeach                                                                
+
             </select>
         </div>
         <div class="col-md-6 mb-3">
