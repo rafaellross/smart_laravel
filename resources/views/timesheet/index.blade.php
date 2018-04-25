@@ -46,14 +46,9 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="timesheets/{{$timesheet->id}}" target="_blank">View</a>
-                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}/edit" style="">Edit</a>                                                
-                            <form action="{{action('TimeSheetController@destroy', $timesheet->id)}}" method="post">
-                                {{csrf_field()}}
-                                <input name="_method" type="hidden" value="DELETE">
-                                <button class="dropdown-item" type="submit">Delete</button>
-                             </form>                                                                        
-
+                            <a class="dropdown-item" href="/timesheets/action/{{$timesheet->id}}/print" target="_blank">View</a>
+                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}/edit">Edit</a>
+                            <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>                                                
                         </div>
                     </div>        
                 </td>

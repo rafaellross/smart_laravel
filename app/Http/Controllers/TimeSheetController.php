@@ -209,9 +209,39 @@ class TimeSheetController extends Controller
         return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
     }
 
-    public function react()
+    public function action($id, $action, $status = null)
     {        
-        return view('timesheet.react');
+
+        $ids = explode(",", $id);
+        if ($action == "delete") {
+            
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $id) {
+                    TimeSheet::find($id)->delete();
+                }                
+                return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');        
+                break;
+            case 'update':
+                foreach ($ids as $id) {
+                    $timesheet = TimeSheet::find($id);
+                    $timesheet->status = $status;
+                    $timesheet->save();
+                }                            
+                return redirect('timesheets')->with('success','Time Sheet(s) has been updated');                        
+                break;
+            case 'print':
+                return "print" . implode(",", $ids);
+                break;
+            
+            default:
+                return redirect('timesheets')->with('error','There was no action selected');        
+                break;
+        }
+
+        
     }
 
 }

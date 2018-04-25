@@ -321,6 +321,67 @@ $(document).ready(function () {
             });
         });
     });
+
+    //Select all checkboxes on click
+    $("#chkRow").click(function () {
+        var checkBoxes = $("input[type=checkbox]").not(this);
+        checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+    });
+
+    $('#btnPrint').click(function () {
+        var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+        if (selecteds > 0) {
+            var url = "/timesheets/action/";
+            var ids = Array();
+            $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+                ids.push(this.id.split("-")[1]);
+            });
+
+            window.open(url + ids.join(",") + "/print", '_blank');
+        }
+    });
+
+    $('#btnDelete').click(function () {
+        var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+        if (selecteds > 0) {
+            var url = "/timesheets/action/";
+            var ids = Array();
+            $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+                ids.push(this.id.split("-")[1]);
+            });
+            var result = confirm("Are you sure you want to delete following documents: " + ids + "?");
+            if (result == true) {
+                $(location).attr('href', url + ids.join(",") + "/delete");
+            }
+        }
+    });
+
+    $('.delete').click(function () {
+        var result = confirm("Are you sure you want to delete this document (#" + $(this).attr('id') + ")?");
+        if (result == true) {
+            $(location).attr('href', '/timesheets/action/' + $(this).attr('id') + "/delete");
+        }
+    });
+
+    $('#btnStatus').click(function () {
+        var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+        if (selecteds > 0) {
+            $('#modalChangeStatus').modal('show');
+        }
+    });
+
+    $('#btnSaveStatus').click(function () {
+        var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+        if (selecteds > 0) {
+            var url = "/timesheets/action/";
+            var ids = Array();
+            $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+                ids.push(this.id.split("-")[1]);
+            });
+            var newStatus = $("select[name=changeStatus]").val();
+            $(location).attr('href', url + ids.join(",") + "/update/" + newStatus);
+        }
+    });
 });
 
 /***/ })

@@ -23,5 +23,6 @@ Route::resource('users', 'UserController');
 Route::resource('employees', 'EmployeeController');
 Route::resource('jobs', 'JobController');
 Route::get('/timesheets/react', 'TimeSheetController@react');
+Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action');
 Route::resource('timesheets', 'TimeSheetController');
 
