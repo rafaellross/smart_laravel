@@ -22,4 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('users', 'UserController');
 Route::resource('employees', 'EmployeeController');
 Route::resource('jobs', 'JobController');
+Route::get('/timesheets/react', 'TimeSheetController@react');
 Route::resource('timesheets', 'TimeSheetController');
+

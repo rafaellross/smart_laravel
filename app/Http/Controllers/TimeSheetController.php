@@ -208,4 +208,10 @@ class TimeSheetController extends Controller
         $timesheet->delete();
         return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
     }
+
+    public function react()
+    {        
+        return view('timesheet.react');
+    }
+
 }

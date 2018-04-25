@@ -11,7 +11,19 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css').version();
+/*
+mix.react('resources/assets/js/components/TimeSheet.js', 'public/js/components');
+mix.react('resources/assets/js/components/Title.js', 'public/js/components');
+mix.react('resources/assets/js/components/Autofill.js', 'public/js/components');
+mix.react('resources/assets/js/components/Day.js', 'public/js/components');
+mix.react('resources/assets/js/components/Job.js', 'public/js/components');
+mix.react('resources/assets/js/components/Special.js', 'public/js/components');
+mix.react('resources/assets/js/components/Total.js', 'public/js/components');
+mix.react('resources/assets/js/components/Signature.js', 'public/js/components');
+*/
 
-mix.js('resources/assets/js/custom.js', 'public/js').version();
+
+mix.js('resources/assets/js/app.js', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.js('resources/assets/js/custom.js', 'public/js')
