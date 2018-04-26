@@ -161,6 +161,10 @@ class TimeSheetController extends Controller
         $timeSheet->user_id         = Auth::id();
         $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
+        $employee = Employee::find($timeSheet->employee_id);
+        $employee->last_time_sheet = $timeSheet->week_end;
+        $employee->last_time_sheet_id = $timeSheet->id;
+        $employee->save();
 
         foreach ($timeSheet->days as $day) {
                 foreach ($day->dayJobs as $job) {
