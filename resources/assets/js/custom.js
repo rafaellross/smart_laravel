@@ -339,7 +339,7 @@ $(document).ready(function(){
             $('#employee').empty();
             let name = $('#search').val();
 
-            $.getJSON( "/api/employees/" + name, function( data ) {
+            $.getJSON( "api/employees/" + name, function( data ) {
         
                 $.each( data, function( key, val ) {
                     console.log(val);
