@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('employees/', function() {			
+	return App\Employee::all();   
+});
+
+Route::get('employees/{name}', function($name) {			
+	return App\Employee::whereRaw("name like '% ". $name ."%'")->get();   
+});

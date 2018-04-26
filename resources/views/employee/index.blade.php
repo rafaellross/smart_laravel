@@ -25,14 +25,21 @@
         </thead>
         <tbody>            
     @foreach ($employees as $employee)
-                  <tr>                    
+                  <tr style="{{is_null($employee->last_timesheet) ? 'background-color: red; color: white;' : ""}}">                    
                         <th>
                             <input type="checkbox" id="chkRow-{{ $employee->id }}">
                         </th>
                         <td>{{ $employee->id }}</td>
                         <td>{{ $employee->name }}</td>
                         <td>{{$employee->phone}}</td>
-                        <td></td>
+                        <td>
+                            @if (!is_null($employee->last_timesheet))
+                                <a class="btn btn-success" href="/timesheets/action/{{$employee->last_timesheet}}/print" role="button" target="_blank">View</a>
+                            @else
+                                <span>No Time Sheet this Week</span>    
+                            @endif
+                        </td>
+
                         <td style="text-align: center;">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

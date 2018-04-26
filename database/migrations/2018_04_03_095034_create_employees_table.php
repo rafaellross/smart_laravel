@@ -16,11 +16,13 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('rdo')->default(true);
-            $table->boolean('travel')->default(true);
-            $table->boolean('site_allow')->default(true);
+            $table->boolean('rdo')->default(false);
+            $table->boolean('travel')->default(false);
+            $table->boolean('site_allow')->default(false);
+            $table->date('last_time_sheet')->nullable();
+            $table->integer('last_time_sheet_id')->nullable();
             $table->float('bonus')->default(0);
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->timestamps();
         });
     }

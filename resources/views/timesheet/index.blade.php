@@ -6,7 +6,7 @@
     <h2 style="text-align: center;">Time Sheet</h2>
     <hr>
     <div class="col-md-12 col-lg-12 col-12">           
-        <a href="{{ URL::to('/timesheets/create') }}" class="btn btn-primary">Create New</a>            
+        <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>            
         <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
         <button class="btn btn-info" id="btnPrint" style="">Print Selected(s)</button>            
         <button class="btn btn-secondary" id="btnStatus" style="">Change Status</button>            

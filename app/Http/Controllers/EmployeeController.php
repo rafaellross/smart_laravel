@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee.index', ['employees' => Employee::all()]);
+        return view('employee.index', ['employees' => Employee::all()->sortBy('name')]);
     }
 
     /**
@@ -35,11 +35,26 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        
         $employee = $this->validate(request(), [
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20|unique:employees',            
         ]);
-        Employee::create($employee);
+
+        $employee = new Employee();
+        $employee->name = $request->get('name');
+        $employee->phone = $request->get('phone');
+        $employee->bonus = $request->get('bonus');
+        
+        if ($request->get('entitlements') !== null) {
+            foreach ($request->get('entitlements') as $entitlement) {
+                $employee->{$entitlement} = true;
+            }
+        }
+        
+
+        $employee->save();
+        //Employee::create($employee);
         return redirect('/employees')->with('success', 'Employee has been added');
         
     }
@@ -65,13 +80,22 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $employee = Employee::find($id);
-        $this->validate(request(), [
+        $employee = $this->validate(request(), [
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20|unique:employees',            
+            'phone' => 'required|string|max:20',            
         ]);
+
+        $employee = Employee::find($id);
         $employee->name = $request->get('name');
         $employee->phone = $request->get('phone');
+        $employee->bonus = $request->get('bonus');
+        
+        if ($request->get('entitlements') !== null) {
+            foreach ($request->get('entitlements') as $entitlement) {
+                $employee->{$entitlement} = true;
+            }
+        }
+        
         $employee->save();
         return redirect('/employees')->with('success', 'Employee has been updated');
     }
@@ -87,4 +111,26 @@ class EmployeeController extends Controller
         $employee->delete();
         return redirect('employees')->with('success','Employee has been  deleted');        
     }    
+
+    public function action($id, $action, $status = null)
+    {        
+
+        $ids = explode(",", $id);
+        if ($action == "delete") {
+            
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $id) {
+                    Employee::find($id)->delete();
+                }                
+                return redirect('employees')->with('success','Job(s) has been deleted');        
+                break;
+            default:
+                return redirect('employees')->with('error','There was no action selected');        
+                break;
+        }        
+    }
+
 }

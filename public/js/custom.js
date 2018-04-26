@@ -342,9 +342,10 @@ $(document).ready(function () {
     });
 
     $('#btnDelete').click(function () {
+
         var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {
-            var url = "/timesheets/action/";
+            var url = window.location.pathname + "/action/";
             var ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function () {
                 ids.push(this.id.split("-")[1]);
@@ -359,7 +360,7 @@ $(document).ready(function () {
     $('.delete').click(function () {
         var result = confirm("Are you sure you want to delete this document (#" + $(this).attr('id') + ")?");
         if (result == true) {
-            $(location).attr('href', '/timesheets/action/' + $(this).attr('id') + "/delete");
+            $(location).attr('href', window.location.pathname + '/action/' + $(this).attr('id') + "/delete");
         }
     });
 
@@ -381,6 +382,20 @@ $(document).ready(function () {
             var newStatus = $("select[name=changeStatus]").val();
             $(location).attr('href', url + ids.join(",") + "/update/" + newStatus);
         }
+    });
+
+    $('#btnSearch').click(function () {
+        $('#employee').empty();
+        var name = $('#search').val();
+
+        $.getJSON("/api/employees/" + name, function (data) {
+
+            $.each(data, function (key, val) {
+                console.log(val);
+                var emp = '\n\n                        <div class="card ' + (val.last_timesheet === null ? "" : "bg-warning") + '">\n                          <div class="card-header" role="tab" id="heading-undefined">\n                            <h6 class="mb-0">\n                              <div>\n                                <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                  </a>\n                                <div class="float-right" style="' + (val.last_timesheet === null ? "display: none" : "display: block;") + '">\n                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                                <a href="action/' + (val.last_timesheet === null ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null ? "none" : "block") + ';" target="_blank">View</a>\n                                </div>                                \n                              </div>\n                            </h6>\n                          </div>\n                          </div>\n                    ';
+                $('#employee').append(emp);
+            });
+        });
     });
 });
 

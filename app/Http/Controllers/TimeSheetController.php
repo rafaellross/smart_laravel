@@ -8,7 +8,7 @@ use App\Employee;
 use App\Day;
 use App\DayJob;
 use App\Job;
-
+use App\TimeSheetReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -31,12 +31,16 @@ class TimeSheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($employee)
     {
         $days = WeekDay::where('number', '<', 8)->get();        
-        $employee = Employee::find(1);
+        $employee = Employee::find($employee);
         
         return view('timesheet.create', ['days' => $days, 'employee' => $employee]);
+    }
+
+    public function select(){
+        return view('timesheet.select');
     }
 
     /**
@@ -65,6 +69,10 @@ class TimeSheetController extends Controller
         $timeSheet->user_id         = Auth::id();
         $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
+        $employee = Employee::find($timeSheet->employee_id);
+        $employee->last_time_sheet = $timeSheet->week_end;
+        $employee->last_time_sheet_id = $timeSheet->id;
+        $employee->save();
 
 
         foreach ($request->get('days') as $key => $day) {
@@ -233,15 +241,17 @@ class TimeSheetController extends Controller
                 return redirect('timesheets')->with('success','Time Sheet(s) has been updated');                        
                 break;
             case 'print':
-                return "print" . implode(",", $ids);
+                $report = new TimeSheetReport();
+                foreach ($ids as $id) {
+                    $timesheet = TimeSheet::find($id);
+                    $report->add($timesheet);
+                }
+                return $report->output();
                 break;
             
             default:
                 return redirect('timesheets')->with('error','There was no action selected');        
                 break;
-        }
-
-        
+        }        
     }
-
 }

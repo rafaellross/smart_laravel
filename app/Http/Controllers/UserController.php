@@ -74,4 +74,27 @@ class UserController extends Controller
         $user->delete();
         return redirect('users')->with('success','Product has been  deleted');        
     }
+
+    public function action($id, $action, $status = null)
+    {        
+
+        $ids = explode(",", $id);
+        if ($action == "delete") {
+            
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $id) {
+                    User::find($id)->delete();
+                }                
+                return redirect('users')->with('success','User(s) has been deleted');        
+                break;
+            
+            default:
+                return redirect('timesheets')->with('error','There was no action selected');        
+                break;
+        }        
+    }
+
 }

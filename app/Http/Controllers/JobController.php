@@ -90,5 +90,27 @@ class JobController extends Controller
         $job = Job::find($id);
         $job->delete();
         return redirect('jobs')->with('success','Job has been  deleted');        
-    }        
+    }
+
+    public function action($id, $action, $status = null)
+    {        
+
+        $ids = explode(",", $id);
+        if ($action == "delete") {
+            
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $id) {
+                    Job::find($id)->delete();
+                }                
+                return redirect('jobs')->with('success','Job(s) has been deleted');        
+                break;
+            default:
+                return redirect('jobs')->with('error','There was no action selected');        
+                break;
+        }        
+    }
+
 }
