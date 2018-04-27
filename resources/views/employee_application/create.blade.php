@@ -352,13 +352,13 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][date]" placeholder="dd/mm/yyyy" value="value"  maxlength="10" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][issue_date]" placeholder="dd/mm/yyyy" value="01/01/2001"  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="01/01/2001" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="value" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>

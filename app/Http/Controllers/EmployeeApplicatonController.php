@@ -64,7 +64,7 @@ class EmployeeApplicatonController extends Controller
             $employee_application->apprentice_year          = $request->get('apprentice_year');
             $employee_application->save();
 
-            return $request;
+            //return $request;
             foreach ($request->get('license') as $key => $value) {
                 $issue_date = $value['issue_date'];
 
