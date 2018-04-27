@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JobTableSeeder::class);
         $this->call(WeekDaysTableSeeder::class);
         $this->call(EmployeeTableSeeder::class);
+        $this->call(LicenseTableSeeder::class);
+        $this->call(StatesTableSeeder::class);
     }
 }

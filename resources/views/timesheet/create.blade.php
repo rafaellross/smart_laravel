@@ -13,7 +13,7 @@
             <h2>Time Sheet</h2>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <form method="POST" action="{{action('TimeSheetController@store')}}">
+            <form method="POST" action="{{action('TimeSheetController@store')}}" id="timesheet_form">
                 {{csrf_field()}}                
                 {{ Form::hidden('employee_id', $employee->id) }}
                 <div class="form-group">

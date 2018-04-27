@@ -273,7 +273,7 @@ $(document).ready(function () {
         $('.' + this.id).trigger("change");
     });
 
-    $('form').submit(function (event) {
+    $('#timesheet_form').submit(function (event) {
 
         var days = [{
             description: "Monday",
@@ -388,7 +388,7 @@ $(document).ready(function () {
         $('#employee').empty();
         var name = $('#search').val();
 
-        $.getJSON("/api/employees/" + name, function (data) {
+        $.getJSON("api/employees/" + name, function (data) {
 
             $.each(data, function (key, val) {
                 console.log(val);

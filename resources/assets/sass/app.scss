@@ -12,3 +12,17 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.card {
+	border: 3px #6c757d solid;
+}
+
+.card-header {
+  background-color: #6c757d;
+  color: #fff;
+  font-weight: bold;  
+}
+
+.card-header:first-child {
+	border-radius: 0;	
+}

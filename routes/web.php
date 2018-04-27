@@ -28,6 +28,7 @@ Route::get('/users/action/{id}/{action}/{status?}', 'UserController@action');
 
 Route::resource('users', 'UserController');
 Route::resource('employees', 'EmployeeController');
+Route::resource('employee_application', 'EmployeeApplicatonController');
 Route::resource('jobs', 'JobController');
 
 Route::resource('timesheets', 'TimeSheetController');

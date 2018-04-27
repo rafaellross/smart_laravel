@@ -205,7 +205,7 @@ $(document).ready(function(){
         $('.' + this.id).trigger( "change" );
     });
 
- $('form').submit(function(event){
+ $('#timesheet_form').submit(function(event){
 
              
        var days = [
