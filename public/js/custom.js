@@ -273,6 +273,22 @@ $(document).ready(function () {
         $('.' + this.id).trigger("change");
     });
 
+    $("#medical_certificates").change(function (event) {
+        var input = this;
+        if (input.files && input.files[0]) {
+            console.log(input);
+            for (var i = 0; i < input.files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    console.log(e.target.result);
+                    var hidden = '<input type="hidden" class="custom-file-input" name="medical_certificates_hidden[' + i + ']"/ value="' + e.target.result + '">';
+                    $('#medical_certificates_list').append(hidden);
+                };
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    });
+
     $('#timesheet_form').submit(function (event) {
 
         var days = [{
@@ -298,6 +314,7 @@ $(document).ready(function () {
         var jobs = [1, 2, 3, 4];
         $.each(days, function (keyDay, day) {
             $.each(jobs, function (key, jobNumber) {
+
                 //Check if job was selected
 
 
@@ -317,6 +334,15 @@ $(document).ready(function () {
                     alert("Select start, end time and job " + jobNumber + " for " + day.description);
                     $("#" + day.short + "_job_" + jobNumber).focus();
                     return false;
+                }
+
+                if (job === "sick" && $("#medical_certificates")[0].files.length === 0) {
+                    event.preventDefault();
+                    alert("Please, attach medical certificate(s)");
+                    $("#medical_certificates").focus();
+                    return false;
+                } else {
+                    $('#medical_certificates_hidden');
                 }
             });
         });
@@ -388,11 +414,11 @@ $(document).ready(function () {
         $('#employee').empty();
         var name = $('#search').val();
 
-        $.getJSON("api/employees/" + name, function (data) {
+        $.getJSON("/smart_laravel/public/api/employees/" + name, function (data) {
 
             $.each(data, function (key, val) {
                 console.log(val);
-                var emp = '\n\n                        <div class="card ' + (val.last_timesheet === null ? "" : "bg-warning") + '">\n                          <div class="card-header" role="tab" id="heading-undefined">\n                            <h6 class="mb-0">\n                              <div>\n                                <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                  </a>\n                                <div class="float-right" style="' + (val.last_timesheet === null ? "display: none" : "display: block;") + '">\n                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                                <a href="action/' + (val.last_timesheet === null ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null ? "none" : "block") + ';" target="_blank">View</a>\n                                </div>                                \n                              </div>\n                            </h6>\n                          </div>\n                          </div>\n                    ';
+                var emp = '\n\n                        <div class="select-employee card ' + (val.last_timesheet === null ? "" : "bg-warning") + '">\n                          <div class="select-employee card-header" role="tab" id="heading-undefined">\n                            <h6 class="mb-0">\n                              <div>\n                                <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                  </a>\n                                <div class="float-right" style="' + (val.last_timesheet === null ? "display: none" : "display: block;") + '">\n                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                                <a href="action/' + (val.last_timesheet === null ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null ? "none" : "block") + ';" target="_blank">View</a>\n                                </div>                                \n                              </div>\n                            </h6>\n                          </div>\n                          </div>\n                    ';
                 $('#employee').append(emp);
             });
         });

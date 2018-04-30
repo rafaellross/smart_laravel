@@ -16,7 +16,8 @@ class EmployeeApplicatonController extends Controller
      */
     public function index()
     {
-        //
+        $employee_applications = EmployeeApplicaton::all(); 
+        return view('employee_application.index', ['employee_applications' => $employee_applications]);
     }
 
     /**
@@ -125,4 +126,28 @@ class EmployeeApplicatonController extends Controller
     {
         //
     }
+
+public function action($id, $action, $status = null)
+    {        
+
+        $ids = explode(",", $id);
+        if ($action == "delete") {
+            
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $id) {
+                    EmployeeApplicaton::find($id)->delete();
+                }                
+                return redirect('employee_application')->with('success','Time Sheet(s) has been deleted');        
+                break;
+            case 'update':
+                return redirect('employee_application')->with('success','Time Sheet(s) has been updated');                        
+                break;            
+            default:
+                return redirect('employee_application')->with('error','There was no action selected');        
+                break;
+        }        
+    }    
 }

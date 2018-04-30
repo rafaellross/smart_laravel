@@ -205,9 +205,28 @@ $(document).ready(function(){
         $('.' + this.id).trigger( "change" );
     });
 
+
+  $("#medical_certificates").change(function(event) {
+        var input = this;
+        if (input.files && input.files[0]) {
+          console.log(input);
+          for (var i = 0; i < input.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                console.log(e.target.result);
+                var hidden = `<input type="hidden" class="custom-file-input" name="medical_certificates_hidden[`+i+`]"/ value="`+e.target.result+`">`;
+                $('#medical_certificates_list').append(hidden);           
+            }
+                reader.readAsDataURL(input.files[i]);                  
+          }          
+        }            
+    
+  });
+
  $('#timesheet_form').submit(function(event){
 
-             
+       
+
        var days = [
            {
                description: "Monday",
@@ -238,6 +257,7 @@ $(document).ready(function(){
        var jobs = [1, 2, 3, 4];
        $.each(days, function(keyDay, day){           
             $.each( jobs, function( key, jobNumber ) {
+
         //Check if job was selected
         
          
@@ -258,12 +278,22 @@ $(document).ready(function(){
                     (start.length === 0 || end.length === 0) || 
                     (start === "0" && end === "0")
                  )
-            ) {
+            )
+          {
                 event.preventDefault();
                 alert("Select start, end time and job " + jobNumber + " for " + day.description);
                 $("#" + day.short + "_job_" + jobNumber).focus();
                 return false;
-            }        
+          }  
+
+          if (job === "sick" && $("#medical_certificates")[0].files.length === 0) {
+            event.preventDefault();
+            alert("Please, attach medical certificate(s)");
+            $("#medical_certificates").focus();
+            return false;
+          } else {
+            $('#medical_certificates_hidden')
+          }     
         });
        });        
     });
@@ -339,14 +369,14 @@ $(document).ready(function(){
             $('#employee').empty();
             let name = $('#search').val();
 
-            $.getJSON( "api/employees/" + name, function( data ) {
+            $.getJSON( "/smart_laravel/public/api/employees/" + name, function( data ) {
         
                 $.each( data, function( key, val ) {
                     console.log(val);
                     let emp = `
 
-                        <div class="card ` + (val.last_timesheet === null ? "" : "bg-warning") + `">
-                          <div class="card-header" role="tab" id="heading-undefined">
+                        <div class="select-employee card ` + (val.last_timesheet === null ? "" : "bg-warning") + `">
+                          <div class="select-employee card-header" role="tab" id="heading-undefined">
                             <h6 class="mb-0">
                               <div>
                                 <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null ? "" : "color: white;") + `">

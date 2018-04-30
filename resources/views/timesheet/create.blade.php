@@ -41,7 +41,16 @@
 
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
-                
+                <div class="form-group alert alert-info" role="alert">                
+                    <h4 style="text-align: center;">Medical Certificates</h4>
+                    <div class="input-group mb-3">
+                      <div class="custom-file" id="medical_certificates_list">
+                        <input type="file" class="custom-file-input" id="medical_certificates" name="medical_certificates[]" multiple/>
+                        
+                        <label class="custom-file-label" for="inputGroupFile01">Choose files</label>
+                      </div>
+                    </div>                    
+                </div>
                 
                 <!-- Group Special Request -->
                 @include('timesheet.partial.create.special')                

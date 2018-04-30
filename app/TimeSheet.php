@@ -13,6 +13,11 @@ class TimeSheet extends Model
 
         return $this->hasMany('App\Day');        
     }
+
+    public function certificates(){
+
+        return $this->hasMany('App\TimeSheetCertificate');        
+    }
     
     public function user(){
 

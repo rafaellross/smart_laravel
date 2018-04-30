@@ -18,14 +18,15 @@ class CreateEmployeeLicensesTable extends Migration
             $table->date('issue_date');
             $table->string('issuer');
             $table->string('number');
-            $table->binary('image_front');
-            $table->binary('image_back');
             $table->unsignedInteger('application_id');        
             $table->unsignedInteger('license_id');        
             $table->foreign('application_id')->references('id')->on('employee_applicatons')->onDelete('cascade');
             $table->foreign('license_id')->references('id')->on('licenses')->onDelete('cascade');
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE employee_licenses ADD image_front LONGBLOB");
+        DB::statement("ALTER TABLE employee_licenses ADD image_back LONGBLOB");
+
     }
 
     /**

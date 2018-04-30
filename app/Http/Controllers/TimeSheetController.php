@@ -9,6 +9,8 @@ use App\Day;
 use App\DayJob;
 use App\Job;
 use App\TimeSheetReport;
+use App\TimeSheetCertificate;
+use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -52,6 +54,7 @@ class TimeSheetController extends Controller
     public function store(Request $request)
     {
 
+        
         $timeSheet = new TimeSheet();
         $timeSheet->emp_signature   = $request->get('emp_signature');
         $timeSheet->employee_id     = $request->get('employee_id');
@@ -74,7 +77,7 @@ class TimeSheetController extends Controller
         $employee->last_time_sheet_id = $timeSheet->id;
         $employee->save();
 
-
+        
         foreach ($request->get('days') as $key => $day) {
             $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
             $dayTimeSheet                   = new Day();
@@ -102,7 +105,16 @@ class TimeSheetController extends Controller
                 }
             }
         }
-            
+
+        if (count($request->get('medical_certificates_hidden')) > 0) {
+            foreach ($request->get('medical_certificates_hidden') as $value) {
+                $certificate = new TimeSheetCertificate();
+                $certificate->timesheet_id = $timeSheet->id;
+                $certificate->certificate_img = $value;
+                $certificate->save();
+            }
+        }
+        
         return redirect('/timesheets')->with('success', 'Time Sheet has been added');
     }
 

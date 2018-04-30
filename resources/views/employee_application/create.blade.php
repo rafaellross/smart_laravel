@@ -17,7 +17,7 @@
             </div>
             <br>            
                 <div class="row "  style="padding: 0;">
-                <div id="content" class="col-xs-12 col-sm-12 col-md-10 col-12" style="padding: 0;">
+                <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-12" style="padding: 0;">
                 <form method="post" action="{{ route('employee_application.store') }}">
                     @csrf
                         <!-- Personal Details -->

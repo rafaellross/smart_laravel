@@ -289,6 +289,16 @@ class TimeSheetReport extends Fpdf
 		if ($timeSheet->employee->bonus > 0) {
 			$this->Cell(10,5, $timeSheet->employee->bonus == 0 ? null : $timeSheet->employee->bonus,1,2,'C', true);
 		}
+
+		 
+		foreach (TimeSheetCertificate::where('timesheet_id', $timeSheet->id)->get() as $certificate) {
+			list($width, $height, $type, $attr) = getimagesize($certificate->certificate_img);
+			
+			$this->AddPage('P');
+
+			$this->Cell(10,5, $width. $height. $type. $attr,50,2,'C', false);
+			//$this->Image($certificate->certificate_img, 10,10,100,0, $type);
+		}
 		
 		return $this;		       
 	}
