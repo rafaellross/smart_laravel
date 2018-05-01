@@ -15,6 +15,7 @@
                 <option selected="">Status...</option>
                 <option value="all">All</option>
                 <option value="A">Approved</option>        
+                <option value="F">Finalised</option>        
                 <option value="P">Pending</option>
                 <option value="C">Cancelled</option>
             </select>            
@@ -46,8 +47,8 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/timesheets/action/{{$timesheet->id}}/print" target="_blank">View</a>
-                            <a class="dropdown-item" href="/timesheets/{{$timesheet->id}}/edit">Edit</a>
+                            <a class="dropdown-item" href="timesheets/action/{{$timesheet->id}}/print" target="_blank">View</a>
+                            <a class="dropdown-item" href="timesheets/{{$timesheet->id}}/edit">Edit</a>
                             <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>                                                
                         </div>
                     </div>        
@@ -72,6 +73,7 @@
             <select class="form-control" name="changeStatus">
                 <option value="P">Pending</option>
                 <option value="A">Approved</option>
+                <option value="F">Finalised</option>        
                 <option value="C">Cancelled</option>
             </select>
         </div>        

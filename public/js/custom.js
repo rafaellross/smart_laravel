@@ -254,7 +254,7 @@ $(document).ready(function () {
     //Define actions on click button Autofill
     $('#btnPreFill').click(function () {
         //Clear all inputs
-        $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden]').val('');
+        $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn').val('');
 
         var preEnd = $('#preEnd').val();
         $('.end-1').not('#sat_end_1').val(preEnd);
@@ -268,25 +268,92 @@ $(document).ready(function () {
         $(".end-1").not('#sat_end_1').trigger("change");
     });
 
+    $(".job").change(function () {
+        if ($(this).val() == "sick") {
+            alert("You have to attach a medical certificate at the end of this Time Sheet or this day won't be paid!");
+        }
+    });
+
     $('.btnClear').click(function () {
         $('.' + this.id).val('');
         $('.' + this.id).trigger("change");
     });
 
-    $("#medical_certificates").change(function (event) {
-        var input = this;
+    var qty_medical_certificates = 1;
+
+    function loadCert(input) {
         if (input.files && input.files[0]) {
-            console.log(input);
-            for (var i = 0; i < input.files.length; i++) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    console.log(e.target.result);
-                    var hidden = '<input type="hidden" class="custom-file-input" name="medical_certificates_hidden[' + i + ']"/ value="' + e.target.result + '">';
-                    $('#medical_certificates_list').append(hidden);
-                };
-                reader.readAsDataURL(input.files[i]);
-            }
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var destination = $(input).prop('name');
+                var preview = $("[id*='" + destination + "_img']");
+                preview.attr('src', e.target.result).show();
+                var hidden = $("#" + destination + "_hidden");
+                hidden.val(e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function resizeImage(input) {
+        var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 600;
+
+        var destination = $(input).prop('name');
+        var preview = $("[id*='" + destination + "_img']");
+        var hidden = $("[id*='" + destination + "_hidden']");
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = new Image();
+                img.onload = function () {
+                    var oc = document.createElement('canvas'),
+                        octx = oc.getContext('2d');
+                    oc.width = img.width;
+                    oc.height = img.height;
+                    octx.drawImage(img, 0, 0);
+                    while (oc.width * 0.5 > width) {
+                        oc.width *= 0.5;
+                        oc.height *= 0.5;
+                        octx.drawImage(oc, 0, 0, oc.width, oc.height);
+                    }
+                    oc.width = width;
+                    oc.height = oc.width * img.height / img.width;
+                    octx.drawImage(img, 0, 0, oc.width, oc.height);
+                    preview.attr('src', oc.toDataURL()).show();
+                    hidden.val(oc.toDataURL());
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    //Load certificates
+    $(document).on("change", "input[type=file]", function () {
+        resizeImage(this);
+    });
+
+    $(document).on("click", ".delCert", function () {
+        var destination = $(this).prop('id').split("-");
+        if (destination[0] == "medical_certificates[1]") {
+            var preview = $("[id*='" + destination[0] + "_img']");
+            var input = $("[name*='" + destination[0] + "']");
+            var hidden = $("[id*='" + destination[0] + "_hidden']");
+            preview.attr('src', "").hide();
+            hidden.val("");
+            input.val("");
+        } else {
+            certificates--;
+            $("[id*='" + destination[0] + "_row']").remove();
+        }
+    });
+
+    var certificates = 1;
+    $("#addCert").click(function () {
+        certificates++;
+        var cert = '\n        <div class="alert alert-secondary" id="medical_certificates[' + certificates + ']_row">                          \n            <h5 style="text-align: center;">Certificate ' + certificates + '</h5>          \n            <div class="input-group col-12 mb-3">\n              <div class="custom-file" id="medical_certificates_list">\n                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[' + certificates + ']" name="medical_certificates[' + certificates + ']"/>                        \n                <label class="custom-file-label" for="medical_certificates[' + certificates + ']">Choose files</label>\n              </div>\n            </div>\n            <div class="input-group col-12 mb-3">\n                <img id="medical_certificates[' + certificates + ']_img" class="img-fluid" style="">\n            </div>   \n            <input id="medical_certificates[' + certificates + ']-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">\n            <input type="hidden" class="custom-file-input" id="medical_certificates[' + certificates + ']_hidden" name="medical_certificates[' + certificates + ']_hidden" value="">                        \n        </div>';
+        $("#aditional_certificates").append(cert);
     });
 
     $('#timesheet_form').submit(function (event) {
@@ -336,14 +403,21 @@ $(document).ready(function () {
                     return false;
                 }
 
-                if (job === "sick" && $("#medical_certificates")[0].files.length === 0) {
-                    event.preventDefault();
-                    alert("Please, attach medical certificate(s)");
-                    $("#medical_certificates").focus();
-                    return false;
-                } else {
-                    $('#medical_certificates_hidden');
-                }
+                var files = 0;
+                $("input[type=file]").each(function () {
+                    if (this.files[0].length > 0) {
+                        files++;
+                    }
+                });
+                /*
+                          if (job === "sick" && files === 0) {
+                            event.preventDefault();
+                            alert("Please, attach medical certificate(s)");
+                            $("#medical_certificates").focus();
+                            return false;
+                          } else {
+                            $('#medical_certificates_hidden')
+                          }     */
             });
         });
     });
@@ -410,15 +484,21 @@ $(document).ready(function () {
         }
     });
 
+    function getBaseUrl() {
+        var re = new RegExp(/^.*\//);
+        return re.exec(window.location.href);
+    }
     $('#btnSearch').click(function () {
         $('#employee').empty();
         var name = $('#search').val();
 
-        $.getJSON("/smart_laravel/public/api/employees/" + name, function (data) {
+        var loc = window.location.pathname.replace("timesheets/select", "");
+
+        $.getJSON(loc + "api/employees/" + name, function (data) {
 
             $.each(data, function (key, val) {
-                console.log(val);
-                var emp = '\n\n                        <div class="select-employee card ' + (val.last_timesheet === null ? "" : "bg-warning") + '">\n                          <div class="select-employee card-header" role="tab" id="heading-undefined">\n                            <h6 class="mb-0">\n                              <div>\n                                <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                  </a>\n                                <div class="float-right" style="' + (val.last_timesheet === null ? "display: none" : "display: block;") + '">\n                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                                <a href="action/' + (val.last_timesheet === null ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null ? "none" : "block") + ';" target="_blank">View</a>\n                                </div>                                \n                              </div>\n                            </h6>\n                          </div>\n                          </div>\n                    ';
+
+                var emp = '\n\n                        <div class="select-employee card ' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + '">\n                          <div class="select-employee card-header" role="tab" id="heading-undefined">\n                            <h6 class="mb-0">\n                              <div>\n                                <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                  </a>\n                                <div class="float-right" style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + '">\n                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                                <a href="action/' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + ';" target="_blank">View</a>\n                                </div>                                \n                              </div>\n                            </h6>\n                          </div>\n                          </div>\n                    ';
                 $('#employee').append(emp);
             });
         });

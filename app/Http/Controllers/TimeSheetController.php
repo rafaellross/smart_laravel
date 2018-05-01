@@ -24,7 +24,12 @@ class TimeSheetController extends Controller
      */
     public function index()
     {
-        $timesheets = TimeSheet::all();
+        if (Auth::user()->administrator) {
+            $timesheets = TimeSheet::all();
+        } else {
+            $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->get(); 
+        }
+        
         return view('timesheet.index', ['timesheets' => $timesheets]);
     }
 
@@ -53,7 +58,6 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-
         
         $timeSheet = new TimeSheet();
         $timeSheet->emp_signature   = $request->get('emp_signature');
@@ -106,12 +110,17 @@ class TimeSheetController extends Controller
             }
         }
 
-        if (count($request->get('medical_certificates_hidden')) > 0) {
-            foreach ($request->get('medical_certificates_hidden') as $value) {
-                $certificate = new TimeSheetCertificate();
-                $certificate->timesheet_id = $timeSheet->id;
-                $certificate->certificate_img = $value;
-                $certificate->save();
+        if (!empty($request->get('medical_certificates')) > 0) {
+            $certificate_number = 1;
+            foreach ($request->get('medical_certificates') as $value) {
+                if (!is_null($value)) {
+                    $certificate = new TimeSheetCertificate();
+                    $certificate->time_sheet_id = $timeSheet->id;
+                    $certificate->certificate_img = $value;
+                    $certificate->certificate_number = $certificate_number;
+                    $certificate->save();                    
+                    $certificate_number++;
+                }
             }
         }
         
@@ -157,6 +166,7 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $timeSheet = TimeSheet::find($id);        
         
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
@@ -213,8 +223,27 @@ class TimeSheetController extends Controller
                 }
             }
         }
-
+        $certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
+        Debugbar::info($timeSheet->certificates);
+        foreach ($timeSheet->certificates as $certificate) {
+            $certificate->delete();
+            Debugbar::info($certificate);
+        }    
         //return $request;
+        if (!empty($request->get('medical_certificates')) > 0) {
+            $certificate_number = 1;
+            foreach ($request->get('medical_certificates') as $value) {
+                if (!is_null($value)) {
+                    $certificate = new TimeSheetCertificate();
+                    $certificate->time_sheet_id = $timeSheet->id;
+                    $certificate->certificate_img = $value;
+                    $certificate->certificate_number = $certificate_number;
+                    $certificate->save();                    
+                    $certificate_number++;
+                }
+            }
+        }
+        
         return redirect('/timesheets')->with('success', 'Time Sheet has been added');
         
         
@@ -260,7 +289,10 @@ class TimeSheetController extends Controller
                 $report = new TimeSheetReport();
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
-                    $report->add($timesheet);
+                    if ($timesheet) {
+                        $report->add($timesheet);
+                    }
+                    
                 }
                 return $report->output();
                 break;

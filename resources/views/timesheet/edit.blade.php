@@ -13,7 +13,7 @@
             <h2>Time Sheet</h2>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <form method="POST" action="{{action('TimeSheetController@update', ['id' => $timesheet->id])}}">
+            <form method="POST" action="{{action('TimeSheetController@update', ['id' => $timesheet->id])}}" id="timesheet_form">
                 @method('PATCH')
                 @csrf
                 <div class="form-group">
@@ -40,7 +40,72 @@
                 @endforeach                                 
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
+
                 
+                <div class="form-group alert alert-info" role="alert">                
+                    <h4 style="text-align: center;">Medical Certificates</h4>    
+                    <?php $cert_num = 0;?>
+                    <?php $certificates = App\TimeSheetCertificate::where('time_sheet_id', $timesheet->id)->get(); ?>
+                @foreach($certificates as $certificate)
+                    @if ($loop->first)
+                        <div class="alert alert-secondary">                          
+                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>          
+                            <div class="input-group col-12 mb-3">
+                              <div class="custom-file" id="medical_certificates_list">
+                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>                        
+                                <label class="custom-file-label" for="medical_certificates[{{$certificate->certificate_number}}]">Choose files</label>
+                              </div>
+                            </div>
+                            <div class="input-group col-12 mb-3">
+                                <img id="medical_certificates[{{$certificate->certificate_number}}]_img" src="{{$certificate->certificate_img}}" class="img-fluid" style="">
+                            </div>   
+                            <input id="medical_certificates[{{$certificate->certificate_number}}]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
+                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">                        
+                        </div>
+                    @endif                    
+                @endforeach                                 
+                @if($certificates->count() == 0)                    
+                    <div class="alert alert-secondary">                          
+                        <h5 style="text-align: center;">Certificate 1</h5>          
+                        <div class="input-group col-12 mb-3">
+                          <div class="custom-file" id="medical_certificates_list">
+                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]"/>                        
+                            <label class="custom-file-label" for="medical_certificates[1]">Choose files</label>
+                          </div>
+                        </div>
+                        <div class="input-group col-12 mb-3">
+                            <img id="medical_certificates[1]_img" class="img-fluid" style="">
+                        </div>   
+                        <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
+                        <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="medical_certificates[1]_hidden" value="">                        
+                    </div>
+                @endif
+                <div id="aditional_certificates">               
+                @foreach($certificates as $certificate)
+                    @if (!$loop->first)
+                        <div class="alert alert-secondary" id="medical_certificates[{{$certificate->certificate_number}}]_row">                          
+                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>          
+                            <div class="input-group col-12 mb-3">
+                              <div class="custom-file" id="medical_certificates_list">
+                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>                        
+                                <label class="custom-file-label" for="medical_certificates[{{$certificate->certificate_number}}]">Choose files</label>
+                              </div>
+                            </div>
+                            <div class="input-group col-12 mb-3">
+                                <img id="medical_certificates[{{$certificate->certificate_number}}]_img" src="{{$certificate->certificate_img}}" class="img-fluid" style="">
+                            </div>   
+                            <input id="medical_certificates[{{$certificate->certificate_number}}]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
+                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">                        
+                        </div>                                                    
+                    @endif                    
+                @endforeach 
+
+                </div>                            
+
+                    <div>                                
+                        <input id="addCert" type="button" class="btn btn-success btn-sm ml-2 addCert" value="Add Certificate">
+                    </div>                    
+                </div>
                 
                 <!-- Group Special Request -->
                 @include('timesheet.partial.edit.special')                
@@ -97,7 +162,7 @@
                                   <select class="form-control" name="status" id="status">
                                     <option selected="" value="P">Pending</option>
                                     <option value="A">Approved</option>
-                                    <option value="A">Finalised</option>
+                                    <option value="F">Finalised</option>
                                     <option value="C">Cancelled</option>
                                   </select>
                                 </div>

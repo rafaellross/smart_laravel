@@ -46,15 +46,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ URL::to('/home') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ URL::to('/users') }}">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ URL::to('/employees') }}">Employees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ URL::to('/jobs') }}">Jobs</a>
-                        </li>
+                        @if (isset(Auth::user()->administrator) && Auth::user()->administrator)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('/users') }}">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('/employees') }}">Employees</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('/jobs') }}">Jobs</a>
+                            </li>
+
+                        @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Modules

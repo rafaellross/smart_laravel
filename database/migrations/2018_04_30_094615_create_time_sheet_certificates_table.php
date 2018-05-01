@@ -14,11 +14,14 @@ class CreateTimeSheetCertificatesTable extends Migration
     public function up()
     {
         Schema::create('time_sheet_certificates', function (Blueprint $table) {
-            $table->unsignedInteger('timesheet_id');            
+            $table->increments('id');
+            $table->unsignedInteger('time_sheet_id');            
+            $table->integer('certificate_number');            
             $table->timestamps();
             $table->foreign('time_sheet_id')->references('id')->on('time_sheets')->onDelete('cascade');
         });
         DB::statement("ALTER TABLE time_sheet_certificates ADD certificate_img LONGBLOB");        
+        
     }
 
     /**

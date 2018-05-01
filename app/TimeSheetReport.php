@@ -4,6 +4,7 @@ namespace App;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
+use Barryvdh\Debugbar\Facade as Debugbar;
 /**
 * This class is used to convert time
 */
@@ -109,7 +110,10 @@ class TimeSheetReport extends Fpdf
 		$this->Text(11, 105,'Employee Signature   ');
 		$this->Line(11, 106, 80, 106);
     	$this->Line(89, 106, 105, 106);
-		$this->Image($timeSheet->emp_signature, 40,97.7,40,0,'png');
+    	if (!is_null($timeSheet->emp_signature)) {
+    		$this->Image($timeSheet->emp_signature, 40,97.7,40,0,'png');
+    	}
+		
 		$this->Text(75, 105,'Date      '. Carbon::parse($timeSheet->created_at)->format('d/m/Y'));
 
 	    $this->Text(11, 115,'Authorised By   '. '');	    
@@ -290,15 +294,23 @@ class TimeSheetReport extends Fpdf
 			$this->Cell(10,5, $timeSheet->employee->bonus == 0 ? null : $timeSheet->employee->bonus,1,2,'C', true);
 		}
 
-		 
-		foreach (TimeSheetCertificate::where('timesheet_id', $timeSheet->id)->get() as $certificate) {
-			list($width, $height, $type, $attr) = getimagesize($certificate->certificate_img);
-			
-			$this->AddPage('P');
-
-			$this->Cell(10,5, $width. $height. $type. $attr,50,2,'C', false);
-			//$this->Image($certificate->certificate_img, 10,10,100,0, $type);
+		$this->SetFont('Arial','B',$font_large);	 
+		$certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
+		Debugbar::info(TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get()->count());
+		if ($certificates->count() > 0) {
+			foreach ($certificates as $certificate) {				
+					list($width, $height, $type, $attr) = getimagesize($certificate->certificate_img);
+					if ($width > $height) {
+						$this->AddPage('L');
+					} else {
+						$this->AddPage('P');
+					}
+					$this->Cell($this->GetPageWidth(),5,"Medical Certificate for Time Sheet #".$timeSheet->id . " - (" . $timeSheet->employee->name . ")",0,0,'C');
+					$this->Image($certificate->certificate_img, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));							
+			}		
 		}
+
+		
 		
 		return $this;		       
 	}

@@ -42,13 +42,26 @@
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
                 <div class="form-group alert alert-info" role="alert">                
-                    <h4 style="text-align: center;">Medical Certificates</h4>
-                    <div class="input-group mb-3">
-                      <div class="custom-file" id="medical_certificates_list">
-                        <input type="file" class="custom-file-input" id="medical_certificates" name="medical_certificates[]" multiple/>
+                    <h4 style="text-align: center;">Medical Certificates</h4>    
+                    <div class="alert alert-secondary">                          
+                        <h5 style="text-align: center;">Certificate 1</h5>          
+                        <div class="input-group col-12 mb-3">
+                          <div class="custom-file" id="medical_certificates_list">
+                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]"/>                        
+                            <label class="custom-file-label" for="medical_certificates[1]">Choose files</label>
+                          </div>
+                        </div>
+                        <div class="input-group col-12 mb-3">
+                            <img id="medical_certificates[1]_img" class="img-fluid" style="">
+                        </div>   
+                        <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
+                        <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="medical_certificates[1]_hidden" value="">                        
+                    </div>
+                    <div id="aditional_certificates">
                         
-                        <label class="custom-file-label" for="inputGroupFile01">Choose files</label>
-                      </div>
+                    </div>
+                    <div>                                
+                        <input id="addCert" type="button" class="btn btn-success btn-sm ml-2 addCert" value="Add Certificate">
                     </div>                    
                 </div>
                 
@@ -107,7 +120,7 @@
                                   <select class="form-control" name="status" id="status">
                                     <option selected="" value="P">Pending</option>
                                     <option value="A">Approved</option>
-									<option value="A">Finalised</option>
+									<option value="F">Finalised</option>
                                     <option value="C">Cancelled</option>
                                   </select>
                                 </div>
