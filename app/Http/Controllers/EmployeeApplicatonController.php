@@ -38,7 +38,7 @@ class EmployeeApplicatonController extends Controller
      */
     public function store(Request $request)
     {
-            //return $request;
+            
             $employee_application                           = new EmployeeApplicaton();
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
@@ -64,8 +64,7 @@ class EmployeeApplicatonController extends Controller
             $employee_application->apprentice               = $request->get('apprentice');
             $employee_application->apprentice_year          = $request->get('apprentice_year');
             $employee_application->save();
-
-            //return $request;
+            
             foreach ($request->get('license') as $key => $value) {
                 $issue_date = $value['issue_date'];
 
@@ -79,7 +78,7 @@ class EmployeeApplicatonController extends Controller
                 $application_license->image_back = $value["image"]["back"]["img"];
                 $application_license->save();
             }
-            return redirect('/home');
+            return redirect('employee_application');
     }
 
     /**
