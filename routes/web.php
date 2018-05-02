@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Config::set('debugbar.enabled', false);
+//Config::set('debugbar.enabled', false);
 Route::get('/', function () {
     return view('welcome');
 });
