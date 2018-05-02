@@ -100,7 +100,9 @@ class EmployeeApplicatonController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee_application = EmployeeApplicaton::find($id);
+        return view('employee_application.edit',compact('employee_application','id'));
+        
     }
 
     /**

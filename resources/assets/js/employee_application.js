@@ -19,12 +19,11 @@ $(document).ready(function(){
         $('.date-picker').datepicker({
             format: 'dd/mm/yyyy'
         });
-
-                 
+                
                 
         //If employee is apprentice, then show selection of year
         $('select[name=apprentice]').change(function(){
-            if ($(this).val() === "yes") {
+            if ($(this).val() === "1") {
                 $('#apprentice-year').show();
             } else {
                 $('#apprentice-year').hide();

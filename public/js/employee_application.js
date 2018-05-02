@@ -100,7 +100,7 @@ $(document).ready(function () {
 
   //If employee is apprentice, then show selection of year
   $('select[name=apprentice]').change(function () {
-    if ($(this).val() === "yes") {
+    if ($(this).val() === "1") {
       $('#apprentice-year').show();
     } else {
       $('#apprentice-year').hide();

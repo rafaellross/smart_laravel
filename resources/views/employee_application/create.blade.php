@@ -280,7 +280,7 @@
                             <h5 class="card-header">Current Licenses</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
-                                <h5 class="card-title">CIC Construction Induction Card () :</h5>
+                                <h5 class="card-title">CIC Construction Induction Card :</h5>
                                 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
@@ -344,7 +344,7 @@
                             <div class="card-body">
 
                                 <!-- Start Card -->
-                                <h5 class="card-title">DLPI Driver's Licence/Photo I.D () :</h5>
+                                <h5 class="card-title">DLPI Driver's Licence/Photo I.D :</h5>
                                 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
