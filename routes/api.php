@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('employees/', function() {			
-	return App\Employee::all();   
+	return App\Employee::take(10)->get();   
 });
 
 Route::get('employees/{name}', function($name) {			
-	return App\Employee::whereRaw("name like '% ". $name ."%'")->get();   
+	return App\Employee::whereRaw("name like '%". $name ."%'")->take(5)->get();   
 });

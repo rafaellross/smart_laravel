@@ -28,7 +28,7 @@
                         <div class="form-group row">
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ $user->username }}" required>
+                                <input readonly id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ $user->username }}" required>
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('username') }}</strong>
@@ -36,8 +36,9 @@
                                 @endif
                             </div>
                         </div>
+                        @if ($user->administrator)
                         <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+                            <label for="administrator" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
                             <div class="col-md-6">
                                 <select name="administrator" class="form-control">                                    
                                     <option {{!$user->administrator ? "selected" : ""}} value="0">Normal</option>
@@ -45,12 +46,13 @@
                                 </select>                                
                             </div>
                         </div>
+                        @endif
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{$user->password}}" required>
+                                <input id="password" onfocus="this.value=''" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{$user->password}}" required>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">
@@ -64,7 +66,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{$user->password}}" required>
+                                <input id="password-confirm" onfocus="this.value=''" type="password" class="form-control" name="password_confirmation" value="{{$user->password}}" required>
                             </div>
                         </div>
 

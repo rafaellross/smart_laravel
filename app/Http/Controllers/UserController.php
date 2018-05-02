@@ -45,13 +45,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $this->validate(request(), [
-            'name' => 'required|string|max:255',
+
             'password' => 'required|string|min:6|confirmed',
         ]);
-        $user->name = $request->get('name');
-        $user->username = $request->get('username');
-        $user->password = $request->get('password');
-        $user->administrator = $request->get('administrator');
+        if ($user->password !== $request->get('password')) {
+            $user->password = Hash::make($request->get('password'));
+        }
+        
+        $user->administrator = is_null($request->get('administrator')) ? 0 : $request->get('administrator');
         $user->save();
         return redirect('/users')->with('success', 'User has been updated');
     }

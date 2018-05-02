@@ -390,7 +390,7 @@ $(document).ready(function () {
                 var job = $("#" + day.short + "_job_" + jobNumber).val();
                 var hours = $("#" + day.short + "_hours_" + jobNumber).val();
 
-                if (hours !== "" && (start === "" && end === "" || job === "")) {
+                if (hours !== "" && (start === "" && end === "" || job === "") || start !== "" && (end === "" || job === "" || hours === "") || end !== "" && (start === "" || job === "" || hours === "")) {
                     event.preventDefault();
                     alert("Select start, end time and job " + jobNumber + " for " + day.description);
                     $("#" + day.short + "_job_" + jobNumber).focus();
@@ -403,13 +403,14 @@ $(document).ready(function () {
                     return false;
                 }
 
-                var files = 0;
-                $("input[type=file]").each(function () {
-                    if (this.files[0].length > 0) {
-                        files++;
-                    }
-                });
                 /*
+                          var files = 0;
+                          $("input[type=file]").each(function() {
+                            if (this.files[0].length > 0) {
+                              files++;
+                            }
+                          });
+                
                           if (job === "sick" && files === 0) {
                             event.preventDefault();
                             alert("Please, attach medical certificate(s)");

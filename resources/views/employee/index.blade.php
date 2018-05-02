@@ -47,11 +47,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{{action('EmployeeController@edit', $employee->id)}}">Edit</a>                    
-                                    <form action="{{action('EmployeeController@destroy', $employee->id)}}" method="post">
-                                        {{csrf_field()}}
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button class="dropdown-item" type="submit">Delete</button>
-                                     </form>                                                                        
+                                    <a class="dropdown-item delete" id="{{$employee->id}}" href="#">Delete</
                                 </div>
                             </div>        
                         </td>                    

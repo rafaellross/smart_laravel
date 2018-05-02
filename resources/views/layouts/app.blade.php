@@ -3,17 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ 'Administration - Smart Plumbing Solutions' }}</title>
 
-    <!-- Scripts -->
-    
-    
-
+    <!-- Scripts -->    
     <script src="{{ asset('js/jquery.min.js') }}"></script>    
     <script src="{{ asset('js/app.js') }}"></script>    
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
@@ -34,7 +32,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">                    
-                    <img src="{{ URL::to('/') }}/img/brand.ico" width="30" height="30" alt="{{ config('app.name', 'Laravel') }}"/>
+                    <img src="{{ URL::to('/') }}/img/brand.ico" width="30" height="30" alt="{{ config('app.name', 'Administration - Smart Plumbing Solutions') }}"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -83,6 +81,9 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/users/{{Auth::user()->id}}/edit">{{ __('Change Password') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

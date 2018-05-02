@@ -224,12 +224,11 @@ class TimeSheetController extends Controller
             }
         }
         $certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
-        Debugbar::info($timeSheet->certificates);
+        
         foreach ($timeSheet->certificates as $certificate) {
-            $certificate->delete();
-            Debugbar::info($certificate);
+            $certificate->delete();        
         }    
-        //return $request;
+                
         if (!empty($request->get('medical_certificates')) > 0) {
             $certificate_number = 1;
             foreach ($request->get('medical_certificates') as $value) {

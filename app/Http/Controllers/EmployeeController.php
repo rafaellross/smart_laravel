@@ -90,6 +90,11 @@ class EmployeeController extends Controller
         $employee->phone = $request->get('phone');
         $employee->bonus = $request->get('bonus');
         
+        $employee->rdo = false;
+        $employee->travel = false;
+        $employee->site_allow = false;
+        
+
         if ($request->get('entitlements') !== null) {
             foreach ($request->get('entitlements') as $entitlement) {
                 $employee->{$entitlement} = true;

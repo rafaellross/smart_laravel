@@ -87,7 +87,7 @@ class TimeSheetReport extends Fpdf
 	    $this->SetFont('Arial','',$font_regular);
 	    for ($i=0; $i < 8; $i++) { 
 	    	if ($i == 0) {
-	    		$this->Cell(25,5, Hour::convertToDecimal($timeSheet->total),1,2,'C');
+	    		$this->Cell(25,5, Hour::convertToDecimal($timeSheet->total) == 0 ? null : Hour::convertToDecimal($timeSheet->total),1,2,'C');
 	    	} else {
 	    		$this->Cell(25,5,'',1,2,'C');	
 	    	}	    
@@ -102,7 +102,7 @@ class TimeSheetReport extends Fpdf
 
 		//Write total week
 		$this->Cell(10,5,'',0,0,'C');
-		$this->Cell(25,5,Hour::convertToDecimal($timeSheet->total),1,2,'C');
+		$this->Cell(25,5, Hour::convertToDecimal($timeSheet->total) == 0 ? null : Hour::convertToDecimal($timeSheet->total),1,2,'C');
 		$this->Ln();
 	    $this->SetX(10);
         $this->Cell($width_first, 8,"By signing this form I take full responsibility for the hours stated above and confirm the information is correct and true.");
@@ -287,7 +287,7 @@ class TimeSheetReport extends Fpdf
 
 		$this->Cell(10,5, $timeSheet->sickTaken() == 0 ? null : $timeSheet->sickTaken() ,1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->anlTaken()->decimal == 0 ? null : $timeSheet->anlTaken()->decimal,1,2,'C', true);
-		$this->Cell(10,5, $timeSheet->travelDays(),1,2,'C', true);
+		$this->Cell(10,5, $timeSheet->travelDays() == 0 ? null : $timeSheet->travelDays(),1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->siteAllow() == 0 ? null : $timeSheet->siteAllow()/60,1,2,'C', true);
 		$this->Cell(10,5, "",0,2,'C', false);
 		if ($timeSheet->employee->bonus > 0) {
@@ -296,7 +296,7 @@ class TimeSheetReport extends Fpdf
 
 		$this->SetFont('Arial','B',$font_large);	 
 		$certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
-		Debugbar::info(TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get()->count());
+		
 		if ($certificates->count() > 0) {
 			foreach ($certificates as $certificate) {				
 					list($width, $height, $type, $attr) = getimagesize($certificate->certificate_img);
