@@ -461,35 +461,36 @@ function getBaseUrl() {
    $('#btnSearch').click(function(){
             $('#employee').empty();
             let name = $('#search').val();
-
             var loc = window.location.pathname.replace("timesheets/select", "");
-            
+            $.ajax({
+              url: loc + "api/employees/" + name,
+              type: 'GET',
+              dataType: 'json',              
+            })
+            .done(function(data) {
+              $.each( data, function( key, val ) {                    
+                  let emp = `
 
-            $.getJSON(loc + "api/employees/" + name, function( data ) {
-        
-                $.each( data, function( key, val ) {
-                    
-                    let emp = `
-
-                        <div class="select-employee card ` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + `">
-                          <div class="select-employee card-header" role="tab" id="heading-undefined">
-                            <h6 class="mb-0">
-                              <div>
-                                <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + `">
-                                  <span> `+ val.name +`</span>
-                                  </a>
-                                <div class="float-right" style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + `">
-                                 <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>
-                                <a href="action/` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + `/print" class="btnAdd btn btn-primary float-right" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + `;" target="_blank">View</a>
-                                </div>                                
-                              </div>
-                            </h6>
-                          </div>
-                          </div>
-                    `;
-                $('#employee').append(emp);
-                });
+                      <div class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + `">
+                        <div class="select-employee card-header" role="tab" id="heading-undefined">
+                          <h6 class="mb-0">
+                            <div>
+                              <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + `">
+                                <span> `+ val.name +`</span>
+                                </a>
+                              <div class="float-right" style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + `">
+                               <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>
+                              <a href="action/` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + `/print" class="btnAdd btn btn-primary float-right" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + `;" target="_blank">View</a>
+                              </div>                                
+                            </div>
+                          </h6>
+                        </div>
+                        </div>`;
+                  $('#employee').append(emp);
+              });                  
+            })
+            .fail(function() {
+              console.log("error");
             });
         });
-
 });

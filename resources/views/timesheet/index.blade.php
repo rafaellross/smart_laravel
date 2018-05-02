@@ -8,8 +8,8 @@
     <div class="col-md-12 col-lg-12 col-12">           
         <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>            
         <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
-        <button class="btn btn-info" id="btnPrint" style="">Print Selected(s)</button>            
-        <button class="btn btn-secondary" id="btnStatus" style="">Change Status</button>            
+        <button class="btn btn-info mobile" id="btnPrint" style="">Print Selected(s)</button>            
+        <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>            
         <div style="float: right;" id="statusSelect">
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>

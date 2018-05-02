@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+    <link rel="shortcut icon" href="{{{ asset('img/brand.ico') }}}">
+    <link rel="apple-touch-icon" href="{{ asset('img/brand.ico') }}">  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -56,6 +57,7 @@
                             </li>
 
                         @endif
+                        @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Modules
@@ -66,6 +68,8 @@
                                 <a class="dropdown-item" href="{{ URL::to('/employee_application') }}">Employee Application</a>
                             </div>
                         </li>
+                        
+                        @endauth                                                
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,7 +77,6 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

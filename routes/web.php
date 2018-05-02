@@ -37,12 +37,14 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action');
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicatonController@index');
+	Route::get('/employee_application/create', 'EmployeeApplicatonController@create');
 	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicatonController@action');
 	Route::get('/employee_application/{id}/edit', 'EmployeeApplicatonController@action');	
 	
 	
 	Route::patch('/users/{users}', 'UserController@update');
 	Route::resource('timesheets', 'TimeSheetController');
+	Route::resource('employee_application', 'EmployeeApplicatonController');
 
 });
 
