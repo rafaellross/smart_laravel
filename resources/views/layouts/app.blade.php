@@ -65,7 +65,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Time Sheets</a>
                                 <div class="dropdown-divider"></div>                                
-                                <a class="dropdown-item" href="{{ URL::to('/employee_application') }}">Employee Application</a>
+                                <a class="dropdown-item" href="{{ URL::to('/employee_application') }}" style="display: none;">Employee Application</a>
                             </div>
                         </li>
                         
