@@ -27,6 +27,17 @@
 	border-radius: 0;	
 }
 
+.alert h4 {
+  margin-top: 0.5em;
+  margin-bottom: 0.9em;
+  font-weight: bold;
+}
+
+label {
+ font-weight: bold; 
+}
+
+
 @media only screen and (max-width: 568px) {
     .mobile {
         display: none;
