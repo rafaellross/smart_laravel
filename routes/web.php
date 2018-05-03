@@ -10,14 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Config::set('debugbar.enabled', true);
-Route::get('/', function () {
-    return view('welcome');
-});
+Config::set('debugbar.enabled', false);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['administrator']], function () {
 	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
