@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container-fluid">
+<div class="container">
         <!-- Logo -->
             <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center">
                 <img src="{{ URL::to('/') }}/img/logo.svg" alt="Smart Plumbing Solutions" class="img-fluid" style="padding: 1em;">
