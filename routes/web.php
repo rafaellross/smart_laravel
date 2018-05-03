@@ -15,6 +15,8 @@ Config::set('debugbar.enabled', false);
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::group(['middleware' => ['administrator']], function () {
 	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
