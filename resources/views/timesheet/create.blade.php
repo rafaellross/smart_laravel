@@ -2,7 +2,20 @@
 
 @section('content')
 
+<style type="text/css">
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100vw;
+        padding: 0;
+    }
 
+    .container .col-xs-12, .alert {
+        width: 100vw;
+        padding: 1px;
+    }
+
+}    
+</style>
 <div class="container">
         <!-- Logo -->
             <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center">
