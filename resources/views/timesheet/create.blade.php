@@ -124,7 +124,7 @@
                         </div>
                 </div>
                 <!-- Start Group Date-->
-                <div class="form-group alert alert-success" role="alert" id="groupStatus" style="">
+                <div class="form-group alert alert-success" role="alert" id="groupStatus" style="{{!Auth::user()->administrator ? 'display: none;' : '' }}">
                     <h4 style="text-align: center;">Status</h4>
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 mb-3">
