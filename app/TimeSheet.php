@@ -289,10 +289,12 @@ class TimeSheet extends Model
 		$pdf->Cell($tb_right_width,5,'TOTAL TRAVEL DAYS',1,2,'R');
 		$pdf->Cell($tb_right_width,5,'TOTAL SITE ALLOW.',1,2,'R');
 		$pdf->Cell($tb_right_width,5,'',0,2,'R');
-		if ($timeSheet->employee->bonus > 0) {
-			$pdf->Cell($tb_right_width,5,'BONUS',1,0,'R');
-		} else {
-			$pdf->Cell($tb_right_width,5,'',0,0,'R');
+		if (Auth::user()->administrator) {
+			if ($timeSheet->employee->bonus > 0) {
+				$pdf->Cell($tb_right_width,5,'BONUS',1,0,'R');
+			} else {
+				$pdf->Cell($tb_right_width,5,'',0,0,'R');
+			}
 		}
 		$pdf->SetY($pdf->GetY()-(50), false);
 		$pdf->Cell(10,5, $timeSheet->normalLessRdo(),1,2,'C', true);
@@ -411,5 +413,28 @@ class TimeSheet extends Model
 			return 0;
 		}
 
+	}
+
+	public function workDays(){		
+	    $workDays = 0;		
+	    foreach ($this->days as $day) {
+	        if ($day->workForBonus()) {
+	                $workDays++;
+	        }                        
+	    }
+	    return $workDays;        
+	}
+
+
+	public function bonus(){
+		if ($this->workDays() >= 5 || $this->employee->bonus == 0) {
+			return $this->employee->bonus;
+		} else if($this->workDays() == 0) {
+			return 0;
+		} else {
+			$deductBonusDay = $this->employee->bonus/6;
+			$bonus = $this->employee->bonus - ((5-$this->workDays()) * $deductBonusDay);
+			return $bonus;
+		}
 	}
 }

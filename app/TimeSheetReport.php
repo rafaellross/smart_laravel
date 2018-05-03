@@ -5,6 +5,7 @@ namespace App;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Auth;
 /**
 * This class is used to convert time
 */
@@ -273,10 +274,12 @@ class TimeSheetReport extends Fpdf
 		$this->Cell($tb_right_width,5,'TOTAL TRAVEL DAYS',1,2,'R');
 		$this->Cell($tb_right_width,5,'TOTAL SITE ALLOW.',1,2,'R');
 		$this->Cell($tb_right_width,5,'',0,2,'R');
-		if ($timeSheet->employee->bonus > 0) {
-			$this->Cell($tb_right_width,5,'BONUS',1,0,'R');
-		} else {
-			$this->Cell($tb_right_width,5,'',0,0,'R');
+		if (Auth::user()->administrator) {
+			if ($timeSheet->bonus() > 0) {
+				$this->Cell($tb_right_width,5,'BONUS',1,0,'R');
+			} else {
+				$this->Cell($tb_right_width,5,'',0,0,'R');
+			}
 		}
 		$this->SetY($this->GetY()-(50), false);
 		$this->Cell(10,5, $timeSheet->normalLessRdo(),1,2,'C', true);
@@ -290,8 +293,8 @@ class TimeSheetReport extends Fpdf
 		$this->Cell(10,5, $timeSheet->travelDays() == 0 ? null : $timeSheet->travelDays(),1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->siteAllow() == 0 ? null : $timeSheet->siteAllow()/60,1,2,'C', true);
 		$this->Cell(10,5, "",0,2,'C', false);
-		if ($timeSheet->employee->bonus > 0) {
-			$this->Cell(10,5, $timeSheet->employee->bonus == 0 ? null : $timeSheet->employee->bonus,1,2,'C', true);
+		if ($timeSheet->bonus() > 0) {
+			$this->Cell(10,5, $timeSheet->bonus() == 0 ? null : round($timeSheet->bonus(), 2),1,2,'C', true);
 		}
 
 		$this->SetFont('Arial','B',$font_large);	 

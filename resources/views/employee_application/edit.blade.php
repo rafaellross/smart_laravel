@@ -281,7 +281,7 @@
                             @foreach ($employee_application->licenses as $license)
                             <div class="card-body">
                                 <!-- Start Card -->
-                                <h5 class="card-title">CIC Construction Induction Card :</h5>
+                                <h5 class="card-title">{{$license->license->description}} :</h5>
                                 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
@@ -289,19 +289,19 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[1][issue_date]" placeholder="dd/mm/yyyy" value="01/01/2001"  maxlength="10" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[{{$license->id}}][issue_date]" placeholder="dd/mm/yyyy" value="{{Carbon::parse($license->issue_date)->format('d/m/Y')}}"  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][issuer]" placeholder="Issued by" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[{{$license->id}}][issuer]" placeholder="Issued by" value="{{$license->issuer}}" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][number]" placeholder="License Number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[{{$license->id}}][number]" placeholder="License Number" value="{{$license->id}}" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -311,14 +311,14 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*" required>                                                    
+                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][front]" accept="image/*" value="0" required>                                                    
                                                     <label class="custom-file-label">Choose file</label>
-                                                    <input type="hidden" name="license[1][image][front][img]"/>
+                                                    <input type="hidden" name="license[{{$license->id}}][image][front][img]" value="{{$license->image_front}}" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-12 mb-3">
-                                            <img id="license[1][image][front][preview]" class="img-thumbnail" style="max-width: 35%;display: none;"/>
+                                            <img src="{{$license->image_front}}" id="license[{{$license->id}}][image][front][preview]" class="img-thumbnail" style="max-width: 50%;display: block;"/>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -326,14 +326,14 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][back]" accept="image/*" required>
+                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][back]" accept="image/*" value="0" required>
                                                     <label class="custom-file-label">Choose file</label>
-                                                    <input type="hidden" name="license[1][image][back][img]"/>
+                                                    <input type="hidden" name="license[{{$license->id}}][image][back][img]" value="{{$license->image_back}}" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-12 mb-3">
-                                            <img class="img-thumbnail" id="license[1][image][back][preview]" style="max-width: 35%;display: none;"/>
+                                            <img src="{{$license->image_back}}" class="img-thumbnail" id="license[{{$license->id}}][image][back][preview]" style="max-width: 50%;display: block;"/>
                                         </div>
                                     </div>
                                     <!-- End Card -->
@@ -354,7 +354,8 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
-                                            <select class="form-control" id="licenseId" name="licenseId"><option value="value">Select License</option>
+                                            <select class="form-control" id="licenseId" name="licenseId">
+                                                <option value="">Select License</option>
                                                 @foreach (App\License::all() as $license)
                                                     @if ($license->id !== 1 && $license->id !== 16)
                                                         <option value="{{$license->id}}">{{$license->description}}</option>

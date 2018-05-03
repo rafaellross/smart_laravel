@@ -136,10 +136,10 @@ class TimeSheetController extends Controller
     public function show($id)
     {
         
-        $timesheet = TimeSheet::find($id);
+        $timesheet = TimeSheetReport::find($id);
         
         
-        $pdf = TimeSheet::pdf($timesheet);
+        $pdf = TimeSheetReport::add($timesheet);
         $pdf->output();
         exit;
     }
