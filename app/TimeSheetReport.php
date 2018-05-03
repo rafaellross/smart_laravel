@@ -274,13 +274,13 @@ class TimeSheetReport extends Fpdf
 		$this->Cell($tb_right_width,5,'TOTAL TRAVEL DAYS',1,2,'R');
 		$this->Cell($tb_right_width,5,'TOTAL SITE ALLOW.',1,2,'R');
 		$this->Cell($tb_right_width,5,'',0,2,'R');
-		if (Auth::user()->administrator) {
-			if ($timeSheet->bonus() > 0) {
+		
+			if ($timeSheet->bonus() > 0 && Auth::user()->administrator) {
 				$this->Cell($tb_right_width,5,'BONUS',1,0,'R');
 			} else {
 				$this->Cell($tb_right_width,5,'',0,0,'R');
 			}
-		}
+		
 		$this->SetY($this->GetY()-(50), false);
 		$this->Cell(10,5, $timeSheet->normalLessRdo(),1,2,'C', true);
 		$this->Cell(10,5, Hour::convertToDecimal($timeSheet->total_15) == 0 ? null : Hour::convertToDecimal($timeSheet->total_15),1,2,'C', true);
@@ -293,7 +293,7 @@ class TimeSheetReport extends Fpdf
 		$this->Cell(10,5, $timeSheet->travelDays() == 0 ? null : $timeSheet->travelDays(),1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->siteAllow() == 0 ? null : $timeSheet->siteAllow()/60,1,2,'C', true);
 		$this->Cell(10,5, "",0,2,'C', false);
-		if ($timeSheet->bonus() > 0) {
+		if ($timeSheet->bonus() > 0 && Auth::user()->administrator) {
 			$this->Cell(10,5, $timeSheet->bonus() == 0 ? null : round($timeSheet->bonus(), 2),1,2,'C', true);
 		}
 
