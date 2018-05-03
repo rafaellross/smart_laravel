@@ -43,7 +43,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ URL::to('/home') }}">Home</a>
+                            <a class="nav-link" href="{{ URL::to('/') }}">Home</a>
                         </li>
                         @if (isset(Auth::user()->administrator) && Auth::user()->administrator)
                             <li class="nav-item">
