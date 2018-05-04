@@ -6,7 +6,7 @@ $(document).ready(function(){
       $('#modalLoading').modal('show');
     });
       
-    $('#flash-message').fadeOut(7000);
+    $('#flash-message').fadeOut(5000);
     
     function addMinutes(time, minsToAdd) {
         function D(J){
