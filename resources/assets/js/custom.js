@@ -1,7 +1,16 @@
+$(window).on('hashchange', function(e){
+    $('#modalLoading').modal('show');
+});
 
 $(document).ready(function(){
 
-	
+    $('form').submit(function() {
+      /* Act on the event */
+      $('#modalLoading').modal('show');
+    });
+      
+    $('#flash-message').fadeOut(5000);
+    
     function addMinutes(time, minsToAdd) {
         function D(J){
             return (J<10? '0':'') + J;
@@ -300,8 +309,7 @@ function resizeImage(input, width = 600) {
   });
 
 
- $('#timesheet_form').submit(function(event){
-
+ $('#timesheet_form').submit(function(event){      
        
 
        var days = [
@@ -385,7 +393,8 @@ function resizeImage(input, width = 600) {
           }     */
 
         });
-       });        
+       });    
+       $('#modalLoading').modal('hide');   
     });
 
     //Select all checkboxes on click
@@ -398,7 +407,7 @@ function resizeImage(input, width = 600) {
     $('#btnPrint').click(function(){
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {                
-            let url = "/timesheets/action/";
+            let url = "timesheets/action/";
             let ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
                 ids.push(this.id.split("-")[1]);                    
@@ -409,9 +418,11 @@ function resizeImage(input, width = 600) {
     });
 
     $('#btnDelete').click(function(){
-        
+            
+    
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {
+            $('#modalLoading').modal('show');
             let url = window.location.pathname + "/action/";
             let ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
@@ -459,6 +470,7 @@ function getBaseUrl() {
             return re.exec(window.location.href);
         }
    $('#btnSearch').click(function(){
+            $('#modalLoading').modal('show');
             $('#employee').empty();
             let name = $('#search').val();
             var loc = window.location.pathname.replace("timesheets/select", "");
@@ -468,6 +480,7 @@ function getBaseUrl() {
               dataType: 'json',              
             })
             .done(function(data) {
+              $('#modalLoading').modal('hide');
               $.each( data, function( key, val ) {                    
                   let emp = `
 

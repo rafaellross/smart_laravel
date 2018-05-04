@@ -106,10 +106,18 @@ class TimeSheet extends Model
                         $travelDays++;
                 }                        
             }
-
+            //Check if will travel day for special request RDO	
             if ($this->rdo > 0) {
             	if ($this->rdo > (4*60) && $this->rdo <= (8*60) ) {
             		$travelDays++;
+            	} else {
+            		$int = floor(($this->rdo/60)/8);
+            		$travelDays += $int;
+
+            		$rest = ($this->rdo/60)/8 - floor(($this->rdo/60)/8);
+            		if ($rest > 0.5) {
+            			$travelDays++;
+            		}
             	}
             }
             return $travelDays;

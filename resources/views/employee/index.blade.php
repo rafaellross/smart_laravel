@@ -34,7 +34,7 @@
                         <td>{{$employee->phone}}</td>
                         <td>
                             @if (!is_null($employee->last_timesheet))
-                                <a class="btn btn-success" href="/timesheets/action/{{$employee->last_timesheet}}/print" role="button" target="_blank">View</a>
+                                <a class="btn btn-success" href="timesheets/action/{{$employee->last_timesheet}}/print" role="button" target="_blank">View</a>
                             @else
                                 <span>No Time Sheet this Week</span>    
                             @endif

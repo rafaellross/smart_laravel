@@ -213,6 +213,7 @@ class TimeSheetReport extends Fpdf
 	    		$this->Cell($tb_center_width,5, strtoupper($weekDay->short),1,0,'C');
 	    	}	       
 	    }
+		$this->Cell($tb_center_width,5, 'TOTAL',1,0,'C');	    
 	    $this->Ln();	    
 
 		$this->SetX($this->GetX()+45);
@@ -220,6 +221,8 @@ class TimeSheetReport extends Fpdf
 		foreach ($timeSheet->days()->get() as $day) {
     		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total) == 0 ? null : Hour::convertToDecimal($day->total),1,0,'C');			
 		}
+		//Column total
+		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total) == 0 ? null : Hour::convertToDecimal($timeSheet->total),1,0,'C');			
 		$this->Ln();	    
 
 		$this->SetX($this->GetX()+45);
@@ -227,6 +230,9 @@ class TimeSheetReport extends Fpdf
 		foreach ($timeSheet->days()->get() as $day) {
     		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->normal) == 0 ? null : Hour::convertToDecimal($day->normal),1,0,'C');			
 		}
+		//Column total
+		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->normal) == 0 ? null : Hour::convertToDecimal($timeSheet->normal),1,0,'C');			
+
 		$this->Ln();	    
 
 		$this->SetX($this->GetX()+45);
@@ -234,6 +240,9 @@ class TimeSheetReport extends Fpdf
 		foreach ($timeSheet->days()->get() as $day) {
     		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_15) == 0 ? null : Hour::convertToDecimal($day->total_15),1,0,'C');			
 		}
+		//Column total
+		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total_15) == 0 ? null : Hour::convertToDecimal($timeSheet->total_15),1,0,'C');			
+
 		$this->Ln();	    
 
 		$this->SetX($this->GetX()+45);
@@ -241,6 +250,9 @@ class TimeSheetReport extends Fpdf
 		foreach ($timeSheet->days()->get() as $day) {
     		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_20) == 0 ? null : Hour::convertToDecimal($day->total_20),1,0,'C');			
 		}
+		//Column total
+		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total_20) == 0 ? null : Hour::convertToDecimal($timeSheet->total_20),1,0,'C');			
+
 		$this->Ln();	    
 
 		$special_request_width = 20;

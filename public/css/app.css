@@ -10431,3 +10431,22 @@ label {
   }
 }
 
+#flash-message {
+  position: fixed;
+  bottom: 20px;
+  right: 45%;
+  z-index: 10;
+}
+
+#modalLoading .modal-dialog {
+  display: table;
+  position: relative;
+  margin: 0 auto;
+  top: calc(50% - 24px);
+}
+
+#modalLoading .modal-dialog .modal-content {
+  background-color: transparent;
+  border: none;
+}
+

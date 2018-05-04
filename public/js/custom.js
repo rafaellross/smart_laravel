@@ -76,8 +76,18 @@ module.exports = __webpack_require__(38);
 /***/ 38:
 /***/ (function(module, exports) {
 
+$(window).on('hashchange', function (e) {
+    $('#modalLoading').modal('show');
+});
 
 $(document).ready(function () {
+
+    $('form').submit(function () {
+        /* Act on the event */
+        $('#modalLoading').modal('show');
+    });
+
+    $('#flash-message').fadeOut(5000);
 
     function addMinutes(time, minsToAdd) {
         function D(J) {
@@ -421,6 +431,7 @@ $(document).ready(function () {
                           }     */
             });
         });
+        $('#modalLoading').modal('hide');
     });
 
     //Select all checkboxes on click
@@ -432,7 +443,7 @@ $(document).ready(function () {
     $('#btnPrint').click(function () {
         var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {
-            var url = "/timesheets/action/";
+            var url = "timesheets/action/";
             var ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function () {
                 ids.push(this.id.split("-")[1]);
@@ -446,6 +457,7 @@ $(document).ready(function () {
 
         var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {
+            $('#modalLoading').modal('show');
             var url = window.location.pathname + "/action/";
             var ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function () {
@@ -490,6 +502,7 @@ $(document).ready(function () {
         return re.exec(window.location.href);
     }
     $('#btnSearch').click(function () {
+        $('#modalLoading').modal('show');
         $('#employee').empty();
         var name = $('#search').val();
         var loc = window.location.pathname.replace("timesheets/select", "");
@@ -498,6 +511,7 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'json'
         }).done(function (data) {
+            $('#modalLoading').modal('hide');
             $.each(data, function (key, val) {
                 var emp = '\n\n                      <div class="active select-employee card ' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + '">\n                        <div class="select-employee card-header" role="tab" id="heading-undefined">\n                          <h6 class="mb-0">\n                            <div>\n                              <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + '">\n                                <span> ' + val.name + '</span>\n                                </a>\n                              <div class="float-right" style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + '">\n                               <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                              <a href="action/' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + ';" target="_blank">View</a>\n                              </div>                                \n                            </div>\n                          </h6>\n                        </div>\n                        </div>';
                 $('#employee').append(emp);

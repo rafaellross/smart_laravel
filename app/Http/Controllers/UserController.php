@@ -73,7 +73,7 @@ class UserController extends Controller
     protected function destroy($id){
         $user = User::find($id);
         $user->delete();
-        return redirect('users')->with('success','Product has been  deleted');        
+        return redirect('users')->with('success','User has been  deleted');        
     }
 
     public function action($id, $action, $status = null)

@@ -23,12 +23,14 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
@@ -103,10 +105,35 @@
                 </div>
             </div>
         </nav>
+        @if($flash = session('success'))
+        <div id="flash-message" class="alert alert-success" role="alert">            
+            <strong class="mr-2">{{$flash}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>            
+        </div>
+        @endif
+        @if($flash = session('error'))
+        <div id="flash-message" class="alert alert-danger" role="alert">            
+            <strong class="mr-2">{{$flash}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>            
+        </div>
+        @endif
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    <div id="modalLoading" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLoading" aria-hidden="true">          
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content" style="width: 48px">
+                <span class="fa fa-spinner fa-spin fa-3x"></span>
+            </div>
+        </div>          
+    </div>   
+    <style type="text/css">
+    </style> 
 </body>
 </html>
