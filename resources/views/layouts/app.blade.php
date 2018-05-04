@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Expires" content="30">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="{{{ asset('img/brand.ico') }}}">
     <link rel="apple-touch-icon" href="{{ asset('img/brand.ico') }}">  
@@ -12,6 +12,22 @@
 
     <title>{{ 'Administration - Smart Plumbing Solutions' }}</title>
 
+    <!-- Scripts -->    
+    <script src="{{ asset('js/jquery.min.js') }}"></script>    
+    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
+    <script src="{{ asset('js/jSignature.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+
+    
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
 </head>
 <body>
 
@@ -117,22 +133,5 @@
             </div>
         </div>          
     </div>   
-    <!-- Scripts -->    
-    <script async src="{{ asset('js/jquery.min.js') }}"></script>    
-    <script async src="{{ asset('js/app.js') }}"></script>    
-    <script async src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
-    <script async src="{{ asset('js/jSignature.min.js') }}"></script>
-    <script async src="{{ asset('js/custom.js') }}"></script>
-
-    
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
-    
 </body>
 </html>
