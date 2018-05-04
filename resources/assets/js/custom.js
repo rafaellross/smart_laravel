@@ -1,10 +1,22 @@
 
 $(document).ready(function(){
 
+    $(window).on("unload", function() {
+       $('#modalLoading').modal('show');
+    });
+
     $('form').submit(function() {
       /* Act on the event */
-      $('#modalLoading').modal('show');
+      loading();
     });
+    function loading() {
+    $('#modalLoading').modal('show');
+    setInterval(function(){
+          $('#modalLoading').modal('hide');
+        }, 3000);      
+
+    }
+
       
     $('#flash-message').fadeOut(5000);
     
@@ -353,9 +365,11 @@ function resizeImage(input, width = 600) {
               (start !== "") && (end === "" || job === "" || hours === "") ||
               (end !== "") && (start === "" || job === "" || hours === "") 
             ) {
+            
              event.preventDefault();
              alert("Select start, end time and job " + jobNumber + " for " + day.description);
              $("#" + day.short + "_job_" + jobNumber).focus();
+
              return false;
          }
          if (
@@ -366,32 +380,17 @@ function resizeImage(input, width = 600) {
                  )
             )
           {
+            
                 event.preventDefault();
                 alert("Select start, end time and job " + jobNumber + " for " + day.description);
                 $("#" + day.short + "_job_" + jobNumber).focus();
+                
                 return false;
           }  
-
-/*
-          var files = 0;
-          $("input[type=file]").each(function() {
-            if (this.files[0].length > 0) {
-              files++;
-            }
-          });
-
-          if (job === "sick" && files === 0) {
-            event.preventDefault();
-            alert("Please, attach medical certificate(s)");
-            $("#medical_certificates").focus();
-            return false;
-          } else {
-            $('#medical_certificates_hidden')
-          }     */
-
+            
         });
        });    
-       $('#modalLoading').modal('hide');   
+       
     });
 
     //Select all checkboxes on click
@@ -419,7 +418,7 @@ function resizeImage(input, width = 600) {
     
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {
-            $('#modalLoading').modal('show');
+            loading();
             let url = window.location.pathname + "/action/";
             let ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
@@ -443,9 +442,13 @@ function resizeImage(input, width = 600) {
     $('#btnStatus').click(function(){
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {                                    
-            $('#modalChangeStatus').modal('show');
+            loading();
         }
     });          
+    console.log(window.location);
+    $('#selectStatus').change(function(){        
+      $(location).attr('href',"/public/timesheets/" + $(this).val());
+    });
 
 
     $('#btnSaveStatus').click(function(){

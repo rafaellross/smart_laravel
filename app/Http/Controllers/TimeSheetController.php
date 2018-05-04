@@ -22,12 +22,21 @@ class TimeSheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($status = null)
     {
-        if (Auth::user()->administrator) {
-            $timesheets = TimeSheet::all();
+        if (is_null($status) || $status == "all") {
+            if (Auth::user()->administrator) {
+                $timesheets = TimeSheet::all();
+            } else {
+                $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->get(); 
+            }            
         } else {
-            $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->get(); 
+            if (Auth::user()->administrator) {
+                $timesheets = TimeSheet::where('status', '=', $status)->get();
+            } else {
+                $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->where('status', '=', $status)->get(); 
+            }            
+
         }
         
         return view('timesheet.index', ['timesheets' => $timesheets]);

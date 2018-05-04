@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Config::set('debugbar.enabled', false);
+Config::set('debugbar.enabled', true);
 
 Auth::routes();
 
@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/select', 'TimeSheetController@select');
 	Route::get('/timesheets/create/{id}', 'TimeSheetController@create');
 	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action');
+	Route::get('/timesheets', 'TimeSheetController@index');
+	Route::get('/timesheets/{status?}', 'TimeSheetController@index');
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicatonController@index');
 	Route::get('/employee_application/create', 'EmployeeApplicatonController@create');
@@ -42,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
 	
 	
 	Route::patch('/users/{users}', 'UserController@update');
-	Route::resource('timesheets', 'TimeSheetController');
+	Route::resource('timesheets', 'TimeSheetController', ['except' => ['index']]);
 	Route::resource('employee_application', 'EmployeeApplicatonController');
 
 });
