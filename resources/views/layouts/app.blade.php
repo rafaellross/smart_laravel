@@ -118,11 +118,11 @@
         </div>          
     </div>   
     <!-- Scripts -->    
-    <script src="{{ asset('js/jquery.min.js') }}"></script>    
-    <script src="{{ asset('js/app.js') }}"></script>    
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
-    <script src="{{ asset('js/jSignature.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script async src="{{ asset('js/jquery.min.js') }}"></script>    
+    <script async src="{{ asset('js/app.js') }}"></script>    
+    <script async src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
+    <script async src="{{ asset('js/jSignature.min.js') }}"></script>
+    <script async src="{{ asset('js/custom.js') }}"></script>
 
     
     <!-- Fonts -->
