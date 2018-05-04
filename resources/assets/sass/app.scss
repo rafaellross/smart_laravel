@@ -48,6 +48,13 @@ label {
         padding: 10px;
         margin-bottom: 10px;
     }
+    #flash-message {
+      position: fixed;
+      bottom: -10px;      
+      z-index: 10;
+      width: 90%;      
+      left: 5%;
+    }    
 }        
 
 #flash-message {

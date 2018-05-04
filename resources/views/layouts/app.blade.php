@@ -113,8 +113,8 @@
             </button>            
         </div>
         @endif
-        @if($flash = session('error'))
-        <div id="flash-message" class="alert alert-danger" role="alert">            
+        @if($flash = session('success'))
+        <div id="flash-message" class="alert alert-success" role="alert">            
             <strong class="mr-2">{{$flash}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -126,7 +126,7 @@
             @yield('content')
         </main>
     </div>
-    <div id="modalLoading" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLoading" aria-hidden="true">          
+    <div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoading" aria-hidden="true">          
         <div class="modal-dialog modal-sm">
             <div class="modal-content" style="width: 48px">
                 <span class="fa fa-spinner fa-spin fa-3x"></span>

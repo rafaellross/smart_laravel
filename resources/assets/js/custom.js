@@ -1,6 +1,3 @@
-$(window).on('hashchange', function(e){
-    $('#modalLoading').modal('show');
-});
 
 $(document).ready(function(){
 
@@ -9,7 +6,7 @@ $(document).ready(function(){
       $('#modalLoading').modal('show');
     });
       
-    $('#flash-message').fadeOut(5000);
+    $('#flash-message').fadeOut(7000);
     
     function addMinutes(time, minsToAdd) {
         function D(J){
