@@ -12,12 +12,6 @@
 
     <title>{{ 'Administration - Smart Plumbing Solutions' }}</title>
 
-    <!-- Scripts -->    
-    <script src="{{ asset('js/jquery.min.js') }}"></script>    
-    <script src="{{ asset('js/app.js') }}"></script>    
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
-    <script src="{{ asset('js/jSignature.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
 
     
     <!-- Fonts -->
@@ -133,5 +127,12 @@
             </div>
         </div>          
     </div>   
+    <!-- Scripts -->    
+    <script src="{{ asset('js/jquery.min.js') }}"></script>    
+    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
+    <script src="{{ asset('js/jSignature.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+    
 </body>
 </html>
