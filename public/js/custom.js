@@ -476,9 +476,9 @@ $(document).ready(function () {
             loading();
         }
     });
-    console.log(window.location);
+
     $('#selectStatus').change(function () {
-        $(location).attr('href', "/public/timesheets/" + $(this).val());
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
     });
 
     $('#btnSaveStatus').click(function () {
