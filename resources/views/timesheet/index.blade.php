@@ -31,8 +31,8 @@
                 <th scope="col" class="mobile">Date</th>
                 <th scope="col">Employee</th>
                 <th scope="col">Total Hours</th>
-                <th scope="col">Total Hours 1.5</th>
-                <th scope="col">Total Hours 2.0</th>
+                <th scope="col">Hours 1.5</th>
+                <th scope="col">Hours 2.0</th>
                 <th scope="col">Week End</th>
                 <th scope="col">Status</th>      
                 <th scope="col">Action</th>
