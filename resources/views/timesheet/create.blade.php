@@ -28,12 +28,15 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <form method="POST" action="{{action('TimeSheetController@store')}}" id="timesheet_form">
                 {{csrf_field()}}                
-                {{ Form::hidden('employee_id', $employee->id) }}
+                
                 <div class="form-group">
                     <label for="empname">
                         <h5>Name:</h5>
                     </label>
-                    <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name }}">
+                    @foreach($employees as $employee)
+                        <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
+                        <input type="hidden" name="employees[{{$employee->id}}]" value="{{$employee->id}}">
+                    @endforeach
                 </div>
                 <div class="form-group">
                     <label for="empname">

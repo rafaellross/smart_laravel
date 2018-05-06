@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('employees/', function() {			
-	return App\Employee::take(10)->get();   
+	return App\Employee::all();   
 });
 
 Route::get('employees/{name}', function($name) {			
