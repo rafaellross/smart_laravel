@@ -271,6 +271,9 @@ class TimeSheetController extends Controller
     public function destroy($id)
     {
         $timesheet = TimeSheet::find($id);
+        $employee = Employee::find($timesheet->employee_id);
+        $employee->last_time_sheet_dt = null;
+        $employee->last_time_sheet_id = null;
         $timesheet->delete();
         return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
     }
@@ -286,7 +289,12 @@ class TimeSheetController extends Controller
         switch ($action) {
             case 'delete':
                 foreach ($ids as $id) {
-                    TimeSheet::find($id)->delete();
+                    $timesheet = TimeSheet::find($id);
+                    $employee = Employee::find($timesheet->employee_id);
+                    $employee->last_time_sheet_dt = null;
+                    $employee->last_time_sheet_id = null;
+                    $timesheet->delete();
+
                 }                
                 return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');        
                 break;
