@@ -1,12 +1,6 @@
 
 $(document).ready(function(){
 
-
-    $('form').submit(function() {
-      /* Act on the event */
-      loading();
-    });
-
     function loading() {
     $('#modalLoading').modal('show');
     setInterval(function(){
@@ -363,7 +357,7 @@ function resizeImage(input, width = 600) {
               (start !== "") && (end === "" || job === "" || hours === "") ||
               (end !== "") && (start === "" || job === "" || hours === "") 
             ) {
-            loading();
+            
              event.preventDefault();
              alert("Select start, end time and job " + jobNumber + " for " + day.description);
              $("#" + day.short + "_job_" + jobNumber).focus();
@@ -400,14 +394,17 @@ function resizeImage(input, width = 600) {
    
     $('#btnPrint').click(function(){
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-        if (selecteds > 0) {                
-            let url = "timesheets/action/";
+        if (selecteds > 0) {                            
             let ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
                 ids.push(this.id.split("-")[1]);                    
             });
-
-            window.open(url + ids.join(",") + "/print", '_blank');
+          let urlArray = window.location.href.split("/");
+          if (urlArray[urlArray.length - 1] == "timesheets") {
+            window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');          
+          } else {
+            window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));  
+          }            
         }
     });
 
@@ -415,8 +412,7 @@ function resizeImage(input, width = 600) {
             
     
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-        if (selecteds > 0) {
-            loading();
+        if (selecteds > 0) {            
             let url = window.location.pathname + "/action/";
             let ids = Array();
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
@@ -440,7 +436,7 @@ function resizeImage(input, width = 600) {
     $('#btnStatus').click(function(){
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
         if (selecteds > 0) {                                    
-            loading();
+            $('#modalChangeStatus').modal('show');
         }
     });          
 
@@ -459,14 +455,20 @@ function resizeImage(input, width = 600) {
 
     $('#btnSaveStatus').click(function(){
         let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-        if (selecteds > 0) {                                       
-            let url = "/timesheets/action/";
+        if (selecteds > 0) {                                           
             let ids = Array();
+            let newStatus = $("select[name=changeStatus]").val();
+            //Get checked timesheets
             $("input[type=checkbox]:checked").not('#chkRow').each(function(){
                 ids.push(this.id.split("-")[1]);                    
             });    
-            let newStatus = $("select[name=changeStatus]").val();
-            $(location).attr('href', url + ids.join(",") + "/update/" + newStatus);                                    
+
+            let urlArray = window.location.href.split("/");
+            if (urlArray[urlArray.length - 1] == "timesheets") {
+              window.location += '/action/' + ids.join(",") + "/update/" + newStatus;
+            } else {
+              window.location = window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/update/" + newStatus);  
+            }                        
         }
         
     });
@@ -491,11 +493,13 @@ function getBaseUrl() {
    $(document).on('click', '.btn-remove', function() {     
      /* Act on the event */
 
-     
-     jQuery("#emp-" + this.id).remove();
-     employeesSelected.splice(employeesSelected.indexOf(this.id), 1);
-     $("#countSelecteds").text("(" + employeesSelected.length + ")");
-     console.log(employeesSelected);
+    var result = confirm("Are you sure you want to unselect this employee?");                
+    if (result == true) {    
+       jQuery("#emp-" + this.id).remove();
+       employeesSelected.splice(employeesSelected.indexOf(this.id), 1);
+       $("#countSelecteds").text("(" + employeesSelected.length + ")");
+       console.log(employeesSelected);    
+    }                            
    });
 
     $("#btn-continue").click(function() {
@@ -504,7 +508,7 @@ function getBaseUrl() {
       }
     });        
    $('#btnSearch').click(function(){
-            $('#modalLoading').modal('show');
+            
             $('#employee').empty();
             let name = $('#search').val();
             var loc = window.location.pathname.replace("timesheets/select", "");
@@ -519,26 +523,25 @@ function getBaseUrl() {
 
                       <div id="emp-` + val.id + `" class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + `">
                         <div class="select-employee card-header" role="tab" id="heading-undefined">
-                          <h6 class="mb-0">
-                            <div>
-                              <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + `">
-                                <span> `+ val.name +`</span>
+                        <div class="row">
+                          <div class="col-md-10 col-lg-10">
+                            <h6>                            
+                                <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + `">
+                                  <span> `+ val.name +`</span>
                                 </a>
+                            </h6>
+                            <i style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">This employee already have a Time Sheet for this week   &#32;</i>
+                          </div>
+                          <div class="col-md-1 col-lg-1" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">                            
+                            <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View</a>
+                          </div>
 
-                              <div class="float-right mr-3" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">
-                               <i class="mb-3" style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>
-                              <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary float-right" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View</a>
-                              </div>
-                              <div class="float-left">                              
-                                <button id="` + val.id + `" class="btn btn-success btn-select">Select</button>
-                              </div>                                
-                                
-                            </div>
-                          </h6>
+                          <div class="col-md-1 col-lg-1">                                                            
+                            <button id="` + val.id + `" class="btn btn-success btn-select">Select</button>                              
+                          </div>                        
                         </div>
-                        </div>`;
-                  $('#employee').append(emp);
-                  $('#modalLoading').modal('hide');
+                      </div>`;
+                  $('#employee').append(emp);            
               });                  
             })
             .fail(function() {

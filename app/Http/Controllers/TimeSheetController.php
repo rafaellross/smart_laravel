@@ -183,6 +183,7 @@ class TimeSheetController extends Controller
         $timeSheet = TimeSheet::find($id);        
         
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
+        $timeSheet->emp_signature   = $request->get('emp_signature');
         $timeSheet->rdo             = $request->get('rdo');
         $timeSheet->pld             = $request->get('pld');
         $timeSheet->anl             = $request->get('anl');
@@ -256,7 +257,7 @@ class TimeSheetController extends Controller
             }
         }
         
-        return redirect('/timesheets')->with('success', 'Time Sheet has been added');
+        return redirect('/timesheets')->with('success', 'Time Sheet has been updated');
         
         
     }

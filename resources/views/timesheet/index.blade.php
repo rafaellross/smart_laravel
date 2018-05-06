@@ -29,8 +29,13 @@
                 <th scope="col" class="mobile">#</th>
                 <th scope="col">User</th>
                 <th scope="col" class="mobile">Date</th>
-
-                <th scope="col">Employee</th><th scope="col">Week End</th><th scope="col">Status</th>      <th scope="col">Action</th>
+                <th scope="col">Employee</th>
+                <th scope="col">Total Hours</th>
+                <th scope="col">Total Hours 1.5</th>
+                <th scope="col">Total Hours 2.0</th>
+                <th scope="col">Week End</th>
+                <th scope="col">Status</th>      
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +45,9 @@
                 <td>{{$timesheet->user->username}}</td>
                 <td class="mobile">{{ Carbon::parse($timesheet->created_at)->format('d/m/Y') }}</td>
                 <td>{{$timesheet->employee->name}}</td>
+                <td>{{$timesheet->total}}</td>
+                <td>{{$timesheet->total_15}}</td>
+                <td>{{$timesheet->total_20}}</td>
                 <td>{{Carbon::parse($timesheet->week_end)->format('d/m/Y')}}</td>
                 <td>{{$timesheet->status}}</td><td style="text-align: center;">
                     <div class="dropdown">
