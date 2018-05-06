@@ -86,7 +86,7 @@ class TimeSheetController extends Controller
         $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
         $employee = Employee::find($timeSheet->employee_id);
-        $employee->last_time_sheet = $timeSheet->week_end;
+        $employee->last_time_sheet_dt = $timeSheet->week_end;
         $employee->last_time_sheet_id = $timeSheet->id;
         $employee->save();
 
@@ -193,7 +193,7 @@ class TimeSheetController extends Controller
         $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
         $employee = Employee::find($timeSheet->employee_id);
-        $employee->last_time_sheet = $timeSheet->week_end;
+        $employee->last_time_sheet_dt = $timeSheet->week_end;
         $employee->last_time_sheet_id = $timeSheet->id;
         $employee->save();
 

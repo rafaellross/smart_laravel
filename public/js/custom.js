@@ -79,14 +79,11 @@ module.exports = __webpack_require__(38);
 
 $(document).ready(function () {
 
-    $(window).on("unload", function () {
-        $('#modalLoading').modal('show');
-    });
-
     $('form').submit(function () {
         /* Act on the event */
         loading();
     });
+
     function loading() {
         $('#modalLoading').modal('show');
         setInterval(function () {
@@ -408,7 +405,7 @@ $(document).ready(function () {
                 var hours = $("#" + day.short + "_hours_" + jobNumber).val();
 
                 if (hours !== "" && (start === "" && end === "" || job === "") || start !== "" && (end === "" || job === "" || hours === "") || end !== "" && (start === "" || job === "" || hours === "")) {
-
+                    loading();
                     event.preventDefault();
                     alert("Select start, end time and job " + jobNumber + " for " + day.description);
                     $("#" + day.short + "_job_" + jobNumber).focus();
@@ -477,8 +474,14 @@ $(document).ready(function () {
         }
     });
 
+    //console.log(window.location.href);
     $('#selectStatus').change(function () {
-        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
+        var urlArray = window.location.href.split("/");
+        if (urlArray[urlArray.length - 1] == "timesheets") {
+            window.location += '/' + $(this).val();
+        } else {
+            window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
+        }
     });
 
     $('#btnSaveStatus').click(function () {
@@ -508,10 +511,10 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'json'
         }).done(function (data) {
-            $('#modalLoading').modal('hide');
             $.each(data, function (key, val) {
-                var emp = '\n\n                      <div class="active select-employee card ' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + '">\n                        <div class="select-employee card-header" role="tab" id="heading-undefined">\n                          <h6 class="mb-0">\n                            <div>\n                              <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + '">\n                                <span> ' + val.name + '</span>\n                                </a>\n                              <div class="float-right" style="' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + '">\n                               <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                              <a href="action/' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + ';" target="_blank">View</a>\n                              </div>                                \n                            </div>\n                          </h6>\n                        </div>\n                        </div>';
+                var emp = '\n\n                      <div class="active select-employee card ' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + '">\n                        <div class="select-employee card-header" role="tab" id="heading-undefined">\n                          <h6 class="mb-0">\n                            <div>\n                              <a href="create/' + val.id + ' " style="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + '">\n                                <span> ' + val.name + '</span>\n                                </a>\n                              <div class="float-right">                              \n                                <button id="' + val.id + '" class="btn btn-success">Select</button>\n                              </div>                                \n\n                              <div class="float-right mr-3" style="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + '">\n                               <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>\n                              <a href="action/' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + '/print" class="btnAdd btn btn-primary float-right" style="color: white;display:' + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + ';" target="_blank">View</a>\n                              </div>                                \n                            </div>\n                          </h6>\n                        </div>\n                        </div>';
                 $('#employee').append(emp);
+                $('#modalLoading').modal('hide');
             });
         }).fail(function () {
             console.log("error");

@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->boolean('rdo')->default(false);
             $table->boolean('travel')->default(false);
             $table->boolean('site_allow')->default(false);
-            $table->date('last_time_sheet')->nullable();
+            $table->timestamp('last_time_sheet_dt')->nullable();
             $table->integer('last_time_sheet_id')->nullable();
             $table->float('bonus')->default(0);
             $table->string('phone');

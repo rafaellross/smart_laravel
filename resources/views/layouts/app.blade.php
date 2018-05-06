@@ -112,8 +112,8 @@
             </button>            
         </div>
         @endif
-        @if($flash = session('success'))
-        <div id="flash-message" class="alert alert-success" role="alert">            
+        @if($flash = session('error'))
+        <div id="flash-message" class="alert alert-danger" role="alert">            
             <strong class="mr-2">{{$flash}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

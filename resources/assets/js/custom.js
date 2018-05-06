@@ -1,14 +1,12 @@
 
 $(document).ready(function(){
 
-    $(window).on("unload", function() {
-       $('#modalLoading').modal('show');
-    });
 
     $('form').submit(function() {
       /* Act on the event */
       loading();
     });
+
     function loading() {
     $('#modalLoading').modal('show');
     setInterval(function(){
@@ -365,7 +363,7 @@ function resizeImage(input, width = 600) {
               (start !== "") && (end === "" || job === "" || hours === "") ||
               (end !== "") && (start === "" || job === "" || hours === "") 
             ) {
-            
+            loading();
              event.preventDefault();
              alert("Select start, end time and job " + jobNumber + " for " + day.description);
              $("#" + day.short + "_job_" + jobNumber).focus();
@@ -446,8 +444,16 @@ function resizeImage(input, width = 600) {
         }
     });          
 
+    //console.log(window.location.href);
     $('#selectStatus').change(function(){        
-        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
+        let urlArray = window.location.href.split("/");
+        if (urlArray[urlArray.length - 1] == "timesheets") {
+          window.location += '/' + $(this).val();
+        } else {
+          window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());  
+        }
+
+        
     });
 
 
@@ -479,27 +485,31 @@ function getBaseUrl() {
               type: 'GET',
               dataType: 'json',              
             })
-            .done(function(data) {
-              $('#modalLoading').modal('hide');
+            .done(function(data) {              
               $.each( data, function( key, val ) {                    
                   let emp = `
 
-                      <div class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "bg-warning") + `">
+                      <div class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + `">
                         <div class="select-employee card-header" role="tab" id="heading-undefined">
                           <h6 class="mb-0">
                             <div>
-                              <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : "color: white;") + `">
+                              <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + `">
                                 <span> `+ val.name +`</span>
                                 </a>
-                              <div class="float-right" style="` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "display: none" : "display: block;") + `">
+                              <div class="float-right">                              
+                                <button id="` + val.id + `" class="btn btn-success">Select</button>
+                              </div>                                
+
+                              <div class="float-right mr-3" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">
                                <i style="margin-right: 20px;">This employee already have a Time Sheet for this week   &#32;</i>
-                              <a href="action/` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "" : val.last_timesheet.id) + `/print" class="btnAdd btn btn-primary float-right" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet.id === undefined ? "none" : "block") + `;" target="_blank">View</a>
+                              <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary float-right" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View</a>
                               </div>                                
                             </div>
                           </h6>
                         </div>
                         </div>`;
                   $('#employee').append(emp);
+                  $('#modalLoading').modal('hide');
               });                  
             })
             .fail(function() {
