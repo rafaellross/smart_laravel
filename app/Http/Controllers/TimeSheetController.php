@@ -26,7 +26,7 @@ class TimeSheetController extends Controller
     {
         if (is_null($status) || $status == "all") {
             if (Auth::user()->administrator) {
-                $timesheets = TimeSheet::all();
+                $timesheets = TimeSheet::orderBy('employee_id', 'desc');
             } else {
                 $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->get(); 
             }            
