@@ -536,8 +536,8 @@ function getBaseUrl() {
                             <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View</a>
                           </div>
 
-                          <div class="col-md-1 col-lg-1">                                                            
-                            <button id="` + val.id + `" class="btn btn-success btn-select">Select</button>                              
+                          <div class="col-md-1 col-lg-1" style="padding-left: 0px;">                                                            
+                            <button id="` + val.id + `" class="btn btn-success btn-select" style="` + (employeesSelected.indexOf(val.id.toString()) === -1 ? '' : 'display:none;') + `">Select</button>                              
                           </div>                        
                         </div>
                       </div>`;
