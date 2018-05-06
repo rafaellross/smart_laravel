@@ -293,6 +293,7 @@ class TimeSheetController extends Controller
                     $employee = Employee::find($timesheet->employee_id);
                     $employee->last_time_sheet_dt = null;
                     $employee->last_time_sheet_id = null;
+                    $employee->save();
                     $timesheet->delete();
 
                 }                
