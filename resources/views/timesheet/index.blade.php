@@ -7,9 +7,13 @@
     <hr>
     <div class="col-md-12 col-lg-12 col-12">           
         <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>            
-        <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
+        @if(Auth::user()->administrator)
+            <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
+        @endif
         <button class="btn btn-info mobile" id="btnPrint" style="">Print Selected(s)</button>            
+        @if(Auth::user()->administrator)
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>            
+        @endif
         <div style="float: right;" id="statusSelect">
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
@@ -57,7 +61,9 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="timesheets/action/{{$timesheet->id}}/print" target="_blank">View</a>
                             <a class="dropdown-item" href="timesheets/{{$timesheet->id}}/edit">Edit</a>
-                            <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>                                                
+                            @if(Auth::user()->administrator || $timesheet->status == 'P')
+                                <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>
+                            @endif                                                
                         </div>
                     </div>        
                 </td>

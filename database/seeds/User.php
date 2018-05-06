@@ -12,7 +12,7 @@ class User extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            ['name' =>'rafaellross', 'username' => 'rafaellross', 'password' => '$2y$10$gyzzzNdUQuhevysdiHJizukJQuk8BZSv6iuegDPL/8qLeBOYtAaJG', 'administrator' =>1],
+            ['name' =>'rafaellross', 'username' => 'rafaellross', 'password' => bcrypt('123123'), 'administrator' =>1],
             ['name' =>'chris', 'username' => 'chris', 'password' => '$2y$10$gFK0ndU6ksSqCshM63f8Vu7de4c46a2Ce77yfF7tRbw0CsGb2HqhW', 'administrator' =>1],
             ['name' =>'chris.borg', 'username' => 'chris.borg', 'password' => '$2y$10$RXOQSfABAhOC6he/1xx/j.pwmqgb1u5zSNgJ/Q7K4CWLspn0U3Kx2', 'administrator' =>0],
             ['name' =>'robert.ailao', 'username' => 'robert.ailao', 'password' => '$2y$10$DsK8AKcRWZdouHvr3hNX4OfIZz5JAt1brPXgp0uyZjTIZCuv/48Ty', 'administrator' =>0],
