@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Day extends Model
 {
     public function dayJobs(){
-        return $this->hasMany('App\DayJob');
+        return $this->hasMany('App\DayJob')->orderBy('number');
     }
 
     public function listHours(){

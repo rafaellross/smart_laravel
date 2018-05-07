@@ -26,15 +26,16 @@ class TimeSheetController extends Controller
     {
         if (is_null($status) || $status == "all") {
             if (Auth::user()->administrator) {
-                $timesheets = TimeSheet::all()->sortByDesc('employee_id');
+                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->get();
             } else {
-                $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->get(); 
+                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('user_id', '=', Auth::user()->id)->get();
+                
             }            
         } else {
             if (Auth::user()->administrator) {
-                $timesheets = TimeSheet::where('status', '=', $status)->get();
+                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('status', '=', $status)->get();
             } else {
-                $timesheets = TimeSheet::where('user_id', '=', Auth::user()->id)->where('status', '=', $status)->get(); 
+                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('user_id', '=', Auth::user()->id)->where('status', '=', $status)->get(); 
             }            
 
         }
@@ -179,7 +180,7 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+
         $timeSheet = TimeSheet::find($id);        
         
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));

@@ -11,7 +11,7 @@ class TimeSheet extends Model
 
     public function days(){
 
-        return $this->hasMany('App\Day');        
+        return $this->hasMany('App\Day')->orderBy('week_day');
     }
 
     public function certificates(){
@@ -26,7 +26,7 @@ class TimeSheet extends Model
 
     public function employee(){
 
-        return $this->belongsTo('App\Employee');
+        return $this->belongsTo('App\Employee');        
     }
     	
 	public function listHours(){
