@@ -179,7 +179,7 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        return $request;
         $timeSheet = TimeSheet::find($id);        
         
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
@@ -208,7 +208,7 @@ class TimeSheetController extends Controller
                 }
                 $day->delete();
         }    
-            
+        
         foreach ($request->get('days') as $key => $day) {
 
             $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
