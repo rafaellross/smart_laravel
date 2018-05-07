@@ -46,9 +46,9 @@
         @foreach ($timesheets as $timesheet)
             <tr>
             </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
-                <td>{{$timesheet->user->username}}</td>
+                <td>{{$timesheet->username}}</td>
                 <td class="mobile">{{ Carbon::parse($timesheet->created_at)->format('d/m/Y') }}</td>
-                <td>{{$timesheet->employee->name}}</td>
+                <td>{{$timesheet->name}}</td>
                 <td>{{$timesheet->total}}</td>
                 <td>{{$timesheet->total_15}}</td>
                 <td>{{$timesheet->total_20}}</td>

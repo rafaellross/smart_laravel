@@ -14,7 +14,7 @@ use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use DB;
 class TimeSheetController extends Controller
 {
     /**
@@ -26,16 +26,43 @@ class TimeSheetController extends Controller
     {
         if (is_null($status) || $status == "all") {
             if (Auth::user()->administrator) {
-                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->get();
+                $timesheets = DB::table('time_sheets')
+                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
+                              ->orderBy('employees.name')
+                              ->get();
+                
             } else {
-                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('user_id', '=', Auth::user()->id)->get();
+                $timesheets =   DB::table('time_sheets')
+                                ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
+                                ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                                ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
+                                ->orderBy('employees.name')
+                                ->where('user_id', '=', Auth::user()->id)
+                                ->get();
+                
                 
             }            
         } else {
             if (Auth::user()->administrator) {
-                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('status', '=', $status)->get();
+                $timesheets = DB::table('time_sheets')
+                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
+                              ->orderBy('employees.name')
+                              ->where('time_sheets.status', '=', $status)
+                              ->get();
+                
             } else {
-                $timesheets = TimeSheet::join('employees', 'time_sheets.employee_id', '=', 'employees.id')->orderBy('employees.name')->where('user_id', '=', Auth::user()->id)->where('status', '=', $status)->get(); 
+                $timesheets = DB::table('time_sheets')
+                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
+                              ->orderBy('employees.name')
+                              ->where('user_id', '=', Auth::user()->id)                              
+                              ->where('time_sheets.status', '=', $status)
+                              ->get();                
             }            
 
         }
@@ -309,13 +336,13 @@ class TimeSheetController extends Controller
                 return redirect('timesheets')->with('success','Time Sheet(s) has been updated');                        
                 break;
             case 'print':
+                
                 $report = new TimeSheetReport();
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
                     if ($timesheet) {
                         $report->add($timesheet);
                     }
-                    
                 }
                 return $report->output();
                 break;
