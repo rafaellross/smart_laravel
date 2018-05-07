@@ -74,7 +74,7 @@ class TimeSheetReport extends Fpdf
 	    		//Write start and end hours	    		
 	    		$this->Cell($width_days,5, Hour::convertToHour($job->start) . (is_null($job->job["code"]) ? "" : "-") . Hour::convertToHour($job->end), 1,2,'C', true);	    			    		
 	    		//Write job code
-	    		$this->Cell($width_days,5, $job->job["code"] .  (is_null($job->job["code"]) ? "" : "/") . Hour::convertToDecimal($job->hours()), 1,2,'C', false);	    		
+	    		$this->Cell($width_days,5, $job->job["code"] .  (is_null($job->job["code"]) ? "" : "/") . $job->hours(), 1,2,'C', false);	    		
 	    	}	    	
 	    	$this->SetX($this->GetX()+$width_days);
 	    	$this->SetY($this->GetY()-(4*10), false);
