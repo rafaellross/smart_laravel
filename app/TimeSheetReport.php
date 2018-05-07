@@ -180,6 +180,10 @@ class TimeSheetReport extends Fpdf
 	    	unset($listHours["rdo"]);
 	    }
 
+	    if (isset($listHours["pld"])) {
+	    	unset($listHours["pld"]);
+	    }
+
 	    if ($timeSheet->rdoTaken()->integer > 0) {
 	    	if (isset($listHours["001"])) {
 	    		$listHours["001"] += $timeSheet->rdoTaken()->integer;
