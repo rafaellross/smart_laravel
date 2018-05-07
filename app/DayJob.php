@@ -15,7 +15,7 @@ class DayJob extends Model
     }
 
     public function hours(){
-    	if ($this->number == 1 && $this->day->week_day !== 7) {
+    	if ($this->number == 1 && $this->day->week_day < 7) {
     		return ($this->end - $this->start)-15 < 0 ? 0 : ($this->end - $this->start);
     	} else {
     		return $this->end - $this->start < 0 ? 0 :$this->end - $this->start;
