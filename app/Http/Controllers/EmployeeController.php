@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
-
+use DB;
 class EmployeeController extends Controller
 {
     /**
@@ -14,7 +14,18 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee.index', ['employees' => Employee::all()->sortBy('name')]);
+        $employees = DB::select( 
+                    DB::raw(
+                        "select emp.id, 
+                                emp.name, 
+                                emp.phone,
+                                (select id from time_sheets where employee_id = emp.id order by id desc limit 1) as last_timesheet
+                                from employees emp                          
+                                order by emp.name asc
+                         ") 
+                    );
+        
+        return view('employee.index', ['employees' => $employees]);
     }
 
     /**

@@ -19,9 +19,33 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('employees/', function() {			
-	return App\Employee::all();   
+
+    $employees = DB::select( 
+                DB::raw(
+                    "select emp.id, 
+                            emp.name, 
+                            emp.phone,
+                            (select id from time_sheets where employee_id = emp.id order by id desc limit 1) as last_timesheet
+                            from employees emp                          
+                            order by emp.name asc
+                     ") 
+                );
+    return $employees;
+
 });
 
 Route::get('employees/{name}', function($name) {			
-	return App\Employee::whereRaw("name like '%". $name ."%'")->take(5)->get();   
+    $employees = DB::select( 
+                DB::raw(
+                    "select emp.id, 
+                            emp.name, 
+                            emp.phone,
+                            (select id from time_sheets where employee_id = emp.id order by id desc limit 1) as last_timesheet
+                            from employees emp                          
+                            where emp.name like '%$name%'
+                            order by emp.name asc
+                     ") 
+                );
+    return $employees;
+
 });
