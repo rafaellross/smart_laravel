@@ -26,7 +26,7 @@ class Employee extends Model
     }
 
     public function getLastTimesheetAttribute(){
-        if (Carbon::parse($this->last_time_sheet_dt)->weekOfYear == Carbon::now('Australia/Sydney')->weekOfYear) {
+        if (Carbon::parse($this->last_time_sheet_dt)->addDay()->weekOfYear == Carbon::now('Australia/Sydney')->weekOfYear) {
             return $this->last_time_sheet_id;
         } else {
             return null;
