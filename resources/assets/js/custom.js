@@ -310,9 +310,9 @@ function resizeImage(input, width = 600) {
   });
 
 
- $('#timesheet_form').submit(function(event){      
+ $('#timesheet_form').on('submit', function(event) {
        
-
+       var isValid = true;
        var days = [
            {
                description: "Monday",
@@ -357,7 +357,7 @@ function resizeImage(input, width = 600) {
               (start !== "") && (end === "" || job === "" || hours === "") ||
               (end !== "") && (start === "" || job === "" || hours === "") 
             ) {
-            
+             isValid = false;
              event.preventDefault();
              alert("Select start, end time and job " + jobNumber + " for " + day.description);
              $("#" + day.short + "_job_" + jobNumber).focus();
@@ -372,7 +372,7 @@ function resizeImage(input, width = 600) {
                  )
             )
           {
-            
+               isValid = false;
                 event.preventDefault();
                 alert("Select start, end time and job " + jobNumber + " for " + day.description);
                 $("#" + day.short + "_job_" + jobNumber).focus();
@@ -382,6 +382,13 @@ function resizeImage(input, width = 600) {
             
         });
        });    
+       if (isValid) {
+        $('#modalLoading').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+         $('#modalLoading').modal('show');
+       }
        
     });
 
@@ -524,7 +531,7 @@ function getBaseUrl() {
                       <div id="emp-` + val.id + `" class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + `">
                         <div class="select-employee card-header" role="tab" id="heading-undefined">
                         <div class="row">
-                          <div class="col-md-10 col-lg-10">
+                          <div class="`+(val.last_timesheet === null || val.last_timesheet === undefined ? "col-md-11 col-lg-11" : "col-md-9 col-lg-9")+`">
                             <h6>                            
                                 <a href="create/` + val.id + ` " style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + `">
                                   <span> `+ val.name +`</span>
@@ -532,11 +539,11 @@ function getBaseUrl() {
                             </h6>
                             <i style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">This employee already have a Time Sheet for this week   &#32;</i>
                           </div>
-                          <div class="col-md-1 col-lg-1" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">                            
-                            <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View</a>
+                          <div class="col-md-2 col-lg-2" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">                            
+                            <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View Time Sheet</a>
                           </div>
 
-                          <div class="col-md-1 col-lg-1" style="padding-left: 0px;">                                                            
+                          <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px;">                                                            
                             <button id="` + val.id + `" class="btn btn-success btn-select" style="` + (employeesSelected.indexOf(val.id.toString()) === -1 ? '' : 'display:none;') + `">Select</button>                              
                           </div>                        
                         </div>

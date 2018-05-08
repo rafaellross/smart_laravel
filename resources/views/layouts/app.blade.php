@@ -13,11 +13,11 @@
     <title>{{ 'Administration - Smart Plumbing Solutions' }}</title>
 
     <!-- Scripts -->    
-    <script src="{{ asset('js/jquery.min.js') }}"></script>    
-    <script src="{{ asset('js/app.js') }}"></script>    
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
-    <script src="{{ asset('js/jSignature.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('./js/jquery.min.js') }}"></script>    
+    <script src="{{ asset('./js/app.js') }}"></script>    
+    <script src="{{ asset('./js/bootstrap-datepicker.min.js') }}"></script>        
+    <script src="{{ asset('./js/jSignature.min.js') }}"></script>
+    <script src="{{ asset('./js/custom.js') }}"></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
