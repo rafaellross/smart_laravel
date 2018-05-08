@@ -39,7 +39,7 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/users/{{$user->id}}/edit">Edit</a>                    
+                                    <a class="dropdown-item" href="users/{{$user->id}}/edit">Edit</a>                    
                                     <form action="{{action('UserController@destroy', $user->id)}}" method="post">
                                         {{csrf_field()}}
                                         <input name="_method" type="hidden" value="DELETE">

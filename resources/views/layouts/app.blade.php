@@ -13,11 +13,11 @@
     <title>{{ 'Administration - Smart Plumbing Solutions' }}</title>
 
     <!-- Scripts -->    
-    <script src="{{ asset('./js/jquery.min.js') }}"></script>    
-    <script src="{{ asset('./js/app.js') }}"></script>    
-    <script src="{{ asset('./js/bootstrap-datepicker.min.js') }}"></script>        
-    <script src="{{ asset('./js/jSignature.min.js') }}"></script>
-    <script src="{{ asset('./js/custom.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>    
+    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>        
+    <script src="{{ asset('js/jSignature.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -85,7 +85,7 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/users/{{Auth::user()->id}}/edit">{{ __('Change Password') }}
+                                    <a class="dropdown-item" href="users/{{Auth::user()->id}}/edit">{{ __('Change Password') }}
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
