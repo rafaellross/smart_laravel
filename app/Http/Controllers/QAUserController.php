@@ -39,8 +39,9 @@ class QAUserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $qa_user = new QAUser();
+        $qa_user                        = QAUser::find($id);
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
         $qa_user->qa_type               = $request->get('qa_type');
@@ -53,7 +54,24 @@ class QAUserController extends Controller
         $qa_user->site_manager          = $request->get('site_manager');
         $qa_user->foreman               = $request->get('foreman');
         $qa_user->distribution          = $request->get('distribution');
+        $qa_user->comments              = trim(stripslashes(htmlentities($request->get('comments'))));
         $qa_user->location              = $request->get('location');
+        $qa_user->approved_name_1       = $request->get('approved_name_1');
+        $qa_user->approved_name_2       = $request->get('approved_name_2');
+        $qa_user->approved_name_3       = $request->get('approved_name_3');
+        $qa_user->approved_name_4       = $request->get('approved_name_4');
+        $qa_user->approved_company_1    = $request->get('approved_company_1');
+        $qa_user->approved_company_2    = $request->get('approved_company_2');
+        $qa_user->approved_company_3    = $request->get('approved_company_3');
+        $qa_user->approved_company_4    = $request->get('approved_company_4');
+        $qa_user->approved_position_1   = $request->get('approved_position_1');
+        $qa_user->approved_position_2   = $request->get('approved_position_2');
+        $qa_user->approved_position_3   = $request->get('approved_position_3');
+        $qa_user->approved_position_4   = $request->get('approved_position_4');
+        $qa_user->approved_sign_1       = $request->get('img_signature_1');
+        $qa_user->approved_sign_2       = $request->get('img_signature_2');
+        $qa_user->approved_sign_3       = $request->get('img_signature_3');
+        $qa_user->approved_sign_4       = $request->get('img_signature_4');
         $qa_user->save();
 
         foreach ($request->get('activities') as $key => $value) {
@@ -106,7 +124,7 @@ class QAUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $qa_user                        = QAUser::find($id);
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
@@ -122,6 +140,23 @@ class QAUserController extends Controller
         $qa_user->distribution          = $request->get('distribution');
         $qa_user->comments              = trim(stripslashes(htmlentities($request->get('comments'))));
         $qa_user->location              = $request->get('location');
+        $qa_user->approved_name_1       = $request->get('approved_name_1');
+        $qa_user->approved_name_2       = $request->get('approved_name_2');
+        $qa_user->approved_name_3       = $request->get('approved_name_3');
+        $qa_user->approved_name_4       = $request->get('approved_name_4');
+        $qa_user->approved_company_1    = $request->get('approved_company_1');
+        $qa_user->approved_company_2    = $request->get('approved_company_2');
+        $qa_user->approved_company_3    = $request->get('approved_company_3');
+        $qa_user->approved_company_4    = $request->get('approved_company_4');
+        $qa_user->approved_position_1   = $request->get('approved_position_1');
+        $qa_user->approved_position_2   = $request->get('approved_position_2');
+        $qa_user->approved_position_3   = $request->get('approved_position_3');
+        $qa_user->approved_position_4   = $request->get('approved_position_4');
+        $qa_user->approved_sign_1       = $request->get('img_signature_1');
+        $qa_user->approved_sign_2       = $request->get('img_signature_2');
+        $qa_user->approved_sign_3       = $request->get('img_signature_3');
+        $qa_user->approved_sign_4       = $request->get('img_signature_4');
+
         $qa_user->save();
         
 

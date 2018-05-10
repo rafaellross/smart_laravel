@@ -16,60 +16,50 @@ class QAUserReport extends Fpdf
 
 	private function _header(QAUser $qa_user) {
 		$this->AddPage('L');
+		$this->SetFont('Arial','B',$this->font['header']);		
 		$this->Image('img/water_mark.jpg', 74, 30, 150);
 		$this->SetFont('Arial','B',$this->font['header']);
 		$this->Cell(125,10,'Smart Plumbing Solutions Pty Ltd',1,0,'L');
 		$this->Cell(80,10, $qa_user->title,1,0,'C');
 		$this->Cell(70,10, 'Q.A Sign Off',1,1,'C');
-
 		$this->SetFont('Arial','',$this->font['label']);
-		$this->Cell(125+80,5,'Revision No:' . $qa_user->revision,1,0,'L');
-		$this->Cell(70,5, 'Date of Update:' . Carbon::parse($qa_user->update_date)->format('d/m/Y'),1,1,'L');
 
-		$this->Cell(13,5, 'Project','L',1,'L');
-		$this->Cell(13,10, '','LB',1,'L');
-		$this->SetXY($this->GetX()+13, $this->GetY()-10);
-		$this->MultiCell(36,5, substr($qa_user->job->description, 0, 30) ,'B','L');
+		$height_fields = 15;
+		$start_fields_y = 15;
 
-		$this->SetXY($this->GetX()+13+36, $this->GetY()-15);
-		$this->Cell(17,5, 'Customer','L',1,'L');
-		$this->SetX($this->GetX()+13+36);
-		$this->Cell(17,10, '','LB',1,'L');
-		$this->SetXY($this->GetX()+13+36+17, $this->GetY()-10);
-		$this->MultiCell(36,10, substr($qa_user->customer, 0, 30) ,'B','L');
+		$this->Line(10, $start_fields_y + 20, 285, $start_fields_y + 20);
 
-		$this->SetXY($this->GetX()+13+36+53, $this->GetY()-15);
-		$this->Cell(23,5, 'Unit/Area No.','L',1,'L');
-		$this->SetX($this->GetX()+13+36+53);
-		$this->Cell(23,10, '','LB',1,'L');
-		$this->SetXY($this->GetX()+13+36+53+23, $this->GetY()-10);
-		$this->MultiCell(36,10, substr($qa_user->unit_area, 0, 30) ,'B','L');
-
-		$this->SetXY($this->GetX()+13+36+53+23+36, $this->GetY()-15);
-		$this->Cell(25,5, 'Site Manager:','L',0,'L');
-		$this->Cell(55,5, $qa_user->site_manager,0,1,'L');		
-		$this->SetXY($this->GetX()+13+36+53+23+36, $this->GetY());
-		$this->Cell(25,5, 'Foreman:','L',0,'L');
-		$this->Cell(55,5, $qa_user->foreman_name->name, 0,1,'L');
-		$this->SetXY($this->GetX()+13+36+53+23+36, $this->GetY());
-		$this->Cell(80,5, '','LB',0,'L');
-
-		$this->SetXY($this->GetX(), $this->GetY()-10);
-		$this->Cell(34,5, 'Distribution','LBR',1,'L');
-		$this->SetXY($this->GetX()+241, $this->GetY());
-
-		$this->SetFillColor(255,154,0);
-
-		$this->Cell(16,5, 'Builder','L',0,'L', ($qa_user->distribution == 'Builder' ? true : false));
-		$this->Cell(18,5, 'Reg Auth.','R', 1,'L', ($qa_user->distribution == 'Reg Auth.' ? true : false));
 		
-		$this->SetXY($this->GetX()+241, $this->GetY());
-		$this->Cell(16,5, 'Client','LB',0,'L', ($qa_user->distribution == 'Client' ? true : false));
-		$this->Cell(18,5, 'Engineer','RB',1,'L', ($qa_user->distribution == 'Engineer' ? true : false));
+		$this->Line(10, 15, 10, 20 + $height_fields);
+		$this->Text(11, 24,'Revision No:');	    	
+		$this->SetXY(33, 21.3);		
+		$this->MultiCell(15, 4, $qa_user->revision);
 		
+		$this->Line(45, 20, 45, 20 + $height_fields);
+		$this->Text(46, 24,'Customer:');	    	
+		$this->SetXY(63, 21.3);		
+		$this->MultiCell(50, 4, $qa_user->customer . "kldlçkdlçkdadlçkdalhjdjkdalkjdkjdalkjdalkldjkldjkdjdkkdjhdkdjdkjkdjdjkddjjhdjdjdjdj");
 
-		$this->Cell(275,5, 'Location: ' . $qa_user->location,'LBR',1,'L');
 
+		$this->Line(60+53, 20, 60+53, 20 + $height_fields);
+		$this->Text(60+54, 24,'Unit/Area No:');	    	
+
+		$this->Line(60+95, 20, 60+95, 20 + $height_fields);
+		$this->Text(60+96, 24,'Site Manager:');	    	
+
+		$this->Line(60+150, 20, 60+150, 20 + $height_fields);
+		$this->Text(60+151, 24,'Date of Update:');	    	
+
+		$this->Line(60+190, 20, 60+190, 20 + $height_fields);
+		$this->Text(60+191, 24,'Distribution');	    	
+		$this->Line(285, 20, 285, 20 + $height_fields);
+
+		$this->Line(10, 25 + $height_fields, 285, 25 + $height_fields);		
+		
+		$this->Line(10, 35, 10, 40);		
+		$this->Text(11, 38.5, 'Location:');	    	
+		$this->Line(285, 35, 285, 40);		
+		$this->SetY(40);		
 
 	}
 
@@ -110,43 +100,61 @@ class QAUserReport extends Fpdf
 	}
 
 	public function _comments(QAUser $qa_user){
-		$this->Cell(275,5, 'COMMENTS','LRT','C');		
+		$this->Cell(275,5, 'COMMENTS','T','C');		
+		$this->Line(10, 115, 10, 163);
+		$this->Line(285, 115, 285, 163);
+		$this->Line(10, 163, 285, 163);
 		$this->Ln();
 		$this->SetLeftMargin(12);
 		$this->SetRightMargin(12);
 		$this->Write(5, $qa_user->comments);
 
-		$this->SetLeftMargin(10);
-		$this->Rect(10, 125, 275, 39.5);
+		$this->SetLeftMargin(10);		
 
-		$this->SetY($this->GetY()+4.5);		
+		$this->SetY($this->GetY()+8);		
 	}
 
 	public function _approvals(QAUser $qa_user){
+
+		$sign_width = 23;
 		$this->Cell(275,5, 'Approved By',1,'C');		
 		$this->Ln();
-		$this->Cell(73,5, 'Name', 'LB','C');		
-		$this->Cell(76,5, 'Company','LB','C');		
-		$this->Cell(63,5, 'Position','LB','C');		
-		$this->Cell(63,5, 'Signature','LRB','C');		
+		$this->Cell(73,5, 'Name: ' . $qa_user->approved_name_1, 'LB','C');		
+		$this->Cell(76,5, 'Company:' . $qa_user->approved_company_1,'LB','C');		
+		$this->Cell(63,5, 'Position:' . $qa_user->approved_position_1,'LB','C');		
+		$this->Cell(63,5, 'Signature:','LRB','C');				
+    	if (!is_null($qa_user->approved_sign_1)) {
+    		$this->Image($qa_user->approved_sign_1, $this->GetX()-40, $this->GetY()+0.5, $sign_width,0,'png');
+    	}
 
 		$this->Ln();
-		$this->Cell(73,5, 'Name', 'LB','C');		
-		$this->Cell(76,5, 'Company','LB','C');		
-		$this->Cell(63,5, 'Position','LB','C');		
-		$this->Cell(63,5, 'Signature','LRB','C');		
+		$this->Cell(73,5, 'Name: ' . $qa_user->approved_name_2, 'LB','C');		
+		$this->Cell(76,5, 'Company:' . $qa_user->approved_company_2,'LB','C');		
+		$this->Cell(63,5, 'Position:' . $qa_user->approved_position_2,'LB','C');		
+		$this->Cell(63,5, 'Signature:','LRB','C');		
+    	if (!is_null($qa_user->approved_sign_2)) {
+    		$this->Image($qa_user->approved_sign_2, $this->GetX()-40, $this->GetY()+0.5, $sign_width,0,'png');
+    	}
+
 
 		$this->Ln();
-		$this->Cell(73,5, 'Name', 'LB','C');		
-		$this->Cell(76,5, 'Company','LB','C');		
-		$this->Cell(63,5, 'Position','LB','C');		
-		$this->Cell(63,5, 'Signature','LRB','C');		
+		$this->Cell(73,5, 'Name: ' . $qa_user->approved_name_3, 'LB','C');		
+		$this->Cell(76,5, 'Company:' . $qa_user->approved_company_3,'LB','C');		
+		$this->Cell(63,5, 'Position:' . $qa_user->approved_position_3,'LB','C');		
+		$this->Cell(63,5, 'Signature:','LRB','C');		
+    	if (!is_null($qa_user->approved_sign_3)) {
+    		$this->Image($qa_user->approved_sign_3, $this->GetX()-40, $this->GetY()+0.5, $sign_width,0,'png');
+    	}
 
 		$this->Ln();
-		$this->Cell(73,5, 'Name', 'LB','C');		
-		$this->Cell(76,5, 'Company','LB','C');		
-		$this->Cell(63,5, 'Position','LB','C');		
-		$this->Cell(63,5, 'Signature','LRB','C');		
+		$this->Cell(73,5, 'Name: ' . $qa_user->approved_name_4, 'LB','C');		
+		$this->Cell(76,5, 'Company:' . $qa_user->approved_company_4,'LB','C');		
+		$this->Cell(63,5, 'Position:' . $qa_user->approved_position_4,'LB','C');		
+		$this->Cell(63,5, 'Signature:','LRB','C');		
+    	if (!is_null($qa_user->approved_sign_4)) {
+    		$this->Image($qa_user->approved_sign_4, $this->GetX()-40, $this->GetY()+0.4, $sign_width,0,'png');
+    	}
+
 	}
 	public function add(QAUser $qa_user){
 		$this->_header($qa_user);

@@ -221,7 +221,78 @@
                                 <button id="signature_1" type="button" class="btn btn-secondary btn-signature">
                                     {{ __('Sign') }}
                                 </button>                                                                                
+                                <input type="hidden" name="img_signature_1" id="img_signature_1" value="">
                                 <img class="ml-1" id="preview_signature_1" src="" style="width: 32%;" />
+                            </div>
+                        </div>
+                        <div class="form-group row">                            
+                            <div class="col-md-3">
+                                <label for="approved_name_2" class="col-form-label text-md-right">{{ __('Name:') }}</label>
+                                <input id="approved_name_2" type="text" class="form-control" name="approved_name_2" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_company_2" class="col-form-label text-md-right">{{ __('Company:') }}</label>
+                                <input id="approved_company_2" type="text" class="form-control" name="approved_company_2" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_2" class="col-form-label text-md-right">{{ __('Position:') }}</label>
+                                <input id="approved_position_2" type="text" class="form-control" name="approved_position_2" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_2" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
+                                <br>                                
+                                <button id="signature_2" type="button" class="btn btn-secondary btn-signature">
+                                    {{ __('Sign') }}
+                                </button>                                       
+                                <input type="hidden" name="img_signature_2" id="img_signature_2" value="">                                         
+                                <img class="ml-1" id="preview_signature_2" src="" style="width: 32%;" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">                            
+                            <div class="col-md-3">
+                                <label for="approved_name_3" class="col-form-label text-md-right">{{ __('Name:') }}</label>
+                                <input id="approved_name_3" type="text" class="form-control" name="approved_name_3" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_company_3" class="col-form-label text-md-right">{{ __('Company:') }}</label>
+                                <input id="approved_company_3" type="text" class="form-control" name="approved_company_3" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_3" class="col-form-label text-md-right">{{ __('Position:') }}</label>
+                                <input id="approved_position_3" type="text" class="form-control" name="approved_position_3" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_3" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
+                                <br>                                
+                                <button id="signature_3" type="button" class="btn btn-secondary btn-signature">
+                                    {{ __('Sign') }}
+                                </button>
+                                <input type="hidden" name="img_signature_3" id="img_signature_3" value="">                                                                                
+                                <img class="ml-1" id="preview_signature_3" src="" style="width: 32%;" />
+                            </div>
+                        </div>
+                        <div class="form-group row">                            
+                            <div class="col-md-3">
+                                <label for="approved_name_4" class="col-form-label text-md-right">{{ __('Name:') }}</label>
+                                <input id="approved_name_4" type="text" class="form-control" name="approved_name_4" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_company_4" class="col-form-label text-md-right">{{ __('Company:') }}</label>
+                                <input id="approved_company_4" type="text" class="form-control" name="approved_company_4" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_4" class="col-form-label text-md-right">{{ __('Position:') }}</label>
+                                <input id="approved_position_4" type="text" class="form-control" name="approved_position_4" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_4" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
+                                <br>                                
+                                <button id="signature_4" type="button" class="btn btn-secondary btn-signature">
+                                    {{ __('Sign') }}
+                                </button>                                 
+                                <input type="hidden" name="img_signature_4" id="img_signature_4" value="">                                               
+                                <img class="ml-1" id="preview_signature_4" src="" style="width: 32%;" />
                             </div>
                         </div>
 
@@ -251,12 +322,10 @@
         </button>
       </div>
       <div class="modal-body">
-            <div class="form-group alert alert-success" role="alert" id="groupFriday">
+            <div class="form-group alert alert-success" role="alert">
                 <h4 style="text-align: center;">Signature</h4>
                     <div class="form-row" style="text-align: center;">
-                        <div class="col-md-12 mb-3">
-
-                            <input type="hidden" name="img_signature_1" id="img_signature_1" value="">
+                        <div class="col-md-12 mb-3">                            
                             <div id="div_signature_1" class="div-signature"></div>
 
                             <input type="button" value="Clear" id="div_signature_1" class="btn btn-danger btn-clear-sign" >
@@ -268,10 +337,102 @@
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary btn-save-sign" id="save_signature_1" data-dismiss="modal" >Save & Close</button>
       </div>
     </div>
   </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" id="modal_signature_2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Signature 2</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group alert alert-success" role="alert">
+                <h4 style="text-align: center;">Signature</h4>
+                    <div class="form-row" style="text-align: center;">
+                        <div class="col-md-12 mb-3">
+                            
+                            <div id="div_signature_2" class="div-signature"></div>
+
+                            <input type="button" value="Clear" id="div_signature_2" class="btn btn-danger btn-clear-sign" >
+
+                            <script>
+                            </script>
+                        </div>
+                    </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-save-sign" id="save_signature_2" data-dismiss="modal" >Save & Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal_signature_3">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Signature 3</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group alert alert-success" role="alert">
+                <h4 style="text-align: center;">Signature</h4>
+                    <div class="form-row" style="text-align: center;">
+                        <div class="col-md-12 mb-3">
+
+                            
+                            <div id="div_signature_3" class="div-signature"></div>
+
+                            <input type="button" value="Clear" id="div_signature_3" class="btn btn-danger btn-clear-sign" >
+
+                            <script>
+                            </script>
+                        </div>
+                    </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-save-sign" id="save_signature_3" data-dismiss="modal" >Save & Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal_signature_4">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Signature 4</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group alert alert-success" role="alert">
+                <h4 style="text-align: center;">Signature</h4>
+                    <div class="form-row" style="text-align: center;">
+                        <div class="col-md-12 mb-3">                            
+                            <div id="div_signature_4" class="div-signature"></div>
+                            <input type="button" value="Clear" id="div_signature_4" class="btn btn-danger btn-clear-sign" >
+                            <script>
+                            </script>
+                        </div>
+                    </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-save-sign" id="save_signature_4" data-dismiss="modal" >Save & Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 

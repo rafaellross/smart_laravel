@@ -15,16 +15,16 @@ class CreateQAUserActivitiesTable extends Migration
     {
         Schema::create('q_a_user_activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('qa_type');
-            $table->integer('order');            
-            $table->string('description');
-            $table->string('at', 1);
-            $table->string('requirements');
-            $table->string('reference');
-            $table->string('installed_by');
+            $table->unsignedInteger('qa_type')->nullable();
+            $table->integer('order')->nullable();
+            $table->string('description')->nullable();
+            $table->string('at', 1)->nullable();
+            $table->string('requirements')->nullable();
+            $table->string('reference')->nullable();
+            $table->string('installed_by')->nullable();
             $table->string('yes_no');            
-            $table->string('checked_by');
-            $table->date('activity_date');
+            $table->string('checked_by')->nullable();
+            $table->date('activity_date')->nullable();
             $table->timestamps();            
 
         });

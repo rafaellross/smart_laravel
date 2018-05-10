@@ -127,42 +127,40 @@ $(document).ready(function () {
         "signature_3": {
             "div": $("#div_signature_3"),
             "modal": $("#modal_signature_3"),
-            "hidden": $("#img_signature_2"),
+            "hidden": $("#img_signature_3"),
             "opened": false
         },
         "signature_4": {
             "div": $("#div_signature_4"),
             "modal": $("#modal_signature_4"),
-            "hidden": $("#img_signature_2"),
+            "hidden": $("#img_signature_4"),
             "opened": false
         }
     };
 
     $('.btn-signature').click(function () {
+
         signatures[this.id].modal.modal('show');
 
         if (!signatures[this.id].opened) {
             signatures[this.id].div.jSignature(); // inits the jSignature widget.
-            //signatures[this.id].opened = true;
+            signatures[this.id].div.jSignature("setData", signatures[this.id].hidden.val());
+            signatures[this.id].opened = true;
         }
     });
 
-    $(".div-signature").bind('change', function (e) {
-        var $sigdiv = $(this);
-        var img = $sigdiv.jSignature("getData", "svgbase64");
-        var preview = this.id.replace("div", "preview", 1);
-        $('#' + preview).attr('src', 'data:' + img[0] + "," + img[1]);
-        $('#' + preview.replace("preview", "img", 1)).val('data:' + img[0] + "," + img[1]);
+    $('.btn-save-sign').click(function () {
+        var signature = this.id.replace("save", "");
+        var div = $("#div" + signature);
+        var img = div.jSignature("getData");
+        $('#preview' + signature).attr('src', img);
+        $('#img' + signature).val(img);
     });
 
     // after some doodling...
     $('.btn-clear-sign').click(function () {
         var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
         $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
-    });
-
-    $('form').submit(function () {
-        $('#img_signature_1').val($sigdiv.jSignature("getData"));
     });
 });
 

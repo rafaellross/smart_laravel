@@ -15,8 +15,9 @@ class QATypeTableSeeder extends Seeder
 			["description" => "Fire Collars", "title" => "Fire Collars"],
 			["description" => "Fire Hydrants", "title" => "Fire Hydrants"],
 			["description" => "Gas Meter", "title" => "Gas Meter"],
+            ["description" => "Gas Rough In", "title" => "Gas Rough In"],
+            ["description" => "Hot Water Unit", "title" => "Hot Water Unit"],
 			["description" => "Fire Hose Reels", "title" => "Fire Hose Reels"]
-    	]);
-        
+    	]);        
     }
 }
