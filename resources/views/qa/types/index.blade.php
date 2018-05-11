@@ -7,7 +7,7 @@
     <hr/>
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">                 
-            <button href="{{ URL::to('/qa_types/create') }}" class="btn btn-primary">Create New</button>                
+            <a href="{{ URL::to('/qa_types/create') }}" class="btn btn-primary">Create New</a>                
             <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
         </div>
 
