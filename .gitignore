@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-!/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
+/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
 !.gitignore
 /.idea
 /.vscode
