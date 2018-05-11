@@ -65,6 +65,7 @@
                             </a>
                             <div class="dropdown-menu dropright" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Time Sheets</a>
+                                @if (isset(Auth::user()->tester) && Auth::user()->tester)
                                 <a class="dropdown-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="padding-left: 24px;">
                                         Q.A Forms <span class="caret"></span>
@@ -74,7 +75,7 @@
                                         <a class="dropdown-item" href="{{URL::to('/qa_types')}}">{{ __('Q.A Types') }}</a>
                                     </div>
                                 </a>
-
+                                @endif
                                 <a class="dropdown-item" href="{{ URL::to('/employee_application') }}" style="display: none;">Employee Application</a>
                             </div>
                         </li>

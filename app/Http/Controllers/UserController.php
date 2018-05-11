@@ -53,6 +53,7 @@ class UserController extends Controller
         }
         
         $user->administrator = is_null($request->get('administrator')) ? 0 : $request->get('administrator');
+        $user->tester        = $request->get("tester");
         $user->save();
         return redirect('/users')->with('success', 'User has been updated');
     }
