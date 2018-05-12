@@ -137,55 +137,52 @@
                         <h4 class="text-center">
                             <strong>Activities</strong>
                         </h4>
-                            <table class="table table-responsive-sm table-striped">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Activity</th>
-                                  <th scope="col">A/T</th>
-                                  <th scope="col">Criteria Requirements</th>
-                                  <th scope="col">Reference</th>
-                                  <th scope="col">Yes/No</th>
-                                  <th scope="col">Installed By</th>
-                                  <th scope="col">Checked By</th>
-                                  <th scope="col">Date</th>
-                                </tr>
-                              </thead>
-                              <tbody>
+                        <div class="row text-center font-weight-bold card-header mb-1">                                                          
+                              <div class="col-md-3">Activity</div>
+                              <div class="col-md-1">A/T</div>
+                              <div class="col-md-3">Criteria Requirements</div>
+                              <div class="col-md-1 px-0">Reference</div>
+                              <div class="col-md-1 px-0">Yes/No</div>
+                              <div class="col-md-1 px-0">Installed By</div>
+                              <div class="col-md-1 px-0">Checked By</div>
+                              <div class="col-md-1 px-0">Date</div>                            
+                        </div>         
+
                                 @foreach($qa_type->activities as  $key => $activity)
                                     <input type="hidden" name="activities[{{$key}}][description]" value="{{$activity->description}}" required/>
                                     <input type="hidden" name="activities[{{$key}}][requirements]" value="{{$activity->requirements}}" required/>
                                     <input type="hidden" name="activities[{{$key}}][at]" value="{{$activity->at}}" required/>
                                     <input type="hidden" name="activities[{{$key}}][order]" value="{{$activity->order}}" required/>
-                                    <tr>                                  
-                                        <td>                                        
-                                            {{$activity->description}}
-                                        </td>
-                                        <td>
-                                            {{$activity->at}}
-                                        </td>
-                                        <td>
-                                            {{$activity->requirements}}
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="activities[{{$key}}][reference]" value=""/>
-                                        </td>
-                                        <td>
-                                            <select name="activities[{{$key}}][yes_no]" class="form-control">
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input id="title" type="text" class="form-control" name="activities[{{$key}}][installed_by]" value="">                                        
-                                        </td>                                        
-                                        <td>
-                                            <input id="title" type="text" class="form-control" name="activities[{{$key}}][checked_by]" value="">                                        
-                                        </td>                                        
-                                        <td>
-                                            <input id="title" type="text" class="form-control date-picker" name="activities[{{$key}}][activity_date]" value="">                                        
-                                        </td>                                        
+                            <div class="row mb-1 div-striped">                                                          
+                                    <div class="col-md-3 px-0">
+                                        ({{$activity->order}}) {{$activity->description}}
+                                    </div>
+                                  <div class="col-md-1 text-center px-0">
+                                    {{$activity->at}}
+                                  </div>
+                                  <div class="col-md-3 px-0">
+                                    {{$activity->requirements}}
+                                  </div>
+                                  <div class="col-md-1 px-0">
+                                      <input type="text" class="form-control px-1" name="activities[{{$key}}][reference]" value="{{ $activity->reference }}"/>
+                                  </div>
+                                  <div class="col-md-1 px-0">
+                                        <select name="activities[{{$key}}][yes_no]" class="form-control">
+                                            <option value="yes" {{$activity->yes_no == 'yes' ? 'selected' : ''}}>Yes</option>
+                                            <option value="no" {{$activity->yes_no == 'no' ? 'selected' : ''}}>No</option>
+                                        </select>                                      
+                                  </div>
+                                  <div class="col-md-1 px-0">
+                                        <input id="title" type="text" class="form-control" name="activities[{{$key}}][installed_by]" value="{{ $activity->installed_by }}"/">                                        
+                                  </div>
+                                  <div class="col-md-1 px-0">
+                                        <input id="title" type="text" class="form-control" name="activities[{{$key}}][checked_by]" value="{{ $activity->checked_by }}"">                                        
+                                  </div>
+                                  <div class="col-md-1 px-0">
+                                        <input id="title" type="text" class="form-control date-picker px-0" name="activities[{{$key}}][activity_date]" value="{{ Carbon::parse($activity->activity_date)->format('d/m/Y') }}">                                        
+                                  </div>                            
+                            </div>                
 
-                                    </tr>                            
                                 @endforeach
                               </tbody>
                             </table>

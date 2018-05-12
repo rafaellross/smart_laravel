@@ -16,7 +16,7 @@ class CheckTester
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->tester) {
+        if (!isset(Auth::user()->tester) || !Auth::user()->tester) {
             return redirect('/home');
         }        
         return $next($request);

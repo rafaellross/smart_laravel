@@ -142,11 +142,11 @@
                               <div class="col-md-3">Activity</div>
                               <div class="col-md-1">A/T</div>
                               <div class="col-md-3">Criteria Requirements</div>
-                              <div class="col-md-1">Reference</div>
-                              <div class="col-md-1">Yes/No</div>
-                              <div class="col-md-1">Installed By</div>
-                              <div class="col-md-1">Checked By</div>
-                              <div class="col-md-1">Date</div>                            
+                              <div class="col-md-1 px-0">Reference</div>
+                              <div class="col-md-1 px-0">Yes/No</div>
+                              <div class="col-md-1 px-0">Installed By</div>
+                              <div class="col-md-1 px-0">Checked By</div>
+                              <div class="col-md-1 px-0">Date</div>                            
                         </div>         
                         @foreach($qa_user->activities as  $key => $activity)     
                             <input type="hidden" name="activities[{{$key}}][description]" value="{{$activity->description}}" required/>
@@ -154,28 +154,28 @@
                             <input type="hidden" name="activities[{{$key}}][at]" value="{{$activity->at}}" required/>
                             <input type="hidden" name="activities[{{$key}}][order]" value="{{$activity->order}}" required/>                          
                             <div class="row mb-1 div-striped">                                                          
-                                    <div class="col-md-3 px-1">
-                                        ({{$activity->order}}){{$activity->description}}
+                                    <div class="col-md-3 px-0">
+                                        ({{$activity->order}}) {{$activity->description}}
                                     </div>
-                                  <div class="col-md-1 text-center px-1">
+                                  <div class="col-md-1 text-center px-0">
                                     {{$activity->at}}
                                   </div>
-                                  <div class="col-md-3 px-1">
+                                  <div class="col-md-3 px-0">
                                     {{$activity->requirements}}
                                   </div>
-                                  <div class="col-md-1">
+                                  <div class="col-md-1 px-0">
                                       <input type="text" class="form-control px-1" name="activities[{{$key}}][reference]" value="{{ $activity->reference }}"/>
                                   </div>
-                                  <div class="col-md-1 px-1">
+                                  <div class="col-md-1 px-0">
                                         <select name="activities[{{$key}}][yes_no]" class="form-control">
                                             <option value="yes" {{$activity->yes_no == 'yes' ? 'selected' : ''}}>Yes</option>
                                             <option value="no" {{$activity->yes_no == 'no' ? 'selected' : ''}}>No</option>
                                         </select>                                      
                                   </div>
-                                  <div class="col-md-1 px-1">
+                                  <div class="col-md-1 px-0">
                                         <input id="title" type="text" class="form-control" name="activities[{{$key}}][installed_by]" value="{{ $activity->installed_by }}"/">                                        
                                   </div>
-                                  <div class="col-md-1 px-1">
+                                  <div class="col-md-1 px-0">
                                         <input id="title" type="text" class="form-control" name="activities[{{$key}}][checked_by]" value="{{ $activity->checked_by }}"">                                        
                                   </div>
                                   <div class="col-md-1 px-0">
