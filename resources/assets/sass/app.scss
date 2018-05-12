@@ -90,3 +90,10 @@ label {
 .div-striped:hover {
   background-color: rgba(0, 0, 0, 0.075);
 }
+
+.nav-item .dropdown-item, .dropdown-menu, .list-group-item {
+    padding: 0.5rem 1rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;  
+}
