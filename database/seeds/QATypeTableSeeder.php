@@ -19,12 +19,10 @@ class QATypeTableSeeder extends Seeder
 			["description" => "Default", "title" => "Gas Meter"],
             ["description" => "Default", "title" => "Gas Rough In"],
             ["description" => "Default", "title" => "Hot Water Unit"],
-			["description" => "Default", "title" => "Fire Hose Reels"],
-            ["description" => "Default", "title" => "Gas Rough In"],
+			["description" => "Default", "title" => "Fire Hose Reels"],            
             ["description" => "Default", "title" => "Gas"],
 
-            ["description" => "Default", "title" => "Hot Water Meter"],
-            ["description" => "Default", "title" => "Hot Water Unit"],
+            ["description" => "Default", "title" => "Hot Water Meter"],            
             ["description" => "Default", "title" => "Hot Water"],
 
             ["description" => "Default", "title" => "Hydrant Inground"],

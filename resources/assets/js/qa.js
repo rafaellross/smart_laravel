@@ -1,13 +1,14 @@
 $(document).ready(function() {
 
-		let activities = 1;
+	let activities = $(".row-act").length + 1;
+
 	$('#addActivity').click(function() {
 		let activity = `
-		<div id="row-act-` + activities + `">
+		<div id="row-act-` + activities + `" class="row-act">
             <div class="form-group row">
                 <label for="activities[` + activities + `]" class="col-md-4 col-form-label text-md-right">Activity:</label>
                 <div class="col-md-6">
-                    <input id="activities[` + activities + `][description]" type="text" class="form-control" name="activities[`+activities+`][description]" value="" required>                                
+                    <input id="activities[` + activities + `][description]" type="text" class="form-control" name="activities[`+activities+`][description]" value="" />                                
                 </div>
             </div>        
             <div class="form-group row">
@@ -29,13 +30,13 @@ $(document).ready(function() {
             <div class="form-group row">
                 <label for="activities[` + activities + `][requirements]" class="col-md-4 col-form-label text-md-right">Criteria Requirements:</label>
                 <div class="col-md-6">
-                    <input id="activities[` + activities + `][requirements]" type="text" class="form-control" name="activities[`+activities+`][requirements]" value="" required>                                
+                    <input id="activities[` + activities + `][requirements]" type="text" class="form-control" name="activities[`+activities+`][requirements]" value=""/>                                
                 </div>
             </div>                            
             <div class="form-group row">
                 <label for="activities[` + activities + `][order]" class="col-md-4 col-form-label text-md-right">Order:</label>
                 <div class="col-md-6">
-                    <input id="activities[` + activities + `][order]" type="number" class="form-control order" name="activities[`+activities+`][order]" value="`+activities+`" required>                                
+                    <input id="activities[` + activities + `][order]" type="number" class="form-control order" name="activities[`+activities+`][order]" value="`+activities+`" />                                
                 </div>
             </div>                            
 
@@ -53,6 +54,9 @@ $(document).ready(function() {
 
 	$(document).on('click', '.btn-remove-act', function() {
 		$("#row-" + this.id).remove();
+        if (activities > 0) {
+            activities--;    
+        }    
 	});
 
     $(document).on('click', '.order', function() {

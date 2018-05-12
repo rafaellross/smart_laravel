@@ -16,10 +16,10 @@ class CreateQAActivitiesTable extends Migration
         Schema::create('q_a_activities', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('qa_type');
-            $table->integer('order');            
-            $table->string('description');
-            $table->string('at', 1);
-            $table->string('requirements');
+            $table->integer('order')->nullable();
+            $table->string('description')->nullable();
+            $table->string('at', 1)->nullable();
+            $table->string('requirements')->nullable();
             $table->timestamps();
             $table->foreign('qa_type')->references('id')->on('q_a_types')->onDelete('cascade');
         });

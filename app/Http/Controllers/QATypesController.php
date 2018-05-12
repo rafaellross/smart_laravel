@@ -108,7 +108,7 @@ class QATypesController extends Controller
             }
         }
 
-        return redirect('/qa_types')->with('success', 'Q.A Type has been updated');
+        return redirect('/qa_types')->with('success', 'Q.A ' . $qa_type->title . ' has been updated');
     }
 
     /**
