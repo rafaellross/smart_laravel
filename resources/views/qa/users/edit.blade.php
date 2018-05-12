@@ -105,7 +105,7 @@
                                 <label for="foreman" class="col-form-label text-md-right">{{ __('Foreman:') }}</label>
                                 <select class="form-control" name="foreman">
                                        <option value="">Select Foreman</option>
-                                    @foreach(App\employee::where('foreman', 1)->get() as $employee)
+                                    @foreach(App\Employee::where('foreman', 1)->get() as $employee)
                                         <option value="{{$employee->id}}" {{ $qa_user->foreman == $employee->id ? 'selected' : '' }}>{{$employee->name}}</option>
                                     @endforeach
                                 </select>
