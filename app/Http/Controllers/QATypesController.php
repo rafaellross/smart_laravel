@@ -15,7 +15,7 @@ class QATypesController extends Controller
      */
     public function index()
     {        
-        return view('qa.types.index', ['qa_types' => QATypes::all()]);
+        return view('qa.types.index', ['qa_types' => QATypes::orderBy('title', 'asc')->get()]);
     }
 
     /**

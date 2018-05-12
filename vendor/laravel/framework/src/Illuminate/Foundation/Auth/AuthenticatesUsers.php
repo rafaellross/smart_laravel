@@ -141,7 +141,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'username2';
+        return 'username';
     }
 
     /**
