@@ -33,7 +33,7 @@ class QAUser extends Model
 
     public function photos(){
 
-        return $this->hasMany('App\QAUserPhoto', 'qa_user');
+        return $this->hasMany('App\QAUserPhoto', 'qa_user')->orderBy('photo_number');;
     }
 
 
