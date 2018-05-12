@@ -151,8 +151,8 @@ class QAUserReport extends Fpdf
 
 	public function _comments(QAUser $qa_user){
 		$this->Cell(275,5, 'COMMENTS','T','C');		
-		$this->Line(10, 115, 10, 173);
-		$this->Line(285, 115, 285, 173);
+		$this->Line(10, 115, 10, 175);
+		$this->Line(285, 115, 285, 175);
 		
 		$this->Ln();
 		$this->SetLeftMargin(12);
@@ -165,7 +165,7 @@ class QAUserReport extends Fpdf
 	}
 
 	public function _approvals(QAUser $qa_user){
-		$this->SetY(173);		
+		$this->SetY(175);		
 		$sign_width = 23;
 		$this->Cell(275,5, 'Approved By',1,'C');		
 		$this->Ln();
