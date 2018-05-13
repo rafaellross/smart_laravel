@@ -122,7 +122,7 @@
 
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 mb-3">
-                                <input type="text" class="form-control form-control-lg date-picker" name="empDate" id="empDate" required value="{{Carbon::now()->format('d/m/Y')}}">
+                                <input type="text" class="form-control form-control-lg date-picker" name="empDate" id="empDate" required value="{{Carbon::now('Australia/Sydney')->format('d/m/Y')}}">
                             </div>
                         </div>
                 </div>
