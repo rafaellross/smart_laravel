@@ -52,6 +52,10 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+             'options' => array(
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET time_zone = \'+10:00\''
+            )
+            
         ],
 
         'pgsql' => [
