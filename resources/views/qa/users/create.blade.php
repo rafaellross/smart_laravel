@@ -257,9 +257,9 @@
                         <div class="col-md-12 mb-3">
 
                             <input type="hidden" name="img_signature_1" id="img_signature_1" value="">
-                            <div id="div_signature_1"></div>
+                            <div id="div_signature_1" class="div-signature"></div>
 
-                            <input type="button" value="Clear" id="btnClearSign" class="btn btn-danger" >
+                            <input type="button" value="Clear" id="div_signature_1" class="btn btn-danger btn-clear-sign" >
 
                             <script>
                             </script>

@@ -77,41 +77,55 @@ $(document).ready(function() {
         }            
     });          
 
-    let signatures = {
-        
+    let signatures = {    
         "signature_1" : {
             "div": $("#div_signature_1"),
             "modal": $("#modal_signature_1"),
+            "hidden": $("#img_signature_1"),
+            "opened": false
+        },
+        "signature_2" : {
+            "div": $("#div_signature_2"),
+            "modal": $("#modal_signature_2"),
+            "hidden": $("#img_signature_2"),
+            "opened": false
+        },
+        "signature_3" : {
+            "div": $("#div_signature_3"),
+            "modal": $("#modal_signature_3"),
+            "hidden": $("#img_signature_2"),
+            "opened": false
+        },
+        "signature_4" : {
+            "div": $("#div_signature_4"),
+            "modal": $("#modal_signature_4"),
+            "hidden": $("#img_signature_2"),
             "opened": false
         }
-    
     };
-    console.log(signatures);
-    var $sigdiv = $("#div_signature_1");
 
-    $('.btn-signature').click(function(){            
-        signatures
-        $('#modal_' + this.id).modal('show');                
-        if (!opened) {
-            
-            $sigdiv.jSignature(); // inits the jSignature widget.
-            opened = true;            
-        }
-        
 
+    $('.btn-signature').click(function(){                    
+        signatures[this.id].modal.modal('show');
+                   
+        if (!signatures[this.id].opened) {            
+            signatures[this.id].div.jSignature(); // inits the jSignature widget.
+            //signatures[this.id].opened = true;
+        }      
     }); 
 
-    $("#div_signature_1").bind('change', function(e){ 
-        var $sigdiv = $("#div_signature_1");
+    $(".div-signature").bind('change', function(e){ 
+        var $sigdiv = $(this);
         var img = $sigdiv.jSignature("getData", "svgbase64");
-        console.log(img);
-        //data:image/png;base64,
-        $('#preview_signature_1').attr('src', 'data:' + img[0] + "," + img[1]);                 
+        var preview = this.id.replace("div", "preview", 1);
+        $('#' + preview).attr('src', 'data:' + img[0] + "," + img[1]);                 
+        $('#' + preview.replace("preview", "img", 1)).val('data:' + img[0] + "," + img[1]);                 
     });
     
 
     // after some doodling...
-    $('#btnClearSign').click(function(){
+    $('.btn-clear-sign').click(function(){
+        var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
         $sigdiv.jSignature("reset") // clears the canvas and rerenders the decor on it.
     });
 
