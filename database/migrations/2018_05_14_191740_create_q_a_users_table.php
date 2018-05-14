@@ -18,7 +18,7 @@ class CreateQAUsersTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('location');
-            $table->unsignedInteger('qa_type');
+            $table->integer('qa_type');
             $table->string('revision');
             $table->date('update_date');
             $table->string('project')->nullable();
