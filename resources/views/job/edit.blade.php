@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register Job') }}</div>
+                <div class="card-header">{{ __('Edit Job') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{action('JobController@update', $id)}}">

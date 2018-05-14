@@ -23,6 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('last_time_sheet_id')->nullable();
             $table->float('bonus')->default(0);
             $table->string('phone');
+            $table->boolean('foreman')->default(false);
             $table->timestamps();
         });
     }

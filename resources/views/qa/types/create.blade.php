@@ -1,31 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="{{ asset('js/qa.js') }}"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Create New Job') }}</div>
+                <div class="card-header">{{ __('Create New Q.A Type') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('jobs.store') }}">
+                    <form method="POST" action="{{ route('qa_types.store') }}">
                         @csrf
                         <div class="form-group row">
-                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Code') }}</label>
-
+                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Title:') }}</label>
                             <div class="col-md-6">
-                                <input id="code" type="text" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" value="{{ old('code') }}" required autofocus>
-
-                                @if ($errors->has('code'))
+                                <input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}" required>
+                                @if ($errors->has('title'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('code') }}</strong>
+                                        <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description:') }}</label>
                             <div class="col-md-6">
                                 <input id="description" type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') }}" required>
                                 @if ($errors->has('description'))
@@ -35,23 +33,26 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
-                            <div class="col-md-6">
-                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}">
-                                @if ($errors->has('address'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('address') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+
+                        <hr/>
+                        <h4 class="text-center">
+                            <strong>Activities</strong>
+                        </h4>
+                        <div id="activities">
+                        </div>
+                        <hr/>                                                
+                        <div class="col-md-5 col-12 mb-3">
+                            <button type="button" class="btn btn-success" id="addActivity">Add Activity</button>
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-5 offset-md-7">
+                                <button type="submit" class="btn btn-danger">
+                                    {{ __('Cancel') }}
+                                </button>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Create') }}
-                                </button>
+                                </button>                                
                             </div>
                         </div>
                     </form>

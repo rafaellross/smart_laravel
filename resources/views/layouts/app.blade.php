@@ -63,9 +63,18 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Modules
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropright" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Time Sheets</a>
-                                <div class="dropdown-divider"></div>                                
+                                <a class="dropdown-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="padding-left: 24px;">
+                                        Q.A Forms <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{URL::to('/qa_users')}}">{{ __('Q.A') }}</a>
+                                        <a class="dropdown-item" href="{{URL::to('/qa_types')}}">{{ __('Q.A Types') }}</a>
+                                    </div>
+                                </a>
+
                                 <a class="dropdown-item" href="{{ URL::to('/employee_application') }}" style="display: none;">Employee Application</a>
                             </div>
                         </li>

@@ -28,3 +28,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.js('resources/assets/js/custom.js', 'public/js');
 mix.js('resources/assets/js/employee_application.js', 'public/js');
+mix.js('resources/assets/js/qa.js', 'public/js');

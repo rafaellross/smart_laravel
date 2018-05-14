@@ -20,12 +20,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['administrator']], function () {
 	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
+	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
+
+	Route::get('/qa_users/create/{type_id}', 'QAUserController@create');
+	
 	Route::get('/jobs/action/{id}/{action}/{status?}', 'JobController@action');	
 	Route::resource('employees', 'EmployeeController');
-
 	Route::resource('jobs', 'JobController');
 	Route::get('/users/action/{id}/{action}/{status?}', 'UserController@action');
 	Route::resource('users', 'UserController', ['except' => ['edit','update']]);
+	Route::resource('qa_types', 'QATypesController');
+	Route::resource('qa_users', 'QAUserController');
 });	
 
 
