@@ -27,6 +27,14 @@
                         <h5>Week End:</h5>
                     </label>
                     <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{ Carbon::parse($timesheet->week_end)->format('d/m/Y') }}">
+                    @if ($errors->has('week_end'))
+                        <span class="invalid-feedback" style="display: block;">
+                            @foreach ($errors->all() as $error)
+                                <strong>{{ $error }}</strong>
+                                <br>
+                            @endforeach                                                        
+                        </span>
+                    @endif                    
                 </div>
                 <?php
                     $jobDB = App\Job::select('id', 'code','description')->get();            

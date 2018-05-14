@@ -184,6 +184,10 @@ class TimeSheetReport extends Fpdf
 	    	unset($listHours["pld"]);
 	    }
 
+	    if (isset($listHours["anl"])) {
+	    	unset($listHours["anl"]);
+	    }
+
 	    if ($timeSheet->rdoTaken()->integer > 0) {
 	    	if (isset($listHours["001"])) {
 	    		$listHours["001"] += $timeSheet->rdoTaken()->integer;
@@ -328,9 +332,7 @@ class TimeSheetReport extends Fpdf
 					$this->Image($certificate->certificate_img, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));							
 			}		
 		}
-
-		
-		
+			
 		return $this;		       
 	}
 

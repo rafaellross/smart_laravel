@@ -97,8 +97,13 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
+        $this->validate(request(), [
+            'week_end' => 'required|date_format:d/m/Y'
+        ]);
         
         foreach ($request->get('employees') as $employee_id) {
+
 
             $timeSheet = new TimeSheet();
             $timeSheet->emp_signature   = $request->get('emp_signature');
@@ -117,10 +122,6 @@ class TimeSheetController extends Controller
             $timeSheet->user_id         = Auth::id();
             $timeSheet->status          = $request->get('status');
             $timeSheet->save();        
-            $employee = Employee::find($timeSheet->employee_id);
-            $employee->last_time_sheet_dt = $timeSheet->week_end;
-            $employee->last_time_sheet_id = $timeSheet->id;
-            $employee->save();
 
             
             foreach ($request->get('days') as $key => $day) {
@@ -210,6 +211,9 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate(request(), [
+            'week_end' => 'required|date_format:d/m/Y'
+        ]);
 
         $timeSheet = TimeSheet::find($id);        
         
@@ -228,10 +232,6 @@ class TimeSheetController extends Controller
         $timeSheet->user_id         = Auth::id();
         $timeSheet->status          = $request->get('status');
         $timeSheet->save();        
-        $employee = Employee::find($timeSheet->employee_id);
-        $employee->last_time_sheet_dt = $timeSheet->week_end;
-        $employee->last_time_sheet_id = $timeSheet->id;
-        $employee->save();
 
         foreach ($timeSheet->days as $day) {
                 foreach ($day->dayJobs as $job) {
@@ -302,9 +302,6 @@ class TimeSheetController extends Controller
     public function destroy($id)
     {
         $timesheet = TimeSheet::find($id);
-        $employee = Employee::find($timesheet->employee_id);
-        $employee->last_time_sheet_dt = null;
-        $employee->last_time_sheet_id = null;
         $timesheet->delete();
         return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
     }
@@ -318,10 +315,6 @@ class TimeSheetController extends Controller
             case 'delete':
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
-                    $employee = Employee::find($timesheet->employee_id);
-                    $employee->last_time_sheet_dt = null;
-                    $employee->last_time_sheet_id = null;
-                    $employee->save();
                     $timesheet->delete();
 
                 }                
