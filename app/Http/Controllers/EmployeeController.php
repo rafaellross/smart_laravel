@@ -19,7 +19,7 @@ class EmployeeController extends Controller
                         "select emp.id, 
                                 emp.name, 
                                 emp.phone,
-                                (select id from time_sheets where employee_id = emp.id order by id desc limit 1) as last_timesheet
+                                (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) order by id desc limit 1) as last_timesheet
                                 from employees emp                          
                                 order by emp.name asc
                          ") 
@@ -48,8 +48,8 @@ class EmployeeController extends Controller
     {
         
         $employee = $this->validate(request(), [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20|unique:employees',            
+            'name' => 'required|string|max:255'
+            
         ]);
 
         $employee = new Employee();

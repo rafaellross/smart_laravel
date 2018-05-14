@@ -86,6 +86,11 @@ $(document).ready(function () {
         }, 3000);
     }
 
+    $('form').not('#timesheet_form').submit(function (event) {
+        /* Act on the event */
+        $('#modalLoading').modal('show');
+    });
+
     $('#flash-message').fadeOut(5000);
 
     function addMinutes(time, minsToAdd) {

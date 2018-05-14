@@ -24,13 +24,14 @@ class TimeSheetController extends Controller
      */
     public function index($status = null)
     {
-        if (is_null($status) || $status == "all") {
+        if (is_null($status)) {
             if (Auth::user()->administrator) {
                 $timesheets = DB::table('time_sheets')
                               ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
                               ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
+                              ->where('status', '=', 'P')
                               ->get();
                 
             } else {
@@ -40,6 +41,7 @@ class TimeSheetController extends Controller
                                 ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                                 ->orderBy('employees.name')
                                 ->where('user_id', '=', Auth::user()->id)
+                                ->where('status', '=', 'P')
                                 ->get();
                 
                 
@@ -51,7 +53,7 @@ class TimeSheetController extends Controller
                               ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
-                              ->where('time_sheets.status', '=', $status)
+                              ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
                               ->get();
                 
             } else {
@@ -61,7 +63,7 @@ class TimeSheetController extends Controller
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
                               ->where('user_id', '=', Auth::user()->id)                              
-                              ->where('time_sheets.status', '=', $status)
+                              ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
                               ->get();                
             }            
 
@@ -177,11 +179,12 @@ class TimeSheetController extends Controller
     public function show($id)
     {
         
-        $timesheet = TimeSheetReport::find($id);
+        $timesheet = TimeSheet::find($id);
         
         
         $pdf = TimeSheetReport::add($timesheet);
-        $pdf->output();
+        $pdf->Open('doc.pdf');
+        $pdf->output('F', 'TimeSheets.pdf');
         exit;
     }
 
@@ -338,6 +341,7 @@ class TimeSheetController extends Controller
             case 'print':
                 
                 $report = new TimeSheetReport();
+                $report->SetCompression(true);
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
                     if ($timesheet) {
