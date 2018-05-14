@@ -4,7 +4,7 @@
         <div class="col-md-6 col-12 mb-3">
             <label>Start</label>
             
-            @if ($job->number === 1)
+            @if ($job->number == '1')
                 <select class="hour-start start-{{$job->number}} form-control form-control-lg custom-select start group_{{$weekDay->short}}_{{$job->number}}" id="{{$weekDay->short}}_start_{{$job->number}}" name="days[{{ $weekDay->short}}][{{$job->number}}][start]">
             @else
                 <select class="hour-start form-control form-control-lg custom-select start group_{{$weekDay->short}}_{{$job->number}}" id="{{$weekDay->short}}_start_{{$job->number}}" name="days[{{ $weekDay->short}}][{{$job->number}}][start]">
@@ -29,7 +29,7 @@
     <div class="form-row" style="text-align: center;">
         <div class="col-md-6 mb-3">
             <label>Job</label>
-            @if ($job->number === 1)   
+            @if ($job->number == '1')   
                 <select class="form-control form-control-lg custom-select job job-1 group_{{$weekDay->short}}_{{$job->number}}" id="{{$weekDay->short}}_job_{{$job->number}}" name="days[{{$weekDay->short}}][{{$job->number}}][job]">
             @else
                 <select class="form-control form-control-lg custom-select job group_{{$weekDay->short}}_{{$job->number}}" id="{{$weekDay->short}}_job_{{$job->number}}" name="days[{{$weekDay->short}}][{{$job->number}}][job]">
