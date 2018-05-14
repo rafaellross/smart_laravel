@@ -26,6 +26,7 @@ class CreateQAUsersTable extends Migration
             $table->string('unit_area')->nullable();
             $table->string('site_manager')->nullable();
             $table->unsignedInteger('foreman')->nullable();
+            $table->unsignedInteger('user_id');
             $table->string('distribution')->nullable();
             $table->text('comments')->nullable();
             $table->string('approved_name_1')->nullable();
@@ -49,6 +50,7 @@ class CreateQAUsersTable extends Migration
             $table->binary('approved_sign_4')->nullable();
             $table->timestamps();
             $table->foreign('foreman')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

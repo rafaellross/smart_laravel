@@ -313,9 +313,6 @@ class TimeSheetController extends Controller
     {        
 
         $ids = explode(",", $id);
-        if ($action == "delete") {
-            
-        }
 
         switch ($action) {
             case 'delete':

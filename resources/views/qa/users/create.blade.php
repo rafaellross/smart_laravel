@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="{{ asset('js/qa.js') }}"></script>
+
 <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">{{ __('Create New Q.A ' . $qa_type->title) }}</div>
@@ -137,7 +137,7 @@
                         <h4 class="text-center">
                             <strong>Activities</strong>
                         </h4>
-                            <table class="table">
+                            <table class="table table-responsive-sm table-striped">
                               <thead>
                                 <tr>
                                   <th scope="col">Activity</th>
@@ -189,12 +189,40 @@
                                 @endforeach
                               </tbody>
                             </table>
-                        
-                        <div id="activities">
+                            <hr/>
+                        <h4 class="text-center">
+                            <strong>Comments</strong>
+                        </h4>                        
+                        <div class="form-group">                            
+                            <textarea class="form-control" id="comments" name="comments" rows="3" style="resize: none;" maxlength="1432"></textarea>
                         </div>
+
                         <hr/>                                                
-                        <div class="col-md-5 col-12 mb-3">
-                            <button type="button" class="btn btn-success" id="addActivity">Add Activity</button>
+                        <h4 class="text-center">
+                            <strong>Approved By</strong>
+                        </h4>                        
+
+                        <div class="form-group row">                            
+                            <div class="col-md-3">
+                                <label for="approved_name_1" class="col-form-label text-md-right">{{ __('Name:') }}</label>
+                                <input id="approved_name_1" type="text" class="form-control" name="approved_name_1" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_company_1" class="col-form-label text-md-right">{{ __('Company:') }}</label>
+                                <input id="approved_company_1" type="text" class="form-control" name="approved_company_1" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_1" class="col-form-label text-md-right">{{ __('Position:') }}</label>
+                                <input id="approved_position_1" type="text" class="form-control" name="approved_position_1" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="approved_position_1" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
+                                <br>                                
+                                <button id="signature_1" type="button" class="btn btn-secondary btn-signature">
+                                    {{ __('Sign') }}
+                                </button>                                                                                
+                                <img class="ml-1" id="preview_signature_1" src="" style="width: 32%;" />
+                            </div>
                         </div>
 
                         <div class="form-group row mb-0">
@@ -213,4 +241,37 @@
         </div>
     </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" id="modal_signature_1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Signature 1</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group alert alert-success" role="alert" id="groupFriday">
+                <h4 style="text-align: center;">Signature</h4>
+                    <div class="form-row" style="text-align: center;">
+                        <div class="col-md-12 mb-3">
+
+                            <input type="hidden" name="img_signature_1" id="img_signature_1" value="">
+                            <div id="div_signature_1"></div>
+
+                            <input type="button" value="Clear" id="btnClearSign" class="btn btn-danger" >
+
+                            <script>
+                            </script>
+                        </div>
+                    </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
+

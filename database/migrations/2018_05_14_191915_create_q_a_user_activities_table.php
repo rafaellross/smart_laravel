@@ -22,6 +22,7 @@ class CreateQAUserActivitiesTable extends Migration
             $table->string('requirements');
             $table->string('reference');
             $table->string('installed_by');
+            $table->string('yes_no');            
             $table->string('checked_by');
             $table->date('activity_date');
             $table->timestamps();            

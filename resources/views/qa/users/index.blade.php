@@ -3,7 +3,7 @@
 @section('content')
 <script src="{{ asset('js/qa.js') }}"></script>
 <div class="container">
-    <h2 style="text-align: center;">Q.A Types</h2>
+    <h2 style="text-align: center;">Q.A Sign Off</h2>
     <hr/>
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">                 
@@ -12,14 +12,16 @@
         </div>
 
     </div> 
-    <table class="table table-hover table-responsive-sm">
+    <table class="table table-hover table-responsive-sm table-striped">
         <thead>
             <tr>
                 <th scope="col"><input type="checkbox" id="chkRow"></th>                          
                 <th scope="col">#</th>                
+                <th scope="col">User</th>             
                 <th scope="col">Q.A Type</th>                      
                 <th scope="col">Project</th>                      
                 <th scope="col">Customer</th>                      
+                <th scope="col">Site Manager</th>                      
                 <th scope="col">Update Date</th>                      
                 <th scope="col">Actions</th>                      
             </tr>
@@ -31,18 +33,21 @@
                             <input type="checkbox" id="chkRow-{{ $qa_user->id }}">
                         </th>
                         <td>{{ $qa_user->id }}</td>                    
-                        <td>{{ $qa_user->qa_type->title }}</td>                        
-                        <td>{{ $qa_user->project }}</td>                        
-                        project
-                        
+                        <td>{{ $qa_user->user->username }}</td>                    
+                        <td>{{ $qa_user->title }}</td>                                                
+                        <td>{{ $qa_user->job['description']}}</td>                                                                        
+                        <td>{{ $qa_user->site_manager}}</td>                                                                        
+                        <td>{{ $qa_user->customer}}</td>                                                                        
+                        <td>{{ Carbon::parse($qa_user->update_date)->format('d/m/Y')}}</td>                                                                        
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{action('QAUserActivitiesController@edit', $qa_user->id->id)}}">Edit</a>                    
-                                    <a class="dropdown-item delete" id="{{$qa_type->id}}" href="#">Delete</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                    
+                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/action/' . $qa_user->id .'/print') }}" target="_blank">View</a>                    
+                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/' . $qa_user->id .'/edit') }}">Edit</a>                    
+                                    <a class="dropdown-item delete" id="{{$qa_user->id}}" href="#">Delete</a>
                                 </div>
                             </div>        
                         </td>                    

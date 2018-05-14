@@ -11,7 +11,12 @@ $(document).ready(function(){
 
     $('form').not('#timesheet_form').submit(function(event) {
       /* Act on the event */
-      $('#modalLoading').modal('show');
+
+        $('#modalLoading').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+
     });
 
     $('#flash-message').fadeOut(5000);

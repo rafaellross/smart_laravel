@@ -12,7 +12,7 @@
         </div>
 
     </div> 
-    <table class="table table-hover table-responsive-sm">
+    <table class="table table-hover table-responsive-sm table-striped">
         <thead>
             <tr>
                 <th scope="col"><input type="checkbox" id="chkRow"></th>                          

@@ -110,6 +110,45 @@ $(document).ready(function () {
             }
         }
     });
+
+    var signatures = {
+
+        "signature_1": {
+            "div": $("#div_signature_1"),
+            "modal": $("#modal_signature_1"),
+            "opened": false
+        }
+
+    };
+    console.log(signatures);
+    var $sigdiv = $("#div_signature_1");
+
+    $('.btn-signature').click(function () {
+        signatures;
+        $('#modal_' + this.id).modal('show');
+        if (!opened) {
+
+            $sigdiv.jSignature(); // inits the jSignature widget.
+            opened = true;
+        }
+    });
+
+    $("#div_signature_1").bind('change', function (e) {
+        var $sigdiv = $("#div_signature_1");
+        var img = $sigdiv.jSignature("getData", "svgbase64");
+        console.log(img);
+        //data:image/png;base64,
+        $('#preview_signature_1').attr('src', 'data:' + img[0] + "," + img[1]);
+    });
+
+    // after some doodling...
+    $('#btnClearSign').click(function () {
+        $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
+    });
+
+    $('form').submit(function () {
+        $('#img_signature_1').val($sigdiv.jSignature("getData"));
+    });
 });
 
 /***/ })

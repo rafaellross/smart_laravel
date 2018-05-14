@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{action('UserController@update', $id)}}">
                         {{csrf_field()}}
-                        <input name="_method" type="hidden" value="PATCH">
+                        @method('PATCH')
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
