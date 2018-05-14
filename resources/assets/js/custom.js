@@ -390,7 +390,18 @@ function resizeImage(input, width = 600) {
           }  
             
         });
-       });    
+       });
+
+       if ($('#totalWeek').val() == "00:00") {
+            var result = confirm("The total of hours of this Time Sheet is 00:00, are you sure you want to continue ?");                
+            if (result == false) {                    
+                isValid = false;            
+                event.preventDefault();
+                return false;
+            }                            
+
+       }
+
        if (isValid) {
         $('#modalLoading').modal({
           backdrop: 'static',

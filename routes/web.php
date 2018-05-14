@@ -21,9 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['test']], function () {
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
 	Route::get('/qa_users/action/{id}/{action}', 'QAUserController@action');
-
 	Route::get('/qa_users/create/{type_id}', 'QAUserController@create');
-
 	Route::resource('qa_types', 'QATypesController');
 	Route::resource('qa_users', 'QAUserController');
 
@@ -53,7 +51,7 @@ Route::group(['middleware' => ['administrator']], function () {
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/select', 'TimeSheetController@select');
 	Route::get('/timesheets/create/{id}', 'TimeSheetController@create');
-	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action');
+	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action')->name('action_timesheet');
 	Route::get('/timesheets', 'TimeSheetController@index');
 	Route::get('/timesheets/{status?}', 'TimeSheetController@index');
 	

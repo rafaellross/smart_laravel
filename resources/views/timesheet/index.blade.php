@@ -59,8 +59,8 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="timesheets/action/{{$timesheet->id}}/print" target="_blank">View</a>
-                            <a class="dropdown-item" href="timesheets/{{$timesheet->id}}/edit">Edit</a>
+                            <a class="dropdown-item" href="{{ route('action_timesheet', ['id' => $timesheet->id, 'action' => 'print']) }}" target="_blank">View</a>
+                            <a class="dropdown-item" href="{{ action('TimeSheetController@edit', ['id' => $timesheet->id])}}">Edit</a>
                             @if(Auth::user()->administrator || $timesheet->status == 'P')
                                 <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>
                             @endif                                                
