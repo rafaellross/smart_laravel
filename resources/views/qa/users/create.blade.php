@@ -302,9 +302,9 @@
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-5 offset-md-7">
-                                <button type="submit" class="btn btn-danger">
+                                <a src="{{url()->previous()}}" class="btn btn-danger">
                                     {{ __('Cancel') }}
-                                </button>
+                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Create') }}
                                 </button>                                

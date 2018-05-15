@@ -316,9 +316,10 @@
                             </div>                    
 
                         </div>
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-4 offset-md-2">
-                                <a href="{{ URL::to('/qa_users') }}" class="btn btn-danger btn-lg btn-block">
+                                <a href="{{ url()->previous() }}" class="btn btn-danger btn-lg btn-block">
                                     {{ __('Cancel') }}
                                 </a>
                             </div>

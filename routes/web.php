@@ -19,11 +19,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Middleware used for testing
 Route::group(['middleware' => ['test']], function () {
+	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
 	Route::get('/qa_users/action/{id}/{action}', 'QAUserController@action');
 	Route::get('/qa_users/create/{type_id}', 'QAUserController@create');
 	Route::resource('qa_types', 'QATypesController');
 	Route::resource('qa_users', 'QAUserController');
+
+	//Forms
+	Route::resource('form_prestart', 'FormPreStartController');
+	Route::get('/form_prestart/action/{id}/{action}', 'FormPreStartController@action');
 
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicatonController@index');
