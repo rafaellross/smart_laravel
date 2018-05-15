@@ -31,5 +31,11 @@ class QAUser extends Model
         return $this->hasOne('App\Employee', 'foreman');
     }
 
+    public function photos(){
+
+        return $this->hasMany('App\QAUserPhoto', 'qa_user');
+    }
+
+
     
 }

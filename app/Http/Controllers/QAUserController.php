@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\QATypes;
 use App\QAUserActivities;
 use App\QAUserReport;
+use App\QAUserPhoto;
 use Carbon\Carbon;
 use Auth;
 class QAUserController extends Controller
@@ -40,8 +41,7 @@ class QAUserController extends Controller
     public function store(Request $request)
     {
 
-        $qa_user = new QAUser();
-        $qa_user                        = QAUser::find($id);
+        $qa_user = new QAUser();        
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
         $qa_user->qa_type               = $request->get('qa_type');
@@ -73,6 +73,18 @@ class QAUserController extends Controller
         $qa_user->approved_sign_3       = $request->get('img_signature_3');
         $qa_user->approved_sign_4       = $request->get('img_signature_4');
         $qa_user->save();
+
+        if (!empty($request->get('photos')) > 0) {
+
+            foreach ($request->get('photos') as $key => $photo) {
+                
+                $qa_photo                  = new QAUserPhoto();
+                $qa_photo->qa_user         = $qa_user->id;
+                $qa_photo->photo_number    = $key;
+                $qa_photo->qa_photo        = $photo;
+                $qa_photo->save();                                
+            }            
+        }
 
         foreach ($request->get('activities') as $key => $value) {
             $qa_activities = new QAUserActivities();
@@ -124,7 +136,7 @@ class QAUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
         $qa_user                        = QAUser::find($id);
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
@@ -158,13 +170,26 @@ class QAUserController extends Controller
         $qa_user->approved_sign_4       = $request->get('img_signature_4');
 
         $qa_user->save();
-        
+
+        foreach ($qa_user->photos as $photo) {
+            $photo->delete();
+        }
+
+        if (!empty($request->get('photos')) > 0) {
+
+            foreach ($request->get('photos') as $key => $photo) {
+                
+                $qa_photo                  = new QAUserPhoto();
+                $qa_photo->qa_user         = $qa_user->id;
+                $qa_photo->photo_number    = $key;
+                $qa_photo->qa_photo        = $photo;
+                $qa_photo->save();                                
+            }            
+        }
 
         foreach ($qa_user->activities as $activity) {
             $activity->delete();
         }
-
-
 
         foreach ($request->get('activities') as $key => $value) {
             $qa_activities                  = new QAUserActivities();

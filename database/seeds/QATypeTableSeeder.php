@@ -12,12 +12,12 @@ class QATypeTableSeeder extends Seeder
     public function run()
     {
     	DB::table('q_a_types')->insert([
-			["description" => "Fire Collars", "title" => "Fire Collars"],
-			["description" => "Fire Hydrants", "title" => "Fire Hydrants"],
-			["description" => "Gas Meter", "title" => "Gas Meter"],
-            ["description" => "Gas Rough In", "title" => "Gas Rough In"],
-            ["description" => "Hot Water Unit", "title" => "Hot Water Unit"],
-			["description" => "Fire Hose Reels", "title" => "Fire Hose Reels"]
+			["description" => "Default", "title" => "Fire Collars"],
+			["description" => "Default", "title" => "Fire Hydrants"],
+			["description" => "Default", "title" => "Gas Meter"],
+            ["description" => "Default", "title" => "Gas Rough In"],
+            ["description" => "Default", "title" => "Hot Water Unit"],
+			["description" => "Default", "title" => "Fire Hose Reels"]
     	]);        
     }
 }

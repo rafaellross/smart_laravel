@@ -75,4 +75,18 @@ label {
   background-color: transparent;
   border: none;
 }        
-//Test
+
+.div-signature {
+  border: 0.5px black solid;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.div-striped:nth-of-type(odd)
+{
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.div-striped:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}

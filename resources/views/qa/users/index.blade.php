@@ -7,8 +7,9 @@
     <hr/>
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">                 
-            <button id="btn-create-qa-users" class="btn btn-primary">Create New</button>                
-            <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
+            <button id="btn-create-qa-users" class="btn btn-primary btn-lg">Create New</button>                
+            <a href="#" class="btn btn-danger mobile btn-lg" id="btnDelete">Delete Selected(s)</a>
+            <button class="btn btn-info mobile btn-lg" id="btnPrintQA" style="">Print Selected(s)</button>            
         </div>
 
     </div> 

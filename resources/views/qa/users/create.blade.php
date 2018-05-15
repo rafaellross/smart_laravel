@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<script src="{{ asset('js/qa.js') }}"></script>    
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 col-lg-12">
@@ -47,7 +47,7 @@
 
                             <div class="col-md-6">
                                 <label for="description" class="col-form-label text-md-right">{{ __('Revision No:') }}</label>
-                                <input id="update_date" type="number" class="form-control" name="revision" value="1" required>
+                                <input id="update_date" type="number" class="form-control" name="revision" value="" required>
                                 @if ($errors->has('revision'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('revision') }}</strong>
@@ -64,7 +64,7 @@
                                        <option value="">Select Project</option>
                                     @foreach(App\Job::all() as $job)
                                         @if(!in_array($job->code, ['rdo', 'pld', 'tafe', 'sick', 'anl', 'holiday']))
-                                        <option value="{{$job->id}}">{{$job->description}}</option>
+                                        <option value="{{$job->id}}" selected>{{$job->description}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -72,7 +72,7 @@
 
                             <div class="col-md-6">
                                 <label for="customer" class="col-form-label text-md-right">{{ __('Customer:') }}</label>
-                                <input id="customer" type="text" class="form-control" name="customer" value="" required>
+                                <input id="customer" maxlength="89" type="text" class="form-control" name="customer" value="" required>
                                 @if ($errors->has('customer'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('customer') }}</strong>
@@ -84,12 +84,12 @@
                         <div class="form-group row">                            
                             <div class="col-md-6">
                                 <label for="unit_area" class="col-form-label text-md-right">{{ __('Unit/Area No:') }}</label>
-                                <input id="unit_area" type="text" class="form-control" name="unit_area" value="" required>
+                                <input id="unit_area" maxlength="75" type="text" class="form-control" name="unit_area" value="" required>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="site_manager" class="col-form-label text-md-right">{{ __('Site Manager:') }}</label>
-                                <input id="site_manager" type="text" class="form-control" name="site_manager" value="" required>
+                                <input id="site_manager" maxlength="30" type="text" class="form-control" name="site_manager" value="" required>
                                 @if ($errors->has('site_manager'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('site_manager') }}</strong>
@@ -182,7 +182,7 @@
                                             <input id="title" type="text" class="form-control" name="activities[{{$key}}][checked_by]" value="">                                        
                                         </td>                                        
                                         <td>
-                                            <input id="title" type="text" class="form-control date-picker" name="activities[{{$key}}][activity_date]" value="" required>                                        
+                                            <input id="title" type="text" class="form-control date-picker" name="activities[{{$key}}][activity_date]" value="">                                        
                                         </td>                                        
 
                                     </tr>                            
@@ -194,7 +194,7 @@
                             <strong>Comments</strong>
                         </h4>                        
                         <div class="form-group">                            
-                            <textarea class="form-control" id="comments" name="comments" rows="3" style="resize: none;" maxlength="1432"></textarea>
+                            <textarea class="form-control" id="comments" name="comments" rows="8" style="resize: none; text-align: left" maxlength="1900"></textarea>
                         </div>
 
                         <hr/>                                                
@@ -295,7 +295,14 @@
                                 <img class="ml-1" id="preview_signature_4" src="" style="width: 32%;" />
                             </div>
                         </div>
+                        <div class="form-group alert alert-info" role="alert">                
+                            <h4 style="text-align: center;">Photos</h4>    
+                            <div id="additional_photos"></div>
+                            <div>                                
+                                <input id="addPhoto" type="button" class="btn btn-success btn-sm ml-2 addPhoto" value="Add Photo">
+                            </div>                    
 
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-5 offset-md-7">
                                 <button type="submit" class="btn btn-danger">
@@ -322,7 +329,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <div class="form-group alert alert-success" role="alert">
+            <div class="form-group alert" role="alert">
                 <h4 style="text-align: center;">Signature</h4>
                     <div class="form-row" style="text-align: center;">
                         <div class="col-md-12 mb-3">                            
@@ -352,7 +359,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <div class="form-group alert alert-success" role="alert">
+            <div class="form-group alert" role="alert">
                 <h4 style="text-align: center;">Signature</h4>
                     <div class="form-row" style="text-align: center;">
                         <div class="col-md-12 mb-3">
@@ -383,7 +390,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <div class="form-group alert alert-success" role="alert">
+            <div class="form-group alert" role="alert">
                 <h4 style="text-align: center;">Signature</h4>
                     <div class="form-row" style="text-align: center;">
                         <div class="col-md-12 mb-3">
@@ -415,7 +422,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <div class="form-group alert alert-success" role="alert">
+            <div class="form-group alert" role="alert">
                 <h4 style="text-align: center;">Signature</h4>
                     <div class="form-row" style="text-align: center;">
                         <div class="col-md-12 mb-3">                            

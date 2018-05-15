@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Codedge\Fpdf\FpdfServiceProvider::class, 
         Collective\Html\HtmlServiceProvider::class,
+        Backup\BackupServiceProvider::class,
 
     ],
 
