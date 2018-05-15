@@ -29,6 +29,9 @@ Route::group(['middleware' => ['test']], function () {
 	//Forms
 	Route::resource('form_prestart', 'FormPreStartController');
 	Route::get('/form_prestart/action/{id}/{action}', 'FormPreStartController@action');
+	Route::resource('form_checklist', 'FormDailyCheckListController');
+	Route::get('/form_checklist/action/{id}/{action}', 'FormDailyCheckListController@action');
+
 
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicatonController@index');

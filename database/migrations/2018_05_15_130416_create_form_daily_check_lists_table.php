@@ -15,7 +15,7 @@ class CreateFormDailyCheckListsTable extends Migration
     {
         Schema::create('form_daily_check_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user');
             $table->date('dt_form');
             $table->string('working_for')->nullable();
             $table->string('plant_description')->nullable();
@@ -29,11 +29,9 @@ class CreateFormDailyCheckListsTable extends Migration
             $table->string('reported_to_position')->nullable();
             $table->date('reported_to_date')->nullable();
             $table->string('require_repair')->nullable();
-            $table->string('safety_hazard')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-
+            $table->string('safety_hazard')->nullable();            
             $table->timestamps();
+            $table->foreign('user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

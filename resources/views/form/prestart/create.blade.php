@@ -25,9 +25,9 @@
                             <div class="col-md-6">
                                 <label for="description" class="col-form-label text-md-right">{{ __('Time:') }}</label>
                                 <input type="text" class="form-control" name="time" value="">
-                                @if ($errors->has('revision'))
+                                @if ($errors->has('time'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('revision') }}</strong>
+                                        <strong>{{ $errors->first('time') }}</strong>
                                     </span>
                                 @endif
                             </div>
