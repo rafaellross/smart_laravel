@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //Middleware used for testing
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['test']], function () {
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
 	Route::get('/qa_users/action/{id}/{action}', 'QAUserController@action');
 
