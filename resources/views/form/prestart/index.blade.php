@@ -32,7 +32,7 @@
                         </th>
                         <td>{{ $form_prestart->id }}</td>                    
                         <td>{{ $form_prestart->project }}</td>                        
-                        <td>{{ $form_prestart->dt_form }}</td>                        
+                        <td>{{ Carbon::parse($form_prestart->dt_form)->format('d/m/Y')}}</td>                        
                         <td>{{ $form_prestart->time }}</td>                        
                         
                         <td>

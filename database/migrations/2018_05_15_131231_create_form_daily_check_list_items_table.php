@@ -14,7 +14,8 @@ class CreateFormDailyCheckListItemsTable extends Migration
     public function up()
     {
         Schema::create('form_daily_check_list_items', function (Blueprint $table) {
-            $table->increments('id');            
+            $table->increments('id');   
+            $table->unsignedInteger('checklist');         
             $table->integer('number');
             $table->string('description')->nullable();
             $table->string('monday')->nullable();
@@ -25,6 +26,7 @@ class CreateFormDailyCheckListItemsTable extends Migration
             $table->string('saturday')->nullable();
             $table->string('sunday')->nullable();
             $table->timestamps();
+            $table->foreign('checklist')->references('id')->on('form_daily_check_lists')->onDelete('cascade');
         });
     }
 

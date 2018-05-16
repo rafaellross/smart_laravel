@@ -30,8 +30,8 @@
                             <input type="checkbox" id="chkRow-{{ $form_checklist->id }}">
                         </th>
                         <td>{{ $form_checklist->id }}</td>                    
-                        <td>{{ $form_checklist->project }}</td>                        
-                        <td>{{ $form_checklist->dt_form }}</td>                        
+                        <td>{{ $form_checklist->job_site }}</td>                        
+                        <td>{{ Carbon::parse($form_checklist->dt_form)->format('d/m/Y')}}</td>                        
                         
                         
                         <td>
