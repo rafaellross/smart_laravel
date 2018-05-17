@@ -6,13 +6,13 @@
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
-                <div class="card-header">{{ __('Create New Daily Plant Inspection Checklist') }}</div>
+                <div class="card-header">{{ __('Create New Service Sheet') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('form_checklist.store') }}">
                         @csrf                        
                         <div class="form-group row">                            
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="description" class="col-form-label text-md-right">{{ __('Date:') }}</label>
                                 <input id="dt_form" type="text" class="form-control date-picker" name="dt_form" value="{{ Carbon::now('Australia/Sydney')->format('d/m/Y') }}" >
                                 @if ($errors->has('dt_form'))
@@ -21,23 +21,69 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="form-group row">                            
                             <div class="col-md-6">
-                                <label for="working_for" class="col-form-label text-md-right">{{ __('Working For:') }}</label>
+                                <label for="job_no" class="col-form-label text-md-right">{{ __('Job Nº:') }}</label>
                                 <input type="text" class="form-control" name="working_for" value="" >
-                                @if ($errors->has('working_for'))
+                                @if ($errors->has('job_no'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('working_for') }}</strong>
                                     </span>
                                 @endif
                             </div>
+
+                        </div>
+
+                        <div class="form-group row">                            
                             <div class="col-md-6">
-                                <label for="plant_description" class="col-form-label text-md-right">{{ __('Plant Description:') }}</label>
-                                <input id="dt_form" type="text" class="form-control" name="plant_description" value="" >
-                                @if ($errors->has('dt_form'))
+                                <label for="customer_name" class="col-form-label text-md-right">{{ __('Customer Name:') }}</label>
+                                <input type="text" class="form-control" name="customer_name" value="" >
+                                @if ($errors->has('customer_name'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('dt_form') }}</strong>
+                                        <strong>{{ $errors->first('customer_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sample" class="col-form-label text-md-right">{{ __('Sample:') }}</label>
+                                <input id="sample" type="text" class="form-control" name="sample" value="" >
+                                @if ($errors->has('sample'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('sample') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="form-group row">                            
+                            <div class="col-md-6">
+                                <label for="sample" class="col-form-label text-md-right">{{ __('Sample:') }}</label>
+                                <input type="text" class="form-control" name="working_for" value="" >
+                                @if ($errors->has('sample'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('sample') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sample" class="col-form-label text-md-right">{{ __('Sample:') }}</label>
+                                <input id="sample" type="text" class="form-control" name="sample" value="" >
+                                @if ($errors->has('sample'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('sample') }}</strong>
                                     </span>
                                 @endif
                             </div>

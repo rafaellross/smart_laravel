@@ -17,7 +17,7 @@ class FormDailyCheckListReport extends Fpdf
 	private function _header(FormDailyCheckList $form) {
 
 		$this->AddPage('P');
-		
+		$this->SetAutoPageBreak(false);
 				
 		$this->SetFont('Arial','B',$this->font['header']);		
 		$this->Cell(95,23, '',1);		
@@ -41,7 +41,9 @@ class FormDailyCheckListReport extends Fpdf
 
 		$this->Cell(95, 6, 'SERIAL NO: ' . $form->serial_no,1);	
 		$this->Cell(95, 6, 'HOUR METRE/KM READING: ' . $form->km_reading,1, 1);	
+	}	
 
+	public function _details(FormDailyCheckList $form){
 		$this->SetFont('Arial','BU',$this->font['label']);	
 		$this->Ln();
 		$this->Cell(95, 6, 'PLANT OPERATOR DAILY SAFETY CHECKLIST:',0, 1);	
@@ -60,7 +62,7 @@ class FormDailyCheckListReport extends Fpdf
 		$this->SetXY($this->GetX()+115, $this->GetY()-12);
 		$this->MultiCell(15, 15, 'N/A', 0, 'C');	
 		$this->SetXY($this->GetX()+130, $this->GetY()-15);
-		$this->MultiCell(35, 6, 'Fault, identified, use report below', 0, 'L');	
+		$this->MultiCell(35, 6, 'Item not applicable to machine or', 0, 'L');	
 
 		$this->Image('img/icon-check.png', 15, 104, 10);			
 		$this->Image('img/icon-fault.png', 75, 104, 10);			
@@ -97,10 +99,12 @@ class FormDailyCheckListReport extends Fpdf
 			$this->Cell(10, 5, $item->friday, 1, 0, 'C');	
 			$this->Cell(10, 5, $item->saturday, 1, 0, 'C');	
 			$this->Cell(10, 5, $item->sunday, 1, 1, 'C');	
-			
+		
 		}
-
 		$this->Ln();
+	}
+
+	public function _operators(FormDailyCheckList $form){
 
 		$this->SetFont('Arial','',$this->font['field']);		
 		$this->Cell(35, 8, '', 1, 'C');
@@ -116,11 +120,21 @@ class FormDailyCheckListReport extends Fpdf
 		$this->Cell(25, 8, '', 1, 'C');	
 		
 		$this->Cell(30, 8, '', 1, 'C');	
+		$this->SetX(17);
+		$this->Text($this->GetX(), $this->GetY()+5, "Operators Name");
+		$this->Text($this->GetX()+30, $this->GetY()+5, "Operators Initials");
+		$this->Text($this->GetX()+54, $this->GetY()+5, "Drivers Licence no");
+		$this->Text($this->GetX()+81, $this->GetY()+4, "Plant operators");
+		$this->Text($this->GetX()+85, $this->GetY()+7.5, "ticket no");
+		$this->Text($this->GetX()+105, $this->GetY()+5, "Induction card no");
+		$this->Text($this->GetX()+129, $this->GetY()+4, "Track safety Awar.");
+		$this->Text($this->GetX()+135, $this->GetY()+7.1, "Cert no");		
+		$this->Text($this->GetX()+154, $this->GetY()+5, "Supervisors Signature");
 
-		$this->Text(15, $this->GetY()+5, "Operators Name");
+		$this->SetXY(10, $this->GetY()+8);
 		$this->SetFont('Arial','',$this->font['values']);
 		foreach ($form->operators as $operator) {
-			/*
+			
 			$this->Cell(35, 5,$operator->op_name, 1);	
 			$this->Cell(25, 5, $operator->op_initials, 1, 0, 'C');	
 			$this->Cell(25, 5, $operator->op_driver_lic, 1, 0, 'C');	
@@ -130,89 +144,30 @@ class FormDailyCheckListReport extends Fpdf
 			$this->Cell(30, 5, '', 1, 1, 'C');				
 			if ($operator->signature) {
 				$this->Image($operator->signature, $this->GetX()+160, $this->GetY()-6.4, 30,0,'png');
-			}*/
+			}
 		}
-		/*
 		$this->Ln(2);
+	}
+
+	public function _footer(FormDailyCheckList $form){	
 		$this->Cell(10, 6, 'Details of faults or defects and action taken:',0);	
-
 		$this->Ln();
-
-		
-
-		$this->MultiCell(190, 4, "Fault reported to________________ Position ____________________Date ________________");
-		$this->MultiCell(190, 4, "Does fault constitute a safety hazard?");
-		$this->MultiCell(190, 4, "Does machine require immediate repair? Y/N Does machine require immediate repair?");
-		$this->MultiCell(190, 4, "If yes to either PARK MACHINE UP. Contact the hirer or supervisor and plant operator- detail inside front cover. Machine should not be used until supervisor or plant operator gives clearance for use.");
-		*/
-		/*
-		$this->SetFont('Arial','',$this->font['label']);		
-		$this->Cell(10, 6, 'Date:','BT');	
-
-		if (Carbon::parse($form_prestart->dt_form)) {			
-			$this->Cell(25,6, Carbon::parse($form_prestart->dt_form)->format('d/m/Y'), 'BT');		
-		} else {
-			$this->Cell(25,6, null, 'RB',1,'L');
-		}
-
-		$this->Cell(10, 6, 'Time:','BT');			
-		$this->Cell(25,6, $form_prestart->time, 'BT',0);
-
-		$this->Cell(13, 6, 'Project:','BT');			
-		$this->Cell(107,6, $form_prestart->project, 'BT',1);
-		$this->Cell(16, 6, 'Foreman:','B');			
-
-		$foreman = Employee::find($form_prestart->foreman);
-		
-		if ($foreman) {
-			$this->Cell(174,6, $foreman->name, 'B',1);
-		} else {
-			$this->Cell(174,6, null, 'B',1);
-		}*/
-
-	}	
-
-	public function _details(FormDailyCheckList $form){
-		$this->Ln(10);
-		$this->Cell(190,5, 'Details of Discussion', 1, 1, 'L', 1);	
-
-		$this->Line(10, 67, 10, 185);
-		$this->Line(200, 67, 200, 185);
-		$this->Line(10, 185, 200, 185);
-		
-		$this->Write(5, $form_prestart->details);
-		$this->SetY(190);
+		$this->Write(2.1, $form->details);		
+		$this->Ln(5);
+		$this->Cell(10, 5, "Fault reported to $form->reported_to  Position  $form->reported_position  Date " . (is_null($form->reported_to_date) ? '' : Carbon::parse($form->reported_to_date)->format('d/m/Y')), 0, 0);
+		$this->Ln(2.3);
+		$this->Cell(48, 5, "Does fault constitute a safety hazard? $form->fault_hazard", 0, 0);
+		$this->Ln(2.3);
+		$this->Cell(10, 5, "Does machine require immediate repair? $form->fault_repair", 0, 0);
+		$this->Ln(3.8);
+		$this->MultiCell(190, 2.3, "If yes to either PARK MACHINE UP. Contact the hirer or supervisor and plant operator- detail inside front cover. Machine should not be used until supervisor or plant operator gives clearance for use.");		
 	}
 
-	public function _persons(FormDailyCheckList $form){
-		$this->Cell(10, 6, 'All persons in attendance must sign below.',0, 1);			
-		$sign_width = 35;
-
-		$this->Cell(47.5, 6, 'Name',1, 0, 'C', 1);	
-		$this->Cell(47.5, 6, 'Signature',1, 0, 'C', 1);	
-		$this->Cell(47.5, 6, 'Name',1, 0, 'C', 1);	
-		$this->Cell(47.5, 6, 'Signature',1, 1, 'C', 1);	
-
-		foreach ($form_prestart->persons as $person) {
-			$break_ln = false;
-			if ($person->number % 2 == 0) {
-				$break_ln = true;
-			}
-
-			$this->Cell(47.5, 6, $person->name,1, 0, 'L');	
-			if ($person->signature) {
-				$this->Image($person->signature, $this->GetX()+10, $this->GetY()-1, $sign_width,0,'png');
-			}
-			
-			$this->Cell(47.5, 6, '',1, $break_ln, 'C');				
-			
-		}		
-	}
-	
 	public function add(FormDailyCheckList $form){		
 		$this->_header($form);
-		//$this->_details($form_prestart);		
-		//$this->_persons($form_prestart);		
+		$this->_details($form);		
+		$this->_operators($form);
+		$this->_footer($form);
 		$this->SetTitle("Daily Plant Inspection Checklist ");
 	    
 

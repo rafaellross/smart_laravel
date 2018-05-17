@@ -22,6 +22,9 @@ class CreateEmployeesTable extends Migration
             $table->timestamp('last_time_sheet_dt')->nullable();
             $table->integer('last_time_sheet_id')->nullable();
             $table->float('bonus')->default(0);
+            $table->float('pld')->default(0);
+            $table->float('rdo_bal')->default(0);
+            $table->float('anl')->default(0);
             $table->string('phone');
             $table->boolean('foreman')->default(false);
             $table->timestamps();

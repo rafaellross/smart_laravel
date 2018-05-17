@@ -13,6 +13,7 @@
                         <a href="{{ URL::to('/employee_application') }}" class="list-group-item list-group-item-action ">Employee Application</a>            
                         <a href="{{ URL::to('/form_prestart') }}" class="list-group-item list-group-item-action ">Prestart</a>                                                                                                            
                         <a href="{{ URL::to('/form_checklist') }}" class="list-group-item list-group-item-action ">Daily Plant Inspection Checklist</a>                                                                                                                                    
+                        <a href="{{ URL::to('/form_service_sheet') }}" class="list-group-item list-group-item-action ">Service Sheet</a>                                                                                                                                                            
                     @endif
                 </div>
             </div>

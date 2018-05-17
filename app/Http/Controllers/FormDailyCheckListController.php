@@ -48,8 +48,19 @@ class FormDailyCheckListController extends Controller
         $form_checklist->make_model         = $request->get('make_model');
         $form_checklist->job_site           = $request->get('job_site');
         $form_checklist->reg_permit         = $request->get('reg_permit');
+        
         $form_checklist->expire_dt          = is_null($request->get('expire_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('expire_dt'));
         $form_checklist->km_reading         = $request->get('km_reading');
+        $form_checklist->details            = $request->get('details');        
+
+        $form_checklist->reported_to        = $request->get('reported_to');        
+        $form_checklist->reported_position  = $request->get('reported_position');        
+        $form_checklist->reported_to_date   = is_null($request->get('reported_to_date')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('reported_to_date'));
+
+        $form_checklist->fault_hazard       = $request->get('fault_hazard');                
+        $form_checklist->fault_repair       = $request->get('fault_repair');                        
+
+
         $form_checklist->save();        
 
         foreach ($request->get('items') as $key => $item) {
@@ -124,7 +135,17 @@ class FormDailyCheckListController extends Controller
         $form_checklist->make_model         = $request->get('make_model');
         $form_checklist->job_site           = $request->get('job_site');
         $form_checklist->reg_permit         = $request->get('reg_permit');
+        $form_checklist->details            = $request->get('details');
         $form_checklist->expire_dt          = is_null($request->get('expire_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('expire_dt'));
+
+        $form_checklist->reported_to        = $request->get('reported_to');        
+        $form_checklist->reported_position  = $request->get('reported_position');        
+        
+        $form_checklist->reported_to_date   = is_null($request->get('reported_to_date')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('reported_to_date'));
+
+        $form_checklist->fault_hazard       = $request->get('fault_hazard');                
+        $form_checklist->fault_repair       = $request->get('fault_repair');                        
+        
         $form_checklist->km_reading         = $request->get('km_reading');
         $form_checklist->save();        
 

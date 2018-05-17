@@ -25,11 +25,13 @@ class CreateFormDailyCheckListsTable extends Migration
             $table->string('reg_permit')->nullable();
             $table->date('expire_dt')->nullable();
             $table->string('km_reading')->nullable();
-            $table->string('reported_to')->nullable();
-            $table->string('reported_to_position')->nullable();
+            $table->text('details')->nullable();            
+            $table->string('reported_to')->nullable();  
+            $table->string('reported_position')->nullable();  
             $table->date('reported_to_date')->nullable();
-            $table->string('require_repair')->nullable();
-            $table->string('safety_hazard')->nullable();            
+            $table->string('fault_hazard')->nullable();  
+            $table->string('fault_repair')->nullable();
+
             $table->timestamps();
             $table->foreign('user')->references('id')->on('users')->onDelete('cascade');
         });

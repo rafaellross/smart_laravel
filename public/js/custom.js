@@ -579,6 +579,10 @@ $(document).ready(function () {
             console.log("error");
         });
     });
+
+    $('#btnEntitlements').click(function () {
+        $('#modalUpdateEntitlements').modal('show');
+    });
 });
 
 /***/ })

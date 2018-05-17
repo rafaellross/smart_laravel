@@ -27,11 +27,18 @@ Route::group(['middleware' => ['test']], function () {
 	Route::resource('qa_users', 'QAUserController');
 
 	//Forms
+
+	//Prestart
 	Route::resource('form_prestart', 'FormPreStartController');
 	Route::get('/form_prestart/action/{id}/{action}', 'FormPreStartController@action');
+
+	//Checklist
 	Route::resource('form_checklist', 'FormDailyCheckListController');
 	Route::get('/form_checklist/action/{id}/{action}', 'FormDailyCheckListController@action');
 
+	//Service Sheet
+	Route::resource('form_service_sheet', 'FormServiceSheetController');
+	Route::get('/form_service_sheet/action/{id}/{action}', 'FormServiceSheetController@action');
 
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicatonController@index');
@@ -47,7 +54,10 @@ Route::group(['middleware' => ['administrator']], function () {
 	
 	//Employees 
 	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
+	Route::patch('/employees/entitlemens', 'EmployeeController@updateEntitlements');
 	Route::resource('employees', 'EmployeeController');
+
+	//Jobs
 	Route::get('/jobs/action/{id}/{action}/{status?}', 'JobController@action');	
 	Route::resource('jobs', 'JobController');
 	

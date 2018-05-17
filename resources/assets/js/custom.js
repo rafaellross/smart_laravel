@@ -575,4 +575,9 @@ function getBaseUrl() {
               console.log("error");
             });
         });
+
+       $('#btnEntitlements').click(function(){            
+        $('#modalUpdateEntitlements').modal('show');        
+    });          
+
 });

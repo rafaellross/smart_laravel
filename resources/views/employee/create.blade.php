@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <label for="bonus" class="col-md-4 col-form-label text-md-right">{{ __('Bonus') }}</label>
                             <div class="col-md-6">
-                                <input id="bonus" type="text" class="form-control{{ $errors->has('bonus') ? ' is-invalid' : '' }}" name="bonus" value="0" required>
+                                <input id="bonus" type="number" step="any" class="form-control{{ $errors->has('bonus') ? ' is-invalid' : '' }}" name="bonus" value="0.00" required>
                                 @if ($errors->has('bonus'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('bonus') }}</strong>
@@ -47,7 +47,39 @@
                                 @endif
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <label for="rdo_bal" class="col-md-4 col-form-label text-md-right">{{ __('RDO Balance') }}</label>
+                            <div class="col-md-6">
+                                <input id="rdo_bal" type="number" step="any" class="form-control{{ $errors->has('rdo_bal') ? ' is-invalid' : '' }}" name="rdo_bal" value="0.00" required>
+                                @if ($errors->has('rdo_bal'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('rdo_bal') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pld" class="col-md-4 col-form-label text-md-right">{{ __('PLD Balance') }}</label>
+                            <div class="col-md-6">
+                                <input id="pld" type="number" step="any" class="form-control{{ $errors->has('pld') ? ' is-invalid' : '' }}" name="pld" value="0.00" required>
+                                @if ($errors->has('pld'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('pld') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="anl" class="col-md-4 col-form-label text-md-right">{{ __('Annual Leave Balance') }}</label>
+                            <div class="col-md-6">
+                                <input id="anl" type="number" step="any" class="form-control{{ $errors->has('anl') ? ' is-invalid' : '' }}" name="anl" value="0.00" required>
+                                @if ($errors->has('anl'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('anl') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="bonus" class="col-md-4 col-form-label text-md-right">{{ __('Entitlements') }}</label>
                             <div class="col-md-6">
