@@ -155,12 +155,115 @@ class EmployeeController extends Controller
             return redirect('employees')->with('error','The uploaded file is not valid!');        
         }
 
+        $entitlements = array();
+
+        //Getting PLD
+        $isPLD = false;          
         foreach ($contents as $key => $line) {
-            if (substr($line, 0, 1) != '"') {
-                unset($contents[$key]);
+
+            if (strtolower(substr($line, 0, 3)) == 'pld') {                
+                $isPLD = true;                
+            }
+
+            if ($isPLD && (substr($line, 0, 1) != '"' && strtolower(substr($line, 0, 3)) != 'pld')) {                
+                $isPLD = false;                
+            }
+
+            if ($isPLD && substr($line, 0, 1) == '"') {   
+
+                $line = str_replace('"', '', str_replace('",', ';', $line));
+                $entitlement = explode(";", $line);
+                $value = rtrim(ltrim($entitlement[1]));
+                $name = explode(",", $entitlement[0]);
+                $lastName = rtrim(ltrim(strtolower($name[0])));
+                $firstName = isset($name[1]) ? rtrim(ltrim(strtolower($name[1]))) : '';
+
+                if (isset($entitlements['pld'])) {
+                    array_push($entitlements['pld'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                 } else {
+                    $entitlements['pld'] = [];
+                    array_push($entitlements['pld'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                 }                
             }
         }
-        return $contents;                    
+
+        //Getting RDO
+        $isRDO = false;          
+        foreach ($contents as $key => $line) {
+
+            if (strtolower(substr($line, 0, 3)) == 'rdo') {                
+                $isRDO = true;                
+            }
+
+            if ($isRDO && (substr($line, 0, 1) != '"' && strtolower(substr($line, 0, 3)) != 'rdo')) {                
+                $isRDO = false;                
+            }
+
+            if ($isRDO && substr($line, 0, 1) == '"') {   
+                $line = str_replace('"', '', str_replace('",', ';', $line));
+                $entitlement = explode(";", $line);
+                $value = rtrim(ltrim($entitlement[1]));
+                $name = explode(",", $entitlement[0]);
+                $lastName = rtrim(ltrim(strtolower($name[0])));
+                $firstName = isset($name[1]) ? rtrim(ltrim(strtolower($name[1]))) : '';
+                
+                if (isset($entitlements['rdo_bal'])) {
+                    array_push($entitlements['rdo_bal'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                 } else {
+                    $entitlements['rdo_bal'] = [];
+                    array_push($entitlements['rdo_bal'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                 }                
+            }
+        }
+
+        //Getting ANL
+        $isAnl = false;        
+        foreach ($contents as $key => $line) {
+
+            if (strtolower(substr($line, 0, 7)) == 'holiday') {                
+                $isAnl = true;                
+            }
+
+            if ($isAnl && (substr($line, 0, 1) != '"' && strtolower(substr($line, 0, 7)) != 'holiday')) {                
+                $isAnl = false;                
+            }
+
+            if ($isAnl && substr($line, 0, 1) == '"') {  
+                $line = str_replace('"', '', str_replace('",', ';', $line));
+                $entitlement = explode(";", $line);
+                $value = rtrim(ltrim($entitlement[1]));
+                $name = explode(",", $entitlement[0]);
+                $lastName = rtrim(ltrim(strtolower($name[0])));
+                $firstName = isset($name[1]) ? rtrim(ltrim(strtolower($name[1]))) : '';
+
+                if (isset($entitlements['anl'])) {
+                    array_push($entitlements['anl'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                } else {
+                    $entitlements['anl'] = [];
+                    array_push($entitlements['anl'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));                 
+                }                
+            }
+        }
+        $result = [];
+        
+        foreach ($entitlements as $entitlement => $employees) {
+            foreach ($employees as $employee) {
+              try {
+                    $emp = Employee::where("name", 'LIKE', '%' . $employee['firstName'] . '%')
+                    ->where("name", 'LIKE', '%' . $employee['lastName'] . '%')->first();
+                    if ($emp) {
+                        $emp->{$entitlement} = isset($employee['value']) ? $employee['value'] : 0;
+                        $emp->save();
+                        array_push($result, $emp);                        
+                    }
+                    
+                } catch (Exception $e) {
+                    return $e;
+                }                
+            }
+            
+        }
+        return redirect('employees')->with('success','Entitlements were updated!');        
     }
 
     public function action($id, $action, $status = null)

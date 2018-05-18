@@ -12,9 +12,9 @@
         </div>
 
     </div> 
-    <table class="table table-hover table-responsive-sm table-striped">
+    <table class="table table-hover table-responsive-sm table-striped table-fixed">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col"><input type="checkbox" id="chkRow"></th>          
                 <th scope="col">User</th>
                 <th scope="col">Date Created</th>
@@ -24,11 +24,11 @@
         </thead>
         <tbody>            
     @foreach ($users as $user)
-                  <tr>                    
+                  <tr class="text-center">                    
                         <th>
                             <input type="checkbox" id="chkRow-{{ $user->id }}">
                         </th>
-                        <td>{{ $user->username }}</td>
+                        <td class="text-left">{{ $user->username }}</td>
                         
                         <td>{{  Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
 

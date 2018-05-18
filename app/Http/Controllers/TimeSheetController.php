@@ -7,6 +7,7 @@ use App\WeekDay;
 use App\Employee;
 use App\Day;
 use App\DayJob;
+use App\Hour;
 use App\Job;
 use App\TimeSheetReport;
 use App\TimeSheetCertificate;
@@ -97,12 +98,59 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+        
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
         
-        foreach ($request->get('employees') as $employee_id) {
+        //Validate rdo, pld and annual leave
+        $errors = [];
+        foreach ($request->get('employees') as $employee_id => $value) {
+            $employee = Employee::find($employee_id);
+
+            //Validate rdo
+            $rdo = 0;
+            $pld = 0;
+            $anl = 0;
+
+            $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
+            $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;            
+            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;            
+            foreach ($request->get('days') as $key => $day) {
+                foreach ($day as $key => $job) {
+                    if (isset($job["job"])) {
+                        if ($job["job"] == "rdo") {
+                            $rdo += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
+                        }
+                        if ($job["job"] == "pld") {
+                            $pld += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
+                        }
+
+                        if ($job["job"] == "anl") {
+                            $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
+                        }                                            
+                    }                    
+                }
+            }
+            if ($rdo > 0 && ($rdo) > $employee->rdo_bal) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours!");
+            }
+
+            if ($pld > 0 && ($pld) > $employee->pld) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours!");
+            }
+
+            if ($anl > 0 && ($anl) > $employee->anl) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours!");
+            }
+
+        }
+        if (count($errors) > 0) {
+            return redirect()->back()->withInput()->with('error', $errors);                
+        }
+                        
+
+        foreach ($request->get('employees') as $employee_id => $value) {
 
 
             $timeSheet = new TimeSheet();

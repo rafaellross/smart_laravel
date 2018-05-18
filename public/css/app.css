@@ -10442,7 +10442,6 @@ label {
 #flash-message {
   position: fixed;
   bottom: 20px;
-  right: 45%;
   z-index: 10;
 }
 
@@ -10480,4 +10479,24 @@ label {
   line-height: 1.5;
   border-radius: 0.3rem;
 }
+
+/*
+tr {
+width: 100%;
+display: inline-table;
+height:60px;
+table-layout: fixed;
+  
+}
+
+table{
+ height:300px; 
+ display: -moz-groupbox;
+}
+tbody{
+  overflow-y: scroll;
+  height: 200px;
+  width: 50%;
+  position: absolute;
+}*/
 

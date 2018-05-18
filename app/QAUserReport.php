@@ -82,7 +82,7 @@ class QAUserReport extends Fpdf
 
 		$foreman = Employee::find($qa_user->foreman);
 		
-		if ($foreman->name) {
+		if (isset($foreman->name)) {
 			$this->MultiCell(30, 4, $foreman->name);
 		} else {
 			$this->MultiCell(30, 4, null);

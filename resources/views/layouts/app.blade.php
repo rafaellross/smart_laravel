@@ -123,12 +123,17 @@
             </button>            
         </div>
         @endif
-        @if($flash = session('error'))
-        <div id="flash-message" class="alert alert-danger" role="alert">            
-            <strong class="mr-2">{{$flash}}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>            
+        @if($erros = session('error'))
+        <div class="col-md-4 offset-md-3">
+            <div id="_flash-message" class="alert alert-danger align-items-center" role="alert">                        
+                @foreach($erros as $error)
+                <strong class="mr-2">{{$error}}</strong>
+                <br/>
+                @endforeach
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>            
+            </div>            
         </div>
         @endif
 

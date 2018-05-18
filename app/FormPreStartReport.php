@@ -44,7 +44,7 @@ class FormPreStartReport extends Fpdf
 
 		$foreman = Employee::find($form_prestart->foreman);
 		
-		if ($foreman) {
+		if (isset($foreman->name)) {
 			$this->Cell(174,6, $foreman->name, 'B',1);
 		} else {
 			$this->Cell(174,6, null, 'B',1);

@@ -11,7 +11,7 @@
             @endif            
                     <option selected value="">-</option>          
                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                        <option value="{{$i}}" {{isset(old()['days'][$day][$job_curr]['start']) && old()['days'][$day][$job_curr]['start'] == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                     @endfor                                                
             </select>
         </div>
@@ -20,7 +20,7 @@
             <select class="hour-end end-{{$job_curr}} form-control form-control-lg custom-select end group_{{$day}}_{{$job_curr}}" id="{{$day}}_end_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][end]">
                         <option selected value="">-</option>          
                     @for ($i = 0; $i <= (24*60)-15; $i += 15)        
-                        <option value="{{$i}}">{{ date('i:s', $i)}}</option>
+                        <option value="{{$i}}" {{isset(old()['days'][$day][$job_curr]['end']) && old()['days'][$day][$job_curr]['end'] == $i ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
                     @endfor                                                
             </select>
         </div>
@@ -37,10 +37,10 @@
                 <option value="">Select Job</option>
                 @foreach ($jobDB as $job)
                     @if ($day != "sat")
-                        <option value="{{$job->code}}">{{$job->description}}</option>
+                        <option value="{{$job->code}}" {{isset(old()['days'][$day][$job_curr]['job']) && old()['days'][$day][$job_curr]['job'] == $job->code ? 'selected' : ''}}>{{$job->description}}</option>
                     @else
                         @if (!in_array($job->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
-                            <option value="{{$job->code}}">{{$job->description}}</option>
+                            <option value="{{$job->code}}" {{isset(old()['days'][$day][$job_curr]['job']) && old()['days'][$day][$job_curr]['job'] == $job->code ? 'selected' : ''}}>{{$job->description}}</option>
                         @endif                
                     @endif
                 @endforeach                                                                
@@ -48,7 +48,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label>Hours</label>
-                <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$day}}_{{$job_curr}}" id="{{$day}}_hours_{{$job_curr}}" value="" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">
+                <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$day}}_{{$job_curr}}" id="{{$day}}_hours_{{$job_curr}}" value="{{isset(old()['days'][$day][$job_curr]['hours']) && old()['days'][$day][$job_curr]['hours']}}" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">
         </div>        
         @if ($first)
             <button type="button" class="btn btn-secondary btn-sm" id="btnShowExtra" onclick="showExtra(this, extraJobs{{$day}})">Show More Jobs</button>

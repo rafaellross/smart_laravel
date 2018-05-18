@@ -17,6 +17,7 @@
 }    
 </style>
 <div class="container">
+
         <!-- Logo -->
             <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center">
                 <img src="{{ URL::to('/') }}/img/logo.svg" alt="Smart Plumbing Solutions" class="img-fluid" style="padding: 1em;">
@@ -28,7 +29,6 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <form method="POST" action="{{action('TimeSheetController@store')}}" id="timesheet_form">
                 {{csrf_field()}}                
-                
                 <div class="form-group">
                     <label for="empname">
                         <h5>Name:</h5>
@@ -36,13 +36,17 @@
                     @foreach($employees as $employee)
                         <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
                         <input type="hidden" name="employees[{{$employee->id}}]" value="{{$employee->id}}">
+                        <input type="hidden" name="employees[{{$employee->id}}][pld_bal]" value="{{$employee->pld}}" />
+                        <input type="hidden" name="employees[{{$employee->id}}][rdo_bal]" value="{{$employee->rdo_bal}}" />
+                        <input type="hidden" name="employees[{{$employee->id}}][anl_bal]" value="{{$employee->anl}}" />
+
                     @endforeach
                 </div>
                 <div class="form-group">
                     <label for="empname">
                         <h5>Week End:</h5>
                     </label>
-                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="">
+                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{old('week_end')}}">
                     @if ($errors->has('week_end'))
                         <span class="invalid-feedback" style="display: block;">
                             @foreach ($errors->all() as $error)
@@ -77,7 +81,7 @@
                           </div>
                         </div>
                         <div class="input-group col-12 mb-3">
-                            <img id="medical_certificates[1]_img" class="img-fluid" style="">
+                            <img id="medical_certificates[1]_img" class="img-fluid" style="" src="">
                         </div>   
                         <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
                         <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="medical_certificates[1]_hidden" value="">                        
@@ -103,7 +107,7 @@
                         <div class="form-row" style="text-align: center;">
                             <div class="col-md-12 mb-3">
 
-                                <input type="hidden" name="emp_signature" id="output" value="">
+                                <input type="hidden" name="emp_signature" id="output" value="{{old('week_end')}}">
                                 <div id="signature"></div>
 
                                 <input type="button" value="Clear" id="btnClearSign" class="btn btn-danger" >
@@ -143,10 +147,10 @@
                                 <div class="form-group">
                                   <label for="status">Status</label>
                                   <select class="form-control" name="status" id="status">
-                                    <option selected="" value="P">Pending</option>
-                                    <option value="A">Approved</option>
-									<option value="F">Finalised</option>
-                                    <option value="C">Cancelled</option>
+                                    <option selected value="P">Pending</option>
+                                    <option value="A" {{ old('status') == 'A' ? 'selected' : ''}}>Approved</option>
+									<option value="F" {{ old('status') == 'F' ? 'selected' : ''}}>Finalised</option>
+                                    <option value="C" {{ old('status') == 'C' ? 'selected' : ''}}>Cancelled</option>
                                   </select>
                                 </div>
                             </div>
