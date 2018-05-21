@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h2 style="text-align: center;">Time Sheet</h2>
+    <h2 style="text-align: center;">Time Sheet ({{$timesheets->count()}})</h2>
     <hr>
     <div class="col-md-12 col-lg-12 col-12">           
         <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>            

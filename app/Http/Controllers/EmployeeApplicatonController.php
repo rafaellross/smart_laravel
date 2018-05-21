@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\EmployeeApplicaton;
 use App\EmployeeLicense;
+use App\FormTFN;
 use Carbon\Carbon;
+
 
 class EmployeeApplicatonController extends Controller
 {
@@ -89,7 +91,9 @@ class EmployeeApplicatonController extends Controller
      */
     public function show($id)
     {
-        //
+        $tfn = new FormTFN();
+        $employee_application = EmployeeApplicaton::find($id);
+        return $tfn->add($employee_application);        
     }
 
     /**

@@ -31,7 +31,7 @@
                                             <label>
                                                 <strong>First Name:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="first_name" placeholder="Type your first name" value="Rafael" required>
+                                            <input type="text" class="form-control form-control-lg" name="first_name" maxlength="19" placeholder="Type your first name" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -39,7 +39,7 @@
                                             <label>
                                                 <strong>Last Name:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="last_name" placeholder="Type your last name" value="Ross" required>
+                                            <input type="text" class="form-control form-control-lg" name="last_name" placeholder="Type your last name" maxlength="19" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -47,7 +47,7 @@
                                             <label>
                                                 <strong>Date of Birth:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="dob" value="29/10/1987" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="dob" value="" required>
                                         </div>
                                     </div>
                                     <!-- End Card -->
@@ -67,7 +67,7 @@
                                             <label>
                                                 <strong>Street Address:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="street_address" value="Address" required>
+                                            <input type="text" class="form-control form-control-lg" name="street_address" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -75,13 +75,13 @@
                                             <label>
                                                 <strong>Suburb:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="suburb" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="suburb" value="" required>
                                         </div>
                                         <div class="col-md-2 col-12 mb-3">
                                             <label>
                                                 <strong>Post Code:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="post_code"  value="value" maxlength="4" required>
+                                            <input type="text" class="form-control form-control-lg" name="post_code"  value="" maxlength="4" required>
                                         </div>
                                     </div>
 
@@ -91,7 +91,7 @@
                                                 <strong>State:</strong>
                                             </label>
                                             <select class="form-control form-control-lg custom-select" name="state" required>
-                                                <option value="value">Select State</option>
+                                                <option value="">Select State</option>
                                                 @foreach (App\States::all() as $state)
                                                     <option value="{{$state->id}}">{{$state->description}}</option>
                                                 @endforeach            
@@ -115,7 +115,7 @@
                                             <label>
                                                 <strong>Mobile:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="mobile" value="value"  maxlength="10" required>
+                                            <input type="text" class="form-control form-control-lg" name="mobile" value=""  maxlength="10" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -123,7 +123,7 @@
                                             <label>
                                                 <strong>Phone:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="phone" value="value"  maxlength="20" required>
+                                            <input type="text" class="form-control form-control-lg" name="phone" value=""  maxlength="20" required>
                                         </div>
                                     </div>
 
@@ -132,7 +132,7 @@
                                             <label>
                                                 <strong>E-mail:</strong>
                                             </label>
-                                            <input type="email" class="form-control form-control-lg" name="email" value="rafaellross@gmail.com" required>
+                                            <input type="email" class="form-control form-control-lg" name="email" value="" required>
                                         </div>
 
                                     </div>
@@ -155,7 +155,7 @@
                                             <label>
                                                 <strong>Name:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="emergency_name" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="emergency_name" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -163,7 +163,7 @@
                                             <label>
                                                 <strong>Phone:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="emergency_phone" value="value"  maxlength="20" required>
+                                            <input type="text" class="form-control form-control-lg" name="emergency_phone" value=""  maxlength="20" required>
                                         </div>
                                     </div>
 
@@ -172,7 +172,7 @@
                                             <label>
                                                 <strong>Relationship:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="emergency_relationship" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="emergency_relationship" value="" required>
                                         </div>
                                     </div>
                                     <!-- End Card -->
@@ -193,7 +193,7 @@
                                             <label>
                                                 <strong>Tax File Number:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="tax_file_number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="tax_file_number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -201,7 +201,7 @@
                                             <label>
                                                 <strong>Date Employment Commenced:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="01/01/2001" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -209,19 +209,19 @@
                                             <label>
                                                 <strong>Bank A/C Name:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bank_acc_name" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="bank_acc_name" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
                                                 <strong>BSB Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bsb" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="bsb" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
                                                 <strong>A/C Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="account_number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="account_number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -229,7 +229,7 @@
                                             <label>
                                                 <strong>Superannuation Details:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="superannuation" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="superannuation" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -237,7 +237,7 @@
                                             <label>
                                                 <strong>Redundancy Details:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="redundancy" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="redundancy" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -245,7 +245,7 @@
                                             <label>
                                                 <strong>Long Service Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="long_service_number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="long_service_number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -288,19 +288,19 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[1][issue_date]" placeholder="dd/mm/yyyy" value="01/01/2001"  maxlength="10" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[1][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][issuer]" placeholder="Issued by" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[1][issuer]" placeholder="Issued by" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][number]" placeholder="License Number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[1][number]" placeholder="License Number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -352,19 +352,19 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][issue_date]" placeholder="dd/mm/yyyy" value="01/01/2001"  maxlength="10" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[16][number]" placeholder="License Number" value="value" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[16][number]" placeholder="License Number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -414,7 +414,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
-                                            <select class="form-control" id="licenseId" name="licenseId"><option value="value">Select License</option>
+                                            <select class="form-control" id="licenseId" name="licenseId"><option value="">Select License</option>
                                                 @foreach (App\License::all() as $license)
                                                     @if ($license->id !== 1 && $license->id !== 16)
                                                         <option value="{{$license->id}}">{{$license->description}}</option>
