@@ -13,17 +13,17 @@ class AddGenderPaidBaseTaxoptionEmployeeApp extends Migration
      */
     public function up()
     {
-        Schema::table('employee_applicatons', function (Blueprint $table) {
+        Schema::table('employee_applications', function (Blueprint $table) {
             $table->string('gender');
             $table->string('paid_basis');
             $table->date('form_dt');
             $table->boolean('claim_threshold');
-            $table->boolean('tax_status');
+            $table->string('tax_status');
             $table->boolean('educational_loan');
             $table->boolean('financial_supplement');
 
         });
-        DB::statement("ALTER TABLE form_service_sheets ADD employee_signature LONGBLOB NULL DEFAULT NULL");        
+        DB::statement("ALTER TABLE employee_applications ADD employee_signature LONGBLOB NULL DEFAULT NULL");
     }
 
     /**

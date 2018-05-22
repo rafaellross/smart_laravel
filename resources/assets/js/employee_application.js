@@ -7,25 +7,25 @@ $(document).ready(function(){
 	    debug: true,
 	    success: "valid"
 	    });
-        
+
         $.validator.addMethod('filesize', function(value, element, param) {
-	        // param = size (en bytes) 
+	        // param = size (en bytes)
 	        // element = element to validate (<input>)
 	        // value = value of the element (file name)
-	            return this.optional(element) || (element.files[0].size <= param) 
-        });                
+	            return this.optional(element) || (element.files[0].size <= param)
+        });
 
         //Initiate date-picker
         $('.date-picker').datepicker({
             format: 'dd/mm/yyyy'
         });
-                
+
 
         $('input[name=dob]').datepicker({
             format: 'dd/mm/yyyy',
             startView: 4
         });
-                
+
         //If employee is apprentice, then show selection of year
         $('select[name=apprentice]').change(function(){
             if ($(this).val() === "1") {
@@ -34,45 +34,45 @@ $(document).ready(function(){
                 $('#apprentice-year').hide();
             }
         });
-        
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    
+
                     var destination = $(input).prop('name');
                     var preview = $("[id*='"+ destination +"']");
-                    
+
                     preview.attr('src', e.target.result).show();
-                    
+
                     var hidden = $("input[name*='" + destination + "'][type=hidden]");
                     hidden.val(e.target.result);
-                    reader.readAsDataURL(input.files[0]);                  
-                } 
-                reader.readAsDataURL(input.files[0]);                
-       		}            
+                    reader.readAsDataURL(input.files[0]);
+                }
+                reader.readAsDataURL(input.files[0]);
+       		}
         }
 
         $(document).on("change", "input[type=file]", function(){
             resizeImageToSpecificWidth(this);
         });
-        
+
         $(document).on("click", ".btn-remove", function(){
             if (confirm("Are you sure you want to remove this license?")) {
                 $(this).parent().parent().fadeOut("slow");
             }
         });
-        
+
 function resizeImageToSpecificWidth(input, width = 600) {
     var destination = $(input).prop('name');
-    var preview = $("[id*='"+ destination +"']");           
+    var preview = $("[id*='"+ destination +"']");
     var hidden = $("input[name*='" + destination + "'][type=hidden]");
 
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function(event) {
       var img = new Image();
-      img.onload = function() {        
+      img.onload = function() {
           var oc = document.createElement('canvas'), octx = oc.getContext('2d');
           oc.width = img.width;
           oc.height = img.height;
@@ -86,17 +86,17 @@ function resizeImageToSpecificWidth(input, width = 600) {
           oc.height = oc.width * img.height / img.width;
           octx.drawImage(img, 0, 0, oc.width, oc.height);
           preview.attr('src', oc.toDataURL()).show();
-          hidden.val(oc.toDataURL());                   
+          hidden.val(oc.toDataURL());
       };
       img.src = event.target.result;
     };
     reader.readAsDataURL(input.files[0]);
   }
-}        
+}
     var newLicense = function(description, code){
     return `
           <div class="card-body">
-      
+
           <!-- Start Card -->
           <h5 class="card-title">` + description + ` :</h5>
           <form action="" class="licensesAdd" method="post" enctype="multipart/form-data">
@@ -174,6 +174,12 @@ function resizeImageToSpecificWidth(input, width = 600) {
 		$('input[type=file]').remove();
 	});
 
-$('#div_signature').jSignature();
+$('#div_signature').jSignature({
+  'decor-color': 'transparent',
+});
+
+$('form').submit(function(){
+    $('input[name=signature]').val($('#div_signature').jSignature("getData"));
+});
 
   });

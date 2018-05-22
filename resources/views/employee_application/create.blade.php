@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
 @section('content')
+@extends('layouts.app')
         <div class="container">
             <!-- Logo -->
             <div class="row" id="logo">
@@ -15,7 +15,7 @@
                     <h2>Employee Application Form</h2>
                 </div>
             </div>
-            <br>            
+            <br>
                 <div class="row "  style="padding: 0;">
                 <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-12" style="padding: 0;">
                 <form method="post" action="{{ route('employee_application.store') }}">
@@ -58,7 +58,6 @@
                                                 <option value="F">Female</option>
                                             </select>
                                         </div>
-
                                     </div>
                                     <!-- End Card -->
                                 </div>
@@ -104,7 +103,7 @@
                                                 <option value="">Select State</option>
                                                 @foreach (App\States::all() as $state)
                                                     <option value="{{$state->id}}">{{$state->description}}</option>
-                                                @endforeach            
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -218,12 +217,12 @@
                                                 <strong>Employment Type:</strong>
                                             </label>
                                             <select name="paid_basis" class="form-control form-control-lg">
-                                                <option value="">Select employment type</option>    
-                                                <option value="F">Full-time</option>    
-                                                <option value="P">Part-time</option>    
-                                                <option value="C">Casual</option>    
-                                                <option value="L">Labour hire</option>    
-                                                <option value="S">Superannuation or annuity income stream</option>    
+                                                <option value="">Select employment type</option>
+                                                <option value="F">Full-time</option>
+                                                <option value="P">Part-time</option>
+                                                <option value="C">Casual</option>
+                                                <option value="L">Labour hire</option>
+                                                <option value="S">Superannuation or annuity income stream</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 col-4 mb-3">
@@ -231,10 +230,10 @@
                                                 <strong>Are you:</strong><span></span>
                                             </label>
                                             <select name="tax_status" class="form-control form-control-lg">
-                                                <option value="">Select Tax Status</option>    
-                                                <option value="R">An Australian resident for tax purposes</option>    
-                                                <option value="F">A foreign resident for tax purposes</option>    
-                                                <option value="H">A working holiday maker</option>    
+                                                <option value="">Select Tax Status</option>
+                                                <option value="R">An Australian resident for tax purposes</option>
+                                                <option value="F">A foreign resident for tax purposes</option>
+                                                <option value="H">A working holiday maker</option>
                                             </select>
                                         </div>
                                     </div>
@@ -247,37 +246,37 @@
                                             <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
                                             <select name="claim_threshold" class="form-control form-control-lg">
                                                 <option value="">Select an option</option>
-                                                <option value="Y">YES</option>
-                                                <option value="N">NO</option>
+                                                <option value="1">YES</option>
+                                                <option value="0">NO</option>
                                             </select>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="form-row">
                                         <div class="col-md-12 col-12 mb-3">
                                             <label>
                                                 <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
                                             </label>
-                                            <br>                                            
-                                            <select name="claim_threshold" class="form-control form-control-lg">
+                                            <br>
                                                 <option value="">Select an option</option>
-                                                <option value="Y">YES</option>
-                                                <option value="N">NO</option>
+                                                <option value="1">YES</option>
+                                                <select name="educational_loan" class="form-control form-control-lg">
+                                                <option value="0">NO</option>
                                             </select>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="form-row">
                                         <div class="col-md-12 col-12 mb-3">
                                             <label>
                                                 <strong>Do you have a Financial Supplement debt?</strong>
                                             </label>
-                                            <br>                                            
+                                            <br>
                                             <select name="financial_supplement" class="form-control form-control-lg">
                                                 <option value="">Select an option</option>
-                                                <option value="Y">YES</option>
-                                                <option value="N">NO</option>
+                                                <option value="1">YES</option>
+                                                <option value="0">NO</option>
                                             </select>
                                         </div>
-                                    </div>                                    
+                                    </div>
 
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
@@ -348,15 +347,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <br>
-                        
+
                         <div class="card" style="padding: 0;" id="licenses-list">
                             <h5 class="card-header">Current Licenses</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
                                 <h5 class="card-title">CIC Construction Induction Card :</h5>
-                                
+
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-2 col-12 mb-3">
@@ -385,7 +384,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*" required>                                                    
+                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*" required>
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[1][image][front][img]"/>
                                                 </div>
@@ -412,7 +411,7 @@
                                     </div>
                                     <!-- End Card -->
                                 </div>
-                                
+
                                 <hr>
                             </div>
 
@@ -420,7 +419,7 @@
 
                                 <!-- Start Card -->
                                 <h5 class="card-title">DLPI Driver's Licence/Photo I.D :</h5>
-                                
+
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-2 col-12 mb-3">
@@ -477,10 +476,10 @@
                                     <!-- End Card -->
                                     <hr>
                                 </div>
-                                
+
                             </div>
-                        </div>     
-                        <br>                        
+                        </div>
+                        <br>
                         <!-- Additional Licenses Card-->
                         <div class="card" id="additionalLicenses">
                             <h5 class="card-header">Additional Licenses</h5>
@@ -494,7 +493,7 @@
                                                     @if ($license->id !== 1 && $license->id !== 16)
                                                         <option value="{{$license->id}}">{{$license->description}}</option>
                                                     @endif
-                                                @endforeach            
+                                                @endforeach
                                             </select>
                                             <groupedselectlistitem>
                                             </groupedselectlistitem>
@@ -507,17 +506,18 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Additional Licenses Card-->  
-                        <br> 
+                        <!-- End Additional Licenses Card-->
+                        <br>
                         <!-- Signature-->
                         <div class="card" id="additionalLicenses">
                             <h5 class="card-header">Signature</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
                                 <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="form-row">                                        
+                                    <div class="form-row">
                                         <div class="form-row" style="text-align: center;">
-                                            <div class="col-md-12 mb-3">                            
+                                            <div class="col-md-12 mb-3">
+                                              <input type="hidden" name="signature" value="">
                                                 <div id="div_signature" class="div-signature"></div>
                                                 <input type="button" value="Clear" id="div_signature" class="btn btn-danger btn-clear-sign" >
                                             </div>
@@ -534,7 +534,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Signature-->   
+                        <!-- End Signature-->
 
                         <br>
                         <!-- Actions Card-->
@@ -546,18 +546,18 @@
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
                                             <input type="submit" class="btn btn-warning" value="Submit"/>
-                                            <a href="index.php" class="btn btn-secondary">Cancel</a>                                    
+                                            <a href="index.php" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                     <!-- End Card -->
                                 </div>
                             </div>
-                        </div>                
-                        <!-- End Actions Card-->                            
+                        </div>
+                        <!-- End Actions Card-->
                         <br>
                     </div>
                 </div>
-        </div>        
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <script src="{{ asset('js/employee_application.js') }}"></script>
 @endsection

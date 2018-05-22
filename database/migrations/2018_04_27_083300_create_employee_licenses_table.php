@@ -18,9 +18,9 @@ class CreateEmployeeLicensesTable extends Migration
             $table->date('issue_date');
             $table->string('issuer');
             $table->string('number');
-            $table->unsignedInteger('application_id');        
-            $table->unsignedInteger('license_id');        
-            $table->foreign('application_id')->references('id')->on('employee_applicatons')->onDelete('cascade');
+            $table->unsignedInteger('application_id');
+            $table->unsignedInteger('license_id');
+            $table->foreign('application_id')->references('id')->on('employee_applications')->onDelete('cascade');
             $table->foreign('license_id')->references('id')->on('licenses')->onDelete('cascade');
             $table->timestamps();
         });

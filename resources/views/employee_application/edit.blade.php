@@ -15,11 +15,12 @@
                     <h2>Employee Application Form</h2>
                 </div>
             </div>
-            <br>            
+            <br>
                 <div class="row "  style="padding: 0;">
                 <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-12" style="padding: 0;">
-                <form method="post" action="{{ route('employee_application.store') }}">
+                <form method="post" action="{{ route('employee_application.update', $employee_application->id) }}">
                     @csrf
+                    @method('PATCH')
                         <!-- Personal Details -->
                         <div class="card" style="padding: 0;"  id="personalDetails">
                             <h5 class="card-header">Personal Details</h5>
@@ -49,7 +50,17 @@
                                             </label>
                                             <input type="text" class="form-control form-control-lg date-picker" name="dob" value="{{ Carbon::parse($employee_application->dob)->format('d/m/Y') }}" required>
                                         </div>
+                                        <div class="col-md-6 col-12 mb-6">
+                                            <label>
+                                                <strong>Gender:</strong>
+                                            </label>
+                                            <select class="form-control form-control-lg" name="gender">F
+                                                <option value="M" {{$employee_application->gender == 'M' ? 'selected' : ''}}>Male</option>
+                                                <option value="F" {{$employee_application->gender == 'F' ? 'selected' : ''}}>Female</option>
+                                            </select>
+                                        </div>
                                     </div>
+
                                     <!-- End Card -->
                                 </div>
                             </div>
@@ -94,7 +105,7 @@
                                                 <option value="">Select State</option>
                                                 @foreach (App\States::all() as $state)
                                                     <option value="{{$state->id}}" {{$state->id == $employee_application->state ? 'selected' : ''}}>{{$state->description}}</option>
-                                                @endforeach            
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -197,13 +208,79 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
+                                        <div class="col-md-4 col-4 mb-3">
                                             <label>
                                                 <strong>Date Employment Commenced:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="{{Carbon::parse($employee_application->date_commenced)->format('d/m/Y')}}" required>
+                                            <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="{{$employee_application->date_commenced}}" required>
+                                        </div>
+                                        <div class="col-md-4 col-4 mb-3">
+                                            <label>
+                                                <strong>Employment Type:</strong>
+                                            </label>
+                                            <select name="paid_basis" class="form-control form-control-lg">
+                                                <option value="">Select employment type</option>
+                                                <option value="F" {{$employee_application->paid_basis == 'F' ? 'selected' : ''}}>Full-time</option>
+                                                <option value="P" {{$employee_application->paid_basis == 'P' ? 'selected' : ''}}>Part-time</option>
+                                                <option value="C" {{$employee_application->paid_basis == 'C' ? 'selected' : ''}}>Casual</option>
+                                                <option value="L" {{$employee_application->paid_basis == 'L' ? 'selected' : ''}}>Labour hire</option>
+                                                <option value="S" {{$employee_application->paid_basis == 'S' ? 'selected' : ''}}>Superannuation or annuity income stream</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-4 mb-3">
+                                            <label>
+                                                <strong>Are you:</strong><span></span>
+                                            </label>
+                                            <select name="tax_status" class="form-control form-control-lg">
+                                                <option value="">Select Tax Status</option>
+                                                <option value="R" {{$employee_application->tax_status == 'R' ? 'selected' : ''}}>An Australian resident for tax purposes</option>
+                                                <option value="F" {{$employee_application->tax_status == 'F' ? 'selected' : ''}}>A foreign resident for tax purposes</option>
+                                                <option value="H" {{$employee_application->tax_status == 'H' ? 'selected' : ''}}>A working holiday maker</option>
+                                            </select>
                                         </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you want to claim the tax-free threshold from Smart Plumbing Solutions?</strong>
+                                            </label>
+                                            <br>
+                                            <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
+                                            <select name="claim_threshold" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="1" {{$employee_application->claim_threshold == '1' ? 'selected' : ''}}>YES</option>
+                                                <option value="0" {{$employee_application->claim_threshold == '0' ? 'selected' : ''}}>NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
+                                            </label>
+                                            <br>
+                                            <select name="educational_loan" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="1" {{$employee_application->educational_loan == '1' ? 'selected' : ''}}>YES</option>
+                                                <option value="0" {{$employee_application->educational_loan == '0' ? 'selected' : ''}}>NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you have a Financial Supplement debt?</strong>
+                                            </label>
+                                            <br>
+                                            <select name="financial_supplement" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="1" {{$employee_application->financial_supplement == '1' ? 'selected' : ''}}>YES</option>
+                                                <option value="0" {{$employee_application->financial_supplement == '0' ? 'selected' : ''}}>NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -273,16 +350,16 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <br>
-                        
+
                         <div class="card" style="padding: 0;" id="licenses-list">
                             <h5 class="card-header">Current Licenses</h5>
                             @foreach ($employee_application->licenses as $license)
                             <div class="card-body">
                                 <!-- Start Card -->
                                 <h5 class="card-title">{{$license->license->description}} :</h5>
-                                
+
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-2 col-12 mb-3">
@@ -311,7 +388,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][front]" accept="image/*" value="0" required>                                                    
+                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][front]" accept="image/*" value="1">
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[{{$license->id}}][image][front][img]" value="{{$license->image_front}}" />
                                                 </div>
@@ -326,7 +403,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][back]" accept="image/*" value="0" required>
+                                                    <input type="file" class="custom-file-input" name="license[{{$license->id}}][image][back]" accept="image/*" value="1">
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[{{$license->id}}][image][back][img]" value="{{$license->image_back}}" />
                                                 </div>
@@ -338,14 +415,14 @@
                                     </div>
                                     <!-- End Card -->
                                 </div>
-                                
+
                                 <hr>
-                            </div>                                                    
+                            </div>
 
-                            @endforeach            
+                            @endforeach
 
-                        </div>     
-                        <br>                        
+                        </div>
+                        <br>
                         <!-- Additional Licenses Card-->
                         <div class="card" id="additionalLicenses">
                             <h5 class="card-header">Additional Licenses</h5>
@@ -360,7 +437,7 @@
                                                     @if ($license->id !== 1 && $license->id !== 16)
                                                         <option value="{{$license->id}}">{{$license->description}}</option>
                                                     @endif
-                                                @endforeach            
+                                                @endforeach
                                             </select>
                                             <groupedselectlistitem>
                                             </groupedselectlistitem>
@@ -373,7 +450,36 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Additional Licenses Card-->   
+                        <!-- End Additional Licenses Card-->
+                        <br>
+                        <!-- Signature-->
+                        <div class="card" id="additionalLicenses">
+                            <h5 class="card-header">Signature</h5>
+                            <div class="card-body">
+                                <!-- Start Card -->
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-row">
+                                        <div class="form-row" style="text-align: center;">
+                                            <div class="col-md-8 mb-3">
+                                                <input type="hidden" name="signature" value="">
+                                                <div id="div_signature" class="div-signature"></div>
+                                                <input type="button" value="Clear" id="div_signature" class="btn btn-danger btn-clear-sign" >
+                                            </div>
+                                            <div class="col-md-4 col-12 mb-3">
+                                                <label>
+                                                    <strong>Date:</strong>
+                                                </label>
+                                                <input type="text" class="form-control form-control-lg" name="form_dt" value="{{ Carbon::parse($employee_application->form_dt)->format('d/m/Y') }}" required>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- End Card -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Signature-->
+
                         <br>
                         <!-- Actions Card-->
                         <div class="card" id="actions">
@@ -384,18 +490,18 @@
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
                                             <input type="submit" class="btn btn-warning" value="Submit"/>
-                                            <a href="index.php" class="btn btn-secondary">Cancel</a>                                    
+                                            <a href="index.php" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                     <!-- End Card -->
                                 </div>
                             </div>
-                        </div>                
-                        <!-- End Actions Card-->                            
+                        </div>
+                        <!-- End Actions Card-->
                         <br>
                     </div>
                 </div>
-        </div>        
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <script src="{{ asset('js/employee_application.js') }}"></script>
 @endsection

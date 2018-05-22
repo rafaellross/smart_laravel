@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\EmployeeApplicaton;
+use App\EmployeeApplication;
 use App\EmployeeLicense;
 use App\FormTFN;
 use Carbon\Carbon;
 
 
-class EmployeeApplicatonController extends Controller
+class EmployeeApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class EmployeeApplicatonController extends Controller
      */
     public function index()
     {
-        $employee_applications = EmployeeApplicaton::all(); 
+        $employee_applications = EmployeeApplication::all();
         return view('employee_application.index', ['employee_applications' => $employee_applications]);
     }
 
@@ -40,8 +40,7 @@ class EmployeeApplicatonController extends Controller
      */
     public function store(Request $request)
     {
-            
-            $employee_application                           = new EmployeeApplicaton();
+            $employee_application                           = new EmployeeApplication();
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->dob                      = Carbon::createFromFormat('d/m/Y', $request->get('dob'));
@@ -65,8 +64,19 @@ class EmployeeApplicatonController extends Controller
             $employee_application->long_service_number      = $request->get('long_service_number');
             $employee_application->apprentice               = $request->get('apprentice');
             $employee_application->apprentice_year          = $request->get('apprentice_year');
+            $employee_application->gender                   = $request->get('gender');
+            $employee_application->paid_basis               = $request->get('paid_basis');
+            $employee_application->claim_threshold          = $request->get('claim_threshold');
+            $employee_application->form_dt                  = is_null($request->get('form_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
+            $employee_application->tax_status               = $request->get('tax_status');
+            $employee_application->educational_loan         = $request->get('educational_loan');
+            $employee_application->financial_supplement     = $request->get('financial_supplement');
+            $employee_application->employee_signature       = $request->get('signature');
+
+
+
             $employee_application->save();
-            
+
             foreach ($request->get('license') as $key => $value) {
                 $issue_date = $value['issue_date'];
 
@@ -92,8 +102,8 @@ class EmployeeApplicatonController extends Controller
     public function show($id)
     {
         $tfn = new FormTFN();
-        $employee_application = EmployeeApplicaton::find($id);
-        return $tfn->add($employee_application);        
+        $employee_application = EmployeeApplication::find($id);
+        return $tfn->add($employee_application);
     }
 
     /**
@@ -104,9 +114,9 @@ class EmployeeApplicatonController extends Controller
      */
     public function edit($id)
     {
-        $employee_application = EmployeeApplicaton::find($id);
+        $employee_application = EmployeeApplication::find($id);
         return view('employee_application.edit',compact('employee_application','id'));
-        
+
     }
 
     /**
@@ -117,8 +127,8 @@ class EmployeeApplicatonController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-            $employee_application                           = EmployeeApplicaton::find($id);
+    {            
+            $employee_application                           = EmployeeApplication::find($id);
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->dob                      = Carbon::createFromFormat('d/m/Y', $request->get('dob'));
@@ -142,11 +152,19 @@ class EmployeeApplicatonController extends Controller
             $employee_application->long_service_number      = $request->get('long_service_number');
             $employee_application->apprentice               = $request->get('apprentice');
             $employee_application->apprentice_year          = $request->get('apprentice_year');
+            $employee_application->gender                   = $request->get('gender');
+            $employee_application->paid_basis               = $request->get('paid_basis');
+            $employee_application->form_dt                  = Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
+            $employee_application->claim_threshold          = $request->get('claim_threshold');
+            $employee_application->tax_status               = $request->get('tax_status');
+            $employee_application->educational_loan         = $request->get('educational_loan');
+            $employee_application->financial_supplement     = $request->get('financial_supplement');
+            $employee_application->employee_signature       = $request->get('signature');
             $employee_application->save();
-            
+
             foreach ($employee_application->licenses as $license) {
                 $license->delete();
-            }            
+            }
 
             foreach ($request->get('license') as $key => $value) {
                 $issue_date = $value['issue_date'];
@@ -161,7 +179,7 @@ class EmployeeApplicatonController extends Controller
                 $application_license->image_back = $value["image"]["back"]["img"];
                 $application_license->save();
             }
-            return redirect('employee_application');        
+            return redirect('employee_application');
     }
 
     /**
@@ -176,26 +194,26 @@ class EmployeeApplicatonController extends Controller
     }
 
 public function action($id, $action, $status = null)
-    {        
+    {
 
         $ids = explode(",", $id);
         if ($action == "delete") {
-            
+
         }
 
         switch ($action) {
             case 'delete':
                 foreach ($ids as $id) {
-                    EmployeeApplicaton::find($id)->delete();
-                }                
-                return redirect('employee_application')->with('success','Time Sheet(s) has been deleted');        
+                    EmployeeApplication::find($id)->delete();
+                }
+                return redirect('employee_application')->with('success','Time Sheet(s) has been deleted');
                 break;
             case 'update':
-                return redirect('employee_application')->with('success','Time Sheet(s) has been updated');                        
-                break;            
-            default:
-                return redirect('employee_application')->with('error','There was no action selected');        
+                return redirect('employee_application')->with('success','Time Sheet(s) has been updated');
                 break;
-        }        
-    }    
+            default:
+                return redirect('employee_application')->with('error','There was no action selected');
+                break;
+        }
+    }
 }

@@ -41,30 +41,30 @@ Route::group(['middleware' => ['test']], function () {
 	Route::get('/form_service_sheet/action/{id}/{action}', 'FormServiceSheetController@action');
 
 	//Employee application
-	Route::get('/employee_application', 'EmployeeApplicatonController@index');
-	Route::get('/employee_application/create', 'EmployeeApplicatonController@create');
-	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicatonController@action');
-	Route::get('/employee_application/{id}/edit', 'EmployeeApplicatonController@edit');	
+	Route::get('/employee_application', 'EmployeeApplicationController@index');
+	Route::get('/employee_application/create', 'EmployeeApplicationController@create');
+	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicationController@action');
+	Route::get('/employee_application/{id}/edit', 'EmployeeApplicationController@edit');
 
 });
 
 
 Route::group(['middleware' => ['administrator']], function () {
-	
-	
-	//Employees 
+
+
+	//Employees
 	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
 	Route::patch('/employees/entitlemens', 'EmployeeController@updateEntitlements');
 	Route::resource('employees', 'EmployeeController');
 
 	//Jobs
-	Route::get('/jobs/action/{id}/{action}/{status?}', 'JobController@action');	
+	Route::get('/jobs/action/{id}/{action}/{status?}', 'JobController@action');
 	Route::resource('jobs', 'JobController');
-	
+
 	//Users
 	Route::get('/users/action/{id}/{action}/{status?}', 'UserController@action');
 	Route::resource('users', 'UserController', ['except' => ['edit','update']]);
-});	
+});
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/select', 'TimeSheetController@select');
@@ -72,15 +72,15 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action')->name('action_timesheet');
 	Route::get('/timesheets', 'TimeSheetController@index');
 	Route::get('/timesheets/{status?}', 'TimeSheetController@index');
-	
-	
+
+
 	Route::patch('/users/{users}', 'UserController@update');
 	Route::resource('timesheets', 'TimeSheetController', ['except' => ['index']]);
-	Route::resource('employee_application', 'EmployeeApplicatonController');
+	Route::resource('employee_application', 'EmployeeApplicationController');
 
 });
 
-	
+
 	Route::get('/users/{id}/edit', function ($id) {
 		if (!Auth::user()->administrator && Auth::user()->id != $id) {
 			return redirect('/home');
@@ -88,5 +88,5 @@ Route::group(['middleware' => ['auth']], function () {
 	        $user = App\User::find($id);
 	        return view('user.edit',compact('user','id'));
 		}
-	    
-	});	
+
+	});
