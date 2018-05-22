@@ -20,6 +20,11 @@ $(document).ready(function(){
             format: 'dd/mm/yyyy'
         });
                 
+
+        $('input[name=dob]').datepicker({
+            format: 'dd/mm/yyyy',
+            startView: 4
+        });
                 
         //If employee is apprentice, then show selection of year
         $('select[name=apprentice]').change(function(){
@@ -168,5 +173,7 @@ function resizeImageToSpecificWidth(input, width = 600) {
 		/* Act on the event */
 		$('input[type=file]').remove();
 	});
+
+$('#div_signature').jSignature();
 
   });

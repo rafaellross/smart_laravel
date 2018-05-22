@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatesTable extends Migration
+class AddCodeToState extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('description');
-            $table->timestamps();
+        Schema::table('states', function (Blueprint $table) {
+            $table->string('code');            
         });
+        
     }
 
     /**
@@ -27,6 +26,6 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        //
     }
 }

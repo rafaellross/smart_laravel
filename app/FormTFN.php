@@ -4,7 +4,7 @@ namespace App;
 
 use setasign\Fpdi\Fpdi;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class FormTFN extends Fpdi
 {
     public function add(EmployeeApplicaton $application)
@@ -22,6 +22,21 @@ class FormTFN extends Fpdi
 
 		// now write some text above the imported page
 		$this->SetFont('Helvetica', '', 9);
+		$this->SetMargins(0, 0, 0);
+		$this->SetXY(40, 35);
+		$nameX = 43.2;
+		$tax_file_number = str_split(strtoupper($application->tax_file_number));
+		foreach ($tax_file_number as $key => $char) {
+
+
+			if (in_array($key, [3, 6])) {
+				$nameX+=5;
+			}
+
+			$this->SetXY($nameX+=5, 36);
+			$this->Write(0, $char);
+		}
+
 		
 		$nameX = 3.2;
 		$lastName = str_split(strtoupper($application->last_name));
@@ -60,16 +75,33 @@ class FormTFN extends Fpdi
 			$this->Write(0, $char);
 		}
 
-		$this->SetXY($nameX = 3.2, 139.5);
+		$this->SetXY($nameX = 3.2, 139);
 
-		$state = str_split(strtoupper(States::find($application->state)->description));
+		$state = str_split(strtoupper(States::find($application->state)->code));
 		foreach ($state as $char) {
-			$this->SetXY($nameX+=5, 139.5);
+			$this->SetXY($nameX+=4.9, 139);
+			$this->Write(0, $char);
+		}
+
+		$this->SetXY($nameX+=10.9, 139);
+		$post_code = str_split(strtoupper($application->post_code));
+		foreach ($post_code as $char) {
+			$this->SetXY($nameX+=4.8, 139);
 			$this->Write(0, $char);
 		}
 
 
+		$this->SetXY($nameX+=108.5, 35);		
+		$dob = str_split(Carbon::parse($application->dob)->format('dmY'));
+		foreach ($dob as $key => $char) {
 
+			if (in_array($key, [2, 4])) {
+				$nameX+=3.3;
+			}
+
+			$this->SetXY($nameX+=4.8, 35);
+			$this->Write(0, $char);
+		}
 
 		
 

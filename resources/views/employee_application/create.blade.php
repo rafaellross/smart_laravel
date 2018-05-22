@@ -47,8 +47,18 @@
                                             <label>
                                                 <strong>Date of Birth:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="dob" value="" required>
+                                            <input type="text" class="form-control form-control-lg" name="dob" value="" required>
                                         </div>
+                                        <div class="col-md-6 col-12 mb-6">
+                                            <label>
+                                                <strong>Gender:</strong>
+                                            </label>
+                                            <select class="form-control form-control-lg" name="gender">
+                                                <option value="M">Male</option>
+                                                <option value="F">Female</option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <!-- End Card -->
                                 </div>
@@ -197,13 +207,78 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
+                                        <div class="col-md-4 col-4 mb-3">
                                             <label>
                                                 <strong>Date Employment Commenced:</strong>
                                             </label>
                                             <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" required>
                                         </div>
+                                        <div class="col-md-4 col-4 mb-3">
+                                            <label>
+                                                <strong>Employment Type:</strong>
+                                            </label>
+                                            <select name="paid_basis" class="form-control form-control-lg">
+                                                <option value="">Select employment type</option>    
+                                                <option value="F">Full-time</option>    
+                                                <option value="P">Part-time</option>    
+                                                <option value="C">Casual</option>    
+                                                <option value="L">Labour hire</option>    
+                                                <option value="S">Superannuation or annuity income stream</option>    
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-4 mb-3">
+                                            <label>
+                                                <strong>Are you:</strong><span></span>
+                                            </label>
+                                            <select name="tax_status" class="form-control form-control-lg">
+                                                <option value="">Select Tax Status</option>    
+                                                <option value="R">An Australian resident for tax purposes</option>    
+                                                <option value="F">A foreign resident for tax purposes</option>    
+                                                <option value="H">A working holiday maker</option>    
+                                            </select>
+                                        </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you want to claim the tax-free threshold from Smart Plumbing Solutions?</strong>
+                                            </label>
+                                            <br>
+                                            <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
+                                            <select name="claim_threshold" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="Y">YES</option>
+                                                <option value="N">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
+                                            </label>
+                                            <br>                                            
+                                            <select name="claim_threshold" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="Y">YES</option>
+                                                <option value="N">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+                                    <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Do you have a Financial Supplement debt?</strong>
+                                            </label>
+                                            <br>                                            
+                                            <select name="financial_supplement" class="form-control form-control-lg">
+                                                <option value="">Select an option</option>
+                                                <option value="Y">YES</option>
+                                                <option value="N">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -432,7 +507,35 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Additional Licenses Card-->   
+                        <!-- End Additional Licenses Card-->  
+                        <br> 
+                        <!-- Signature-->
+                        <div class="card" id="additionalLicenses">
+                            <h5 class="card-header">Signature</h5>
+                            <div class="card-body">
+                                <!-- Start Card -->
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-row">                                        
+                                        <div class="form-row" style="text-align: center;">
+                                            <div class="col-md-12 mb-3">                            
+                                                <div id="div_signature" class="div-signature"></div>
+                                                <input type="button" value="Clear" id="div_signature" class="btn btn-danger btn-clear-sign" >
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-3">
+                                                <label>
+                                                    <strong>Date:</strong>
+                                                </label>
+                                                <input type="text" class="form-control form-control-lg" name="dob" value="" required>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- End Card -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Signature-->   
+
                         <br>
                         <!-- Actions Card-->
                         <div class="card" id="actions">

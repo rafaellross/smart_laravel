@@ -98,6 +98,11 @@ $(document).ready(function () {
     format: 'dd/mm/yyyy'
   });
 
+  $('input[name=dob]').datepicker({
+    format: 'dd/mm/yyyy',
+    startView: 4
+  });
+
   //If employee is apprentice, then show selection of year
   $('select[name=apprentice]').change(function () {
     if ($(this).val() === "1") {
@@ -181,6 +186,8 @@ $(document).ready(function () {
     /* Act on the event */
     $('input[type=file]').remove();
   });
+
+  $('#div_signature').jSignature();
 });
 
 /***/ })

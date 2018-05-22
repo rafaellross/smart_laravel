@@ -557,7 +557,7 @@ function getBaseUrl() {
                                   <span> `+ val.name +`</span>
                                 </a>
                             </h6>
-                            <i style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">This employee already have a Time Sheet for this week   &#32;</i>
+                            <i style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">This employee already has a Time Sheet for this week   &#32;</i>
                           </div>
                           <div class="col-md-2 col-lg-2" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">                            
                             <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View Time Sheet</a>

@@ -25,7 +25,7 @@ Route::get('employees/', function() {
                     "select emp.id, 
                             emp.name, 
                             emp.phone,
-                            (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) order by id desc limit 1) as last_timesheet
+                            (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) and time_sheets.status not in ('F', 'C') order by id desc limit 1) as last_timesheet
                             from employees emp                          
                             order by emp.name asc
                      ") 
@@ -40,7 +40,7 @@ Route::get('employees/{name}', function($name) {
                         "select emp.id, 
                                 emp.name, 
                                 emp.phone,
-                                (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) order by id desc limit 1) as last_timesheet
+                                (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) and time_sheets.status not in ('F', 'C') order by id desc limit 1) as last_timesheet
                                 from employees emp                          
                                 where name like '%" . $name . "%'
                                 order by emp.name asc

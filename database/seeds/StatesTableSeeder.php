@@ -12,14 +12,14 @@ class StatesTableSeeder extends Seeder
     public function run()
     {
     	DB::table('states')->insert([
-	        ["description" => "Australia Capital Territory"],			
-			["description" => "New South Wales"],
-			["description" => "Northern Territory"],
-			["description" => "Queensland"],
-			["description" => "South Australia"],
-			["description" => "Tasmania"],
-			["description" => "Western Australia"],
-			["description" => "Victoria"]    		
+	        ["code" => "ACT", "description" => "Australia Capital Territory"],			
+			["code" => "NSW", "description" => "New South Wales"],
+			["code" => "NT", "description" => "Northern Territory"],
+			["code" => "QLD", "description" => "Queensland"],
+			["code" => "SA", "description" => "South Australia"],
+			["code" => "TAS", "description" => "Tasmania"],
+			["code" => "WA", "description" => "Western Australia"],
+			["code" => "VIC", "description" => "Victoria"]    		
     	]);
     }
 }
