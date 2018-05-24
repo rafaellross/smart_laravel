@@ -182,4 +182,18 @@ $('form').submit(function(){
     $('input[name=signature]').val($('#div_signature').jSignature("getData"));
 });
 
-  });
+$('.btn-clear-sign').click(function(event) {
+  $('#div_signature').jSignature("reset");
+});
+
+$('#submit_application').prop('disabled', 'true');
+$(document).on('click', '#chk_policy', function(event) {
+
+  if(this.checked) {
+      $('#submit_application').prop('disabled', false);
+  } else {
+      $('#submit_application').prop('disabled', true);
+  }
+});
+
+});

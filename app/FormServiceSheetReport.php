@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 namespace App;
 
 use App\ReportLogo;
-
-class FormServiceSheetReport extends ReportLogo
+use setasign\Fpdi\Fpdi;
+class FormServiceSheetReport extends Fpdi
 {
-	
-	private function _logo() {	
 
-	}	
+	private function _logo() {
+
+	}
 }

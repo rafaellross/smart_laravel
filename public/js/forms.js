@@ -78,70 +78,70 @@ module.exports = __webpack_require__(44);
 
 $(document).ready(function () {
 
-    var signatures = {
-        "signature_1": {
-            "div": "#div_signature_1",
-            "modal": "#modal_signature_1",
-            "hidden": "#img_signature_1",
-            "opened": false
-        }
-    };
-
-    for (var i = 1; i <= 20; i++) {
-        signatures["signature_" + i] = {
-            "div": "#div_signature_" + i,
-            "modal": "#modal_signature_" + i,
-            "hidden": "#img_signature_" + i,
-            "opened": false
-        };
+  var signatures = {
+    "signature_1": {
+      "div": "#div_signature_1",
+      "modal": "#modal_signature_1",
+      "hidden": "#img_signature_1",
+      "opened": false
     }
+  };
 
-    $('.btn-signature').click(function () {
+  for (var i = 1; i <= 20; i++) {
+    signatures["signature_" + i] = {
+      "div": "#div_signature_" + i,
+      "modal": "#modal_signature_" + i,
+      "hidden": "#img_signature_" + i,
+      "opened": false
+    };
+  }
 
-        var modal = $(signatures[this.id].modal);
-        var div = $(signatures[this.id].div);
-        var hidden = $(signatures[this.id].hidden);
-        var opened = signatures[this.id].opened;
-        modal.modal('show');
+  $('.btn-signature').click(function () {
 
-        if (!signatures[this.id].opened) {
-            signatures[this.id].opened = true;
-            div.jSignature(); // inits the jSignature widget.            
-            if (hidden.val() !== "") {
-                div.jSignature("setData", hidden.val());
-            }
-        }
-    });
+    var modal = $(signatures[this.id].modal);
+    var div = $(signatures[this.id].div);
+    var hidden = $(signatures[this.id].hidden);
+    var opened = signatures[this.id].opened;
+    modal.modal('show');
 
-    $('.btn-save-sign').click(function () {
-        var signature = this.id.replace("save", "");
-        var div = $("#div" + signature);
-        var img = div.jSignature("getData");
-        $('#preview' + signature).attr('src', img);
-        $('#img' + signature).val(img);
-    });
+    if (!signatures[this.id].opened) {
+      signatures[this.id].opened = true;
+      div.jSignature(); // inits the jSignature widget.
+      if (hidden.val() !== "") {
+        div.jSignature("setData", hidden.val());
+      }
+    }
+  });
 
-    // after some doodling...
-    $('.btn-clear-sign').click(function () {
-        var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
-        $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
-    });
+  $('.btn-save-sign').click(function () {
+    var signature = this.id.replace("save", "");
+    var div = $("#div" + signature);
+    var img = div.jSignature("getData");
+    $('#preview' + signature).attr('src', img);
+    $('#img' + signature).val(img);
+  });
 
-    $('#btnPrintPreStart').click(function () {
-        var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-        if (selecteds > 0) {
-            var ids = Array();
-            $("input[type=checkbox]:checked").not('#chkRow').each(function () {
-                ids.push(this.id.split("-")[1]);
-            });
-            var urlArray = window.location.href.split("/");
-            if (urlArray[urlArray.length - 1] == "form_prestart") {
-                window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
-            } else {
-                window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));
-            }
-        }
-    });
+  // after some doodling...
+  $('.btn-clear-sign').click(function () {
+    var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
+    $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
+  });
+
+  $('#btnPrintPreStart').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "form_prestart") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));
+      }
+    }
+  });
 });
 
 /***/ })

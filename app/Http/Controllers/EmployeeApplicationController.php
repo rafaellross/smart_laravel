@@ -127,7 +127,7 @@ class EmployeeApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {            
+    {
             $employee_application                           = EmployeeApplication::find($id);
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
@@ -160,6 +160,8 @@ class EmployeeApplicationController extends Controller
             $employee_application->educational_loan         = $request->get('educational_loan');
             $employee_application->financial_supplement     = $request->get('financial_supplement');
             $employee_application->employee_signature       = $request->get('signature');
+            $employee_application->business                 = $request->get('business');
+            $employee_application->business_dt              = is_null($request->get('business_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('business_dt'));
             $employee_application->save();
 
             foreach ($employee_application->licenses as $license) {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/forms.js') }}"></script>    
+<script src="{{ asset('js/forms.js') }}"></script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 col-lg-12">
@@ -9,9 +9,9 @@
                 <div class="card-header">{{ __('Create New Service Sheet') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('form_checklist.store') }}">
-                        @csrf                        
-                        <div class="form-group row">                            
+                    <form method="POST" action="{{ route('form_service_sheet.store') }}">
+                        @csrf
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="description" class="col-form-label text-md-right">{{ __('Date:') }}</label>
                                 <input id="dt_form" type="text" class="form-control date-picker" name="dt_form" value="{{ Carbon::now('Australia/Sydney')->format('d/m/Y') }}" >
@@ -34,7 +34,7 @@
                         </div>
                         <hr/>
                         <h4 class="row text-center font-weight-bold card-header mb-1">Customer</h4>
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="customer_name" class="col-form-label text-md-right">{{ __('Customer Name:') }}</label>
                                 <input type="text" class="form-control" name="customer_name" value="" >
@@ -55,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="requested_by" class="col-form-label text-md-right">{{ __('Service Requested by:') }}</label>
                                 <input type="text" class="form-control" name="requested_by" value="" >
@@ -77,7 +77,7 @@
                         </div>
                         <hr/>
                         <h4 class="text-center">Job</h4>
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="job_description" class="col-form-label text-md-right">{{ __('Job Description:') }}</label>
                                 <input type="text" class="form-control" name="job_description" value="" >
@@ -97,7 +97,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="site_contact" class="col-form-label text-md-right">{{ __('Site Contact:') }}</label>
                                 <input type="text" class="form-control" name="site_contact" value="" >
@@ -119,7 +119,7 @@
                         </div>
                         <hr/>
                         <h4 class="row text-center font-weight-bold card-header mb-1">AUTHORITY TO PERFORM WORK</h4>
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="read_understood" class="col-form-label text-md-right">{{ __('Read and understood by:') }}</label>
                                 <input type="text" class="form-control" name="read_understood" value="" >
@@ -139,7 +139,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">                            
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="authority_dt" class="col-form-label text-md-right">{{ __('Date:') }}</label>
                                 <input type="text" class="form-control date-picker" name="authority_dt" value="" >
@@ -149,37 +149,37 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-6">  
+                            <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-12">                                
-                                        <label for="authority_signature" class="col-form-label text-md-right">{{ __('Signature:') }}</label>                                                             
-                                        <input type="hidden" name="authority_signature_hidden" id="img_authority_signature" value="">                                
+                                    <div class="col-md-12">
+                                        <label for="authority_signature" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
+                                        <input type="hidden" name="authority_signature_hidden" id="img_authority_signature" value="">
                                     </div>
-                                    <div class="col-md-4">                                
+                                    <div class="col-md-4">
                                         <button id="authority_signature" type="button" class="btn btn-secondary btn-block btn-signature">
                                             {{ __('Sign') }}
-                                        </button>                                                                                                                    
-                                    </div>                                                                                            
-                                    <div class="col-md-8">                                
-                                        <img class="ml-1" id="preview_authority_signature" src="" style="width: 100%;" />                                                                
-                                    </div>    
-                                    
+                                        </button>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <img class="ml-1" id="preview_authority_signature" src="" style="width: 100%;" />
+                                    </div>
+
                                 </div>
 
-                            </div>                            
+                            </div>
                         </div>
                         <hr>
                         <h4 class="row text-center font-weight-bold card-header mb-1">
                             <strong>DESCRIPTION OF WORK PERFORMED:</strong>
-                        </h4>                        
-                        <div class="form-group">                            
+                        </h4>
+                        <div class="form-group">
                             <textarea class="form-control" id="description" name="description" rows="5" style="resize: none; text-align: left" maxlength="1000"></textarea>
-                        </div>                        
+                        </div>
                         <hr/>
                         <h4 class="row text-center font-weight-bold card-header mb-1">
                             <strong>MATERIALS USED FROM STOCK:</strong>
-                        </h4>                        
-                        <div class="form-group row">                            
+                        </h4>
+                        <div class="form-group row">
                             <div class="col-md-2">
                                 <label for="purchase_no_1" class="col-form-label text-md-right">{{ __('Purchase Order No:') }}</label>
                                 <input type="text" class="form-control" name="purchase_no_1" value="" >
@@ -188,28 +188,28 @@
                                 <label for="material_no_1" class="col-form-label text-md-right">{{ __('Materials Used:') }}</label>
                                 <input type="text" class="form-control" name="material_no_1" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-2">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="purchase_no_2" value="" >
                             </div>
                             <div class="col-md-10">
-                                
+
                                 <input type="text" class="form-control" name="material_no_2" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-2">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="purchase_no_3" value="" >
                             </div>
-                            <div class="col-md-10">                                
+                            <div class="col-md-10">
                                 <input type="text" class="form-control" name="material_no_3" value="" >
                             </div>
-                        </div>     
+                        </div>
                         <h4 class="row text-center font-weight-bold card-header mb-1">
                             <strong>TIME SHEET:</strong>
-                        </h4>                        
-                        <div class="form-group row">                            
+                        </h4>
+                        <div class="form-group row">
                             <div class="col-md-3">
                                 <label for="time_sheet_dt_1" class="col-form-label text-md-right">{{ __('Date:') }}</label>
                                 <input type="text" class="form-control" name="time_sheet_dt_1" value="" >
@@ -230,75 +230,75 @@
                                 <label for="time_sheet_initial_1" class="col-form-label text-md-right">{{ __('Employee Initials:') }}</label>
                                 <input type="text" class="form-control" name="time_sheet_initial_1" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-3">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_dt_2" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_2" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_end_2" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_total_2" value="" >
                             </div>
-                            <div class="col-md-3">                                
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_initial_2" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-3">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_dt_3" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_3" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_end_3" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_total_3" value="" >
                             </div>
-                            <div class="col-md-3">                                
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_initial_3" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-3">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_dt_4" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_4" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_end_4" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_total_4" value="" >
                             </div>
-                            <div class="col-md-3">                                
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_initial_4" value="" >
                             </div>
-                        </div>                        
-                        <div class="form-group row">                            
-                            <div class="col-md-3">                                
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_dt_5" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_5" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_end_5" value="" >
                             </div>
-                            <div class="col-md-2">                                
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_total_5" value="" >
                             </div>
-                            <div class="col-md-3">                                
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" name="time_sheet_initial_5" value="" >
                             </div>
-                        </div>                        
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-3 offset-md-9">
@@ -307,7 +307,7 @@
                                 </a>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Create') }}
-                                </button>                                
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -331,7 +331,7 @@
                 <div class="form-group alert" role="alert">
                     <h4 style="text-align: center;">Signature</h4>
                         <div class="form-row" style="text-align: center;">
-                            <div class="col-md-12 mb-3">                            
+                            <div class="col-md-12 mb-3">
                                 <div id="div_signature_{{$i}}" class="div-signature"></div>
 
                                 <input type="button" value="Clear" id="div_signature_{{$i}}" class="btn btn-danger btn-clear-sign" >
@@ -347,9 +347,7 @@
         </div>
       </div>
     </div>
-    @endfor 
+    @endfor
 
 
 @endsection
-
-

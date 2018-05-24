@@ -29,47 +29,47 @@ class TimeSheetController extends Controller
             if (Auth::user()->administrator) {
                 $timesheets = DB::table('time_sheets')
                               ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
                               ->where('status', '=', 'P')
                               ->get();
-                
+
             } else {
                 $timesheets =   DB::table('time_sheets')
                                 ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                                ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                                ->join('users', 'time_sheets.user_id', '=', 'users.id')
                                 ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                                 ->orderBy('employees.name')
                                 ->where('user_id', '=', Auth::user()->id)
                                 ->where('status', '=', 'P')
                                 ->get();
-                
-                
-            }            
+
+
+            }
         } else {
             if (Auth::user()->administrator) {
                 $timesheets = DB::table('time_sheets')
                               ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
                               ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
                               ->get();
-                
+
             } else {
                 $timesheets = DB::table('time_sheets')
                               ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')                              
+                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
                               ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
                               ->orderBy('employees.name')
-                              ->where('user_id', '=', Auth::user()->id)                              
+                              ->where('user_id', '=', Auth::user()->id)
                               ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
-                              ->get();                
-            }            
+                              ->get();
+            }
 
         }
-        
+
         return view('timesheet.index', ['timesheets' => $timesheets]);
     }
 
@@ -80,9 +80,9 @@ class TimeSheetController extends Controller
      */
     public function create($employee)
     {
-        $days = WeekDay::where('number', '<', 8)->get();        
+        $days = WeekDay::where('number', '<', 8)->get();
 
-        $employees = Employee::whereRaw("id in ($employee)")->get();        
+        $employees = Employee::whereRaw("id in ($employee)")->get();
         return view('timesheet.create', ['days' => $days, 'employees' => $employees]);
     }
 
@@ -98,11 +98,11 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
-        
+
         //Validate rdo, pld and annual leave
         $errors = [];
         foreach ($request->get('employees') as $employee_id => $value) {
@@ -114,8 +114,8 @@ class TimeSheetController extends Controller
             $anl = 0;
 
             $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
-            $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;            
-            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;            
+            $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;
+            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
             foreach ($request->get('days') as $key => $day) {
                 foreach ($day as $key => $job) {
                     if (isset($job["job"])) {
@@ -128,8 +128,8 @@ class TimeSheetController extends Controller
 
                         if ($job["job"] == "anl") {
                             $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
-                        }                                            
-                    }                    
+                        }
+                    }
                 }
             }
             if ($rdo > 0 && ($rdo) > $employee->rdo_bal) {
@@ -146,9 +146,9 @@ class TimeSheetController extends Controller
 
         }
         if (count($errors) > 0) {
-            return redirect()->back()->withInput()->with('error', $errors);                
+            return redirect()->back()->withInput()->with('error', $errors);
         }
-                        
+
 
         foreach ($request->get('employees') as $employee_id => $value) {
 
@@ -169,30 +169,31 @@ class TimeSheetController extends Controller
 
             $timeSheet->user_id         = Auth::id();
             $timeSheet->status          = $request->get('status');
-            $timeSheet->save();        
+            $timeSheet->save();
 
-            
+
             foreach ($request->get('days') as $key => $day) {
                 $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
                 $dayTimeSheet                   = new Day();
                 $dayTimeSheet->week_day         = $weekDay->number;
-                $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);  
+                $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);
 
                 $dayTimeSheet->total           = $day['total']['total'];
                 $dayTimeSheet->normal          = $day['total']['normal'];
                 $dayTimeSheet->total_15        = $day['total']['1.5'];
                 $dayTimeSheet->total_20        = $day['total']['2.0'];
-                
+
                 $dayTimeSheet->time_sheet_id    = $timeSheet->id;
                 $dayTimeSheet->save();
-                
+
                 foreach ($day as $key => $job) {
-                    
+
                     if (intval($key)) {
-                        $dayJob         = new DayJob();
-                        $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
-                        $dayJob->day_id = $dayTimeSheet->id;
-                        $dayJob->number = $key;
+                        $dayJob               = new DayJob();
+                        $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
+                        $dayJob->day_id       = $dayTimeSheet->id;
+                        $dayJob->number       = $key;
+                        $dayJob->description  = $job["description"];
                         $dayJob->start  = !isset($job["start"]) ? null : $job["start"];
                         $dayJob->end    = !isset($job["end"]) ? null : $job["end"];
                         $dayJob->save();
@@ -208,14 +209,14 @@ class TimeSheetController extends Controller
                         $certificate->time_sheet_id = $timeSheet->id;
                         $certificate->certificate_img = $value;
                         $certificate->certificate_number = $certificate_number;
-                        $certificate->save();                    
+                        $certificate->save();
                         $certificate_number++;
                     }
                 }
             }
-            
+
         }
-        
+
         return redirect('/timesheets')->with('success', 'Time Sheet has been added');
     }
 
@@ -227,10 +228,10 @@ class TimeSheetController extends Controller
      */
     public function show($id)
     {
-        
+
         $timesheet = TimeSheet::find($id);
-        
-        
+
+
         $pdf = TimeSheetReport::add($timesheet);
         $pdf->Open('doc.pdf');
         $pdf->output('F', 'TimeSheets.pdf');
@@ -263,8 +264,8 @@ class TimeSheetController extends Controller
             'week_end' => 'required|date_format:d/m/Y'
         ]);
 
-        $timeSheet = TimeSheet::find($id);        
-        
+        $timeSheet = TimeSheet::find($id);
+
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
         $timeSheet->emp_signature   = $request->get('emp_signature');
         $timeSheet->rdo             = $request->get('rdo');
@@ -279,37 +280,38 @@ class TimeSheetController extends Controller
 
         $timeSheet->user_id         = Auth::id();
         $timeSheet->status          = $request->get('status');
-        $timeSheet->save();        
+        $timeSheet->save();
 
         foreach ($timeSheet->days as $day) {
                 foreach ($day->dayJobs as $job) {
                     $job->delete();
                 }
                 $day->delete();
-        }    
-        
+        }
+
         foreach ($request->get('days') as $key => $day) {
 
             $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
             $dayTimeSheet                   = new Day();
             $dayTimeSheet->week_day         = $weekDay->number;
-            $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);              
+            $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);
             $dayTimeSheet->total           = $day['total']['total'];
             $dayTimeSheet->normal          = $day['total']['normal'];
             $dayTimeSheet->total_15        = $day['total']['1.5'];
             $dayTimeSheet->total_20        = $day['total']['2.0'];
-            
+
             $dayTimeSheet->time_sheet_id    = $timeSheet->id;
             $dayTimeSheet->save();
-            
+
             foreach ($day as $key => $job) {
-                
+
                 if (intval($key)) {
                     //return $job;
                     $dayJob         = new DayJob();
                     $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
                     $dayJob->day_id = $dayTimeSheet->id;
                     $dayJob->number = $key;
+                    $dayJob->description  = $job["description"];
                     $dayJob->start  = $job["start"];
                     $dayJob->end    = $job["end"];
                     $dayJob->save();
@@ -317,11 +319,11 @@ class TimeSheetController extends Controller
             }
         }
         $certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
-        
+
         foreach ($timeSheet->certificates as $certificate) {
-            $certificate->delete();        
-        }    
-                
+            $certificate->delete();
+        }
+
         if (!empty($request->get('medical_certificates')) > 0) {
             $certificate_number = 1;
             foreach ($request->get('medical_certificates') as $value) {
@@ -330,15 +332,15 @@ class TimeSheetController extends Controller
                     $certificate->time_sheet_id = $timeSheet->id;
                     $certificate->certificate_img = $value;
                     $certificate->certificate_number = $certificate_number;
-                    $certificate->save();                    
+                    $certificate->save();
                     $certificate_number++;
                 }
             }
         }
-        
+
         return redirect('/timesheets')->with('success', 'Time Sheet has been updated');
-        
-        
+
+
     }
 
     /**
@@ -351,11 +353,11 @@ class TimeSheetController extends Controller
     {
         $timesheet = TimeSheet::find($id);
         $timesheet->delete();
-        return redirect('timesheets')->with('success','Time Sheet has been  deleted');        
+        return redirect('timesheets')->with('success','Time Sheet has been  deleted');
     }
 
     public function action($id, $action, $status = null)
-    {        
+    {
 
         $ids = explode(",", $id);
 
@@ -365,19 +367,19 @@ class TimeSheetController extends Controller
                     $timesheet = TimeSheet::find($id);
                     $timesheet->delete();
 
-                }                
-                return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');        
+                }
+                return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');
                 break;
             case 'update':
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
                     $timesheet->status = $status;
                     $timesheet->save();
-                }                            
-                return redirect('timesheets')->with('success','Time Sheet(s) has been updated');                        
+                }
+                return redirect('timesheets')->with('success','Time Sheet(s) has been updated');
                 break;
             case 'print':
-                
+
                 $report = new TimeSheetReport();
                 $report->SetCompression(true);
                 foreach ($ids as $id) {
@@ -388,10 +390,10 @@ class TimeSheetController extends Controller
                 }
                 return $report->output();
                 break;
-            
+
             default:
-                return redirect('timesheets')->with('error','There was no action selected');        
+                return redirect('timesheets')->with('error','There was no action selected');
                 break;
-        }        
+        }
     }
 }

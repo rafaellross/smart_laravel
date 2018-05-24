@@ -50,6 +50,8 @@ Route::group(['middleware' => ['test']], function () {
 
 
 Route::group(['middleware' => ['administrator']], function () {
+	//Parameters
+	Route::resource('parameters', 'ParametersController');
 
 
 	//Employees

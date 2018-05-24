@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/qa.js": "/js/qa.js",
+    "/js/parameters.js": "/js/parameters.js",
     "/js/forms.js": "/js/forms.js",
     "/js/employee_application.js": "/js/employee_application.js",
     "/js/custom.js": "/js/custom.js"

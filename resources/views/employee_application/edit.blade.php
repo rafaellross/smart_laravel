@@ -453,7 +453,7 @@
                         <!-- End Additional Licenses Card-->
                         <br>
                         <!-- Signature-->
-                        <div class="card" id="additionalLicenses">
+                        <div class="card" id="employee_signature">
                             <h5 class="card-header">Signature</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -478,7 +478,34 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Signature-->
+                        <br>
+                        <div class="card" id="business">
+                            <h5 class="card-header">Business</h5>
+                            <div class="card-body">
+                                <!-- Start Card -->
+                                <div class="row">
+                                          <div class="col-md-9 col-sm-12">
+                                              <label>
+                                                  <strong>Select Business:</strong>
+                                              </label>
+                                              <select class="form-control form-control-lg custom-select" name="business">
+                                                  @foreach (App\Parameters::all() as $parameter)
+                                                      <option value="{{$parameter->id}}" {{$parameter->id == $employee_application->business ? 'selected' : ''}}>{{$parameter->business_name}}</option>
+                                                  @endforeach
+                                              </select>
+                                          </div>
+                                          <div class="col-md-3 col-sm-12">
+                                              <label>
+                                                  <strong>Date:</strong>
+                                              </label>
+                                              <input type="text" class="form-control form-control-lg" name="business_dt" value="{{ Carbon::parse($employee_application->business_dt)->format('d/m/Y') ? Carbon::parse($employee_application->business_dt)->format('d/m/Y') : '' }}" required>
+                                          </div>
+                                    <!-- End Card -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Business-->
 
                         <br>
                         <!-- Actions Card-->

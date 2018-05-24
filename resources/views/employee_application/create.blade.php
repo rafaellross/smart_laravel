@@ -206,13 +206,13 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-md-4 col-4 mb-3">
+                                        <div class="col-md-4 col-sm-12 mb-3">
                                             <label>
                                                 <strong>Date Employment Commenced:</strong>
                                             </label>
                                             <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" required>
                                         </div>
-                                        <div class="col-md-4 col-4 mb-3">
+                                        <div class="col-md-8 col-sm-12 mb-3">
                                             <label>
                                                 <strong>Employment Type:</strong>
                                             </label>
@@ -225,59 +225,7 @@
                                                 <option value="S">Superannuation or annuity income stream</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 col-4 mb-3">
-                                            <label>
-                                                <strong>Are you:</strong><span></span>
-                                            </label>
-                                            <select name="tax_status" class="form-control form-control-lg">
-                                                <option value="">Select Tax Status</option>
-                                                <option value="R">An Australian resident for tax purposes</option>
-                                                <option value="F">A foreign resident for tax purposes</option>
-                                                <option value="H">A working holiday maker</option>
-                                            </select>
-                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
-                                            <label>
-                                                <strong>Do you want to claim the tax-free threshold from Smart Plumbing Solutions?</strong>
-                                            </label>
-                                            <br>
-                                            <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
-                                            <select name="claim_threshold" class="form-control form-control-lg">
-                                                <option value="">Select an option</option>
-                                                <option value="1">YES</option>
-                                                <option value="0">NO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
-                                            <label>
-                                                <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
-                                            </label>
-                                            <br>
-                                                <option value="">Select an option</option>
-                                                <option value="1">YES</option>
-                                                <select name="educational_loan" class="form-control form-control-lg">
-                                                <option value="0">NO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
-                                            <label>
-                                                <strong>Do you have a Financial Supplement debt?</strong>
-                                            </label>
-                                            <br>
-                                            <select name="financial_supplement" class="form-control form-control-lg">
-                                                <option value="">Select an option</option>
-                                                <option value="1">YES</option>
-                                                <option value="0">NO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -513,23 +461,31 @@
                             <h5 class="card-header">Signature</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="form-row">
-                                        <div class="form-row" style="text-align: center;">
-                                            <div class="col-md-12 mb-3">
-                                              <input type="hidden" name="signature" value="">
-                                                <div id="div_signature" class="div-signature"></div>
-                                                <input type="button" value="Clear" id="div_signature" class="btn btn-danger btn-clear-sign" >
-                                            </div>
-                                            <div class="col-md-3 col-12 mb-3">
-                                                <label>
-                                                    <strong>Date:</strong>
-                                                </label>
-                                                <input type="text" class="form-control form-control-lg" name="dob" value="" required>
-                                            </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                  <div class="form-row">
+                                    <div class="col-md-12 mb-3">
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="chk_policy" value="accept">
+                                        <label class="custom-control-label" for="chk_policy">
+                                          I declare that the information I have given is true and correct. I have read and understood <a target="_blank" href="{{asset('templates/policy_procedures.pdf')}}">Smart Plumbing Solutions's Policies & Procedures</a>.
 
-                                        </div>
+                                        </label>
+                                      </div>
                                     </div>
+                                  </div>
+                                  <div class="form-row" style="text-align: center;">
+                                      <div class="col-md-12 mb-3">
+                                        <input type="hidden" name="signature" value="">
+                                          <div id="div_signature" class="div-signature"></div>
+                                          <input type="button" value="Clear" id="div_signature" class="btn btn-danger btn-clear-sign" >
+                                      </div>
+                                      <div class="col-md-3 col-12 mb-3">
+                                          <label>
+                                              <strong>Date:</strong>
+                                          </label>
+                                          <input type="text" class="form-control form-control-lg date-picker" name="business_dt" value="{{Carbon::now('Australia/Sydney')->format('d/m/Y')}}" required>
+                                      </div>
+                                  </div>
                                     <!-- End Card -->
                                 </div>
                             </div>
@@ -545,7 +501,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
-                                            <input type="submit" class="btn btn-warning" value="Submit"/>
+                                            <input id="submit_application" type="submit" class="btn btn-warning" value="Submit"/>
                                             <a href="index.php" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>

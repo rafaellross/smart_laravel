@@ -5,6 +5,7 @@ namespace App;
 use setasign\Fpdi\Fpdi;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Parameters;
 class FormTFN extends Fpdi
 {
     public function add(EmployeeApplication $application)
@@ -26,7 +27,7 @@ class FormTFN extends Fpdi
 		$this->SetXY(40, 35);
 		$nameX = 43.2;
 
-    
+
     //Write TFN number
 		$tax_file_number = str_split(strtoupper($application->tax_file_number));
 		foreach ($tax_file_number as $key => $char) {
@@ -62,7 +63,7 @@ class FormTFN extends Fpdi
 				$nameX = 3.2;
 			}
 			if ($key > 18) {
-				$this->SetXY($nameX+=5, 89.5+9.5 + 13.5  + 9.5);
+				$this->SetXY($nameX+=5, 89.5+9.5 + 13.5 + 8.5);
 			} else {
 				$this->SetXY($nameX+=5, 89.5+9.5 + 13.5);
 			}
@@ -190,10 +191,147 @@ class FormTFN extends Fpdi
 			$this->Write(0, $char);
 		}
 
+    //Write Employee Signature
     if (!is_null($application->employee_signature)) {
       $this->Image($application->employee_signature, 113,129,40,0,'png');
     }
 
+
+    //Employer section
+
+    $parameters = Parameters::find($application->business);
+    $nameX=3.2;
+    if ($parameters) {
+      //Write TFN number
+  		$abn = str_split(strtoupper($parameters->abn));
+  		foreach ($abn as $key => $char) {
+  			if (in_array($key, [2, 5, 8])) {
+  				$nameX+=5;
+  			}
+  			$this->SetXY($nameX+=5, 184);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Name
+      $nameX=3.2;
+      $nameY=209;
+  		$business_name = str_split(strtoupper($parameters->business_name));
+  		foreach ($business_name as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX = 3.2;
+          $nameY += 8.5;
+  			}
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Address
+      $nameX=3.2;
+      $nameY+=21;
+  		$business_address = str_split(strtoupper($parameters->business_address));
+  		foreach ($business_address as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX = 3.2;
+          $nameY += 8.5;
+  			}
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Suburb
+      $nameX=3.2;
+      $nameY+=18.5;
+  		$business_suburb = str_split(strtoupper($parameters->business_suburb));
+  		foreach ($business_suburb as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX = 3.2;
+          $nameY += 8.5;
+  			}
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business State
+      $nameX=3;
+      $nameY+=9;
+  		$business_state = str_split(strtoupper($parameters->business_state));
+  		foreach ($business_state as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX = 3.2;
+          $nameY += 8.5;
+  			}
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Postcode
+      $nameX=28.5;
+  		$business_post_code = str_split(strtoupper($parameters->business_post_code));
+  		foreach ($business_post_code as $key => $char) {
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business E-mail
+      $nameX=106.5;
+      $nameY = 180.5;
+  		$business_email = str_split(strtoupper($parameters->business_email));
+  		foreach ($business_email as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX=106.7;
+          $nameY += 8.5;
+  			}
+
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Contact
+      $nameX=106.7;
+      $nameY += 13;
+  		$business_contact = str_split(strtoupper($parameters->business_contact));
+  		foreach ($business_contact as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX=106.7;
+          $nameY += 8.5;
+  			}
+
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Business Phone Number
+      $nameX=136.7;
+      $nameY += 8.5;
+  		$business_phone = str_split(strtoupper($parameters->business_phone));
+  		foreach ($business_phone as $key => $char) {
+        if (in_array($key, [19])) {
+  				$nameX=106.7;
+          $nameY += 8.5;
+  			}
+
+  			$this->SetXY($nameX+=5, $nameY);
+  			$this->Write(0, $char);
+  		}
+
+      //Write Employer Signature
+      if (!is_null($parameters->business_signature)) {
+        $this->Image($parameters->business_signature, 113,233,40,0,'png');
+      }
+
+      //Write Business Date
+  		$this->SetXY($nameX=156.3, 241);
+  		$business_dt = str_split(Carbon::parse($application->business_dt)->format('dmY'));
+  		foreach ($business_dt as $key => $char) {
+  			if (in_array($key, [2, 4])) {
+  				$nameX+=3.3;
+  			}
+  			$this->SetXY($nameX+=4.8, 241);
+  			$this->Write(0, $char);
+  		}
+
+
+    }
 
 		$this->Output();
     }

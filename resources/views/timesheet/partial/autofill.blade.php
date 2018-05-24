@@ -13,17 +13,17 @@
                             <div class="col-md-6 col-12 mb-3">
                                 <label>Start</label>
                                 <select class="hour-start form-control form-control-lg custom-select " id="preStart" disable>
-                                    @for ($i = 0; $i <= (24*60)-15; $i += 15)        
+                                    @for ($i = 0; $i <= (24*60)-15; $i += 15)
                                         <option value="{{$i}}" {{$i == (7*60) ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
-                                    @endfor                                                
+                                    @endfor
                                 </select>
                             </div>
                             <div class="col-md-6 col-12 mb-3">
                                 <label>End</label>
                                 <select class="hour-start form-control form-control-lg custom-select " id="preEnd">
-                                    @for ($i = 0; $i <= (24*60)-15; $i += 15)        
+                                    @for ($i = 0; $i <= (24*60)-15; $i += 15)
                                         <option value="{{$i}}" {{$i == (15.25*60) ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
-                                    @endfor                                                
+                                    @endfor
                                 </select>
                             </div>
                         </div>
@@ -31,12 +31,17 @@
                             <div class="col-md-12 mb-3">
                                 <label>Job</label>
                                 <select class="form-control form-control-lg custom-select " id="preJob">
-                                    <option value="">Select Job</option>
+                                    <option value="" selected>Select Job</option>
                                     @foreach ($jobDB as $job)
-                                        <option value="{{$job->code}}" {{$job->code == '001' ? 'selected' : ''}}>{{$job->description}}</option>
-                                    @endforeach                                                                
+                                        <option value="{{$job->code}}">{{$job->description}}</option>
+                                    @endforeach
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row" style="text-align: center;">
+                          <div class="col-md-12 mb-3">
+                          <input readonly class="form-control form-control-lg" type="text" id="preJob_description" value="">
+                          </div>
                         </div>
                         <div class="form-row overtime" style="text-align: center;display:none;">
                             <div class="col-md-6 mb-3">
