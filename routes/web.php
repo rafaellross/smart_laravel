@@ -55,7 +55,7 @@ Route::group(['middleware' => ['administrator']], function () {
 
 
 	//Employees
-	Route::get('/employees/action/{id}/{action}/{status?}', 'EmployeeController@action');
+	Route::get('/employees/action/{id}/{action}/{param?}', 'EmployeeController@action');
 	Route::patch('/employees/entitlemens', 'EmployeeController@updateEntitlements');
 	Route::resource('employees', 'EmployeeController');
 

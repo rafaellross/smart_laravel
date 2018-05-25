@@ -128,16 +128,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.56.5",
+            "version": "3.56.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d5b8f10a6e51174fab6a0222e1f0dfae2323e75d"
+                "reference": "9e4d40ca435d7bda7874e9b4e57b3a5de7c50c58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d5b8f10a6e51174fab6a0222e1f0dfae2323e75d",
-                "reference": "d5b8f10a6e51174fab6a0222e1f0dfae2323e75d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9e4d40ca435d7bda7874e9b4e57b3a5de7c50c58",
+                "reference": "9e4d40ca435d7bda7874e9b4e57b3a5de7c50c58",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +204,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-05-21T20:15:18+00:00"
+            "time": "2018-05-22T22:08:15+00:00"
         },
         {
             "name": "codedge/laravel-fpdf",

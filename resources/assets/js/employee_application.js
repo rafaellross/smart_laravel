@@ -186,14 +186,19 @@ $('.btn-clear-sign').click(function(event) {
   $('#div_signature').jSignature("reset");
 });
 
-$('#submit_application').prop('disabled', 'true');
-$(document).on('click', '#chk_policy', function(event) {
 
-  if(this.checked) {
-      $('#submit_application').prop('disabled', false);
-  } else {
-      $('#submit_application').prop('disabled', true);
-  }
-});
+$('#submit_application').prop('disabled', 'true');
+if($('#chk_policy').is(':checked')) {
+  $('#submit_application').prop('disabled', 'false');
+}
+
+
+  $(document).on('click', '#chk_policy', function(event) {
+    if(this.checked) {
+        $('#submit_application').prop('disabled', false);
+    } else {
+        $('#submit_application').prop('disabled', true);
+    }
+  });
 
 });

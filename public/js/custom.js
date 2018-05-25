@@ -589,6 +589,22 @@ $(document).ready(function () {
   $('#btnEntitlements').click(function () {
     $('#modalUpdateEntitlements').modal('show');
   });
+
+  $('.btnPrintEmployee').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "employees") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print/" + this.id, '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print/" + this.id, '_blank'));
+      }
+    }
+  });
 });
 
 /***/ })
