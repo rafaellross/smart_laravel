@@ -43,6 +43,9 @@ Route::group(['middleware' => ['test']], function () {
 	//Employee application
 	Route::get('/employee_application', 'EmployeeApplicationController@index');
 	Route::get('/employee_application/create', 'EmployeeApplicationController@create');
+
+	Route::get('/employee_application/tfn', 'EmployeeApplicationController@tfn');
+
 	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicationController@action');
 	Route::get('/employee_application/{id}/edit', 'EmployeeApplicationController@edit');
 

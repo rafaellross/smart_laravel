@@ -6,6 +6,12 @@
 <script src="{{ asset('js/file-input/plugins/sortable.min.js') }}"></script>
 <script src="{{ asset('js/file-input/plugins/purify.min.js') }}"></script>
 <script src="{{ asset('js/file-input/fileinput.min.js') }}"></script>
+<script type="text/javascript">
+  // initialize with defaults
+  $(document).ready(function() {
+    $("input[name=tax_declaration]").fileinput();
+  });
+</script>
 
         <div class="container">
             <!-- Logo -->
@@ -506,7 +512,9 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                   <div class="form-row">
                                     <div class="col-md-12 mb-3">
-                                      <input id="input-b3" name="tax_declaration" type="file" class="file" data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload...">
+                                      <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                                      <input name="tax_declaration" type="file" class="file" data-msg-placeholder="Select {files} for upload...">
+
                                     </div>
                                   </div>
                                     <!-- End Card -->
@@ -540,10 +548,4 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <script src="{{ asset('js/employee_application.js') }}"></script>
-        <script type="text/javascript">
-          // initialize with defaults
-          $(document).ready(function() {
-            $("#input-b3").fileinput();
-          });
-        </script>
 @endsection

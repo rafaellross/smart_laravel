@@ -40,7 +40,7 @@ class EmployeeApplicationController extends Controller
      */
     public function store(Request $request)
     {
-            return $request;
+            return $request->file('tax_declaration');
             $employee_application                           = new EmployeeApplication();
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
@@ -106,6 +106,7 @@ class EmployeeApplicationController extends Controller
         $employee_application = EmployeeApplication::find($id);
         return $tfn->add($employee_application);
     }
+
 
     /**
      * Show the form for editing the specified resource.
