@@ -42,7 +42,7 @@ $(document).ready(function() {
   $('.date-picker').datepicker({format: 'dd/mm/yyyy'});
 
   //Show extra jobs for selected day
-  let showExtra = function(btn, extra_inputs) {
+  showExtra = function(btn, extra_inputs) {
     $(extra_inputs).css('display', 'block');
     $(btn).fadeOut();
   }
@@ -157,7 +157,7 @@ $(document).ready(function() {
     calcTotal();
   });
 
-  let calcTotal = function() {
+  calcTotal = function() {
 
     //Calculate total of normal hours
     var normalTotal = 0;

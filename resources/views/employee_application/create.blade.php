@@ -9,7 +9,9 @@
 <script type="text/javascript">
   // initialize with defaults
   $(document).ready(function() {
-    $("input[name=tax_declaration]").fileinput();
+    $("input[name=tax_declaration]").fileinput({
+      
+    });
   });
 </script>
 
