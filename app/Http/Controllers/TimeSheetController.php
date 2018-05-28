@@ -98,6 +98,8 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
+
 
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
@@ -194,8 +196,9 @@ class TimeSheetController extends Controller
                         $dayJob->day_id       = $dayTimeSheet->id;
                         $dayJob->number       = $key;
                         $dayJob->description  = $job["description"];
-                        $dayJob->start  = !isset($job["start"]) ? null : $job["start"];
-                        $dayJob->end    = !isset($job["end"]) ? null : $job["end"];
+                        $dayJob->start        = !isset($job["start"]) ? null : $job["start"];
+                        $dayJob->end          = !isset($job["end"]) ? null : $job["end"];
+                        $dayJob->night_work   = !isset($job["night_work"]) ? false : $job["night_work"];
                         $dayJob->save();
                     }
                 }
@@ -307,13 +310,14 @@ class TimeSheetController extends Controller
 
                 if (intval($key)) {
                     //return $job;
-                    $dayJob         = new DayJob();
-                    $dayJob->job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
-                    $dayJob->day_id = $dayTimeSheet->id;
-                    $dayJob->number = $key;
+                    $dayJob               = new DayJob();
+                    $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
+                    $dayJob->day_id       = $dayTimeSheet->id;
+                    $dayJob->number       = $key;
                     $dayJob->description  = $job["description"];
-                    $dayJob->start  = $job["start"];
-                    $dayJob->end    = $job["end"];
+                    $dayJob->start        = $job["start"];
+                    $dayJob->end          = $job["end"];
+                    $dayJob->night_work   = !isset($job["night_work"]) ? false : $job["night_work"];
                     $dayJob->save();
                 }
             }

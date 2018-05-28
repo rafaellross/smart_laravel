@@ -27,6 +27,7 @@
                 <th scope="col"><input type="checkbox" id="chkRow"></th>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">D.O.B</th>
                 <th scope="col">Phone</th>
                 <th scope="col">RDO Balance</th>
                 <th scope="col">PLD Balance</th>
@@ -43,6 +44,7 @@
                         </th>
                         <td>{{ $employee->id }}</td>
                         <td>{{ $employee->name }}</td>
+                        <td>{{is_null($employee->dob) ? '' :  Carbon::parse($employee->dob)->format('d/m/Y') }}</td>
                         <td>{{$employee->phone}}</td>
                         <td>{{$employee->rdo_bal}}</td>
                         <td>{{$employee->pld}}</td>

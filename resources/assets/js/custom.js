@@ -49,27 +49,36 @@ $(document).ready(function() {
 
   //Update list of hours in accord with current selection
   $('.hour-start').change(function() {
-    let day = $(this).attr('id').split('_');
-    let row = day[2];
-    let destination = $('#' + day[0] + "_end_" + row);
 
-    //Enable and empty select list for end of the row
-    destination.prop('disabled', false).empty();
-    let option = '<option value="">-</option>';
-    destination.append(option);
 
-    //Get the seleted value to be used as minimum for end
-    var startHour = $(this).val();
-    for (var hour = Number(startHour) + 15; hour <= (24 * 60) - 15; hour += 15) {
-      let option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
-      $(destination).append(option);
-    }
+      let day = $(this).attr('id').split('_');
+      let row = day[2];
+      let destination = $('#' + day[0] + "_end_" + row);
+
+      //Enable and empty select list for end of the row
+      destination.prop('disabled', false).empty();
+      let option = '<option value="">-</option>';
+      destination.append(option);
+
+      //Get the seleted value to be used as minimum for end
+      var startHour = $('#group_' + day[0] + "_" + day[2] + "_night").is(':checked') ? 0 : $(this).val();
+      for (var hour = Number(startHour); hour <= (24 * 60) - 15; hour += 15) {
+        let option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
+        $(destination).append(option);
+      }
   });
 
   $('.hour-end').change(function() {
 
     let day = $(this).attr('id').split('_');
     let row = Number(day[2]);
+
+    let isNight = false;
+
+    if($('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
+        isNight = true;
+    }
+
 
     let next_row = row + 1;
 
@@ -103,10 +112,27 @@ $(document).ready(function() {
     var lunch = (row === 1 && day[0] !== "sat")
       ? 15
       : 0;
-    duration.val(
-      (end - start - lunch) > 0
-      ? minutesToHour(end - start - lunch)
-      : "");
+
+      if (isNight) {
+        if (end > start) {
+          duration.val(
+            (end - start - lunch) > 0
+            ? minutesToHour(end - start - lunch)
+            : "");
+        } else {
+          duration.val(
+            (((24*60)-start) + ((24*60) - (24*60 - end))) - lunch > 0
+            ? minutesToHour((((24*60)-start) + ((24*60) - (24*60 - end))) - lunch)
+            : "");
+        }
+      } else {
+        duration.val(
+          (end - start - lunch) > 0
+          ? minutesToHour(end - start - lunch)
+          : "");
+
+      }
+
 
     var hours_job1 = $('#' + day[0] + '_hours_1').val();
     var hours_job2 = $('#' + day[0] + '_hours_2').val();
@@ -134,18 +160,26 @@ $(document).ready(function() {
 
     var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
 
-    if (totalHours > (8 * 60) && day[0] !== "sat") {
+    if (totalHours > (8 * 60) && day[0] !== "sat" && !isNight) {
       //If total hours is bigger than 08:00 and day different than sat set 1.5
       hours_15 = Math.min((2 * 60), totalHours - (8 * 60));
+
+    }
+    //Check if is night work and start time is between 18 and 23
+    else if (isNight && start >= (18*60) & start < (23*60)) {
+      hours_15 = Math.min((2 * 60), totalHours);
     }
 
     //If total hours is bigger than 10:00 or day equal sat set 1.5
-    if (totalHours > (10 * 60) || day[0] == "sat") {
+    if (!isNight && (totalHours > (10 * 60) || day[0] == "sat") ) {
       if (day[0] == "sat") {
         hours_20 = totalHours;
       } else if (job_number !== "pld") {
         hours_20 = totalHours - (8 * 60) - (2 * 60);
       }
+      //Calculate hours 2.0 in case of night work
+    } else if (isNight) {
+      hours_20 = totalHours - hours_15;
     }
 
     hours_nor = totalHours - hours_15 - hours_20;
@@ -239,6 +273,7 @@ $(document).ready(function() {
   });
 
   $('.btnClear').click(function() {
+
     $('.' + this.id).val('');
     $('.' + this.id).trigger("change");
   });
@@ -512,7 +547,6 @@ $(document).ready(function() {
       jQuery("#emp-" + this.id).remove();
       employeesSelected.splice(employeesSelected.indexOf(this.id), 1);
       $("#countSelecteds").text("(" + employeesSelected.length + ")");
-      console.log(employeesSelected);
     }
   });
 
@@ -603,6 +637,11 @@ $(document).ready(function() {
         window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print/" + this.id, '_blank'));
       }
     }
+  });
+
+  //Night Work
+  $(".chk_night_work").click(function() {
+    $('#' + this.id.replace("_night", "")).trigger("click");
   });
 
 

@@ -24,11 +24,22 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('D.O.B') }}</label>
+                            <div class="col-md-6">
+                                <input id="dob" type="text" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }} date-picker" name="dob" value="{{Carbon::parse($employee->dob)->format('d/m/Y')}}" autocomplete="Off">
+                                @if ($errors->has('dob'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
                             <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ $employee->phone }}" required>
+                                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ $employee->phone }}">
                                 @if ($errors->has('phone'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('phone') }}</strong>

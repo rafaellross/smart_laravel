@@ -15,7 +15,6 @@ class CertificateAwareness extends Fpdf
 
   private $title = 'WORKPLACE IMPAIRMENT TRAINING';
 
-
 	private function _start() {
 		$this->SetY($this->GetY()+10);
 	}
@@ -55,10 +54,6 @@ class CertificateAwareness extends Fpdf
     $this->front($employee->name);
     $this->back();
 
-
-
-    //Render Front
-    //$this->shape(1);
     $this->Ln(5);
   }
 }

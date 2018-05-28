@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
 use DB;
+use Carbon\Carbon;
 use App\CertificateAwareness;
 class EmployeeController extends Controller
 {
@@ -22,6 +23,7 @@ class EmployeeController extends Controller
                         "select emp.id,
                                 emp.name,
                                 emp.phone,
+                                emp.dob,
                                 CAST(emp.rdo_bal AS DECIMAL(12,2)) as rdo_bal,
                                 CAST(emp.pld AS DECIMAL(12,2)) as pld,
                                 CAST(emp.anl AS DECIMAL(12,2)) as anl,
@@ -59,6 +61,7 @@ class EmployeeController extends Controller
             'pld' => 'required|numeric|min:0',
             'rdo_bal' => 'required|numeric|min:0',
             'anl' => 'required|numeric|min:0',
+            'dob' => 'date_format:d/m/Y'
         ]);
 
         $employee = new Employee();
@@ -68,6 +71,7 @@ class EmployeeController extends Controller
         $employee->pld = $request->get('pld');
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');
+        $employee->dob = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
 
         if ($request->get('entitlements') !== null) {
             foreach ($request->get('entitlements') as $entitlement) {
@@ -109,6 +113,7 @@ class EmployeeController extends Controller
             'pld' => 'required|numeric|min:0',
             'rdo_bal' => 'required|numeric|min:0',
             'anl' => 'required|numeric|min:0',
+            'dob' => 'date_format:d/m/Y'
         ]);
 
         $employee = Employee::find($id);
@@ -118,6 +123,7 @@ class EmployeeController extends Controller
         $employee->pld = $request->get('pld');
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');
+        $employee->dob = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
 
         $employee->rdo = false;
         $employee->travel = false;

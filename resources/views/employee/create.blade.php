@@ -23,6 +23,17 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('D.O.B') }}</label>
+                            <div class="col-md-6">
+                                <input id="dob" type="text" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }} date-picker" name="dob" value="{{ old('dob') }}" autocomplete="Off">
+                                @if ($errors->has('dob'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
