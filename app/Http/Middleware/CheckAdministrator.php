@@ -16,7 +16,7 @@ class CheckAdministrator
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->administrator) {
+        if (Auth::user() && !Auth::user()->administrator) {
             return redirect('/home');
         }
 

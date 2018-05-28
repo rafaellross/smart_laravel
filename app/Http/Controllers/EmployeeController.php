@@ -282,7 +282,9 @@ class EmployeeController extends Controller
                 case 'print':
                     if ($param = "awareness") {
                       $report = new CertificateAwareness();
+
                       $report->AddPage();
+
                     } else {
                       $report = new CertificateAwareness();
                     }
@@ -292,6 +294,9 @@ class EmployeeController extends Controller
                     foreach ($ids as $id) {
                         $employee = Employee::find($id);
                         if ($employee) {
+                          if ($report->GetY() > 200) {
+                            $report->AddPage();
+                          }
                             $report->add($employee);
                         }
                     }

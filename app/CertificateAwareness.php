@@ -14,20 +14,29 @@ class CertificateAwareness extends Fpdf
   private $height = 53.98;
 
   private $title = 'WORKPLACE IMPAIRMENT TRAINING';
-	private function _logo() {
 
+
+	private function _start() {
+		$this->SetY($this->GetY()+10);
 	}
 
   private function front($name = '', $ln = 0) {
+
     $this->SetFont('Arial','', $this->font["label"]);
     $positions = array('X' => $this->GetX(), 'Y' => $this->GetY());
-    $this->Image('img/water_mark.jpg', $positions['X']+25, $positions['Y']+8, 40);
-    $this->Cell($this->width , 10, $this->title, 'LTR', 1, 'C');
-    $this->SetFont('Arial','', $this->font["field"]);
-    $this->Cell($this->width , 10, $name, 'LR', 1, 'C');
-    $this->Cell($this->width , 20, '', 'LR', 1, 'C');
-    $this->Cell(($this->width/2)+5 , 13.98, '   D.O.B.:', 'LB', 0, 'L');
-    $this->Cell($this->width/2 -5, 13.98, '   Expiry: ' . Carbon::now()->addYear()->format('d/m/Y'), 'BR', 0, 'L');
+    $this->Image('img/water_mark.jpg', $positions['X']+25, $positions['Y']+13, 40);
+		$this->Cell($this->width , 1, '', 'LTR', 1, 'C');
+    $this->Cell($this->width , 8, $this->title, 'LR', 1, 'C');
+    $this->SetFont('Arial','B', $this->font["field"]);
+
+    $this->Cell($this->width , 3, $name, 'LR', 1, 'C');
+		$this->SetFont('Arial','', $this->font["field"]);
+		$this->Cell($this->width , 15+10, '', 'LR', 1, 'C');
+		$this->Cell($this->width , 5, 'TRAINER: VINCENZO MOLLUSO', 'LR', 1, 'C');
+		$this->Cell($this->width , 5, 'ID No OD-002124', 'LR', 1, 'C');
+
+    $this->Cell(($this->width/2)+5 , 6.98, '   D.O.B.:', 'LB', 0, 'L');
+    $this->Cell($this->width/2 -5, 6.98, '   Expiry: ' . Carbon::now()->addYear()->format('d/m/Y'), 'BR', 0, 'L');
     $this->SetXY($positions['X'] + $this->width, $positions['Y']);
     $this->Cell(5 , $this->height, '', 0, 0, 'C');
     return $positions;
@@ -42,6 +51,7 @@ class CertificateAwareness extends Fpdf
   public function add(Employee $employee)
   {
     //Render Front
+
     $this->front($employee->name);
     $this->back();
 
