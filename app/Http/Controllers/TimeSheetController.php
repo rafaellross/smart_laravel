@@ -98,8 +98,7 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-
+        //return $request;
 
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
@@ -180,11 +179,12 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->week_day         = $weekDay->number;
                 $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);
 
-                $dayTimeSheet->total           = $day['total']['total'];
-                $dayTimeSheet->normal          = $day['total']['normal'];
-                $dayTimeSheet->total_15        = $day['total']['1.5'];
-                $dayTimeSheet->total_20        = $day['total']['2.0'];
 
+                $dayTimeSheet->total           = Hour::convertToHour(((Hour::convertToDecimal($day['total']['total']) + Hour::convertToDecimal($day['total']['total_night']))*60));
+                $dayTimeSheet->normal          = Hour::convertToHour(((Hour::convertToDecimal($day['total']['normal']) + Hour::convertToDecimal($day['total']['normal_night']))*60));
+                $dayTimeSheet->total_15        = Hour::convertToHour(((Hour::convertToDecimal($day['total']['1.5']) + Hour::convertToDecimal($day['total']['1.5_night']))*60));
+                $dayTimeSheet->total_20        = Hour::convertToHour(((Hour::convertToDecimal($day['total']['2.0']) + Hour::convertToDecimal($day['total']['2.0_night']))*60));
+                
                 $dayTimeSheet->time_sheet_id    = $timeSheet->id;
                 $dayTimeSheet->save();
 
@@ -369,6 +369,15 @@ class TimeSheetController extends Controller
             case 'delete':
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
+                    foreach ($timesheet->days as $day) {
+                      foreach ($day as $job) {
+                        if (isset($job->id)) {
+                          $job->delete();
+                        }
+
+                      }
+                      $day->delete();
+                    }
                     $timesheet->delete();
 
                 }

@@ -19,7 +19,7 @@ class CertificateAwareness extends Fpdf
 		$this->SetY($this->GetY()+10);
 	}
 
-  private function front($name = '', $ln = 0) {
+  private function front($employee, $ln = 0) {
 
     $this->SetFont('Arial','', $this->font["label"]);
     $positions = array('X' => $this->GetX(), 'Y' => $this->GetY());
@@ -28,13 +28,13 @@ class CertificateAwareness extends Fpdf
     $this->Cell($this->width , 8, $this->title, 'LR', 1, 'C');
     $this->SetFont('Arial','B', $this->font["field"]);
 
-    $this->Cell($this->width , 3, $name, 'LR', 1, 'C');
+    $this->Cell($this->width , 3, $employee->name, 'LR', 1, 'C');
 		$this->SetFont('Arial','', $this->font["field"]);
 		$this->Cell($this->width , 15+10, '', 'LR', 1, 'C');
 		$this->Cell($this->width , 5, 'TRAINER: VINCENZO MOLLUSO', 'LR', 1, 'C');
 		$this->Cell($this->width , 5, 'ID No OD-002124', 'LR', 1, 'C');
 
-    $this->Cell(($this->width/2)+5 , 6.98, '   D.O.B.:', 'LB', 0, 'L');
+    $this->Cell(($this->width/2)+5 , 6.98, '   D.O.B.: ' . (is_null($employee->dob) ? '' : Carbon::parse($employee->dob)->format('d/m/Y')), 'LB', 0, 'L');
     $this->Cell($this->width/2 -5, 6.98, '   Expiry: ' . Carbon::now()->addYear()->format('d/m/Y'), 'BR', 0, 'L');
     $this->SetXY($positions['X'] + $this->width, $positions['Y']);
     $this->Cell(5 , $this->height, '', 0, 0, 'C');
@@ -51,7 +51,7 @@ class CertificateAwareness extends Fpdf
   {
     //Render Front
 
-    $this->front($employee->name);
+    $this->front($employee);
     $this->back();
 
     $this->Ln(5);

@@ -139,6 +139,7 @@ $(document).ready(function () {
     }
   });
 
+  //Calculate Normal Hours
   $('.hour-end').change(function () {
 
     var day = $(this).attr('id').split('_');
@@ -147,7 +148,7 @@ $(document).ready(function () {
     var isNight = false;
 
     if ($('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
-      isNight = true;
+      return false;
     }
 
     var next_row = row + 1;
@@ -181,20 +182,30 @@ $(document).ready(function () {
     var end = Number($(this).val());
     var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
 
-    if (isNight) {
-      if (end > start) {
-        duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
-      } else {
-        duration.val(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch > 0 ? minutesToHour(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch) : "");
-      }
-    } else {
-      duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
+    duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
+
+    //Get hours from every job
+    var hours_job1 = "00:00";
+    var hours_job2 = "00:00";
+    var hours_job3 = "00:00";
+    var hours_job4 = "00:00";
+
+    //Get hours from every job
+    if ($('#' + day[0] + '_hours_1').not('.night')) {
+      hours_job1 = $('#' + day[0] + '_hours_1').val();
     }
 
-    var hours_job1 = $('#' + day[0] + '_hours_1').val();
-    var hours_job2 = $('#' + day[0] + '_hours_2').val();
-    var hours_job3 = $('#' + day[0] + '_hours_3').val();
-    var hours_job4 = $('#' + day[0] + '_hours_4').val();
+    if ($('#' + day[0] + '_hours_2').not('.night')) {
+      hours_job2 = $('#' + day[0] + '_hours_2').val();
+    }
+
+    if ($('#' + day[0] + '_hours_3').not('.night')) {
+      hours_job3 = $('#' + day[0] + '_hours_3').val();
+    }
+
+    if ($('#' + day[0] + '_hours_4').not('.night')) {
+      hours_job4 = $('#' + day[0] + '_hours_4').val();
+    }
 
     hours_job1 = hourToMinutes(hours_job1);
     hours_job2 = hourToMinutes(hours_job2);
@@ -243,6 +254,102 @@ $(document).ready(function () {
     $('#' + day[0] + '_15').val(minutesToHour(hours_15));
     $('#' + day[0] + '_20').val(minutesToHour(hours_20));
     $('#' + day[0] + '_nor').val(minutesToHour(hours_nor));
+
+    calcTotal();
+  });
+
+  //Calculate Night Hours
+  $('.hour-end').change(function () {
+
+    var day = $(this).attr('id').split('_');
+    var row = Number(day[2]);
+
+    var isNight = true;
+
+    if (!$('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
+      return false;
+    }
+
+    var duration = $('#' + day[0] + '_hours_' + row);
+    var start = Number($('#' + day[0] + "_start_" + row).val());
+    var end = Number($(this).val());
+    var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
+
+    if (end > start) {
+      duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
+    } else {
+      duration.val(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch > 0 ? minutesToHour(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch) : "");
+    }
+
+    var hours_job1 = "00:00";
+    var hours_job2 = "00:00";
+    var hours_job3 = "00:00";
+    var hours_job4 = "00:00";
+
+    //Get hours from every job
+    if ($('#' + day[0] + '_hours_1').is('.night')) {
+      hours_job1 = $('#' + day[0] + '_hours_1').val();
+    }
+
+    if ($('#' + day[0] + '_hours_2').is('.night')) {
+      hours_job2 = $('#' + day[0] + '_hours_2').val();
+    }
+
+    if ($('#' + day[0] + '_hours_3').is('.night')) {
+      hours_job3 = $('#' + day[0] + '_hours_3').val();
+    }
+
+    if ($('#' + day[0] + '_hours_4').is('.night')) {
+      hours_job4 = $('#' + day[0] + '_hours_4').val();
+    }
+
+    hours_job1 = hourToMinutes(hours_job1);
+    hours_job2 = hourToMinutes(hours_job2);
+    hours_job3 = hourToMinutes(hours_job3);
+    hours_job4 = hourToMinutes(hours_job4);
+
+    //Calculate total hours
+
+    //Clear 1.5 and 2.0 fields
+    $('#' + day[0] + '_15_night').val('');
+    $('#' + day[0] + '_20_night').val('');
+
+    //Declare total hours
+    var totalHours = hours_job1 + hours_job2 + hours_job3 + hours_job4;
+    $('#' + day[0] + '_total_night').val(minutesToHour(totalHours));
+
+    var hours_15 = 0;
+    var hours_20 = 0;
+    var hours_nor = 0;
+
+    var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
+
+    if (totalHours > 8 * 60 && day[0] !== "sat" && !isNight) {
+      //If total hours is bigger than 08:00 and day different than sat set 1.5
+      hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
+    }
+    //Check if is night work and start time is between 18 and 23
+    else if (isNight && start >= 18 * 60 & start < 23 * 60) {
+        hours_15 = Math.min(2 * 60, totalHours);
+      }
+
+    //If total hours is bigger than 10:00 or day equal sat set 1.5
+    if (!isNight && (totalHours > 10 * 60 || day[0] == "sat")) {
+      if (day[0] == "sat") {
+        hours_20 = totalHours;
+      } else if (job_number !== "pld") {
+        hours_20 = totalHours - 8 * 60 - 2 * 60;
+      }
+      //Calculate hours 2.0 in case of night work
+    } else if (isNight) {
+      hours_20 = totalHours - hours_15;
+    }
+
+    hours_nor = totalHours - hours_15 - hours_20;
+
+    $('#' + day[0] + '_15_night').val(minutesToHour(hours_15));
+    $('#' + day[0] + '_20_night').val(minutesToHour(hours_20));
+    $('#' + day[0] + '_nor_night').val(minutesToHour(hours_nor));
 
     calcTotal();
   });
@@ -464,7 +571,9 @@ $(document).ready(function () {
 
     if ($('#totalWeek').val() == "00:00") {
       var result = confirm("The total of hours of this Time Sheet is 00:00, are you sure you want to continue ?");
+
       if (result == false) {
+
         isValid = false;
         event.preventDefault();
         return false;
@@ -472,6 +581,7 @@ $(document).ready(function () {
     }
 
     if (isValid) {
+
       $('#modalLoading').modal({ backdrop: 'static', keyboard: false });
     }
   });
@@ -528,7 +638,6 @@ $(document).ready(function () {
     }
   });
 
-  //console.log(window.location.href);
   $('#selectStatus').change(function () {
     var urlArray = window.location.href.split("/");
     if (urlArray[urlArray.length - 1] == "timesheets") {
@@ -631,6 +740,21 @@ $(document).ready(function () {
 
   //Night Work
   $(".chk_night_work").click(function () {
+
+    var group = $(this).attr('id').split('_');
+
+    var row = Number(group[2]);
+    var day = group[1];
+
+    //Add night class to hours
+    if ($(this).is(':checked')) {
+
+      $('#' + day + "_hours_" + row).addClass('night');
+    } else {
+
+      $('#' + day + "_hours_" + row).removeClass('night');
+    }
+
     $('#' + this.id.replace("_night", "")).trigger("click");
   });
 });
