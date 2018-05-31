@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('employee/', function() {
+Route::get('employees/', function() {			
 
     $employees = DB::select(
                 DB::raw(
@@ -34,7 +34,7 @@ Route::get('employee/', function() {
 
 });
 
-Route::get('employee/{name}', function($name) {			
+Route::get('employees/{name}', function($name) {
         $employees = DB::select(
                     DB::raw(
                         "select emp.id,

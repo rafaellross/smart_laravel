@@ -16,10 +16,10 @@ class CheckAdministrator
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() && !Auth::user()->administrator) {
-            return redirect('/home');
+        if (Auth::user() && Auth::user()->administrator) {
+              return $next($request);
         }
+        return redirect('/home');
 
-        return $next($request);
     }
 }

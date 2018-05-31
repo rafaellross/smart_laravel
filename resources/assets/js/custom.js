@@ -686,7 +686,7 @@ $(document).ready(function() {
     let name = $('#search').val();
     var loc = window.location.pathname.replace("timesheets/select", "");
     $.ajax({
-      url: loc + "api/employee/" + name,
+      url: loc + "api/employees/" + name,
       type: 'GET',
       dataType: 'json'
     }).done(function(data) {
