@@ -98,7 +98,7 @@ class TimeSheetReport extends Fpdf
 	    $this->SetFillColor(255,154,0);
 	    //Write totals per day
 		foreach ($timeSheet->days()->get() as $day) {
-			$this->Cell($width_days,5, Hour::convertToDecimal($day->total) == 0 ? "" : Hour::convertToDecimal($day->total), 1,0,'C', true);
+			$this->Cell($width_days,5, Hour::convertToDecimal($day->total) == 0 && Hour::convertToDecimal($day->total_night) == 0 ? "" : Hour::convertToDecimal($day->total) + Hour::convertToDecimal($day->total_night), 1,0,'C', true);
 		}
 
 		//Write total week
@@ -227,10 +227,10 @@ class TimeSheetReport extends Fpdf
 		$this->SetX($this->GetX()+45);
 		$this->Cell($tb_center_width,5, 'TOTAL HRS',1,0,'C');
 		foreach ($timeSheet->days()->get() as $day) {
-    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total) == 0 ? null : Hour::convertToDecimal($day->total),1,0,'C');
+    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total) == 0 && Hour::convertToDecimal($day->total_night) == 0 ? null : Hour::convertToDecimal($day->total) + Hour::convertToDecimal($day->total_night),1,0,'C');
 		}
 		//Column total
-		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total) == 0 ? null : Hour::convertToDecimal($timeSheet->total),1,0,'C');
+		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total) == 0 && Hour::convertToDecimal($timeSheet->total_night) == 0 ? null : Hour::convertToDecimal($timeSheet->total) + Hour::convertToDecimal($timeSheet->total_night),1,0,'C');
 		$this->Ln();
 
 		$this->SetX($this->GetX()+45);
@@ -246,7 +246,7 @@ class TimeSheetReport extends Fpdf
 		$this->SetX($this->GetX()+45);
 		$this->Cell($tb_center_width,5, '1.5',1,0,'C');
 		foreach ($timeSheet->days()->get() as $day) {
-    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_15) == 0 ? null : Hour::convertToDecimal($day->total_15),1,0,'C');
+    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_15) == 0 && Hour::convertToDecimal($day->total_15_night) == 0 ? null : Hour::convertToDecimal($day->total_15) + Hour::convertToDecimal($day->total_15_night),1,0,'C');
 		}
 		//Column total
 		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total_15) == 0 ? null : Hour::convertToDecimal($timeSheet->total_15),1,0,'C');
@@ -256,7 +256,7 @@ class TimeSheetReport extends Fpdf
 		$this->SetX($this->GetX()+45);
 		$this->Cell($tb_center_width,5, '2.0',1,0,'C');
 		foreach ($timeSheet->days()->get() as $day) {
-    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_20) == 0 ? null : Hour::convertToDecimal($day->total_20),1,0,'C');
+    		$this->Cell($tb_center_width,5, Hour::convertToDecimal($day->total_20) == 0 && Hour::convertToDecimal($day->total_20_night) == 0 ? null : Hour::convertToDecimal($day->total_20) + Hour::convertToDecimal($day->total_20_night),1,0,'C');
 		}
 		//Column total
 		$this->Cell($tb_center_width,5, Hour::convertToDecimal($timeSheet->total_20) == 0 ? null : Hour::convertToDecimal($timeSheet->total_20),1,0,'C');
