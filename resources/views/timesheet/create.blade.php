@@ -46,7 +46,7 @@
                     <label for="empname">
                         <h5>Week End:</h5>
                     </label>
-                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{old('week_end')}}">
+                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{old('week_end')}}" autocomplete="off">
                     @if ($errors->has('week_end'))
                         <span class="invalid-feedback" style="display: block;">
                             @foreach ($errors->all() as $error)
@@ -149,7 +149,7 @@
                                   <select class="form-control" name="status" id="status">
                                     <option selected value="P">Pending</option>
                                     <option value="A" {{ old('status') == 'A' ? 'selected' : ''}}>Approved</option>
-									<option value="F" {{ old('status') == 'F' ? 'selected' : ''}}>Finalised</option>
+				                             <option value="F" {{ old('status') == 'F' ? 'selected' : ''}}>Finalised</option>
                                     <option value="C" {{ old('status') == 'C' ? 'selected' : ''}}>Cancelled</option>
                                   </select>
                                 </div>
@@ -169,5 +169,5 @@
         </div>
     </div>
 
-@include('timesheet.partial.description')                
+@include('timesheet.partial.description')
 @endsection

@@ -1,5 +1,12 @@
 <div class="alert alert-secondary" style="text-align: center;">
     <h4>Job {{$job->number}}</h4>
+    <div class="form-row">
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded">
+        <input type="checkbox" class="custom-control-input chk_night_work" name="days[{{$weekDay->short}}][{{$job->number}}][night_work]" id="group_{{$weekDay->short}}_{{$job->number}}_night" value="1" {{$job->night_work ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$weekDay->short}}_{{$job->number}}_night">Night Work?</label>
+      </div>
+    </div>
+
     <div class="form-row" style="text-align: center;">
         <div class="col-md-6 col-12 mb-3">
             <label>Start</label>
@@ -49,7 +56,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label>Hours</label>
-            <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$weekDay->short}}_{{$job->number}}" id="{{$weekDay->short}}_hours_{{$job->number}}" value="{{!is_null($job->hours()) && $job->hours() != '00:00' ? date('i:s', $job->hours()) : ""}}" maxlength="5" name="days[{{$weekDay->short}}][{{$job->number}}][hours]">
+            <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$weekDay->short}}_{{$job->number}} {{$job->night_work ? 'night' : ''}} " id="{{$weekDay->short}}_hours_{{$job->number}}" value="{{!is_null($job->hours()) && $job->hours() != '00:00' ? date('i:s', $job->hours()) : ""}}" maxlength="5" name="days[{{$weekDay->short}}][{{$job->number}}][hours]">
         </div>
         <div class="col-md-12 mb-3" style="text-align: center;">
             <input readonly="" type="text" id="{{$weekDay->short}}_{{$job->number}}_description" class="form-control form-control-lg job_description_{{$job->number}} group_{{$weekDay->short}}_{{$job->number}}" name="days[{{$weekDay->short}}][{{$job->number}}][description]" value="{{$job->description}}"/>

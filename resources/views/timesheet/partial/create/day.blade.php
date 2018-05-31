@@ -1,4 +1,4 @@
-<div class="form-group alert alert-success" role="alert" id="groupMonday">
+<div class="form-group alert alert-success" role="alert" id="group_{{ $day->short }}">
     <h4 style="text-align: center;">{{ $day->description }}</h4>
 
     <!-- Start Job 1  -->
@@ -39,13 +39,13 @@
         </div>
         <div class="col-md-6 mb-3">
             <label>Hours 1.5</label>
-            <input readonly="" type="text" class="form-control form-control-lg time hor15" id="{{$day->short}}_15_night" value="00:00" maxlength="5" name="days[{{$day->short}}][total][1.5_night]">
+            <input readonly="" type="text" class="form-control form-control-lg time hor15" id="{{$day->short}}_15_night" value="00:00" maxlength="5" name="days[{{$day->short}}][total][total_15_night]">
         </div>
     </div>
     <div class="form-row overtime " style="text-align: center;">
         <div class="col-md-6 mb-3">
             <label>Hours 2.0</label>
-            <input readonly="" type="text" class="form-control form-control-lg time hor20" value="00:00" maxlength="5" id="{{$day->short}}_20_night" name="days[{{$day->short}}][total][2.0_night]">
+            <input readonly="" type="text" class="form-control form-control-lg time hor20" value="00:00" maxlength="5" id="{{$day->short}}_20_night" name="days[{{$day->short}}][total][total_20_night]">
         </div>
         <div class="col-md-6 mb-3">
             <label>Total Hours</label>

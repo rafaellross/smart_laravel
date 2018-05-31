@@ -2,6 +2,20 @@
 
 @section('content')
 
+<style type="text/css">
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100vw;
+        padding: 0;
+    }
+
+    .container .col-xs-12, .alert {
+        width: 100vw;
+        padding: 1px;
+    }
+
+}
+</style>
 
 <div class="container">
         <!-- Logo -->
@@ -32,94 +46,94 @@
                             @foreach ($errors->all() as $error)
                                 <strong>{{ $error }}</strong>
                                 <br>
-                            @endforeach                                                        
+                            @endforeach
                         </span>
-                    @endif                    
+                    @endif
                 </div>
                 <?php
-                    $jobDB = App\Job::select('id', 'code','description')->get();            
-                ?>                
+                    $jobDB = App\Job::select('id', 'code','description')->get();
+                ?>
 
-                @include('timesheet.partial.autofill')                
+                @include('timesheet.partial.autofill')
 
                 <!-- Start Group Monday-->
                 @foreach($timesheet->days as $day)
                     @include('timesheet.partial.edit.day', ['day'=>$day])
-                @endforeach                                 
+                @endforeach
                 <!--End Group Monday -->
                 <!-- Start Group Tuesday-->
 
-                
-                <div class="form-group alert alert-info" role="alert">                
-                    <h4 style="text-align: center;">Medical Certificates</h4>    
+
+                <div class="form-group alert alert-info" role="alert">
+                    <h4 style="text-align: center;">Medical Certificates</h4>
                     <?php $cert_num = 0;?>
                     <?php $certificates = App\TimeSheetCertificate::where('time_sheet_id', $timesheet->id)->get(); ?>
                 @foreach($certificates as $certificate)
                     @if ($loop->first)
-                        <div class="alert alert-secondary">                          
-                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>          
+                        <div class="alert alert-secondary">
+                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>
                             <div class="input-group col-12 mb-3">
                               <div class="custom-file" id="medical_certificates_list">
-                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>                        
+                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>
                                 <label class="custom-file-label" for="medical_certificates[{{$certificate->certificate_number}}]">Choose files</label>
                               </div>
                             </div>
                             <div class="input-group col-12 mb-3">
                                 <img id="medical_certificates[{{$certificate->certificate_number}}]_img" src="{{$certificate->certificate_img}}" class="img-fluid" style="">
-                            </div>   
+                            </div>
                             <input id="medical_certificates[{{$certificate->certificate_number}}]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
-                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">                        
+                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">
                         </div>
-                    @endif                    
-                @endforeach                                 
-                @if($certificates->count() == 0)                    
-                    <div class="alert alert-secondary">                          
-                        <h5 style="text-align: center;">Certificate 1</h5>          
+                    @endif
+                @endforeach
+                @if($certificates->count() == 0)
+                    <div class="alert alert-secondary">
+                        <h5 style="text-align: center;">Certificate 1</h5>
                         <div class="input-group col-12 mb-3">
                           <div class="custom-file" id="medical_certificates_list">
-                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]"/>                        
+                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]"/>
                             <label class="custom-file-label" for="medical_certificates[1]">Choose files</label>
                           </div>
                         </div>
                         <div class="input-group col-12 mb-3">
                             <img id="medical_certificates[1]_img" class="img-fluid" style="">
-                        </div>   
+                        </div>
                         <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
-                        <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="medical_certificates[1]_hidden" value="">                        
+                        <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="medical_certificates[1]_hidden" value="">
                     </div>
                 @endif
-                <div id="aditional_certificates">               
+                <div id="aditional_certificates">
                 @foreach($certificates as $certificate)
                     @if (!$loop->first)
-                        <div class="alert alert-secondary" id="medical_certificates[{{$certificate->certificate_number}}]_row">                          
-                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>          
+                        <div class="alert alert-secondary" id="medical_certificates[{{$certificate->certificate_number}}]_row">
+                            <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>
                             <div class="input-group col-12 mb-3">
                               <div class="custom-file" id="medical_certificates_list">
-                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>                        
+                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>
                                 <label class="custom-file-label" for="medical_certificates[{{$certificate->certificate_number}}]">Choose files</label>
                               </div>
                             </div>
                             <div class="input-group col-12 mb-3">
                                 <img id="medical_certificates[{{$certificate->certificate_number}}]_img" src="{{$certificate->certificate_img}}" class="img-fluid" style="">
-                            </div>   
+                            </div>
                             <input id="medical_certificates[{{$certificate->certificate_number}}]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
-                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">                        
-                        </div>                                                    
-                    @endif                    
-                @endforeach 
+                            <input type="hidden" class="custom-file-input" id="medical_certificates[{{$certificate->certificate_number}}]_hidden" name="medical_certificates[{{$certificate->certificate_number}}]_hidden" value="{{$certificate->certificate_img}}">
+                        </div>
+                    @endif
+                @endforeach
 
-                </div>                            
-
-                    <div>                                
-                        <input id="addCert" type="button" class="btn btn-success btn-sm ml-2 addCert" value="Add Certificate">
-                    </div>                    
                 </div>
-                
+
+                    <div>
+                        <input id="addCert" type="button" class="btn btn-success btn-sm ml-2 addCert" value="Add Certificate">
+                    </div>
+                </div>
+
                 <!-- Group Special Request -->
-                @include('timesheet.partial.edit.special')                
+                @include('timesheet.partial.edit.special')
                 <!-- End Group Special Request -->
                 <!-- Start Group Total-->
-                @include('timesheet.partial.edit.total')                
+                @include('timesheet.partial.edit.total')
                 <!--End Group Total -->
 
                 <!-- Start Group Signature-->

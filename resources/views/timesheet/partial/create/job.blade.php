@@ -1,9 +1,9 @@
 <div class="alert alert-secondary" style="text-align: center;">
     <h4>Job {{$job_curr}}</h4>
     <div class="form-row">
-      <div class="col-md-2 offset-md-10">
-        <input type="checkbox" class="chk_night_work btnClear" name="days[{{$day}}][{{$job_curr}}][night_work]" id="group_{{$day}}_{{$job_curr}}_night" value="1">
-        <label class="custom-control-label" for="customCheck1">Night Work?</label>
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded">
+        <input type="checkbox" class="custom-control-input chk_night_work" name="days[{{$day}}][{{$job_curr}}][night_work]" id="group_{{$day}}_{{$job_curr}}_night" value="1">
+        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_night">Night Work?</label>
       </div>
     </div>
     <div class="form-row" style="text-align: center;">

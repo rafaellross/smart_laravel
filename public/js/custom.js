@@ -141,13 +141,15 @@ $(document).ready(function () {
 
   //Calculate Normal Hours
   $('.hour-end').change(function () {
+    var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
 
     var day = $(this).attr('id').split('_');
     var row = Number(day[2]);
 
     var isNight = false;
 
-    if ($('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
+    if ($('#group_' + day[0] + "_" + day[2] + "_night").is(':checked') && !reset) {
       return false;
     }
 
@@ -260,13 +262,15 @@ $(document).ready(function () {
 
   //Calculate Night Hours
   $('.hour-end').change(function () {
+    var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
 
     var day = $(this).attr('id').split('_');
     var row = Number(day[2]);
 
     var isNight = true;
 
-    if (!$('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
+    if (!$('#group_' + day[0] + "_" + day[2] + "_night").is(':checked') && !reset) {
       return false;
     }
 
@@ -275,10 +279,10 @@ $(document).ready(function () {
     var end = Number($(this).val());
     var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
 
-    if (end > start) {
+    if (end > start && end !== start) {
       duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
     } else {
-      duration.val(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch > 0 ? minutesToHour(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch) : "");
+      duration.val(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch > 0 && end !== start ? minutesToHour(24 * 60 - start + (24 * 60 - (24 * 60 - end)) - lunch) : "");
     }
 
     var hours_job1 = "00:00";
@@ -322,18 +326,26 @@ $(document).ready(function () {
     var hours_20 = 0;
     var hours_nor = 0;
 
-    var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
+    //Check the gap between start of night work and day work
+    var prev_row = row - 1;
+
+    var diff_day_night = null;
+
+    var prev_row_end = $('#' + day[0] + "_end_" + prev_row);
+
+    if (prev_row_end.length > 0) {
+
+      diff_day_night = start - prev_row_end.val();
+    }
 
     if (totalHours > 8 * 60 && day[0] !== "sat" && !isNight) {
       //If total hours is bigger than 08:00 and day different than sat set 1.5
       hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
     }
     //Check if is night work and start time is between 18 and 23
-    else if (isNight && start >= 18 * 60 & start < 23 * 60) {
+    else if (isNight && start >= 18 * 60 & start < 23 * 60 && (diff_day_night == null || diff_day_night > 10 * 60)) {
         hours_15 = Math.min(2 * 60, totalHours);
-      }
-
-    //If total hours is bigger than 10:00 or day equal sat set 1.5
+      } //If total hours is bigger than 10:00 or day equal sat set 1.5
     if (!isNight && (totalHours > 10 * 60 || day[0] == "sat")) {
       if (day[0] == "sat") {
         hours_20 = totalHours;
@@ -436,8 +448,8 @@ $(document).ready(function () {
 
   $('.btnClear').click(function () {
 
-    $('.' + this.id).val('');
-    $('.' + this.id).trigger("change");
+    $('.' + this.id.replace("_night", "")).val('');
+    $('.' + this.id.replace("_night", "")).trigger("change");
   });
 
   var qty_medical_certificates = 1;
@@ -745,7 +757,10 @@ $(document).ready(function () {
 
     var row = Number(group[2]);
     var day = group[1];
+    //mon_end_1
+    $('#' + day + "_end_" + row).trigger("change", [true]);
 
+    $('#' + this.id.replace("_night", "")).trigger("change");
     //Add night class to hours
     if ($(this).is(':checked')) {
 

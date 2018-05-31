@@ -16,9 +16,9 @@ class TimeSheet extends Model
 
     public function certificates(){
 
-        return $this->hasMany('App\TimeSheetCertificate');        
+        return $this->hasMany('App\TimeSheetCertificate');
     }
-    
+
     public function user(){
 
         return $this->belongsTo('App\User');
@@ -26,11 +26,11 @@ class TimeSheet extends Model
 
     public function employee(){
 
-        return $this->belongsTo('App\Employee');        
+        return $this->belongsTo('App\Employee');
     }
-    	
+
 	public function listHours(){
-        
+
         $result = array();
         foreach ($this->days as $day) {
             foreach ($day->dayJobs as $job) {
@@ -39,8 +39,8 @@ class TimeSheet extends Model
                         $result[$job->job->code] += $job->hours();
                     } else {
                         $result[$job->job->code] = $job->hours();
-                    }                                
-                }                        
+                    }
+                }
             }
         }
         return $result;
@@ -70,8 +70,8 @@ class TimeSheet extends Model
 		if (isset($this->listHours()["sick"])) {
 			return $this->listHours()["sick"] > 0 ? $this->listHours()["sick"]/60 : null;
 		} else {
-			return "";	
-		}				
+			return "";
+		}
 	}
 
 	public function normalLessRdo(){
@@ -95,18 +95,37 @@ class TimeSheet extends Model
 		if (isset($this->listHours()["anl"])) {
 			$anl += $this->listHours()["anl"];
 		}
-		return new Hour($anl);		
+		return new Hour($anl);
 	}
 
 	public function travelDays(){
 		if ($this->employee->travel) {
-            $travelDays = 0;		
+            $travelDays = 0;
             foreach ($this->days as $day) {
+
+
                 if ($day->work()) {
-                        $travelDays++;
-                }                        
+                    $travelDays++;
+                    //Pay one more travel if employee had worked at night
+                }
+
+
+                $jobs = 0;
+
+
+                foreach ($day->dayJobs as $job) {
+                  if (!is_null($job->start)) {
+                      $jobs++;
+                  }
+                }
+
+
+                if ($day->hasNight() && $jobs > 1) {
+                  $travelDays++;
+                }
+
             }
-            //Check if will travel day for special request RDO	
+            //Check if will travel day for special request RDO
             if ($this->rdo > 0) {
             	if ($this->rdo > (4*60) && $this->rdo <= (8*60) ) {
             		$travelDays++;
@@ -130,26 +149,26 @@ class TimeSheet extends Model
 		if ($this->employee->site_allow) {
 	        $siteAllow = 0;
 	        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday", "rdo");
-	        foreach ($this->listHours() as $job => $hours){                
+	        foreach ($this->listHours() as $job => $hours){
 	            if (!in_array($job, $deductCodes)) {
 	                $siteAllow += $hours;
-	            }                
+	            }
 	        }
-	        return $siteAllow;			
+	        return $siteAllow;
 		} else {
 			return 0;
 		}
 
 	}
 
-	public function workDays(){		
-	    $workDays = 0;		
+	public function workDays(){
+	    $workDays = 0;
 	    foreach ($this->days as $day) {
 	        if ($day->workForBonus()) {
 	                $workDays++;
-	        }                        
+	        }
 	    }
-	    return $workDays;        
+	    return $workDays;
 	}
 
 

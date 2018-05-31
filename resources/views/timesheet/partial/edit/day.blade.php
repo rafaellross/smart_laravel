@@ -1,26 +1,24 @@
 <div class="form-group alert alert-success" role="alert" id="groupMonday">
     <?php
         $weekDay = App\WeekDay::select('number','description', 'short')->where("number", "=", $day->week_day)->get()->first();
-        
-        
     ?>
-    
-    <h4 style="text-align: center;">{{ $weekDay->description }}</h4>    
-    <!-- Start Job 1  -->        
+
+    <h4 style="text-align: center;">{{ $weekDay->description }}</h4>
+    <!-- Start Job 1  -->
         @foreach ($day->dayJobs as $job)
             @if ($loop->first)
-                @include('timesheet.partial.edit.job', ['day' => $day, 'job' => $job, 'first' => true, 'weekDay' => $weekDay])            
+                @include('timesheet.partial.edit.job', ['day' => $day, 'job' => $job, 'first' => true, 'weekDay' => $weekDay])
                 @break
-            @endif                
+            @endif
         @endforeach
 
         <div id="extraJobs{{$weekDay->short}}" style="display:none;">
             @foreach ($day->dayJobs as $job)
                 @if (!$loop->first)
-                    @include('timesheet.partial.edit.job', ['day' => $day, 'job' => $job, 'first' => false, 'weekDay' => $weekDay])                                
-                @endif                
+                    @include('timesheet.partial.edit.job', ['day' => $day, 'job' => $job, 'first' => false, 'weekDay' => $weekDay])
+                @endif
             @endforeach
-        </div>     
+        </div>
     <!-- Total day -->
     <div class="form-row overtime " style="text-align: center;">
         <div class="col-md-6 mb-3">
@@ -43,4 +41,27 @@
         </div>
     </div>
     <!-- End Total day -->
+    <!-- Night Work -->
+    <h4 class="text-center">Night Work</h4>
+    <div class="form-row overtime " style="text-align: center;">
+        <div class="col-md-6 mb-3">
+            <label>Normal Hours</label>
+            <input readonly="" type="text" class="form-control form-control-lg time horNormal" id="{{$weekDay->short}}_nor_night" value="{{$day->normal_night}}" maxlength="5" name="days[{{$weekDay->short}}][total][normal_night]">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label>Hours 1.5</label>
+            <input readonly="" type="text" class="form-control form-control-lg time hor15" id="{{$weekDay->short}}_15_night" value="{{$day->total_15_night}}" maxlength="5" name="days[{{$weekDay->short}}][total][total_15_night]">
+        </div>
+    </div>
+    <div class="form-row overtime " style="text-align: center;">
+        <div class="col-md-6 mb-3">
+            <label>Hours 2.0</label>
+            <input readonly="" type="text" class="form-control form-control-lg time hor20" value="{{$day->total_20_night}}" maxlength="5" id="{{$weekDay->short}}_20_night" name="days[{{$weekDay->short}}][total][total_20_night]">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label>Total Hours</label>
+            <input readonly="" type="text" class="form-control form-control-lg time hours-total" value="{{$day->total_night}}" maxlength="5" id="{{$weekDay->short}}_total_night" name="days[{{$weekDay->short}}][total][total_night]">
+        </div>
+    </div>
+    <!--End of Night Work -->
 </div>
