@@ -18,33 +18,33 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('employees/', function() {			
+Route::get('employee/', function() {
 
-    $employees = DB::select( 
+    $employees = DB::select(
                 DB::raw(
-                    "select emp.id, 
-                            emp.name, 
+                    "select emp.id,
+                            emp.name,
                             emp.phone,
                             (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) and time_sheets.status not in ('F', 'C') order by id desc limit 1) as last_timesheet
-                            from employees emp                          
+                            from employees emp
                             order by emp.name asc
-                     ") 
+                     ")
                 );
     return $employees;
 
 });
 
-Route::get('employees/{name}', function($name) {			
-        $employees = DB::select( 
+Route::get('employee/{name}', function($name) {			
+        $employees = DB::select(
                     DB::raw(
-                        "select emp.id, 
-                                emp.name, 
+                        "select emp.id,
+                                emp.name,
                                 emp.phone,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) and time_sheets.status not in ('F', 'C') order by id desc limit 1) as last_timesheet
-                                from employees emp                          
+                                from employees emp
                                 where name like '%" . $name . "%'
                                 order by emp.name asc
-                         ") 
+                         ")
                     );
     return $employees;
 

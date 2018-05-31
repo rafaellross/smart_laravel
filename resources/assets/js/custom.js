@@ -686,7 +686,7 @@ $(document).ready(function() {
     let name = $('#search').val();
     var loc = window.location.pathname.replace("timesheets/select", "");
     $.ajax({
-      url: loc + "api/employees/" + name,
+      url: loc + "api/employee/" + name,
       type: 'GET',
       dataType: 'json'
     }).done(function(data) {
@@ -777,7 +777,7 @@ $(document).ready(function() {
     $('#' + this.id.replace("_night", "")).trigger("change");
     //Add night class to hours
     if($(this).is(':checked')){
-            
+
       $('#' + day + "_hours_" + row).addClass('night');
 
     } else {
