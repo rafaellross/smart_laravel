@@ -55,7 +55,7 @@
 
         <div class="col-md-6 mb-3">
             <label>Hours</label>
-                <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$day}}_{{$job_curr}}" id="{{$day}}_hours_{{$job_curr}}" value="{{isset(old()['days'][$day][$job_curr]['hours']) ? old()['days'][$day][$job_curr]['hours'] : '00:00'}}" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">
+                <input readonly="" type="text" class="form-control form-control-lg time job1 hours group_{{$day}}_{{$job_curr}}" id="{{$day}}_hours_{{$job_curr}}" value="{{isset(old()['days'][$day][$job_curr]['hours']) ? old()['days'][$day][$job_curr]['hours'] : ''}}" maxlength="5" name="days[{{$day}}][{{$job_curr}}][hours]">
         </div>
         <div class="col-md-12 mb-3" style="text-align: center;">
             <input readonly="" type="text" id="{{$day}}_job_{{$job_curr}}_description" class="form-control form-control-lg job_description_{{$job_curr}} group_{{$day}}_{{$job_curr}}" name="days[{{$day}}][{{$job_curr}}][description]" value=""/>

@@ -1,19 +1,9 @@
 
 @section('content')
 @extends('layouts.app')
-<link href="{{ asset('css/file-input/fileinput.min.css') }}" rel="stylesheet">
-<script src="{{ asset('js/file-input/plugins/piexif.min.js') }}"></script>
-<script src="{{ asset('js/file-input/plugins/sortable.min.js') }}"></script>
-<script src="{{ asset('js/file-input/plugins/purify.min.js') }}"></script>
-<script src="{{ asset('js/file-input/fileinput.min.js') }}"></script>
-<script type="text/javascript">
-  // initialize with defaults
-  $(document).ready(function() {
-    $("input[name=tax_declaration]").fileinput({
-      
-    });
-  });
-</script>
+<link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
+<script src="{{ asset('js/dropzone.js') }}"></script>
+
 
         <div class="container">
             <!-- Logo -->
@@ -32,7 +22,7 @@
             <br>
                 <div class="row "  style="padding: 0;">
                 <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-12" style="padding: 0;">
-                <form method="post" action="{{ route('employee_application.store') }}" enctype="multipart/form-data">
+                <form action="{{ route('employee_application.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <!-- Personal Details -->
                         <div class="card" style="padding: 0;"  id="personalDetails">
@@ -507,16 +497,15 @@
                         <!-- End Signature-->
 
                         <br>
-                        <div class="card" id="additionalLicenses">
+                        <div class="card">
                             <h5 class="card-header">Tax Declaration</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                  <div class="form-row">
+                                  <div class="form-row " id="tax_declaration">
                                     <div class="col-md-12 mb-3">
                                       <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                      <input name="tax_declaration" type="file" class="file" data-msg-placeholder="Select {files} for upload...">
-
+                                      <input type="file" name="file"/>
                                     </div>
                                   </div>
                                     <!-- End Card -->
@@ -550,4 +539,5 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <script src="{{ asset('js/employee_application.js') }}"></script>
+
 @endsection

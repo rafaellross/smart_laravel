@@ -40,7 +40,7 @@ class EmployeeApplicationController extends Controller
      */
     public function store(Request $request)
     {
-            return $request->file('tax_declaration');
+            return $request;
             $employee_application                           = new EmployeeApplication();
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
