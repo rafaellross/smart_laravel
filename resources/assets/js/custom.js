@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('#modalLoading').modal({backdrop: 'static', keyboard: false});
   });
 
-  $('#flash-message').fadeOut(5000);
+  $('#flash-message').fadeOut(15000);
 
   function addMinutes(time, minsToAdd) {
     function D(J) {

@@ -126,8 +126,8 @@
         </div>
         @endif
         @if($erros = session('error'))
-        <div class="col-md-4 offset-md-3">
-            <div id="_flash-message" class="alert alert-danger align-items-center" role="alert">
+        <div class="col-md-5 offset-md-3">
+            <div id="flash-message" class="alert alert-danger align-items-center" role="alert">
                 @foreach($erros as $error)
                 <strong class="mr-2">{{$error}}</strong>
                 <br/>

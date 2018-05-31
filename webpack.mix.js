@@ -11,15 +11,17 @@ let mix = require('laravel-mix');
  |
  */
 
-
+/*
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
-
+*/
 mix.js('resources/assets/js/custom.js', 'public/js');
+/*
 mix.js('resources/assets/js/employee_application.js', 'public/js');
 mix.js('resources/assets/js/qa.js', 'public/js');
 mix.js('resources/assets/js/forms.js', 'public/js');
 mix.js('resources/assets/js/parameters.js', 'public/js');
 mix.copyDirectory('vendor/kartik-v/bootstrap-fileinput/js', 'public/js/file-input');
 mix.copyDirectory('vendor/kartik-v/bootstrap-fileinput/css', 'public/css/file-input');
+*/

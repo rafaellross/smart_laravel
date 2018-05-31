@@ -134,20 +134,23 @@ class TimeSheetController extends Controller
                 }
             }
             if ($rdo > 0 && ($rdo) > $employee->rdo_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours!");
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $employee->rdo_bal);
             }
 
             if ($pld > 0 && ($pld) > $employee->pld) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours!");
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $employee->pld);
             }
 
             if ($anl > 0 && ($anl) > $employee->anl) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours!");
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $employee->anl);
             }
 
         }
         if (count($errors) > 0) {
-            return redirect()->back()->withInput()->with('error', $errors);
+            array_push($errors, "");
+            array_push($errors, "");
+            array_push($errors, "Fix it and try again! ");
+            return redirect('/timesheets')->withInput()->with('error', $errors);
         }
 
 
