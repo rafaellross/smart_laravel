@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="job_no" class="col-form-label text-md-right">{{ __('Job Nº:') }}</label>
-                                <input type="text" class="form-control" name="working_for" value="" >
+                                <input type="text" class="form-control" name="job_no" value="" >
                                 @if ($errors->has('job_no'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('job_no') }}</strong>

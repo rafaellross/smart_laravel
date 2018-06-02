@@ -23,6 +23,7 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
+    "pdfjs-dist": "^2.0.489",
     "react-datepicker": "^1.4.1"
   }
 }

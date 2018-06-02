@@ -15,9 +15,9 @@ class CreateEmployeeLicensesTable extends Migration
     {
         Schema::create('employee_licenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('issue_date');
-            $table->string('issuer');
-            $table->string('number');
+            $table->date('issue_date')->nullable();
+            $table->string('issuer')->nullable();
+            $table->string('number')->nullable();
             $table->unsignedInteger('application_id');
             $table->unsignedInteger('license_id');
             $table->foreign('application_id')->references('id')->on('employee_applications')->onDelete('cascade');

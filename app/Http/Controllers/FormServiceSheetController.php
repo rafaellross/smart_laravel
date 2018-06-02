@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\FormServiceSheet;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\FormServiceSheetReport;
 
 class FormServiceSheetController extends Controller
 {
@@ -187,9 +188,9 @@ class FormServiceSheetController extends Controller
                 $report = new FormServiceSheetReport();
                 $report->SetCompression(true);
                 foreach ($ids as $id) {
-                    $timesheet = FormServiceSheet::find($id);
-                    if ($timesheet) {
-                        $report->add($timesheet);
+                    $service_sheet = FormServiceSheet::find($id);
+                    if ($service_sheet) {
+                        $report->add($service_sheet);
                     }
                 }
                 return $report->output();

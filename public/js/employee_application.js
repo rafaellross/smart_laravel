@@ -130,7 +130,8 @@ $(document).ready(function () {
     }
   }
 
-  $(document).on("change", "input[type=file]", function () {
+  $(document).on("change", "input[type=file]:not(input[name=tax_declaration_file])", function () {
+    console.log(this);
     resizeImageToSpecificWidth(this);
   });
 
@@ -185,6 +186,22 @@ $(document).ready(function () {
   $('form').submit(function (event) {
     /* Act on the event */
     $('input[type=file]').remove();
+  });
+
+  $('input[name=tax_declaration_file]').change(function (event) {
+    /* Act on the event */
+
+    $('#selected_tax_declaration').show().text(this.files[0].name);
+    if (this.files && this.files[0]) {
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+
+        var hidden = $("input[name=tax_declaration]");
+        hidden.val(e.target.result);
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
   });
 
   $('#div_signature').jSignature({
