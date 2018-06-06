@@ -61,19 +61,52 @@ class EmployeeApplicationForm extends Fpdi
     }
     $this->Text(173, 170.5, Carbon::parse($application->form_dt)->format('d/m/Y'));
 
+    $this->Text(20, 180.5, "Licenses / Documents:");
+
+    $startY_lic = 180.5;
+    foreach ($application->licenses as $license) {
+      $this->Text(20, $startY_lic += 8, $license->license->description);
+      $this->Text(20, $startY_lic += 5, "Issuer: " . $license->issuer);
+      $this->Text(20, $startY_lic += 5, "Number: " . $license->number);
+
+
+    }
 
     foreach ($application->licenses as $license) {
       if (!is_null($license->image_front)) {
-        list($width, $height, $type, $attr) = getimagesize($license->image_front);
+      list($width, $height, $type, $attr) = getimagesize($license->image_front);
       if ($width > $height) {
         $this->AddPage('L');
       } else {
         $this->AddPage('P');
       }
+      $this->Text(10, 10, $license->license->description);
+      $this->Text(10, 15, "Issuer: " . $license->issuer);
+      $this->Text(10, 20, "Number: " . $license->number);
+      $this->Text(10, 25, "Side: Front");
 
       $this->Image($license->image_front, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
 
       }
+
+      if (!is_null($license->image_front)) {
+      list($width, $height, $type, $attr) = getimagesize($license->image_back);
+      if ($width > $height) {
+        $this->AddPage('L');
+      } else {
+        $this->AddPage('P');
+      }
+      $this->Text(10, 10, "Type: " . $license->license->description);
+      $this->Text(10, 15, "Issuer: " . $license->issuer);
+      $this->Text(10, 20, "Number: " . $license->number);
+      $this->Text(10, 25, "Side: Back");
+
+
+
+      $this->Image($license->image_back, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
+
+      }
+
     }
     }
 
