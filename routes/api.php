@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('employees/', function() {			
+Route::get('employees/', function() {
 
     $employees = DB::select(
                 DB::raw(
@@ -42,7 +42,7 @@ Route::get('employees/{name}', function($name) {
                                 emp.phone,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK(now()) and time_sheets.status not in ('F', 'C') order by id desc limit 1) as last_timesheet
                                 from employees emp
-                                where name like '%" . $name . "%'
+                                where name like '%" . addslashes($name) . "%'
                                 order by emp.name asc
                          ")
                     );

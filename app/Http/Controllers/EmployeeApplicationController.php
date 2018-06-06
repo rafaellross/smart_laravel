@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\EmployeeApplication;
 use App\EmployeeLicense;
-use App\FormTFN;
+use App\EmployeeApplicationForm;
 use Carbon\Carbon;
 use Response;
 
@@ -213,6 +213,19 @@ public function action($id, $action, $status = null)
                 }
                 return redirect('employee_application')->with('success','Time Sheet(s) has been deleted');
                 break;
+            case 'print':
+
+                $report = new EmployeeApplicationForm();
+                $report->SetCompression(true);
+                foreach ($ids as $id) {
+                    $employee_application = EmployeeApplication::find($id);
+                    if ($employee_application) {
+                        $report->add($employee_application);
+                    }
+                }
+                return $report->output();
+                break;
+
             case 'update':
                 return redirect('employee_application')->with('success','Time Sheet(s) has been updated');
                 break;
