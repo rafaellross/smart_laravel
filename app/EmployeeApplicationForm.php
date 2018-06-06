@@ -63,14 +63,17 @@ class EmployeeApplicationForm extends Fpdi
 
 
     foreach ($application->licenses as $license) {
-          list($width, $height, $type, $attr) = getimagesize($license->image_front);
-        if ($width > $height) {
-          $this->AddPage('L');
-        } else {
-          $this->AddPage('P');
-        }
+      if (is_null($license->image_front)) {
+        list($width, $height, $type, $attr) = getimagesize($license->image_front);
+      if ($width > $height) {
+        $this->AddPage('L');
+      } else {
+        $this->AddPage('P');
+      }
 
-        $this->Image($license->image_front, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
+      $this->Image($license->image_front, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
+        
+      }
     }
     }
 
