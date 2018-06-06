@@ -30,9 +30,9 @@
                             <input type="checkbox" id="chkRow-{{ $employee_application->id }}">
                         </th>
                         <td>{{ $employee_application->id }}</td>
-                        <td>{{ $employee_application->first_name }}</td>
-                        <td>{{ $employee_application->last_name }}</td>
-                        <td>{{ $employee_application->email }}</td>
+                        <td>{{ strtoupper($employee_application->first_name) }}</td>
+                        <td>{{ strtoupper($employee_application->last_name) }}</td>
+                        <td>{{ strtolower($employee_application->email) }}</td>
                         <td>{{ $employee_application->mobile }}</td>
                         <td>
                         </td>
