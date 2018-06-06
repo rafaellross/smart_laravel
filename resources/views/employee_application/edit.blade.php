@@ -378,7 +378,7 @@
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[{{$license->id}}][number]" placeholder="License Number" value="{{$license->id}}" required>
+                                            <input type="text" class="form-control form-control-lg" name="license[{{$license->id}}][number]" placeholder="License Number" value="{{$license->number}}" required>
                                         </div>
                                     </div>
                                     <div class="form-row">

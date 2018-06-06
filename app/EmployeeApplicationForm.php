@@ -28,7 +28,7 @@ class EmployeeApplicationForm extends Fpdi
 		$nameX = 43.2;
     $this->Text(33, 65, strtoupper($application->first_name) . " " .  strtoupper($application->last_name));
     $this->Text(175, 65, Carbon::parse($application->dob)->format('d/m/Y'));
-    $this->Text(39, 71, $application->street_address . " - " . $application->suburb);
+    $this->Text(39, 71, strtoupper($application->street_address) . " - " . strtoupper($application->suburb));
     $this->Text(175, 77.5, $application->post_code);
     $this->Text(35, 84, $application->phone);
     $this->Text(163, 84, $application->mobile);
@@ -39,12 +39,12 @@ class EmployeeApplicationForm extends Fpdi
     $this->Text(175, 65, Carbon::parse($application->dob)->format('d/m/Y'));
 
     $this->Text(85, 121, $application->date_commenced);
-    $this->Text(55, 127, $application->bank_acc_name);
+    $this->Text(55, 127, strtoupper($application->bank_acc_name));
     $this->Text(128, 127, $application->bsb);
     $this->Text(173, 127, $application->account_number);
     $this->Text(71, 133.5, $application->superannuation);
     $this->Text(63, 139.5, $application->redundancy);
-    $this->Text(57, 145.5, $application->redundancy);
+    $this->Text(57, 145.5, $application->long_service_number);
 
     $this->SetDrawColor(255, 0, 0);
     if ($application->apprentice) {
