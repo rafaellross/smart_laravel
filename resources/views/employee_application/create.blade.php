@@ -3,7 +3,8 @@
 @extends('layouts.app')
 <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
 <script src="{{ asset('js/dropzone.js') }}"></script>
-
+<script src="{{ asset('js/pdf.worker.js') }}"></script>
+<script src="{{ asset('js/pdf.js') }}"></script>
 
         <div class="container">
             <!-- Logo -->
@@ -221,7 +222,6 @@
                                                 <strong>Employment Type:</strong>
                                             </label>
                                             <select name="paid_basis" class="form-control form-control-lg">
-                                                <option value="">Select employment type</option>
                                                 <option value="F">Full-time</option>
                                                 <option value="P">Part-time</option>
                                                 <option value="C">Casual</option>
@@ -336,7 +336,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*" >
+                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*, application/pdf" >
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[1][image][front][img]"/>
                                                 </div>
@@ -351,7 +351,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][back]" accept="image/*" >
+                                                    <input type="file" class="custom-file-input" name="license[1][image][back]" accept="image/*, application/pdf" >
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[1][image][back][img]"/>
                                                 </div>
@@ -400,7 +400,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[16][image][front]" accept="image/*" >
+                                                    <input type="file" class="custom-file-input" name="license[16][image][front]" accept="image/*, application/pdf" >
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[16][image][front][img]"/>
                                                 </div>
@@ -415,7 +415,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[16][image][back]" accept="image/*" >
+                                                    <input type="file" class="custom-file-input" name="license[16][image][back]" accept="image/*, application/pdf" >
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[16][image][back][img]"/>
                                                 </div>

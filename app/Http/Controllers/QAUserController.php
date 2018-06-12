@@ -8,8 +8,10 @@ use App\QATypes;
 use App\QAUserActivities;
 use App\QAUserReport;
 use App\QAUserPhoto;
+use App\QrReport;
 use Carbon\Carbon;
 use Auth;
+
 class QAUserController extends Controller
 {
     /**
@@ -41,7 +43,7 @@ class QAUserController extends Controller
     public function store(Request $request)
     {
 
-        $qa_user = new QAUser();        
+        $qa_user = new QAUser();
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
         $qa_user->qa_type               = $request->get('qa_type');
@@ -77,13 +79,13 @@ class QAUserController extends Controller
         if (!empty($request->get('photos')) > 0) {
 
             foreach ($request->get('photos') as $key => $photo) {
-                
+
                 $qa_photo                  = new QAUserPhoto();
                 $qa_photo->qa_user         = $qa_user->id;
                 $qa_photo->photo_number    = $key;
                 $qa_photo->qa_photo        = $photo;
-                $qa_photo->save();                                
-            }            
+                $qa_photo->save();
+            }
         }
 
         foreach ($request->get('activities') as $key => $value) {
@@ -91,7 +93,7 @@ class QAUserController extends Controller
             $qa_activities->qa_type         = $qa_user->id;
             $qa_activities->order           = $value["order"];
             $qa_activities->description     = $value["description"];
-            $qa_activities->at              = $value["at"];            
+            $qa_activities->at              = $value["at"];
             $qa_activities->requirements    = $value["requirements"];
             $qa_activities->reference       = $value["reference"];
             $qa_activities->installed_by    = $value["installed_by"];
@@ -102,7 +104,7 @@ class QAUserController extends Controller
         }
 
         return redirect('/qa_users')->with('success', 'Q.A Sign Off has been added');
-        
+
     }
 
     /**
@@ -136,7 +138,7 @@ class QAUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $qa_user                        = QAUser::find($id);
         $qa_user->user_id               = Auth::user()->id;
         $qa_user->description           = $request->get('description');
@@ -178,13 +180,13 @@ class QAUserController extends Controller
         if (!empty($request->get('photos')) > 0) {
 
             foreach ($request->get('photos') as $key => $photo) {
-                
+
                 $qa_photo                  = new QAUserPhoto();
                 $qa_photo->qa_user         = $qa_user->id;
                 $qa_photo->photo_number    = $key;
                 $qa_photo->qa_photo        = $photo;
-                $qa_photo->save();                                
-            }            
+                $qa_photo->save();
+            }
         }
 
         foreach ($qa_user->activities as $activity) {
@@ -196,7 +198,7 @@ class QAUserController extends Controller
             $qa_activities->qa_type         = $qa_user->id;
             $qa_activities->order           = $value["order"];
             $qa_activities->description     = $value["description"];
-            $qa_activities->at              = $value["at"];            
+            $qa_activities->at              = $value["at"];
             $qa_activities->requirements    = $value["requirements"];
             $qa_activities->reference       = $value["reference"];
             $qa_activities->installed_by    = $value["installed_by"];
@@ -205,9 +207,9 @@ class QAUserController extends Controller
             $qa_activities->activity_date   = Carbon::createFromFormat('d/m/Y', $value["activity_date"]);
             $qa_activities->save();
         }
-        
+
         return redirect('/qa_users')->with('success', 'Q.A Sign Off has been updated');
-        
+
     }
 
     /**
@@ -222,7 +224,7 @@ class QAUserController extends Controller
     }
 
     public function action($id, $action, $status = null)
-    {        
+    {
 
         $ids = explode(",", $id);
 
@@ -230,14 +232,14 @@ class QAUserController extends Controller
             case 'delete':
                 foreach ($ids as $id) {
                     QAUser::find($id)->delete();
-                }                
-                return redirect('qa_users')->with('success','Q.A Sign Off(s) has been deleted');        
+                }
+                return redirect('qa_users')->with('success','Q.A Sign Off(s) has been deleted');
                 break;
 
             case 'print':
-                
+
                 $report = new QAUserReport();
-                
+
                 foreach ($ids as $id) {
                     $qa_user = QAUser::find($id);
                     if ($qa_user) {
@@ -247,9 +249,24 @@ class QAUserController extends Controller
                 return $report->output();
                 break;
 
+                case 'qr':
+
+                    $report = new QrReport();
+
+                    foreach ($ids as $id) {
+                        $qa_user = QAUser::find($id);
+                        if ($qa_user) {
+                            $report->add($qa_user);
+                        }
+                    }
+                    return $report->output();
+                    break;
+
+
+
             default:
-                return redirect('qa_users')->with('error','There was no action selected');        
+                return redirect('qa_users')->with('error','There was no action selected');
                 break;
-        }        
-    }      
+        }
+    }
 }

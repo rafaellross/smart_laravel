@@ -70,27 +70,68 @@ function resizeImageToSpecificWidth(input, width = 600) {
     var hidden = $("input[name*='" + destination + "'][type=hidden]");
 
   if (input.files && input.files[0]) {
+    console.log(input.files);
     var reader = new FileReader();
+
     reader.onload = function(event) {
-      var img = new Image();
-      img.onload = function() {
-          var oc = document.createElement('canvas'), octx = oc.getContext('2d');
-          oc.width = img.width;
-          oc.height = img.height;
-          octx.drawImage(img, 0, 0);
-          while (oc.width * 0.5 > width) {
-            oc.width *= 0.5;
-            oc.height *= 0.5;
-            octx.drawImage(oc, 0, 0, oc.width, oc.height);
-          }
-          oc.width = width;
-          oc.height = oc.width * img.height / img.width;
-          octx.drawImage(img, 0, 0, oc.width, oc.height);
-          preview.attr('src', oc.toDataURL()).show();
-          hidden.val(oc.toDataURL());
-      };
-      img.src = event.target.result;
-    };
+      var parentEl = $(this).parent();
+      if(input.files[0].type == "application/pdf"){
+        console.debug("Parsing PDF document...");
+        //PDFJS.workerSrc = '<path_to_pdf.worker.js>';
+            //var PDFJS = {};
+            //PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+            console.log(PDFJS);
+            PDFJS.getDocument(event.target.result).then(function getPdf(pdf) {
+          //
+          // Fetch the first page
+          //
+          pdf.getPage(1).then(function getPage(page) {
+            var scale = 1.5;
+            var viewport = page.getViewport(scale);
+
+            //
+            // Prepare canvas using PDF page dimensions
+            //
+            $(parentEl).append('<canvas id="pdf-image" class="preview"/>');
+
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            hidden.val(canvas.toDataURL());
+
+            //
+            // Render PDF page into canvas context
+            //
+            var renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            page.render(renderContext);
+          });
+        });
+      } else {
+          var img = new Image();
+          img.onload = function() {
+              var oc = document.createElement('canvas'), octx = oc.getContext('2d');
+              oc.width = img.width;
+              oc.height = img.height;
+              octx.drawImage(img, 0, 0);
+              while (oc.width * 0.5 > width) {
+                oc.width *= 0.5;
+                oc.height *= 0.5;
+                octx.drawImage(oc, 0, 0, oc.width, oc.height);
+              }
+              oc.width = width;
+              oc.height = oc.width * img.height / img.width;
+              octx.drawImage(img, 0, 0, oc.width, oc.height);
+              preview.attr('src', oc.toDataURL()).show();
+              hidden.val(oc.toDataURL());
+          };
+          img.src = event.target.result;
+        };
+      }
+
     reader.readAsDataURL(input.files[0]);
   }
 }
@@ -129,7 +170,7 @@ function resizeImageToSpecificWidth(input, width = 600) {
                 </label>
                   <div class="input-group mb-3">
                     <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="license[` + code + `][image][front]" accept="image/*" required>
+                    <input type="file" class="custom-file-input" name="license[` + code + `][image][front]" accept="image/*, application/pdf" required>
                     <label class="custom-file-label">Choose file</label>
                     <input type="hidden" name="license[` + code + `][image][front][img]"/>
                 </div>
@@ -144,7 +185,7 @@ function resizeImageToSpecificWidth(input, width = 600) {
                 </label>
                 <div class="input-group mb-3">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="license[` + code + `][image][back]" accept="image/*" required>
+                    <input type="file" class="custom-file-input" name="license[` + code + `][image][back]" accept="image/*, application/pdf" required>
                     <label class="custom-file-label">Choose file</label>
                     <input type="hidden" name="license[` + code + `][image][back][img]"/>
                   </div>

@@ -3,48 +3,40 @@
 @section('content')
 
 <div class="container">
-    <h2 style="text-align: center;">Parameters</h2>
-    <hr/>
-    <div class="form-group row">
-        <div class="col-md-12 col-lg-12 col-12">
-            <a href="{{ URL::to('/parameters/create') }}" class="btn btn-primary">Create New</a>
-        </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Edit Parameters') }}</div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('parameters.update', $parameter->id) }}">
+                        @csrf
+                        @method('patch')
 
-    </div>
-    <table class="table table-hover table-responsive-sm table-striped">
-        <thead>
-            <tr>
-                <th scope="col"><input type="checkbox" id="chkRow"></th>
-                <th scope="col">#</th>
-                <th scope="col">Business Name</th>
-                <th scope="col">ABN</th>
-                <th scope="col">Address</th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach ($parameters as $parameter)
-                  <tr>
-                        <th>
-                            <input type="checkbox" id="chkRow-{{ $parameter->id }}">
-                        </th>
-                        <td>{{ $parameter->id }}</td>
-                        <td>{{ $parameter->business_name }}</td>
-                        <td>{{ $parameter->abn }}</td>
-                        <td>{{ $parameter->business_address }}</td>
-                        <td></td>
-                        <td style="text-align: center;">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{action('ParametersController@edit', $parameter->id)}}">Edit</a>                                    
-                                </div>
+                        <div class="form-group row">
+                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Week End for Time Sheet') }}</label>
+
+                            <div class="col-md-6">
+                              <input type="text" class="form-control form-control-lg date-picker" name="week_end_timesheet" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end_timesheet" required="" value="{{Carbon::parse($parameter->week_end_timesheet)->format('d/m/Y')}}" autocomplete="off">
+                              @if ($errors->has('week_end_timesheet'))
+                                  <span class="invalid-feedback">
+                                      <strong>{{ $errors->first('week_end_timesheet') }}</strong>
+                                  </span>
+                              @endif
                             </div>
-                        </td>
-                  </tr>
-            @endforeach
-        </tbody>
-    </table>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Update') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="{{ asset('js/parameters.js') }}"></script>
 @endsection

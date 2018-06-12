@@ -17,7 +17,7 @@ class AlterEmployeeApplication extends Migration
         $table->unsignedInteger('business')->nullable();
         $table->date('business_dt')->nullable();
         $table->boolean('still_paying')->default(true);
-        $table->foreign('business')->references('id')->on('parameters')->onDelete('cascade');
+        //$table->foreign('business')->references('id')->on('parameters')->onDelete('cascade');
       });
     }
 

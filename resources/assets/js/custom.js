@@ -693,47 +693,23 @@ $(document).ready(function() {
       $.each(data, function(key, val) {
         let emp = `
 
-                      <div id="emp-` + val.id + `" class="active select-employee card ` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? ""
-          : "bg-warning") + `">
+                      <div id="emp-` + val.id + `" class="active select-employee card ` + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + `">
                         <div class="select-employee card-header" role="tab" id="heading-undefined">
                         <div class="row">
-                          <div class="` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? "col-md-11 col-lg-11"
-          : "col-md-9 col-lg-9") + `">
+                          <div class="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "col-md-11 col-lg-11" : "col-md-9 col-lg-9") + `">
                             <h6>
-                                <a href="create/` + val.id + ` " style="` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? ""
-          : "color: white;") + `">
+                                <a href="`+ (val.last_timesheet === null || val.last_timesheet === undefined ? "create/" + val.id : "#") + `" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "": "color: white;") + `">
                                   <span> ` + val.name + `</span>
                                 </a>
                             </h6>
-                            <i style="` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? "display: none"
-          : "display: block;") + `">This employee already has a Time Sheet for this week   &#32;</i>
+                            <i style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">This employee already has a Time Sheet for this week   &#32;</i>
                           </div>
-                          <div class="col-md-2 col-lg-2" style="` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? "display: none"
-          : "display: block;") + `">
-                            <a href="action/` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? ""
-          : val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (
-          val.last_timesheet === null || val.last_timesheet === undefined
-          ? "none"
-          : "block") + `;" target="_blank">View Time Sheet</a>
+                          <div class="col-md-2 col-lg-2" style="` + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + `">
+                            <a href="action/` + (val.last_timesheet === null || val.last_timesheet === undefined? "": val.last_timesheet) + `/print" class="btnAdd btn btn-primary" style="color: white;display:` + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + `;" target="_blank">View Time Sheet</a>
                           </div>
 
-                          <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px;">
-                            <button id="` + val.id + `" class="btn btn-success btn-select" style="` + (
-          employeesSelected.indexOf(val.id.toString()) === -1
-          ? ''
-          : 'display:none;') + `">Select</button>
+                          <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px; `+(val.last_timesheet === null || val.last_timesheet === undefined ? "display: block" : "display: none;")+`">
+                            <button id="` + val.id + `" class="btn btn-success btn-select" style="` + (employeesSelected.indexOf(val.id.toString()) === -1 ? '' : 'display:none;') + `">Select</button>
                           </div>
                         </div>
                       </div>`;

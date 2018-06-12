@@ -46,7 +46,7 @@
                     <label for="empname">
                         <h5>Week End:</h5>
                     </label>
-                    <input type="text" class="form-control form-control-lg date-picker" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{old('week_end')}}" autocomplete="off">
+                    <input type="text" class="form-control form-control-lg" name="week_end" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end" required="" value="{{Carbon::parse(App\Parameters::all()->first()->week_end_timesheet)->format('d/m/Y')}}" autocomplete="off" readonly>
                     @if ($errors->has('week_end'))
                         <span class="invalid-feedback" style="display: block;">
                             @foreach ($errors->all() as $error)

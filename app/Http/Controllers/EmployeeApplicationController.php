@@ -70,7 +70,7 @@ class EmployeeApplicationController extends Controller
 
 
             $employee_application->employee_signature       = $request->get('signature');
-            $employee_application->tax_declaration          = $request->get('tax_declaration');
+
 
 
 
@@ -100,8 +100,8 @@ class EmployeeApplicationController extends Controller
      */
     public function show($id)
     {
-      $app = EmployeeApplication::find($id);
-      return view('employee_application.show',['tax_declaration' => $app->tax_declaration]);
+      //$app = EmployeeApplication::find($id);
+      //return view('employee_application.show',['tax_declaration' => $app->tax_declaration]);
 
 
       //$pdf = base64_decode($app->tax_declaration);
@@ -164,7 +164,7 @@ class EmployeeApplicationController extends Controller
             $employee_application->employee_signature       = $request->get('signature');
             $employee_application->business                 = $request->get('business');
             $employee_application->business_dt              = is_null($request->get('business_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('business_dt'));
-            $employee_application->tax_declaration          = $request->get('tax_declaration');
+
             $employee_application->save();
 
             foreach ($employee_application->licenses as $license) {
@@ -225,6 +225,38 @@ public function action($id, $action, $status = null)
                 }
                 return $report->output();
                 break;
+
+                case 'test':
+
+
+                    foreach ($ids as $id) {
+                        $employee_application = EmployeeApplication::find($id);
+                        $arr = array();
+
+                        foreach ($employee_application->licenses as $license) {
+
+                          if (getimagesizefromstring($license->image_front)) {
+                            echo '<img src="data:image/png;base64,' . base64_encode($license->image_front) .'"><br>';
+                          } else {
+
+                              $pdf = new \TCPDI(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+                              //$pdfdata = file_get_contents($license->image_front); // Simulate only having raw data available.
+                              $pagecount = $pdf->setSourceData(str_replace("data:image/png;base64,", "", base64_decode($license->image_front)));
+                              for ($i = 1; $i <= $pagecount; $i++) {
+                                  $tplidx = $pdf->importPage($i);
+                                  $pdf->AddPage();
+                                  $pdf->useTemplate($tplidx);
+                              }
+                              $pdf->output();
+                          }
+
+
+                        }
+
+                    }
+                    //return $arr;
+                    break;
 
             case 'update':
                 return redirect('employee_application')->with('success','Time Sheet(s) has been updated');

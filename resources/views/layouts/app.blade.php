@@ -17,7 +17,9 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
+
     <script src="{{ asset('js/custom.js') }}"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -82,7 +84,6 @@
                                 <a class="dropdown-item" href="{{ URL::to('/employee_application') }}" style="display: none;">Employee Application</a>
                             </div>
                         </li>
-
                         @endauth
                     </ul>
 
@@ -92,6 +93,14 @@
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                         @else
+                        <li class="nav-item mr-5">
+                          <span class="nav-link">
+                            <strong>Week End:</strong>
+                              {{ Carbon::parse(App\Parameters::all()->first()->week_end_timesheet)->format('d/m/Y') }}
+                            
+                          </span>
+                        </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

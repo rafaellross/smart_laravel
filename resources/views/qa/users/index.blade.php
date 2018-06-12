@@ -6,52 +6,53 @@
     <h2 style="text-align: center;">Q.A Sign Off</h2>
     <hr/>
     <div class="form-group row">
-        <div class="col-md-12 col-lg-12 col-12">                 
-            <button id="btn-create-qa-users" class="btn btn-primary btn-lg">Create New</button>                
+        <div class="col-md-12 col-lg-12 col-12">
+            <button id="btn-create-qa-users" class="btn btn-primary btn-lg">Create New</button>
             <a href="#" class="btn btn-danger mobile btn-lg" id="btnDelete">Delete Selected(s)</a>
-            <button class="btn btn-info mobile btn-lg" id="btnPrintQA" style="">Print Selected(s)</button>            
+            <button class="btn btn-info mobile btn-lg" id="btnPrintQA" style="">Print Selected(s)</button>
         </div>
 
-    </div> 
+    </div>
     <table class="table table-hover table-responsive-sm table-striped">
         <thead>
             <tr>
-                <th scope="col"><input type="checkbox" id="chkRow"></th>                          
-                <th scope="col">#</th>                
-                <th scope="col">User</th>             
-                <th scope="col">Q.A Type</th>                      
-                <th scope="col">Project</th>                      
-                <th scope="col">Customer</th>                      
-                <th scope="col">Site Manager</th>                      
-                <th scope="col">Update Date</th>                      
-                <th scope="col">Actions</th>                      
+                <th scope="col"><input type="checkbox" id="chkRow"></th>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Q.A Type</th>
+                <th scope="col">Project</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Site Manager</th>
+                <th scope="col">Update Date</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody>            
+        <tbody>
     @foreach ($qa_users as $qa_user)
-                  <tr>                    
+                  <tr>
                         <th>
                             <input type="checkbox" id="chkRow-{{ $qa_user->id }}">
                         </th>
-                        <td>{{ $qa_user->id }}</td>                    
-                        <td>{{ $qa_user->user->username }}</td>                    
-                        <td>{{ $qa_user->title }}</td>                                                
-                        <td>{{ $qa_user->job['description']}}</td>                                                                        
-                        <td>{{ $qa_user->site_manager}}</td>                                                                        
-                        <td>{{ $qa_user->customer}}</td>                                                                        
-                        <td>{{ Carbon::parse($qa_user->update_date)->format('d/m/Y')}}</td>                                                                        
+                        <td>{{ $qa_user->id }}</td>
+                        <td>{{ $qa_user->user->username }}</td>
+                        <td>{{ $qa_user->title }}</td>
+                        <td>{{ $qa_user->job['description']}}</td>
+                        <td>{{ $qa_user->site_manager}}</td>
+                        <td>{{ $qa_user->customer}}</td>
+                        <td>{{ Carbon::parse($qa_user->update_date)->format('d/m/Y')}}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                    
-                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/action/' . $qa_user->id .'/print') }}" target="_blank">View</a>                    
-                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/' . $qa_user->id .'/edit') }}">Edit</a>                    
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/action/' . $qa_user->id .'/qr') }}" target="_blank">Generate QR Code</a>                    
+                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/action/' . $qa_user->id .'/print') }}" target="_blank">View</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/qa_users/' . $qa_user->id .'/edit') }}">Edit</a>
                                     <a class="dropdown-item delete" id="{{$qa_user->id}}" href="#">Delete</a>
                                 </div>
-                            </div>        
-                        </td>                    
+                            </div>
+                        </td>
                   </tr>
             @endforeach
         </tbody>
@@ -75,7 +76,7 @@
                     <option value="{{$qa_type->id}}">{{$qa_type->title}}</option>
                 @endforeach
             </select>
-        </div>        
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="btnSelectType">Continue</button>
