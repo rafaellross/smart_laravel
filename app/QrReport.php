@@ -22,7 +22,7 @@ class QrReport extends Fpdf
     $url->setOutfile('tmp/qr.png')->png();
 
     $this->Image('tmp/qr.png', ($this->GetPageWidth()/2)-50, 95, 100, 'png');
-    //dd(get_class_methods($url));
+    
 
 
     //dd($qr = QRCode::url('http://google.com')->png());
