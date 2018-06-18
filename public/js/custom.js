@@ -182,7 +182,7 @@ $(document).ready(function () {
     var duration = $('#' + day[0] + '_hours_' + row);
     var start = Number($('#' + day[0] + "_start_" + row).val());
     var end = Number($(this).val());
-    var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
+    var lunch = row === 1 && day[0] !== "sat" && day[0] !== "sun" ? 15 : 0;
 
     duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
 
@@ -230,7 +230,7 @@ $(document).ready(function () {
 
     var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
 
-    if (totalHours > 8 * 60 && day[0] !== "sat" && !isNight) {
+    if (totalHours > 8 * 60 && day[0] !== "sat" && day[0] !== "sun" && !isNight) {
       //If total hours is bigger than 08:00 and day different than sat set 1.5
       hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
     }
@@ -240,8 +240,8 @@ $(document).ready(function () {
       }
 
     //If total hours is bigger than 10:00 or day equal sat set 1.5
-    if (!isNight && (totalHours > 10 * 60 || day[0] == "sat")) {
-      if (day[0] == "sat") {
+    if (!isNight && (totalHours > 10 * 60 || day[0] == "sat" || day[0] == "sun")) {
+      if (day[0] == "sat" || day[0] == "sun") {
         hours_20 = totalHours;
       } else if (job_number !== "pld") {
         hours_20 = totalHours - 8 * 60 - 2 * 60;
@@ -277,7 +277,7 @@ $(document).ready(function () {
     var duration = $('#' + day[0] + '_hours_' + row);
     var start = Number($('#' + day[0] + "_start_" + row).val());
     var end = Number($(this).val());
-    var lunch = row === 1 && day[0] !== "sat" ? 15 : 0;
+    var lunch = row === 1 && day[0] !== "sat" && day[0] !== "sun" ? 15 : 0;
 
     if (end > start && end !== start) {
       duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
@@ -338,7 +338,7 @@ $(document).ready(function () {
       diff_day_night = start - prev_row_end.val();
     }
 
-    if (totalHours > 8 * 60 && day[0] !== "sat" && !isNight) {
+    if (totalHours > 8 * 60 && day[0] !== "sat" && day[0] !== "sun" && !isNight) {
       //If total hours is bigger than 08:00 and day different than sat set 1.5
       hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
     }
@@ -346,8 +346,8 @@ $(document).ready(function () {
     else if (isNight && start >= 18 * 60 & start < 23 * 60 && (diff_day_night == null || diff_day_night > 10 * 60)) {
         hours_15 = Math.min(2 * 60, totalHours);
       } //If total hours is bigger than 10:00 or day equal sat set 1.5
-    if (!isNight && (totalHours > 10 * 60 || day[0] == "sat")) {
-      if (day[0] == "sat") {
+    if (!isNight && (totalHours > 10 * 60 || day[0] == "sat" || day[0] == "sun")) {
+      if (day[0] == "sat" || day[0] == "sat") {
         hours_20 = totalHours;
       } else if (job_number !== "pld") {
         hours_20 = totalHours - 8 * 60 - 2 * 60;
@@ -403,18 +403,18 @@ $(document).ready(function () {
     $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn, #preJob_description, #job_description').val('');
 
     var preEnd = $('#preEnd').val();
-    $('.end-1').not('#sat_end_1').val(preEnd);
+    $('.end-1').not('#sat_end_1, #sun_end_1').val(preEnd);
 
     var preStart = $('#preStart').val();
-    $('.start-1').not('#sat_start_1').val(preStart);
+    $('.start-1').not('#sat_start_1, #sun_start_1').val(preStart);
 
     var preJob = $('#preJob').val();
-    $('.job-1').not('#sat_job_1').val(preJob);
+    $('.job-1').not('#sat_job_1, #sun_job_1').val(preJob);
 
     var preJobDescription = $('#preJob_description').val();
-    $('.job_description_1').not('#sat_job_1_description').val(preJobDescription);
+    $('.job_description_1').not('#sat_job_1_description, #sun_job_1_description').val(preJobDescription);
 
-    $(".end-1").not('#sat_end_1').trigger("change");
+    $(".end-1").not('#sat_end_1, #sun_end_1').trigger("change");
   });
 
   $(".job").change(function () {
@@ -550,6 +550,9 @@ $(document).ready(function () {
     }, {
       description: "Saturday",
       short: "sat"
+    }, {
+      description: "Sunday",
+      short: "sun"
     }];
 
     var jobs = [1, 2, 3, 4];

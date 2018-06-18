@@ -80,7 +80,7 @@ class TimeSheetController extends Controller
      */
     public function create($employee)
     {
-        $days = WeekDay::where('number', '<', 8)->get();
+        $days = WeekDay::all();
 
         $employees = Employee::whereRaw("id in ($employee)")->get();
         return view('timesheet.create', ['days' => $days, 'employees' => $employees]);

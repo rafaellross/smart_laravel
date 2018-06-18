@@ -20,7 +20,7 @@ class TimeSheetReport extends Fpdf
 
 		//Table Dimensions
 		$width_first = 20;
-		$width_days = 35;
+		$width_days = 30;
 		$height = 10;
 		$this->SetTitle("Time Sheet");
 	    $this->SetFont('Arial','',$font_large);
@@ -47,7 +47,7 @@ class TimeSheetReport extends Fpdf
 
 
 	    foreach (WeekDay::all() as $weekDay) {
-	    	if ($weekDay->number < 8) {
+	    	if ($weekDay->number < 9) {
 	    		$this->Cell($width_days,5, strtoupper($weekDay->description),1,0,'C');
 	    	}
 	    }
@@ -213,11 +213,11 @@ class TimeSheetReport extends Fpdf
 	    $this->SetY($getYtitle, false);
 	    $this->SetX($this->GetX()+45);
 
-	    $tb_center_width = 17;
+	    $tb_center_width = 15;
 
 	    $this->Cell($tb_center_width,5, '',1,0,'C');
 	    foreach (WeekDay::all() as $weekDay) {
-	    	if ($weekDay->number < 8) {
+	    	if ($weekDay->number < 9) {
 	    		$this->Cell($tb_center_width,5, strtoupper($weekDay->short),1,0,'C');
 	    	}
 	    }
