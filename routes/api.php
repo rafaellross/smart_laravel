@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 
+
+
+use Illuminate\Http\Resources\Json\Resource;
+use GuzzleHttp\Client;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,5 +52,20 @@ Route::get('employees/{name}', function($name) {
                          ")
                     );
     return $employees;
+
+});
+
+Route::get('myob/', function() {
+    $client = new GuzzleHttp\Client();
+    $res = $client->request('GET', 'http://192.168.1.119:8080/AccountRight/efaea9a2-7946-4284-8db2-ffa28465df30/Contact/EmployeePayrollDetails?api-version=v2', [
+        'Authorization' => 'Basic QWRtaW5pc3RyYXRvcjoxMjM0NTY=',
+        'UID' => "efaea9a2-7946-4284-8db2-ffa28465df30"
+    ]);
+    echo $res->getStatusCode();
+    // "200"
+    echo $res->getHeader('content-type');
+    // 'application/json; charset=utf8'
+    echo $res->getBody();
+    // {"type":"User"...'
 
 });
