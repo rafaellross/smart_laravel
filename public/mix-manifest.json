@@ -5,6 +5,5 @@
     "/js/parameters.js": "/js/parameters.js",
     "/js/forms.js": "/js/forms.js",
     "/js/employee_application.js": "/js/employee_application.js",
-    "/js/custom.js": "/js/custom.js",
-    "/js/instascan.min.js": "/js/instascan.min.js"
+    "/js/custom.js": "/js/custom.js"
 }

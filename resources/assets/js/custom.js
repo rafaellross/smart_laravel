@@ -620,15 +620,18 @@ $(document).ready(function() {
     }
   });
 
-  $('#selectStatus').change(function() {
+  $('#selectLocation').change(function() {
     let urlArray = window.location.href.split("/");
-    if (urlArray[urlArray.length - 1] == "timesheets") {
+    if (urlArray[urlArray.length - 1] == "employees") {
       window.location += '/' + $(this).val();
     } else {
       window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
     }
 
   });
+
+
+
 
   $('#btnSaveStatus').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

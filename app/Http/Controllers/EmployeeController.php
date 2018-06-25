@@ -17,7 +17,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($location = null)
     {
         $employees = DB::select(
                     DB::raw(
@@ -39,6 +39,8 @@ class EmployeeController extends Controller
 
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
+                                where
+                                " . (is_null($location) ? '1=1' : " emp.location = '$location'") . "
                                 order by emp.name asc
                          ")
                     );

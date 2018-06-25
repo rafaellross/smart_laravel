@@ -653,9 +653,9 @@ $(document).ready(function () {
     }
   });
 
-  $('#selectStatus').change(function () {
+  $('#selectLocation').change(function () {
     var urlArray = window.location.href.split("/");
-    if (urlArray[urlArray.length - 1] == "timesheets") {
+    if (urlArray[urlArray.length - 1] == "employees") {
       window.location += '/' + $(this).val();
     } else {
       window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());

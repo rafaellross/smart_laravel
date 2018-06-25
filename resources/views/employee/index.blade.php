@@ -18,8 +18,18 @@
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">ID Card</a>
               </div>
+              <div style="float: right;" id="locationSelect">
+                  <select class="custom-select mb-4" id="selectLocation">
+                      <option selected="">Location...</option>
+                      <option value="C">Construction</option>
+                      <option value="M">Maintenance</option>
+                      <option value="O">Office</option>
+                  </select>
+
+              </div>
 
         </div>
+
 
     </div>
     <table class="table table-hover table-responsive-sm table-striped table-fixed">

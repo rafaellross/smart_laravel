@@ -59,8 +59,10 @@ Route::group(['middleware' => ['administrator']], function () {
 	//employees entries
 
 	//Employees
+	Route::get('/employees/{location?}', 'EmployeeController@index');
 	Route::get('/employees/action/{id}/{action}/{param?}', 'EmployeeController@action');
 	Route::patch('/employees/entitlemens', 'EmployeeController@updateEntitlements');
+
 	Route::resource('employees', 'EmployeeController');
 
 	//Jobs
