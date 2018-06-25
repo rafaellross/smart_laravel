@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <h2 style="text-align: center;">Employees</h2>
+    <h2 style="text-align: center;">Employees ({{count($employees)}})</h2>
     <hr/>
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">
