@@ -24,6 +24,7 @@
                       <option value="C">Construction</option>
                       <option value="M">Maintenance</option>
                       <option value="O">Office</option>
+                      <option value="L">Labourer</option>
                   </select>
 
               </div>
