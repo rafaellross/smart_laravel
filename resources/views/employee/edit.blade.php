@@ -144,6 +144,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Inactive ?') }}</label>
+                            <div class="col-md-6">
+                                <select name="inactive" class="form-control">
+                                    <option value="1" {{ $employee->inactive == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $employee->inactive == 0 ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
