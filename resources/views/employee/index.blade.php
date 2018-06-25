@@ -6,7 +6,7 @@
     <h2 style="text-align: center;">Employees ({{count($employees)}})</h2>
     <hr/>
     <div class="form-group row">
-        <div class="col-md-12 col-lg-12 col-12">
+        <div class="col-12 mb-4">
             <a href="{{ URL::to('/employees/create') }}" class="btn btn-primary">Create New</a>
             <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
             <button class="btn btn-secondary mobile" id="btnEntitlements" style="">Update Entitlements</button>
@@ -18,21 +18,31 @@
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">ID Card</a>
               </div>
-              <div style="float: right;" id="locationSelect">
-                  <select class="custom-select mb-4" id="selectLocation">
-                      <option selected="">Location...</option>
-                      <option value="C">Construction</option>
-                      <option value="M">Maintenance</option>
-                      <option value="MA">Apprentice - Maintenance</option>
-                      <option value="CA">Apprentice - Construction</option>
-                      <option value="O">Office</option>
-                      <option value="L">Labourer</option>
-                      <option value="null/true">Inactives</option>
-                  </select>
 
-              </div>
-
+            </div>
         </div>
+        <div class="form-group row">
+          <select class="custom-select" id="selectCompany">
+              <option selected="">Maintenance / Construction...</option>
+              <option value="C" {{isset($params['company']) && $params['company'] == 'C' ? 'selected' : '' }}>Construction</option>
+              <option value="M" {{isset($params['company']) && $params['company'] == 'M' ? 'selected' : '' }}>Maintenance</option>
+              <option value="all" {{isset($params['company']) && $params['company'] == 'all' ? 'selected' : '' }}>All</option>
+          </select>
+        </div>
+        <div class="form-group row">
+            <select class="custom-select mb-4" id="selectLocation">
+                <option selected="">Role...</option>
+                <option value="P" {{isset($params['type']) && $params['type'] == 'P' ? 'selected' : '' }}>Plumber</option>
+                <option value="A" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Apprentice</option>
+                <option value="A" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Office</option>
+                <option value="L" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Labourer</option>
+                <option value="all" {{isset($params['type']) && $params['type'] == 'all' ? 'selected' : '' }}>All</option>
+            </select>
+        </div>
+
+
+
+
 
 
     </div>

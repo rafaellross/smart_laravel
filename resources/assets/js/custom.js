@@ -621,15 +621,12 @@ $(document).ready(function() {
   });
 
   $('#selectLocation').change(function() {
-    let urlArray = window.location.href.split("/");
-    if (urlArray[urlArray.length - 1] == "employees") {
-      window.location += '/' + $(this).val();
-    } else {
-      window.location = window.location.href.replace(/\/[^\/]*$/, '/' + $(this).val());
-    }
-
+    window.location = window.location.href += "&type=" + $(this).val();
   });
 
+  $('#selectCompany').change(function() {
+      window.location = window.location.href += "&company=" + $(this).val();
+  });
 
 
 

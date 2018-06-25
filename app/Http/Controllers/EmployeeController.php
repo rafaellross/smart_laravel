@@ -17,8 +17,12 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($location = null, $inactives = false)
+    public function index()
     {
+        $company = filter_input(INPUT_GET, 'company', FILTER_SANITIZE_SPECIAL_CHARS);
+        $type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
+
+
         $employees = DB::select(
                     DB::raw(
                         "select emp.id,
@@ -26,12 +30,10 @@ class EmployeeController extends Controller
                                 emp.phone,
                                 emp.dob,
                                 case
-                                when emp.location = 'C' then 'Construction'
-                                when emp.location = 'M' then 'Maintenance'
-                                when emp.location = 'L' then 'Labourer'
+                                when emp.location = 'P' then 'Plumber'
                                 when emp.location = 'O' then 'Office'
-                                when emp.location = 'CA' then 'Apprentice - Construction'
-                                when emp.location = 'MA' then 'Apprentice - Maintenance'
+                                when emp.location = 'A' then 'Apprentice'
+                                when emp.location = 'L' then 'Labourer'
                                 end location,
                                 emp.anniversary_dt,
                                 emp.apprentice_year,
@@ -41,14 +43,17 @@ class EmployeeController extends Controller
 
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
-                                where " . ($inactives ? 'emp.inactive is not null' :  'emp.inactive = 0'). "
+                                where
+                                ".($company == 'all' || is_null($company) ? 'emp.company is not null' : "emp.company = '$company'" )."
                                 and
-                                " . (is_null($location) ? '1=1' : " emp.location = '$location'") . "
+                                " . ($company == 'all' ? 'emp.inactive is not null' :  'emp.inactive = 0'). "
+                                and
+                                " . ($type == 'all' || is_null($type) ? '1=1' : " emp.location = '$type'") . "
                                 order by emp.name asc
                          ")
                     );
 
-        return view('employee.index', ['employees' => $employees]);
+        return view('employee.index', ['employees' => $employees, 'params' => $_GET]);
     }
 
     /**

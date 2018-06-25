@@ -54,7 +54,7 @@
                                 <a class="nav-link" href="{{ URL::to('/users') }}">Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('/employees') }}">Employees</a>
+                                <a class="nav-link" href="{{ URL::to('/employees?params=true') }}">Employees</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/jobs') }}">Jobs</a>

@@ -134,19 +134,26 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                             <div class="col-md-6">
-                                <select name="location" class="form-control">
-                                    <option value="C" {{ $employee->apprentice_year == 'C' ? 'selected' : '' }}>Construction</option>
-                                    <option value="O" {{ $employee->apprentice_year == 'O' ? 'selected' : '' }}>Office</option>
-                                    <option value="M" {{ $employee->apprentice_year == 'M' ? 'selected' : '' }}>Maintenance</option>
-                                    <option value="L" {{ $employee->apprentice_year == 'L' ? 'selected' : '' }}>Labourer</option>
-                                    <option value="MA" {{ $employee->apprentice_year == 'MA' ? 'selected' : '' }}>Apprentice - Maintenance</option>
-                                    <option value="CA" {{ $employee->apprentice_year == 'CA' ? 'selected' : '' }}>Apprentice - Construction</option>                                    
-
-                                </select>
+                                  <select name="location" class="form-control">
+                                    <option value="P" {{ $employee->location == 'P' ? 'selected' : '' }}>Plumber</option>
+                                    <option value="A" {{ $employee->location == 'A' ? 'selected' : '' }}>Apprentice</option>
+                                    <option value="O" {{ $employee->location == 'O' ? 'selected' : '' }}>Office</option>
+                                    <option value="L" {{ $employee->location == 'L' ? 'selected' : '' }}>Labourer</option>
+                                  </select>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="company" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
+                            <div class="col-md-6">
+                                  <select name="company" class="form-control">
+                                    <option value="C" {{ $employee->company == 'C' ? 'selected' : '' }}>Construction</option>
+                                    <option value="M" {{ $employee->company == 'M' ? 'selected' : '' }}>Maintenance</option>
+                                  </select>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Inactive ?') }}</label>
                             <div class="col-md-6">

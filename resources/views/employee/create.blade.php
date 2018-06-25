@@ -133,13 +133,23 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                             <div class="col-md-6">
                                 <select name="location" class="form-control">
-                                    <option value="C">Construction</option>
-                                    <option value="O">Office</option>
-                                    <option value="M">Maintenance</option>
-                                    <option value="L">Labourer</option>
+                                  <option value="P">Plumber</option>
+                                  <option value="A">Apprentice</option>
+                                  <option value="O">Office</option>
+                                  <option value="L">Labourer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="company" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
+                            <div class="col-md-6">
+                                <select name="company" class="form-control">
+                                  <option value="C">Construction</option>
+                                  <option value="M">Maintenance</option>
                                 </select>
                             </div>
                         </div>
