@@ -59,7 +59,7 @@ Route::group(['middleware' => ['administrator']], function () {
 	//employees entries
 
 	//Employees
-	Route::get('/employees/{id}/edit', 'EmployeeController@create');
+	Route::get('/employees/{id}/edit', 'EmployeeController@edit');
 	Route::get('/employees/create/', 'EmployeeController@create');
 	Route::get('/employees/{location?}/{inactives?}', 'EmployeeController@index');
 	Route::get('/employees/action/{id}/{action}/{param?}', 'EmployeeController@action');
