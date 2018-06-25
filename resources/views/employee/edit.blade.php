@@ -137,10 +137,10 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
                             <div class="col-md-6">
                                 <select name="location" class="form-control">
-                                    <option value="C">Construction</option>
-                                    <option value="O">Office</option>
-                                    <option value="M">Maintenance</option>
-                                    <option value="L">Labourer</option>
+                                    <option value="C" {{ $employee->apprentice_year == 'C' ? 'selected' : '' }}>Construction</option>
+                                    <option value="O" {{ $employee->apprentice_year == 'O' ? 'selected' : '' }}>Office</option>
+                                    <option value="M" {{ $employee->apprentice_year == 'M' ? 'selected' : '' }}>Maintenance</option>
+                                    <option value="L" {{ $employee->apprentice_year == 'L' ? 'selected' : '' }}>Labourer</option>
                                 </select>
                             </div>
                         </div>
