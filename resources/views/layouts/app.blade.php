@@ -62,6 +62,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/parameters') }}">Parameters</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('/employee_entries') }}">Employees Entries</a>
+                            </li>
+
                         @endif
                         @auth
                         <li class="nav-item dropdown">
@@ -96,8 +100,8 @@
                         <li class="nav-item mr-5">
                           <span class="nav-link">
                             <strong>Week End:</strong>
-                              {{ Carbon::parse(App\Parameters::all()->first()->week_end_timesheet)->format('d/m/Y') }}
-                            
+                              {{ isset(App\Parameters::all()->first()->week_end_timesheet) ? Carbon::parse(App\Parameters::all()->first()->week_end_timesheet)->format('d/m/Y') : ''}}
+
                           </span>
                         </li>
 

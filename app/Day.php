@@ -11,11 +11,17 @@ class Day extends Model
     }
 
     public function listHours(){
-
+      $this->loadMissing('dayJobs');
     	$result = array();
 
-    	foreach ($this->dayJobs() as $job) {
-    		$result[$job->job] += $job->hours;
+    	foreach ($this->dayJobs as $job) {
+        //dd($job->job);
+        if (isset($job->job->code) && isset($result[$job->job->code])) {
+          $result[$job->job->code] += $job->hours();
+        } else if (isset($job->job->code)){
+          $result[$job->job->code] = $job->hours();
+        }
+
     	}
     	return $result;
     }
@@ -50,7 +56,7 @@ class Day extends Model
         return $nightWork;
     }
 
-    
+
 
     public function workForBonus(){
         $work = false;

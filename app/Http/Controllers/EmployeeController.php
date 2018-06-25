@@ -9,6 +9,7 @@ use File;
 use DB;
 use Carbon\Carbon;
 use App\CertificateAwareness;
+use App\IdCard;
 class EmployeeController extends Controller
 {
     /**
@@ -24,6 +25,13 @@ class EmployeeController extends Controller
                                 emp.name,
                                 emp.phone,
                                 emp.dob,
+                                case
+                                when emp.location = 'C' then 'Construction'
+                                when emp.location = 'M' then 'Maintenance'
+                                when emp.location = 'L' then 'Labourer'
+                                end location,
+                                emp.anniversary_dt,
+                                emp.apprentice_year,
                                 CAST(emp.rdo_bal AS DECIMAL(12,2)) as rdo_bal,
                                 CAST(emp.pld AS DECIMAL(12,2)) as pld,
                                 CAST(emp.anl AS DECIMAL(12,2)) as anl,
@@ -73,6 +81,11 @@ class EmployeeController extends Controller
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');
         $employee->dob = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
+        $employee->anniversary_dt = is_null($request->get('anniversary_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('anniversary_dt'));
+
+        $employee->apprentice_year = $request->get('apprentice_year');
+
+        $employee->location = $request->get('location');
 
         if ($request->get('entitlements') !== null) {
             foreach ($request->get('entitlements') as $entitlement) {
@@ -125,6 +138,13 @@ class EmployeeController extends Controller
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');
         $employee->dob = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
+
+        $employee->anniversary_dt = is_null($request->get('anniversary_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('anniversary_dt'));
+
+        $employee->apprentice_year = $request->get('apprentice_year');
+
+        $employee->location = $request->get('location');
+
 
         $employee->rdo = false;
         $employee->travel = false;
@@ -286,7 +306,7 @@ class EmployeeController extends Controller
                 }
                 return redirect('employees')->with('success','Job(s) has been deleted');
                 break;
-                case 'print':
+                case 'print_certificate':
                     if ($param = "awareness") {
                       $report = new CertificateAwareness();
 
@@ -309,6 +329,29 @@ class EmployeeController extends Controller
                     }
                     return $report->output();
                     break;
+                    case 'print':
+                        if ($param = "awareness") {
+                          $report = new IdCard();
+
+                          $report->AddPage();
+
+                        } else {
+                          $report = new IdCard();
+                        }
+
+                        $report->SetCompression(true);
+
+                        foreach ($ids as $id) {
+                            $employee = Employee::find($id);
+                            if ($employee) {
+                              if ($report->GetY() > 200) {
+                                $report->AddPage();
+                              }
+                                $report->add($employee);
+                            }
+                        }
+                        return $report->output();
+                        break;
 
             default:
                 return redirect('employees')->with('error','There was no action selected');

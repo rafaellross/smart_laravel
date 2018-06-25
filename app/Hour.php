@@ -28,7 +28,7 @@ class Hour extends Model
 				return $hour/60;
 			} else {
 				return null;
-			}			
+			}
 		} else {
 		    $piece = explode(":", $hour);
 		    if (count($piece) > 1) {
@@ -59,7 +59,7 @@ class Hour extends Model
 		     if ($minutes > 0) {
 		       return Hour::D($minutes/60 | 0) . ':' . Hour::D($minutes%60);
 		     } else {
-		     	return "";
+		     	return "00:00";
 		     }
 		}
 	}

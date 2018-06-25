@@ -108,6 +108,41 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Apprentice Anniversary Date') }}</label>
+                            <div class="col-md-6">
+                                <input id="dob" type="text" class="form-control{{ $errors->has('anniversary_dt') ? ' is-invalid' : '' }} date-picker" name="anniversary_dt" value="{{ old('anniversary_dt') }}" autocomplete="Off">
+                                @if ($errors->has('anniversary_dt'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('anniversary_dt') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Apprentice Year') }}</label>
+                            <div class="col-md-6">
+                                <input id="dob" type="text" class="form-control{{ $errors->has('apprentice_year') ? ' is-invalid' : '' }} " name="apprentice_year" value="{{ old('apprentice_year') }}" autocomplete="Off">
+                                @if ($errors->has('apprentice_year'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('apprentice_year') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
+                            <div class="col-md-6">
+                                <select name="location" class="form-control">
+                                    <option value="C">Construction</option>
+                                    <option value="O">Office</option>
+                                    <option value="M">Maintenance</option>
+                                    <option value="L">Labourer</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

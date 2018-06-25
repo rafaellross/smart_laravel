@@ -56,6 +56,7 @@ Route::group(['middleware' => ['administrator']], function () {
 	//Parameters
 	Route::resource('parameters', 'ParametersController');
 
+	//employees entries
 
 	//Employees
 	Route::get('/employees/action/{id}/{action}/{param?}', 'EmployeeController@action');
@@ -69,6 +70,7 @@ Route::group(['middleware' => ['administrator']], function () {
 	//Users
 	Route::get('/users/action/{id}/{action}/{status?}', 'UserController@action');
 	Route::resource('users', 'UserController', ['except' => ['edit','update']]);
+	//Employee entries
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -76,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/timesheets/create/{id}', 'TimeSheetController@create');
 	Route::get('/timesheets/action/{id}/{action}/{status?}', 'TimeSheetController@action')->name('action_timesheet');
 	Route::get('/timesheets', 'TimeSheetController@index');
+	Route::get('/timesheets/approve/{id}', 'TimeSheetController@approve');
 	Route::get('/timesheets/{status?}', 'TimeSheetController@index');
 
 
@@ -83,8 +86,23 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('timesheets', 'TimeSheetController', ['except' => ['index']]);
 	Route::resource('employee_application', 'EmployeeApplicationController');
 
+	Route::get('/employee_entries/create/{id?}', 'EmployeeEntryController@create');
+	Route::get('/employee_entries/{id?}', 'EmployeeEntryController@index');
+	Route::get('/employee_entries', 'EmployeeEntryController@index');
+	Route::get('/employee_entries/create', 'EmployeeEntryController@create');
+	Route::get('/employee_entries/generate/{id}', 'EmployeeEntryController@generateTimeSheet');
+	Route::resource('employee_entries', 'EmployeeEntryController');
+
+
+
+
+
+
 });
 
+Route::get('/entries/scan', function () {
+	return view('employee_entries.scan');
+});
 
 	Route::get('/users/{id}/edit', function ($id) {
 		if (!Auth::user()->administrator && Auth::user()->id != $id) {

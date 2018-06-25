@@ -287,7 +287,7 @@ $(document).ready(function() {
 
     }
     //Check if is night work and start time is between 18 and 23
-    else if (isNight && start >= (18*60) & start < (23*60) && (diff_day_night == null || diff_day_night > 10*60) ) {
+    else if (isNight && start >= (18*60) && start < (23*60) && (diff_day_night == null || diff_day_night > 10*60) ) {
       hours_15 = Math.min((2 * 60), totalHours);
     }    //If total hours is bigger than 10:00 or day equal sat set 1.5
     if (!isNight && (totalHours > (10 * 60) || day[0] == "sat" || day[0] == "sun") ) {

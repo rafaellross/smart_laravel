@@ -16,6 +16,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
+                <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">ID Card</a>
               </div>
 
         </div>
@@ -31,7 +32,10 @@
                 <th scope="col">Phone</th>
                 <th scope="col">RDO Balance</th>
                 <th scope="col">PLD Balance</th>
+                <th scope="col">Location</th>
                 <th scope="col">Annual Leave Balance</th>
+                <th scope="col">Apprentice Year</th>
+                <th scope="col">Apprentice Anniversary Date</th>
                 <th scope="col">Time Sheet</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -48,7 +52,11 @@
                         <td>{{$employee->phone}}</td>
                         <td>{{$employee->rdo_bal}}</td>
                         <td>{{$employee->pld}}</td>
+                        <td>{{isset($employee->location) ? $employee->location : ''}}</td>
                         <td>{{$employee->anl}}</td>
+                        <td>{{isset($employee->apprentice_year) ? $employee->apprentice_year : ''}}</td>
+                        <td>{{isset($employee->anniversary_dt) ? Carbon::parse($employee->anniversary_dt)->format('d/m/Y') : ''}}</td>
+
                         <td>
                             @if (!is_null($employee->last_timesheet))
                                 <a class="btn btn-success" href="timesheets/action/{{$employee->last_timesheet}}/print" role="button" target="_blank">View</a>
@@ -63,8 +71,9 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{URL::to('/employee_entries/'.$employee->id)}}">View Entries</a>
                                     <a class="dropdown-item" href="{{action('EmployeeController@edit', $employee->id)}}">Edit</a>
-                                    <a class="dropdown-item delete" id="{{$employee->id}}" href="#">Delete</
+                                    <a class="dropdown-item delete" id="{{$employee->id}}" href="#">Delete</a>
                                 </div>
                             </div>
                         </td>

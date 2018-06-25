@@ -8,15 +8,17 @@
             <div class="card">
                 <div class="card-header">{{ __('Edit Parameters') }}</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('parameters.update', $parameter->id) }}">
+                    <form method="POST" action="{{ isset($parameter->week_end_timesheet) ? route('parameters.update', $parameter->id) : route('parameters.store') }}">
                         @csrf
-                        @method('patch')
+                        @if(isset($parameter->week_end_timesheet))
+                          @method('patch')
+                        @endif
 
                         <div class="form-group row">
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Week End for Time Sheet') }}</label>
 
                             <div class="col-md-6">
-                              <input type="text" class="form-control form-control-lg date-picker" name="week_end_timesheet" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end_timesheet" required="" value="{{Carbon::parse($parameter->week_end_timesheet)->format('d/m/Y')}}" autocomplete="off">
+                              <input type="text" class="form-control form-control-lg date-picker" name="week_end_timesheet" data-date-days-of-week-disabled="1,2,3,4,5,6" id="week_end_timesheet" required="" value="{{isset($parameter->week_end_timesheet) ? Carbon::parse($parameter->week_end_timesheet)->format('d/m/Y') : ''}}" autocomplete="off">
                               @if ($errors->has('week_end_timesheet'))
                                   <span class="invalid-feedback">
                                       <strong>{{ $errors->first('week_end_timesheet') }}</strong>

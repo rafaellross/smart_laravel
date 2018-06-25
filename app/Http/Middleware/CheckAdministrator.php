@@ -19,7 +19,7 @@ class CheckAdministrator
         if (Auth::user() && Auth::user()->administrator) {
               return $next($request);
         }
-        return redirect()->previous();
+        return redirect('/');
 
     }
 }

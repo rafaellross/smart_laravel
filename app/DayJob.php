@@ -24,7 +24,6 @@ class DayJob extends Model
         } else {
 
             return (((24*60)-$this->start) + ((24*60) - (24*60 - $this->end))) - 15 > 0 ? (((24*60)-$this->start) + ((24*60) - (24*60 - $this->end)) - 15) : 0;
-
         }
 
     	} else {
@@ -43,8 +42,6 @@ class DayJob extends Model
           return 0;
 
         }
-
-
     	}
     }
 }
