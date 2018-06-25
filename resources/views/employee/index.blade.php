@@ -23,8 +23,11 @@
                       <option selected="">Location...</option>
                       <option value="C">Construction</option>
                       <option value="M">Maintenance</option>
+                      <option value="MA">Apprentice - Maintenance</option>
+                      <option value="CA">Apprentice - Construction</option>
                       <option value="O">Office</option>
                       <option value="L">Labourer</option>
+                      <option value="null/true">Inactives</option>
                   </select>
 
               </div>

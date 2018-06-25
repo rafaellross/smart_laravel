@@ -141,6 +141,9 @@
                                     <option value="O" {{ $employee->apprentice_year == 'O' ? 'selected' : '' }}>Office</option>
                                     <option value="M" {{ $employee->apprentice_year == 'M' ? 'selected' : '' }}>Maintenance</option>
                                     <option value="L" {{ $employee->apprentice_year == 'L' ? 'selected' : '' }}>Labourer</option>
+                                    <option value="MA" {{ $employee->apprentice_year == 'MA' ? 'selected' : '' }}>Apprentice - Maintenance</option>
+                                    <option value="CA" {{ $employee->apprentice_year == 'CA' ? 'selected' : '' }}>Apprentice - Construction</option>                                    
+
                                 </select>
                             </div>
                         </div>
