@@ -29,6 +29,7 @@ class EmployeeController extends Controller
                                 when emp.location = 'C' then 'Construction'
                                 when emp.location = 'M' then 'Maintenance'
                                 when emp.location = 'L' then 'Labourer'
+                                when emp.location = 'O' then 'Office'
                                 end location,
                                 emp.anniversary_dt,
                                 emp.apprentice_year,
