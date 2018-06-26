@@ -34,8 +34,8 @@
                 <option selected="">Role...</option>
                 <option value="P" {{isset($params['type']) && $params['type'] == 'P' ? 'selected' : '' }}>Plumber</option>
                 <option value="A" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Apprentice</option>
-                <option value="A" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Office</option>
-                <option value="L" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Labourer</option>
+                <option value="O" {{isset($params['type']) && $params['type'] == 'O' ? 'selected' : '' }}>Office</option>
+                <option value="L" {{isset($params['type']) && $params['type'] == 'L' ? 'selected' : '' }}>Labourer</option>
                 <option value="all" {{isset($params['type']) && $params['type'] == 'all' ? 'selected' : '' }}>All</option>
             </select>
         </div>
