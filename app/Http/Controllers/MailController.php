@@ -32,6 +32,7 @@ class MailController extends Controller
                                 from employees emp
                                 where
                                 if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) = 1
+                                and emp.location = 'A'
                                 order by emp.name asc
                          ")
                     );
