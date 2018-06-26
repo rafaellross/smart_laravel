@@ -38,7 +38,9 @@
                 <option value="L" {{isset($params['type']) && $params['type'] == 'L' ? 'selected' : '' }}>Labourer</option>
                 <option value="all" {{isset($params['type']) && $params['type'] == 'all' ? 'selected' : '' }}>All</option>
             </select>
+            <a href="{{ URL::to('/employees?params=true') }}" class="btn btn-outline-dark">Clear Filters</a>
         </div>
+
 
 
 
