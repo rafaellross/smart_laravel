@@ -11,7 +11,7 @@
         "doctrine/dbal": "^2.7",
         "elcobvg/laravel-opcache": "^0.3.1",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/guzzle": "^6.3",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",

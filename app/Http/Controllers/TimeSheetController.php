@@ -19,7 +19,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Resources\Json\Resource;
 use GuzzleHttp\Client;
-use App\MYOB\AccountRightV2;
+
 use Config;
 
 class TimeSheetController extends Controller
@@ -111,7 +111,7 @@ class TimeSheetController extends Controller
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
-
+/*
         //Validate rdo, pld and annual leave
         $errors = [];
         foreach ($request->get('employees') as $employee_id => $value) {
@@ -154,6 +154,7 @@ class TimeSheetController extends Controller
             ]);
 
             $employees = json_decode((string) $response->getBody(), true)['Items'];
+
             $rdo_bal = 0;
 
             $pld_bal = 0;
@@ -196,7 +197,7 @@ class TimeSheetController extends Controller
             array_push($errors, "Fix it and try again! ");
             return redirect('/timesheets')->withInput()->with('error', $errors);
         }
-
+*/
 
         foreach ($request->get('employees') as $employee_id => $value) {
 

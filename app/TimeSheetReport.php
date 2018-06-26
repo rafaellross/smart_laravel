@@ -330,6 +330,17 @@ class TimeSheetReport extends Fpdf
 			}
 		}
 
+		if (Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->weekOfYear == Carbon::parse($timeSheet->employee->anniversary_dt)->weekOfYear) {
+					$this->SetFont('Arial','B', $font_regular-1);
+					$this->SetTextColor(255, 255, 255);
+					$this->SetFillColor(255, 0, 0);
+					$this->Rect(168, 180, 105, 20, 'F');
+					$this->Text(173, 185,'The apprenticeship rollover of this employee occurred this week' );
+					$this->Text(173, 190,'Rollover Date: ' .  Carbon::parse($timeSheet->employee->anniversary_dt)->format('d/m/Y'));
+					$this->Text(173, 195,'Current Year Apprenticeship: ' .  $timeSheet->employee->apprentice_year);
+		}
+
+
 
 		$this->SetFont('Arial','B',$font_large);
 		$certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
@@ -346,6 +357,8 @@ class TimeSheetReport extends Fpdf
 					$this->Image($certificate->certificate_img, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
 			}
 		}
+
+
 
 		return $this;
 	}

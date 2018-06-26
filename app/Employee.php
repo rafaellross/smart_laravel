@@ -22,7 +22,7 @@ class Employee extends Model
 
     public function timesheets(){
 
-        return $this->hasMany('App\TimeSheet');        
+        return $this->hasMany('App\TimeSheet');
     }
 
     public function getLastTimesheetAttribute(){
@@ -31,7 +31,6 @@ class Employee extends Model
         } else {
             return null;
         }
-        
-    }
 
+    }
 }

@@ -16,6 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('mail/send', 'MailController@send');
 
 //Middleware used for testing
 Route::group(['middleware' => ['test']], function () {

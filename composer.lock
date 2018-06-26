@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3c86aff34bc56a1c8c2a35b9d6a6f96",
+    "content-hash": "eb0791b13b23278663992f7d3cf61154",
     "packages": [
         {
             "name": "appstract/laravel-opcache",

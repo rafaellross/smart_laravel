@@ -61,33 +61,35 @@
                 <th scope="col">Role</th>
                 <th scope="col">Annual Leave Balance</th>
                 <th scope="col">Apprentice Year</th>
-                <th scope="col">Apprentice Anniversary Date</th>
+                <th scope="col">Apprentice Rollover</th>
                 <th scope="col">Time Sheet</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
     @foreach ($employees as $employee)
-                  <tr style="{{is_null($employee->last_timesheet) ? 'background-color: red; color: white;' : ""}}">
+                    <tr class="{{is_null($employee->last_timesheet) ? 'bg-danger text-white' : ""}}">
                         <th>
                             <input type="checkbox" id="chkRow-{{ $employee->id }}">
                         </th>
                         <td>{{ $employee->id }}</td>
                         <td>{{ $employee->name }}</td>
                         <td>{{is_null($employee->dob) ? '' :  Carbon::parse($employee->dob)->format('d/m/Y') }}</td>
-                        <td>{{$employee->phone}}</td>
-                        <td>{{$employee->rdo_bal}}</td>
-                        <td>{{$employee->pld}}</td>
-                        <td>{{isset($employee->location) ? $employee->location : ''}}</td>
-                        <td>{{$employee->anl}}</td>
-                        <td>{{isset($employee->apprentice_year) ? $employee->apprentice_year : ''}}</td>
-                        <td>{{isset($employee->anniversary_dt) ? Carbon::parse($employee->anniversary_dt)->format('d/m/Y') : ''}}</td>
+                        <td class="text-center">{{$employee->phone}}</td>
+                        <td class="text-center">{{$employee->rdo_bal}}</td>
+                        <td class="text-center">{{$employee->pld}}</td>
+                        <td class="text-center">{{isset($employee->location) ? $employee->location : ''}}</td>
+                        <td class="text-center">{{$employee->anl}}</td>
+                        <td class="text-center">{{isset($employee->apprentice_year) ? $employee->apprentice_year : ''}}</td>
+                        <td data-toggle="tooltip" data-placement="bottom" title="{{$employee->rollover ?  'The apprenticeship rollover of this employee occurred this week' : ''}}" class="text-center {{$employee->rollover ?  'bg-warning text-white' : ''}}">{{isset($employee->anniversary_dt) ? Carbon::parse($employee->anniversary_dt)->format('d/m/Y') : ''}}</td>
 
-                        <td>
+                        <td class="text-center">
                             @if (!is_null($employee->last_timesheet))
                                 <a class="btn btn-success" href="timesheets/action/{{$employee->last_timesheet}}/print" role="button" target="_blank">View</a>
                             @else
-                                <span>No Time Sheet this Week</span>
+                                <small>
+                                  <small class="font-italic">No Time Sheet this Week</small>
+                                </small>
                             @endif
                         </td>
 

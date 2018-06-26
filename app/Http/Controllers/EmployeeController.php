@@ -40,7 +40,7 @@ class EmployeeController extends Controller
                                 CAST(emp.rdo_bal AS DECIMAL(12,2)) as rdo_bal,
                                 CAST(emp.pld AS DECIMAL(12,2)) as pld,
                                 CAST(emp.anl AS DECIMAL(12,2)) as anl,
-
+                                if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) as rollover,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
                                 where
