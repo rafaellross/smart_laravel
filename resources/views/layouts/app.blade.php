@@ -62,9 +62,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/parameters') }}">Parameters</a>
                             </li>
+                            @if (isset(Auth::user()->tester) && Auth::user()->tester)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/employee_entries') }}">Employees Entries</a>
                             </li>
+                            @endif
 
                         @endif
                         @auth
