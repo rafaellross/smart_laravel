@@ -11,17 +11,11 @@ use App\Hour;
 use App\Job;
 use App\TimeSheetReport;
 use App\TimeSheetCertificate;
-use App\TimeSheetMyOb;
 use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Http\Resources\Json\Resource;
-use GuzzleHttp\Client;
-
-use Config;
-
 class TimeSheetController extends Controller
 {
     /**
@@ -87,10 +81,8 @@ class TimeSheetController extends Controller
     public function create($employee)
     {
         $days = WeekDay::all();
-        $ids = explode(",", $employee);
-        array_walk($ids, function(&$x) {$x = "'$x'";});
 
-        $employees = Employee::whereRaw("id in ( " . implode(',', $ids) ." )")->get();
+        $employees = Employee::whereRaw("id in ($employee)")->get();
         return view('timesheet.create', ['days' => $days, 'employees' => $employees]);
     }
 
@@ -106,12 +98,12 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
 
-      $this->myob = Config::get('myob');
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
-/*
+
         //Validate rdo, pld and annual leave
         $errors = [];
         foreach ($request->get('employees') as $employee_id => $value) {
@@ -141,53 +133,16 @@ class TimeSheetController extends Controller
                     }
                 }
             }
-
-            $client = new Client();
-            $response = $client->request('GET', $this->myob['settings']['base_url'] . $this->myob['settings']['UID'] .'/Contact/EmployeePayrollDetails?$filter=Employee/UID eq guid' . "'" . $employee->myob_id . "'", [
-                'headers' => [
-                'Accept' => 'application/json',
-                'Content-type' => 'application/json',
-                'Authorization' => [$this->myob['settings']['auth']],
-                'UID' => $this->myob['settings']['UID'],
-                'x-myobapi-version' => 'v2'
-                ]
-            ]);
-
-            $employees = json_decode((string) $response->getBody(), true)['Items'];
-
-            $rdo_bal = 0;
-
-            $pld_bal = 0;
-
-            $anl_bal = 0;
-
-            foreach ($employees[0]['Entitlements'] as $entitlement) {
-
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['rdo']) {
-                $rdo_bal =  $entitlement["Total"];
-              }
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['pld']) {
-                $pld_bal =  $entitlement["Total"];
-              }
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['anl']) {
-                $anl_bal =  $entitlement["Total"];
-              }
-
+            if ($rdo > 0 && ($rdo) > $employee->rdo_bal) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $employee->rdo_bal);
             }
 
-            if ($rdo > 0 && ($rdo) > $rdo_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $rdo_bal);
+            if ($pld > 0 && ($pld) > $employee->pld) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $employee->pld);
             }
 
-            if ($pld > 0 && ($pld) > $pld_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $pld_bal);
-            }
-
-            if ($anl > 0 && ($anl) > $anl_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $anl_bal);
+            if ($anl > 0 && ($anl) > $employee->anl) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $employee->anl);
             }
 
         }
@@ -197,7 +152,7 @@ class TimeSheetController extends Controller
             array_push($errors, "Fix it and try again! ");
             return redirect('/timesheets')->withInput()->with('error', $errors);
         }
-*/
+
 
         foreach ($request->get('employees') as $employee_id => $value) {
 
@@ -315,100 +270,11 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->myob = Config::get('myob');
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
 
-
         $timeSheet = TimeSheet::find($id);
-
-        //Validate rdo, pld and annual leave
-            $errors = [];
-
-
-            //Validate rdo
-            $rdo = 0;
-            $pld = 0;
-            $anl = 0;
-
-            $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
-            $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;
-            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
-            foreach ($request->get('days') as $key => $day) {
-                foreach ($day as $key => $job) {
-                    if (isset($job["job"])) {
-                        if ($job["job"] == "rdo") {
-                            $rdo += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
-                        }
-                        if ($job["job"] == "pld") {
-                            $pld += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
-                        }
-
-                        if ($job["job"] == "anl") {
-                            $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
-                        }
-                    }
-                }
-            }
-
-            $client = new Client();
-            $response = $client->request('GET', $this->myob['settings']['base_url'] . $this->myob['settings']['UID'] .'/Contact/EmployeePayrollDetails?$filter=Employee/UID eq guid' . "'" . $timeSheet->employee->myob_id . "'", [
-                'headers' => [
-                'Accept' => 'application/json',
-                'Content-type' => 'application/json',
-                'Authorization' => [$this->myob['settings']['auth']],
-                'UID' => $this->myob['settings']['UID'],
-                'x-myobapi-version' => 'v2'
-                ]
-            ]);
-
-            $employees = json_decode((string) $response->getBody(), true)['Items'];
-            $rdo_bal = 0;
-
-            $pld_bal = 0;
-
-            $anl_bal = 0;
-
-            foreach ($employees[0]['Entitlements'] as $entitlement) {
-
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['rdo']) {
-                $rdo_bal =  $entitlement["Total"];
-              }
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['pld']) {
-                $pld_bal =  $entitlement["Total"];
-              }
-
-              if ($entitlement['EntitlementCategory']['UID'] == $this->myob['entitlements']['anl']) {
-                $anl_bal =  $entitlement["Total"];
-              }
-
-            }
-
-            if ($rdo > 0 && ($rdo) > $rdo_bal) {
-                array_push($errors, "Employee: " . $timeSheet->employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $rdo_bal);
-            }
-
-            if ($pld > 0 && ($pld) > $pld_bal) {
-                array_push($errors, "Employee: " . $timeSheet->employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $pld_bal);
-            }
-
-            if ($anl > 0 && ($anl) > $anl_bal) {
-                array_push($errors, "Employee: " . $timeSheet->employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $anl_bal);
-            }
-
-
-        if (count($errors) > 0) {
-            array_push($errors, "");
-            array_push($errors, "");
-            array_push($errors, "Fix it and try again! ");
-            return redirect('/timesheets')->withInput()->with('error', $errors);
-        }
-
-
-
 
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
         $timeSheet->emp_signature   = $request->get('emp_signature');
@@ -555,46 +421,4 @@ class TimeSheetController extends Controller
                 break;
         }
     }
-        public function approve($id){
-          $timesheet      = TimeSheet::find($id);
-          $curl = curl_init();
-          $this->myob = Config::get('myob');
-          $timesheet_myob = new TimeSheetMyOb($timesheet);
-
-
-
-          //return json_encode($timesheet_myob->obj);
-          curl_setopt_array($curl, array(
-            CURLOPT_PORT => "8080",
-            CURLOPT_URL => $this->myob['settings']['base_url'] . $this->myob['settings']['UID'] .'/Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS => json_encode($timesheet_myob->obj),
-
-            CURLOPT_HTTPHEADER => array(
-              "authorization: " . $this->myob['settings']['auth'],
-              "cache-control: no-cache",
-              "content-type: application/json",
-              "x-myobapi-version: v2"
-            ),
-          ));
-
-          $response = curl_exec($curl);
-          $err = curl_error($curl);
-          $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-          echo $httpcode;
-          curl_close($curl);
-
-          if ($err) {
-            echo "cURL Error #:" . $err;
-          } else {
-            var_dump($response);
-          }
-
-        }
-
 }
