@@ -56,7 +56,7 @@
                 <th scope="col">Phone</th>
                 <th scope="col">RDO Balance</th>
                 <th scope="col">PLD Balance</th>
-                <th scope="col">Location</th>
+                <th scope="col">Role</th>
                 <th scope="col">Annual Leave Balance</th>
                 <th scope="col">Apprentice Year</th>
                 <th scope="col">Apprentice Anniversary Date</th>

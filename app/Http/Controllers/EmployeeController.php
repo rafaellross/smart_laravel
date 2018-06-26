@@ -108,8 +108,7 @@ class EmployeeController extends Controller
 
 
         $employee->save();
-        //Employee::create($employee);
-        return redirect('/employees')->with('success', 'Employee has been added');
+        return redirect('/employees?params=true')->with('success', 'Employee has been added');
 
     }
 
@@ -172,7 +171,7 @@ class EmployeeController extends Controller
         }
 
         $employee->save();
-        return redirect('/employees')->with('success', 'Employee has been updated');
+        return redirect('/employees?params=true')->with('success', 'Employee has been updated');
     }
 
     /**
@@ -184,7 +183,7 @@ class EmployeeController extends Controller
     protected function destroy($id){
         $employee = Employee::find($id);
         $employee->delete();
-        return redirect('employees')->with('success','Employee has been  deleted');
+        return redirect('employees?params=true')->with('success','Employee has been  deleted');
     }
 
     public function updateEntitlements(Request $request)
@@ -194,7 +193,7 @@ class EmployeeController extends Controller
         if ($request->hasFile('entitlements_balance')) {
              $contents = file($request->file('entitlements_balance'));
         } else {
-            return redirect('employees')->with('error','The uploaded file is not valid!');
+            return redirect('/employees?params=true')->with('error','The uploaded file is not valid!');
         }
 
         $entitlements = array();
