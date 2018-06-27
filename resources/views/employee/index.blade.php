@@ -8,7 +8,6 @@
     <div class="form-group row">
         <div class="col-12 mb-4">
             <a href="{{ URL::to('/employees/create') }}" class="btn btn-primary">Create New</a>
-            <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
             <button class="btn btn-secondary mobile" id="btnEntitlements" style="">Update Entitlements</button>
 
               <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -16,7 +15,8 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
-                <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">ID Card</a>
+                <a class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</a>
+                <a class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</a>
               </div>
 
             </div>

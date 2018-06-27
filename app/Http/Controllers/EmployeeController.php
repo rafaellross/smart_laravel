@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use DB;
 use Carbon\Carbon;
-use App\CertificateAwareness;
-use App\IdCard;
+
 class EmployeeController extends Controller
 {
     /**
@@ -306,69 +305,47 @@ class EmployeeController extends Controller
         }
         return redirect('employees')->with('success','Entitlements were updated!');
     }
-
+    //This action prints all employee's reports
     public function action($id, $action, $param = null)
     {
 
         $ids = explode(",", $id);
+        $report = null;
 
         switch ($action) {
-            case 'delete':
-                foreach ($ids as $id) {
-                    Employee::find($id)->delete();
-                }
-                return redirect('employees')->with('success','Job(s) has been deleted');
-                break;
-                case 'print_certificate':
-                    if ($param = "awareness") {
-                      $report = new CertificateAwareness();
+            //Print certificate of awareness
+            case 'awareness':
 
-                      $report->AddPage();
+                  $report = new \App\Reports\Employees\CertificateAwareness();
 
-                    } else {
-                      $report = new CertificateAwareness();
-                    }
+                  break;
 
-                    $report->SetCompression(true);
+            case 'id':
 
-                    foreach ($ids as $id) {
-                        $employee = Employee::find($id);
-                        if ($employee) {
-                          if ($report->GetY() > 200) {
-                            $report->AddPage();
-                          }
-                            $report->add($employee);
-                        }
-                    }
-                    return $report->output();
-                    break;
-                    case 'print':
-                        if ($param = "awareness") {
-                          $report = new IdCard();
+                  $report = new \App\Reports\Employees\Card();
 
-                          $report->AddPage();
-
-                        } else {
-                          $report = new IdCard();
-                        }
-
-                        $report->SetCompression(true);
-
-                        foreach ($ids as $id) {
-                            $employee = Employee::find($id);
-                            if ($employee) {
-                              if ($report->GetY() > 200) {
-                                $report->AddPage();
-                              }
-                                $report->add($employee);
-                            }
-                        }
-                        return $report->output();
-                        break;
+                  break;
 
             default:
                 return redirect('employees')->with('error','There was no action selected');
                 break;
         }
+
+        $report->AddPage();
+        $report->SetCompression(true);
+
+        foreach ($ids as $id) {
+            $employee = Employee::find($id);
+            if ($employee) {
+              if ($report->GetY() > 200) {
+                $report->AddPage();
+              }
+                $report->add($employee);
+            }
+        }
+        return $report->output();
+
+
+
     }
 }

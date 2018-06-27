@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Reports\Employees;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
 use LaravelQRCode\Facades\QRCode;
 use QR_Code\Types\QR_Url;
+use App\Employee;
 
-
-class IdCard extends Fpdf
+class Card extends Fpdf
 {
 
 	private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
@@ -26,7 +26,7 @@ class IdCard extends Fpdf
 
     $this->SetFont('Arial','', $this->font["label"]);
     $positions = array('X' => $this->GetX(), 'Y' => $this->GetY());
-    
+
 		$this->Cell($this->width , 1, '', 'LTR', 1, 'C');
     $this->Cell($this->width , 8, $this->title, 'LR', 1, 'C');
     $this->SetFont('Arial','B', $this->font["field"]);

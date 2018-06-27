@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Reports\Employees;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
-
+use App\Employee;
 class CertificateAwareness extends Fpdf
 {
 

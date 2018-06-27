@@ -734,12 +734,9 @@ $(document).ready(function() {
       $("input[type=checkbox]:checked").not('#chkRow').each(function() {
         ids.push(this.id.split("-")[1]);
       });
+
       let urlArray = window.location.href.split("/");
-      if (urlArray[urlArray.length - 1] == "employees") {
-        window.open(window.location.href + "/action/" + ids.join(",") + "/print/" + this.id, '_blank');
-      } else {
-        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print/" + this.id, '_blank'));
-      }
+      window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
     }
   });
 
