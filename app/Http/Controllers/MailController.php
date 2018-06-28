@@ -38,7 +38,7 @@ class MailController extends Controller
                     );
 
         if (count($employees) > 0) {
-          Mail::to("raf@smartplumbingsolutions.com.au")->send(new ApprenticeEmail($employees));
+          Mail::to("ross@smartplumbingsolutions.com.au")->send(new ApprenticeEmail($employees));
         }
 
     }

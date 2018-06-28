@@ -26,7 +26,7 @@ class CertificateAwareness extends Fpdf
     $this->Image('img/water_mark.jpg', $positions['X']+25, $positions['Y']+13, 40);
 		$this->Cell($this->width , 1, '', 'LTR', 1, 'C');
     $this->Cell($this->width , 8, $this->title, 'LR', 1, 'C');
-    $this->SetFont('Arial','B', $this->font["field"]);
+    $this->SetFont('Arial','B', $this->font["field"]+2);
 
     $this->Cell($this->width , 3, $employee->name, 'LR', 1, 'C');
 		$this->SetFont('Arial','', $this->font["field"]);
