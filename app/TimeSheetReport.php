@@ -330,7 +330,7 @@ class TimeSheetReport extends Fpdf
 			}
 		}
 
-		if (!is_null($timeSheet->employee->anniversary_dt) && Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->weekOfYear == Carbon::parse($timeSheet->employee->anniversary_dt)->weekOfYear) {
+		if (!is_null($timeSheet->employee->anniversary_dt) && Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->weekOfYear-1 == Carbon::parse($timeSheet->employee->anniversary_dt)->weekOfYear) {
 					$this->SetFont('Arial','B', $font_regular-1);
 					$this->SetTextColor(255, 255, 255);
 					$this->SetFillColor(255, 0, 0);
