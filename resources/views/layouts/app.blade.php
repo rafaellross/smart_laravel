@@ -18,7 +18,7 @@
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
 
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 
 
     <!-- Fonts -->
