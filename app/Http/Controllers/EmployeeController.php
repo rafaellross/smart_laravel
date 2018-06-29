@@ -92,7 +92,7 @@ class EmployeeController extends Controller
         $employee->anl = $request->get('anl');
         $employee->dob = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
         $employee->anniversary_dt = is_null($request->get('anniversary_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('anniversary_dt'));
-
+        $employee->company = $request->get('company');
         $employee->apprentice_year = $request->get('apprentice_year');
 
         $employee->location = $request->get('location');
@@ -157,7 +157,7 @@ class EmployeeController extends Controller
         $employee->location = $request->get('location');
 
         $employee->inactive = $request->get('inactive');
-
+        $employee->company = $request->get('company');
         $employee->rdo = false;
         $employee->travel = false;
         $employee->site_allow = false;
