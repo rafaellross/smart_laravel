@@ -39,7 +39,7 @@ class EmployeeEntryController extends Controller
                             on emp.id = entry.employee_id
                           inner join users
                             on users.id = entry.user_id
-                          where YEARWEEK(entry.entry_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))
+                          where YEARWEEK(entry.entry_dt)+1 = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))
                           and ".(Auth::user()->administrator ? '1=1' : 'entry.user_id = ' . Auth::user()->id)."
                           and ".(is_null($id) ? '1=1' : 'entry.employee_id = ' . $id ) .
                           " order by emp.name, entry.entry_dt, entry. entry_time asc
@@ -174,7 +174,17 @@ class EmployeeEntryController extends Controller
 
     public function generateTimeSheet($id) {
       $employee_entries = EmployeeEntry::where('employee_id', '=', $id)->get();
+      /*
+      $days = array();
+      foreach ($employee_entries as $entry) {
+          if (!isset($days[Carbon::parse($entry->entry_dt)->dayOfWeekIso])) {
+            $days[Carbon::parse($entry->entry_dt)->dayOfWeekIso] = array();
+          }
+          array_push($days[Carbon::parse($entry->entry_dt)->dayOfWeekIso], $entry);
 
+      }
+      return $days;
+      */
       $timesheet = new TimeSheet();
       $timesheet->emp_signature   = null;
 
@@ -194,11 +204,82 @@ class EmployeeEntryController extends Controller
       $timesheet->status          = 'P';
       $timesheet->save();
 
+
+      //Generate skeleton for timesheet
+      foreach (\App\WeekDay::orderBy('number', 'desc')->get() as $day) {
+        $dayTimeSheet                   = new Day();
+        $dayTimeSheet->week_day         = $day->number;
+
+        $dayTimeSheet->day_dt           = Carbon::parse($timesheet->week_end)->subDays($day->days_to_end);
+
+
+        $dayTimeSheet->total           = "00:00";
+
+        $dayTimeSheet->normal          = "00:00";
+        $dayTimeSheet->total_15        = "00:00";
+        $dayTimeSheet->total_20        = "00:00";
+
+        $dayTimeSheet->total_night           = "00:00";
+        $dayTimeSheet->normal_night          = "00:00";
+        $dayTimeSheet->total_15_night        = "00:00";
+        $dayTimeSheet->total_20_night        = "00:00";
+
+        $dayTimeSheet->time_sheet_id    = $timesheet->id;
+        $dayTimeSheet->save();
+
+        for ($i=1; $i <= 4; $i++) {
+          $dayJob               = new \App\DayJob();
+          $dayJob->day_id       = $dayTimeSheet->id;
+          $dayJob->number       = $i;
+          $dayJob->night_work   = 0;
+
+          $dayJob->save();
+
+        }
+
+      }
+
+      foreach ($employee_entries as $entry) {
+        //return $employee_entries;
+        $dayTimeSheet         = \App\Day::where('day_dt', Carbon::parse($entry->entry_dt))->where('time_sheet_id', $timesheet->id)->first();
+
+
+        $dayJob               = \App\DayJob::where('day_id', $dayTimeSheet->id)->where('number', 1)->first();
+
+        $dayJob->job_id       = $entry->user->job_id;
+
+
+          if ($entry->in_out == 1) {
+
+            $dayJob->start = $entry->entry_time;
+
+          } else {
+
+            $dayJob->end = $entry->entry_time;
+
+          }
+          $dayJob->save();
+
+
+
+
+      }
+
+      return $timesheet->days;
+/*
       foreach ($employee_entries as $entry) {
         $dayOfWeek = Carbon::parse($entry->entry_dt)->dayOfWeekIso + 1;
-        //return $dayOfWeek;
+
         $weekDay                        = \App\WeekDay::where("number", "=", $dayOfWeek)->first();
-        $dayTimeSheet                   = new Day();
+
+
+        if (count($timesheet->days()->where('day_dt', Carbon::parse($entry->entry_dt))->first()) > 0) {
+          $dayTimeSheet = $timesheet->days()->where('day_dt', Carbon::parse($entry->entry_dt))->first();
+        } else {
+          $dayTimeSheet                   = new Day();
+        }
+
+
 
         $dayTimeSheet->week_day         = $weekDay->number;
 
@@ -220,10 +301,10 @@ class EmployeeEntryController extends Controller
         $dayTimeSheet->save();
 
         $dayJob               = new \App\DayJob();
-        $dayJob->job_id       = \App\Job::where("code", '001')->value('id');
+        $dayJob->job_id       = $entry->job_id;
         $dayJob->day_id       = $dayTimeSheet->id;
         $dayJob->number       = $weekDay->number;
-        $dayJob->description  = 'Description';
+        $dayJob->description  = '';
         $dayJob->start        = 7*60;
         $dayJob->end          = 15*60;
         $dayJob->night_work   = false;
@@ -232,7 +313,7 @@ class EmployeeEntryController extends Controller
 
 
 
-      }
+      }*/
 
       return $employee_entries;
 

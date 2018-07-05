@@ -26,6 +26,10 @@ class TimeSheetController extends Controller
     public function index($status = null)
     {
         $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        if (is_null($status)) {
+          $status = 'P';
+        }
 
         $timesheets = DB::select(
                     DB::raw(
@@ -46,11 +50,11 @@ class TimeSheetController extends Controller
                       on emp.id = ts.employee_id
                       where " .
                       (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
-                      ($status == 'all' || is_null($status) ? "1=1" : "ts.status = '" . $status . "'") . " " .
+                      ($status == 'all' ? "1=1" : "ts.status = '" . $status . "'") . " " .
                       " order by emp.name asc"
                     )
                   );
-        
+
         return view('timesheet.index', ['timesheets' => $timesheets]);
     }
 

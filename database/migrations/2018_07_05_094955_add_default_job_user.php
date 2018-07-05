@@ -14,7 +14,8 @@ class AddDefaultJobUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->unsignedInteger('job_id')->nullable();
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
         });
     }
 
@@ -26,7 +27,7 @@ class AddDefaultJobUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            
+
         });
     }
 }

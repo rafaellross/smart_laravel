@@ -38,19 +38,31 @@
                         <div class="form-group row">
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
                             <div class="col-md-6">
-                                <select name="administrator" class="form-control">                                    
+                                <select name="administrator" class="form-control">
                                     <option value="0">Normal</option>
                                     <option value="1">Administrator</option>
-                                </select>                                
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Tester ?') }}</label>
+                            <label for="tester" class="col-md-4 col-form-label text-md-right">{{ __('Tester ?') }}</label>
                             <div class="col-md-6">
-                                <select name="tester" class="form-control">                                    
+                                <select name="tester" class="form-control">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
-                                </select>                                
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="job_id" class="col-md-4 col-form-label text-md-right">{{ __('Default Job') }}</label>
+                            <div class="col-md-6">
+                                <select name="job_id" class="form-control">
+                                  @foreach (App\Job::all() as $job)
+                                    @if (!in_array($job->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
+                                      <option value="{{$job->id}}">{{$job->description}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>
                             </div>
                         </div>
 

@@ -40,22 +40,34 @@
                         <div class="form-group row">
                             <label for="administrator" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
                             <div class="col-md-6">
-                                <select name="administrator" class="form-control">                                    
+                                <select name="administrator" class="form-control">
                                     <option {{!$user->administrator ? "selected" : ""}} value="0">Normal</option>
                                     <option {{$user->administrator ? "selected" : ""}} value="1">Administrator</option>
-                                </select>                                
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Tester ?') }}</label>
                             <div class="col-md-6">
-                                <select name="tester" class="form-control">                                    
+                                <select name="tester" class="form-control">
                                     <option value="0" {{ !$user->tester ? 'selected' : ''}}>No</option>
                                     <option value="1" {{ $user->tester ? 'selected' : ''}}>Yes</option>
-                                </select>                                
+                                </select>
                             </div>
-                        </div>                        
+                        </div>
                         @endif
+                        <div class="form-group row">
+                            <label for="job_id" class="col-md-4 col-form-label text-md-right">{{ __('Default Job') }}</label>
+                            <div class="col-md-6">
+                                <select name="job_id" class="form-control">
+                                  @foreach (App\Job::all() as $job)
+                                    @if (!in_array($job->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
+                                      <option value="{{$job->id}}" {{$user->job_id == $job->id ? 'selected' : ''}}>{{$job->description}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
