@@ -628,6 +628,11 @@ $(document).ready(function() {
       window.location = window.location.href += "&company=" + $(this).val();
   });
 
+  $('#selectStatus').change(function() {
+      console.log(this);
+      window.location = window.location.href += "&status=" + $(this).val();
+  });
+
 
 
   $('#btnSaveStatus').click(function() {

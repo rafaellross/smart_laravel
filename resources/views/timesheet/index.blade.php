@@ -3,33 +3,33 @@
 @section('content')
 
 <div class="container">
-    <h2 style="text-align: center;">Time Sheet ({{$timesheets->count()}})</h2>
+    <h2 style="text-align: center;">Time Sheet ({{count($timesheets)}})</h2>
     <hr>
-    <div class="col-md-12 col-lg-12 col-12">           
-        <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>            
+    <div class="col-md-12 col-lg-12 col-12">
+        <a href="{{ URL::to('/timesheets/select') }}" class="btn btn-primary">Create New</a>
         @if(Auth::user()->administrator)
             <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
         @endif
-        <button class="btn btn-info mobile" id="btnPrint" style="">Print Selected(s)</button>            
+        <button class="btn btn-info mobile" id="btnPrint" style="">Print Selected(s)</button>
         @if(Auth::user()->administrator)
-        <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>            
+        <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
         @endif
         <div style="float: right;" id="statusSelect">
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
                 <option value="all">All</option>
-                <option value="A">Approved</option>        
-                <option value="F">Finalised</option>        
+                <option value="A">Approved</option>
+                <option value="F">Finalised</option>
                 <option value="P">Pending</option>
                 <option value="C">Cancelled</option>
-            </select>            
+            </select>
 
-        </div>    
+        </div>
     </div>
     <table class="table table-hover table-responsive-sm table-striped">
         <thead>
             <tr>
-                <th scope="col" class="mobile"><input type="checkbox" id="chkRow"></th>    
+                <th scope="col" class="mobile"><input type="checkbox" id="chkRow"></th>
                 <th scope="col" class="mobile">#</th>
                 <th scope="col">User</th>
                 <th scope="col" class="mobile">Date</th>
@@ -38,7 +38,7 @@
                 <th scope="col">Hours 1.5</th>
                 <th scope="col">Hours 2.0</th>
                 <th scope="col">Week End</th>
-                <th scope="col">Status</th>      
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -63,9 +63,9 @@
                             <a class="dropdown-item" href="{{ action('TimeSheetController@edit', ['id' => $timesheet->id])}}">Edit</a>
                             @if(Auth::user()->administrator || $timesheet->status == 'P')
                                 <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>
-                            @endif                                                
+                            @endif
                         </div>
-                    </div>        
+                    </div>
                 </td>
             </tr>
             @endforeach
@@ -87,10 +87,10 @@
             <select class="form-control" name="changeStatus">
                 <option value="P">Pending</option>
                 <option value="A">Approved</option>
-                <option value="F">Finalised</option>        
+                <option value="F">Finalised</option>
                 <option value="C">Cancelled</option>
             </select>
-        </div>        
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="btnSaveStatus">Save changes</button>

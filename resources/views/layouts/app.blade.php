@@ -75,7 +75,7 @@
                                 Modules
                             </a>
                             <div class="dropdown-menu dropright" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ URL::to('/timesheets') }}">Time Sheets</a>
+                                <a class="dropdown-item" href="{{ URL::to('/timesheets') }}?filter=1">Time Sheets</a>
                                 @if (isset(Auth::user()->tester) && Auth::user()->tester)
                                 <a class="dropdown-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="padding-left: 24px;">

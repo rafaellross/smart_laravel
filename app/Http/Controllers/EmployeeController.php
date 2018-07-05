@@ -46,11 +46,10 @@ class EmployeeController extends Controller
                                 ".($company == 'all' || is_null($company) ? 'emp.company is not null' : "emp.company = '$company'" )."
                                 and
                                 " . ($company == 'all' ? 'emp.inactive is not null' :  'emp.inactive = 0'). "
-                                and
-                                " . ($type == 'all' || is_null($type) ? '1=1' : " emp.location = '$type'") . "
-                                order by emp.name asc
-                         ")
-                    );
+                                and " . ($type == 'all' || $type == 'missing'  || is_null($type) ? '1=1' : " emp.location = '$type'")
+                                . " and "
+                                . ($type == 'missing' ? '(select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) is null' : " 1=1")
+                                . " order by emp.name asc"));
 
         return view('employee.index', ['employees' => $employees, 'params' => $_GET]);
     }
@@ -326,23 +325,61 @@ class EmployeeController extends Controller
 
                   break;
 
+            case 'list':
+
+                  $report = new \App\Reports\Employees\EmployeesList();
+
+                  break;
+
+
             default:
                 return redirect('employees')->with('error','There was no action selected');
                 break;
         }
 
         $report->AddPage();
-        $report->SetCompression(true);
 
-        foreach ($ids as $id) {
-            $employee = Employee::find($id);
-            if ($employee) {
-              if ($report->GetY() > 200) {
-                $report->AddPage();
-              }
-                $report->add($employee);
+        $report->AliasNbPages();
+        if ($action == 'list') {
+          $employees = DB::select(
+                      DB::raw(
+                          "select emp.id,
+                                  emp.name,
+                                  emp.phone,
+                                  emp.dob,
+                                  case
+                                  when emp.location = 'P' then 'Plumber'
+                                  when emp.location = 'O' then 'Office'
+                                  when emp.location = 'A' then 'Apprentice'
+                                  when emp.location = 'L' then 'Labourer'
+                                  end location,
+                                  emp.anniversary_dt,
+                                  emp.apprentice_year,
+                                  emp.company,
+                                  CAST(emp.rdo_bal AS DECIMAL(12,2)) as rdo_bal,
+                                  CAST(emp.pld AS DECIMAL(12,2)) as pld,
+                                  CAST(emp.anl AS DECIMAL(12,2)) as anl,
+                                  if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) as rollover,
+                                  (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
+                                  from employees emp
+                                  where
+                                  emp.id in ($id)
+                                  order by emp.name asc
+                           ")
+            );
+          $report->add($employees);
+        } else {
+            foreach ($ids as $id) {
+                $employee = Employee::find($id);
+                if ($employee) {
+                  if ($report->GetY() > 200 && $action != 'list') {
+                    $report->AddPage();
+                  }
+                    $report->add($employee);
+                }
             }
         }
+
         return $report->output();
 
 

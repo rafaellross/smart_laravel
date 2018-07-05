@@ -32,11 +32,13 @@
         <div class="form-group row">
             <select class="custom-select mb-4" id="selectLocation">
                 <option selected="">Role...</option>
+                <option value="missing" {{isset($params['type']) && $params['type'] == 'missing' ? 'selected' : '' }}>Missing Time Sheet</option>
                 <option value="P" {{isset($params['type']) && $params['type'] == 'P' ? 'selected' : '' }}>Plumber</option>
                 <option value="A" {{isset($params['type']) && $params['type'] == 'A' ? 'selected' : '' }}>Apprentice</option>
                 <option value="O" {{isset($params['type']) && $params['type'] == 'O' ? 'selected' : '' }}>Office</option>
                 <option value="L" {{isset($params['type']) && $params['type'] == 'L' ? 'selected' : '' }}>Labourer</option>
                 <option value="all" {{isset($params['type']) && $params['type'] == 'all' ? 'selected' : '' }}>All</option>
+
             </select>
             <a href="{{ URL::to('/employees?params=true') }}" class="btn btn-outline-dark">Clear Filters</a>
         </div>

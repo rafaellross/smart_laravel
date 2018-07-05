@@ -25,51 +25,32 @@ class TimeSheetController extends Controller
      */
     public function index($status = null)
     {
-        if (is_null($status)) {
-            if (Auth::user()->administrator) {
-                $timesheets = DB::table('time_sheets')
-                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
-                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
-                              ->orderBy('employees.name')
-                              ->where('status', '=', 'P')
-                              ->get();
+        $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
 
-            } else {
-                $timesheets =   DB::table('time_sheets')
-                                ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                                ->join('users', 'time_sheets.user_id', '=', 'users.id')
-                                ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
-                                ->orderBy('employees.name')
-                                ->where('user_id', '=', Auth::user()->id)
-                                ->where('status', '=', 'P')
-                                ->get();
+        $timesheets = DB::select(
+                    DB::raw(
+                        "select ts.id,
+                      		users.username,
+                              ts.created_at,
+                              emp.name,
+                              ts.total,
+                              ts.total_15,
+                              ts.total_20,
+                              ts.week_end,
+                              ts.status
 
-
-            }
-        } else {
-            if (Auth::user()->administrator) {
-                $timesheets = DB::table('time_sheets')
-                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
-                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
-                              ->orderBy('employees.name')
-                              ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
-                              ->get();
-
-            } else {
-                $timesheets = DB::table('time_sheets')
-                              ->join('employees', 'time_sheets.employee_id', '=', 'employees.id')
-                              ->join('users', 'time_sheets.user_id', '=', 'users.id')
-                              ->select('employees.name', 'time_sheets.id', 'time_sheets.created_at','time_sheets.total', 'time_sheets.total_15', 'time_sheets.total_20', 'time_sheets.week_end', 'time_sheets.status', 'users.username')
-                              ->orderBy('employees.name')
-                              ->where('user_id', '=', Auth::user()->id)
-                              ->whereRaw("time_sheets.status " . ($status == "all" ? "is not null" : "= '$status'"))
-                              ->get();
-            }
-
-        }
-
+                      from time_sheets ts
+                      inner join users
+                      on ts.user_id = users.id
+                      inner join employees emp
+                      on emp.id = ts.employee_id
+                      where " .
+                      (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
+                      ($status == 'all' || is_null($status) ? "1=1" : "ts.status = '" . $status . "'") . " " .
+                      " order by emp.name asc"
+                    )
+                  );
+        
         return view('timesheet.index', ['timesheets' => $timesheets]);
     }
 
