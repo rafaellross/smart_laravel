@@ -14,7 +14,7 @@ class AddCompanyEmployee extends Migration
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->string('company');
+            $table->string('company')->nullable();
         });
     }
 

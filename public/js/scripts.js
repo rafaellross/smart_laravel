@@ -618,7 +618,7 @@ $(document).ready(function () {
       if (urlArray[urlArray.length - 1] == "timesheets") {
         window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
       } else {
-        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/print", '_blank'));
       }
     }
   });
