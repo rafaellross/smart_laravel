@@ -26,7 +26,7 @@ class TimeSheetController extends Controller
     public function index($status = null)
     {
         $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
-        
+
         if (is_null($status)) {
           $status = 'P';
         }
@@ -386,7 +386,7 @@ class TimeSheetController extends Controller
                     $timesheet->status = $status;
                     $timesheet->save();
                 }
-                return redirect('timesheets')->with('success','Time Sheet(s) has been updated');
+                return redirect('timesheets?filter=1')->with('success','Time Sheet(s) has been updated');
                 break;
             case 'print':
 

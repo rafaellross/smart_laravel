@@ -649,7 +649,7 @@ $(document).ready(function() {
       if (urlArray[urlArray.length - 1] == "timesheets") {
         window.location += '/action/' + ids.join(",") + "/update/" + newStatus;
       } else {
-        window.location = window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/update/" + newStatus);
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/update/" + newStatus);
       }
     }
 
