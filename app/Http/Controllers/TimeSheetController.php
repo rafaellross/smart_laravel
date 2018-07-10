@@ -241,6 +241,8 @@ class TimeSheetController extends Controller
      */
     public function edit($id)
     {
+        $generate = filter_input(INPUT_GET, 'generate', FILTER_SANITIZE_SPECIAL_CHARS);
+        //return $generate;
         $timesheet = TimeSheet::find($id);
 
         return view('timesheet.edit', ['timesheet' => $timesheet]);
@@ -339,7 +341,14 @@ class TimeSheetController extends Controller
             }
         }
 
-        return redirect('/timesheets')->with('success', 'Time Sheet has been updated');
+        $generated = filter_input(INPUT_GET, 'generated', FILTER_SANITIZE_SPECIAL_CHARS);
+        if ($generated == 1) {
+
+          return "<script>window.close();</script>";
+        } else {
+            return redirect('/timesheets')->with('success', 'Time Sheet has been updated');
+        }
+
 
 
     }

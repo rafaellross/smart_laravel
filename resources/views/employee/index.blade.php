@@ -10,16 +10,18 @@
             <a href="{{ URL::to('/employees/create') }}" class="btn btn-primary">Create New</a>
             <button class="btn btn-secondary mobile" id="btnEntitlements" style="">Update Entitlements</button>
 
-              <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Print Selected(s)
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
-                <a class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</a>
-                <a class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</a>
-              </div>
 
+            <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Print Selected(s)
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
+              <a class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</a>
+              <a class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</a>
             </div>
+            <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>
+          </div>
+
         </div>
         <div class="form-group row">
           <select class="custom-select" id="selectCompany">

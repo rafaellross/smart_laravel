@@ -1,5 +1,16 @@
 $(document).ready(function() {
 
+  $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null){
+         return null;
+      }
+      else{
+         return decodeURI(results[1]) || 0;
+      }
+  }
+
+
   $('form').not('#timesheet_form').submit(function(event) {
     /* Act on the event */
     $('#modalLoading').modal({backdrop: 'static', keyboard: false});
@@ -745,6 +756,18 @@ $(document).ready(function() {
     }
   });
 
+  $('#btnGenerateTimeSheets').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        window.open("employee_entries/generate/" + this.id.split("-")[1], '_blank');
+      });
+    }
+  });
+
+
+
   //Night Work
   $(".chk_night_work").click(function() {
 
@@ -770,5 +793,18 @@ $(document).ready(function() {
     $('#' + this.id.replace("_night", "")).trigger("click");
 
   });
+
+  //Check if page is being executed via controller
+  if ($.urlParam('generate') == 1) {
+      $(".hour-end").trigger("change");
+      var action = $("#timesheet_form").attr("action") ;
+      $("#timesheet_form").attr("action", action + "?generated=1") ;
+      $('#timesheet_form').submit();
+  }
+
+
+
+
+  console.log($.urlParam('generate'));
 
 });

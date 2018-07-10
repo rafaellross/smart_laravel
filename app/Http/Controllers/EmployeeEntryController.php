@@ -21,8 +21,6 @@ class EmployeeEntryController extends Controller
      */
     public function index($id = null)
     {
-      //return $id;
-
         $employee_entries = DB::select(
                     DB::raw(
                         "select entry.id,
@@ -42,7 +40,7 @@ class EmployeeEntryController extends Controller
                           where YEARWEEK(entry.entry_dt)+1 = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))
                           and ".(Auth::user()->administrator ? '1=1' : 'entry.user_id = ' . Auth::user()->id)."
                           and ".(is_null($id) ? '1=1' : 'entry.employee_id = ' . $id ) .
-                          " order by emp.name, entry.entry_dt, entry. entry_time asc
+                          " order by emp.name, entry.entry_dt, entry.entry_time, entry.in_out asc
                          ")
                     );
 
@@ -62,12 +60,21 @@ class EmployeeEntryController extends Controller
      */
     public function create($employee_id = null)
     {
+
       $last_entry = null;
+
+      //Check if $employee_id is null
       if (is_null($employee_id)) {
+
         $employee = null;
+
       } else {
+
+        //Load employee
         $employee = Employee::find($employee_id);
+
         $last_entry = (EmployeeEntry::where('entry_dt', '=', Carbon::now('Australia/Sydney')->format('Y-m-d'))->where('employee_id', '=', $employee_id)->orderBy('entry_time', 'desc')->first());
+
       }
 
         return view('employee_entries.create', ['employee' => $employee, 'now' => Carbon::now('Australia/Sydney')->diffInRealMinutes(Carbon::now('Australia/Sydney')->format('Y-m-d')), 'last_entry' => $last_entry]);
@@ -83,8 +90,10 @@ class EmployeeEntryController extends Controller
     public function store(Request $request)
     {
       //Validate entries
-        $entry_in = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $request->get('employee_id'))->where('in_out', '=', 1)->first();
+/*        $entry_in = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $request->get('employee_id'))->where('in_out', '=', 1)->first();
+
         $entry_out = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $request->get('employee_id'))->where('in_out', '=', 0)->first();
+
         $errors = [];
 
         if (!is_null($entry_in) && $request->get('in_out')) {
@@ -110,7 +119,7 @@ class EmployeeEntryController extends Controller
           return redirect('/employee_entries')->withInput()->with('error', $errors);
 
         }
-
+*/
         //Check if IN entry is less than OUT
         //return $entries;
 
@@ -146,7 +155,7 @@ class EmployeeEntryController extends Controller
      */
     public function edit(EmployeeEntry $employeeEntry)
     {
-        //
+        return view('employee_entries.edit', ['employeeEntry' => $employeeEntry]);
     }
 
     /**
@@ -156,9 +165,19 @@ class EmployeeEntryController extends Controller
      * @param  \App\EmployeeEntry  $employeeEntry
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EmployeeEntry $employeeEntry)
+    public function update(Request $request, $id)
     {
-        //
+
+        $entry              = EmployeeEntry::find($id);
+        $entry->employee_id = $request->get('employee_id');
+        $entry->in_out      = $request->get('in_out');
+        $entry->notes       = $request->get('notes');
+        $entry->entry_dt    = $request->get('entry_dt');
+        $entry->entry_time  = $request->get('entry_time');
+        $entry->user_id     = Auth::user()->id;
+        $entry->save();
+
+        return redirect('/employee_entries')->with('success', 'Employee entry has been updated');
     }
 
     /**
@@ -173,18 +192,19 @@ class EmployeeEntryController extends Controller
     }
 
     public function generateTimeSheet($id) {
-      $employee_entries = EmployeeEntry::where('employee_id', '=', $id)->get();
-      /*
-      $days = array();
-      foreach ($employee_entries as $entry) {
-          if (!isset($days[Carbon::parse($entry->entry_dt)->dayOfWeekIso])) {
-            $days[Carbon::parse($entry->entry_dt)->dayOfWeekIso] = array();
-          }
-          array_push($days[Carbon::parse($entry->entry_dt)->dayOfWeekIso], $entry);
+      //Load all entries for parameter week end
+
+      // TODO: fix where to get only entries from the current week
+      $employee_entries = EmployeeEntry::where('employee_id', '=', $id)->whereRaw('1=1')->get();
+
+      //check if employee has any entry
+      if ($employee_entries->count() <= 0) {
+
+        //if not, close the tab
+        return "<script>window.close();</script>";
 
       }
-      return $days;
-      */
+
       $timesheet = new TimeSheet();
       $timesheet->emp_signature   = null;
 
@@ -227,15 +247,20 @@ class EmployeeEntryController extends Controller
         $dayTimeSheet->time_sheet_id    = $timesheet->id;
         $dayTimeSheet->save();
 
+        //$total = 0;
+
         for ($i=1; $i <= 4; $i++) {
           $dayJob               = new \App\DayJob();
           $dayJob->day_id       = $dayTimeSheet->id;
           $dayJob->number       = $i;
           $dayJob->night_work   = 0;
 
+
           $dayJob->save();
+          //$total += $dayJob->hours();
 
         }
+        //$dayTimeSheet->total           = \App\Hour::convertToHour($total);
 
       }
 
@@ -244,7 +269,7 @@ class EmployeeEntryController extends Controller
         $dayTimeSheet         = \App\Day::where('day_dt', Carbon::parse($entry->entry_dt))->where('time_sheet_id', $timesheet->id)->first();
 
 
-        $dayJob               = \App\DayJob::where('day_id', $dayTimeSheet->id)->where('number', 1)->first();
+        $dayJob               = \App\DayJob::where('day_id', $dayTimeSheet->id)->where('number', $entry->row())->first();
 
         $dayJob->job_id       = $entry->user->job_id;
 
@@ -258,6 +283,11 @@ class EmployeeEntryController extends Controller
             $dayJob->end = $entry->entry_time;
 
           }
+
+          if ($dayJob->hours() > 0) {
+            $dayJob->job_id       = Auth::user()->job_id;
+          }
+
           $dayJob->save();
 
 
@@ -265,7 +295,7 @@ class EmployeeEntryController extends Controller
 
       }
 
-      return $timesheet->days;
+      //return $timesheet->days;
 /*
       foreach ($employee_entries as $entry) {
         $dayOfWeek = Carbon::parse($entry->entry_dt)->dayOfWeekIso + 1;
@@ -314,8 +344,13 @@ class EmployeeEntryController extends Controller
 
 
       }*/
+      //$client = new \GuzzleHttp\Client;
 
-      return $employee_entries;
+      //$res = $client->getAsync("http://127.0.0.1:8000/timesheets/" . $timesheet->id . "/edit?generate=1");
+
+      //echo '<script>window.open("http://localhost/smart_laravel/public/timesheets/'. $timesheet->id . '/edit?generate=1");</script>';
+      return redirect('/timesheets/' . $timesheet->id . "/edit?generate=1");
+      //return $employee_entries;
 
     }
 }
