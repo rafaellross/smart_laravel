@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-Route::get('/entries/scan', function () {
+Route::get('/employee_entries/scan', function () {
 	return view('employee_entries.scan');
 });
 
