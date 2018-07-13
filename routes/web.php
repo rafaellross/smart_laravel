@@ -95,14 +95,15 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('employee_application', 'EmployeeApplicationController');
 
 	Route::get('/employee_entries/create/{id?}', 'EmployeeEntryController@create');
+	Route::get('/employee_entries/scan', function () {
+		return view('employee_entries.scan');
+	});
+	
 	Route::get('/employee_entries/{id?}', 'EmployeeEntryController@index');
 	Route::get('/employee_entries', 'EmployeeEntryController@index');
 	Route::get('/employee_entries/create', 'EmployeeEntryController@create');
 	Route::get('/employee_entries/generate/{id}', 'EmployeeEntryController@generateTimeSheet');
 	
-	Route::get('/employee_entries/scan', function () {
-		return view('employee_entries.scan');
-	});
 	
 	Route::resource('employee_entries', 'EmployeeEntryController');
 
