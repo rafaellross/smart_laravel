@@ -99,6 +99,11 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/employee_entries', 'EmployeeEntryController@index');
 	Route::get('/employee_entries/create', 'EmployeeEntryController@create');
 	Route::get('/employee_entries/generate/{id}', 'EmployeeEntryController@generateTimeSheet');
+	
+	Route::get('/employee_entries/scan', function () {
+		return view('employee_entries.scan');
+	});
+	
 	Route::resource('employee_entries', 'EmployeeEntryController');
 
 
@@ -108,9 +113,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-Route::get('/employee_entries/scan', function () {
-	return view('employee_entries.scan');
-});
 
 	Route::get('/users/{id}/edit', function ($id) {
 		if (!Auth::user()->administrator && Auth::user()->id != $id) {
