@@ -8,6 +8,7 @@
     <div class="form-group row">
       @if(Auth::user()->administrator)
         <div class="col-md-12 col-lg-12 col-12">
+            <a href="{{ URL::to('/employee_entries/scan') }}" class="btn btn-primary">Scan QR Code</a>
             <a href="{{ URL::to('/employee_entries/create') }}" class="btn btn-primary">Create New</a>
             <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
         </div>

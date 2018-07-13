@@ -32,11 +32,8 @@
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('In / Out') }}</label>
                             <div class="col-md-6">
                               <select class="custom-select" name="in_out">
-                                @if((isset($last_entry->in_out) && $last_entry->in_out))
                                   <option value="0">Out</option>
-                                @else
-                                 <option value="1">In</option>
-                                @endif
+                                  <option value="1">In</option>                                
                                </select>
                              </div>
                         </div>
