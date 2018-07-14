@@ -5,7 +5,7 @@ namespace App\Reports\Employees;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
 use LaravelQRCode\Facades\QRCode;
-use QR_Code\Types\QR_Url;
+use QR_Code\Types\QR_Text;
 use App\Employee;
 
 class Card extends Fpdf
@@ -38,7 +38,7 @@ class Card extends Fpdf
 		$this->Cell($this->width , 5, '', 'LR', 1, 'C');
 
 
-		$url = new QR_Url(url('/employee_entries/create/' . $employee->id));
+		$url = new QR_Text("{\"id\": $employee->id, \"name\": \"$employee->name\" }");
     $url->setOutfile('tmp/qr_' . $employee->id .'.png')->png();
 
 		$this->Image('tmp/qr_' . $employee->id .'.png', $positions['X']+23, $positions['Y']+13, 40);

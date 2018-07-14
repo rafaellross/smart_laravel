@@ -803,8 +803,6 @@ $(document).ready(function() {
   }
 
 
-
-
   console.log($.urlParam('generate'));
 
 });
