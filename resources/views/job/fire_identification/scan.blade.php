@@ -153,7 +153,7 @@
               let fireSeal = JSON.parse(fireSeal);
 
               beepOk.play();
-
+             document.getElementById('project').innerHTML = JSON.stringify(fireSeal);
               if (!findObjectByKey(scannedEmployees, 'project', fireSeal.project)) {
 
                   document.getElementById('project').innerHTML = fireSeal.project;
