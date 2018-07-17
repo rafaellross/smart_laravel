@@ -338,6 +338,7 @@ class TimeSheetReport extends Fpdf
 					$this->Text(173, 185,'The apprenticeship rollover of this employee occurred this week' );
 					$this->Text(173, 190,'Rollover Date: ' .  Carbon::parse($timeSheet->employee->anniversary_dt)->format('d/m/Y'));
 					$this->Text(173, 195,'Current Year Apprenticeship: ' .  $timeSheet->employee->apprentice_year);
+					$this->SetTextColor(0, 0, 0);
 		}
 
 

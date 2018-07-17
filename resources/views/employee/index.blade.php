@@ -103,6 +103,7 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{URL::to('employees/action/'.$employee->id.'/qr_code')}}">Download QR Code</a>
                                     <a class="dropdown-item" href="{{URL::to('/employee_entries/'.$employee->id)}}">View Entries</a>
                                     <a class="dropdown-item" href="{{action('EmployeeController@edit', $employee->id)}}">Edit</a>
                                     <a class="dropdown-item delete" id="{{$employee->id}}" href="#">Delete</a>

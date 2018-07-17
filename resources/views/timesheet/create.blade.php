@@ -76,7 +76,7 @@
                         <h5 style="text-align: center;">Certificate 1</h5>
                         <div class="input-group col-12 mb-3">
                           <div class="custom-file" id="medical_certificates_list">
-                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]"/>
+                            <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[1]" name="medical_certificates[1]" accept="image/*"/>
                             <label class="custom-file-label" for="medical_certificates[1]">Choose files</label>
                           </div>
                         </div>

@@ -21,7 +21,6 @@
                 <th scope="col"><input type="checkbox" id="chkRow"></th>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">In / Out</th>
                 <th scope="col">Notes</th>
                 <th scope="col">Entry Date</th>
                 <th scope="col">Entry Time</th>
@@ -37,7 +36,6 @@
                         </th>
                         <td>{{ $employee_entry->id }}</td>
                         <td>{{ strtoupper($employee_entry->name ) }}</td>
-                        <td>{{ $employee_entry->in_out ? 'In' : 'Out' }}</td>
                         <td>{{ $employee_entry->notes }}</td>
                         <td>{{ Carbon::parse($employee_entry->entry_dt)->format('d/m/Y') }}</td>
                         <td>{{ App\Hour::convertToHour($employee_entry->entry_time) }}</td>

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use DB;
 use Carbon\Carbon;
+use LaravelQRCode\Facades\QRCode;
+use QR_Code\Types\QR_Text;
+
 
 class EmployeeController extends Controller
 {
@@ -330,6 +333,17 @@ class EmployeeController extends Controller
                   $report = new \App\Reports\Employees\EmployeesList();
 
                   break;
+            case 'qr_code':
+                  $employee = Employee::find($id);
+
+                  $url = new QR_Text("{\"id\": $employee->id, \"name\": \"$employee->name\" }");
+
+                  $file_path = 'tmp/qr_code_' . $employee->id . '_'. str_replace(' ', '', strtolower($employee->name)).'.png';
+
+                  $url->setOutfile($file_path)->png();
+
+                  return response()->download($file_path)->deleteFileAfterSend(true);
+
 
 
             default:
@@ -368,7 +382,16 @@ class EmployeeController extends Controller
                            ")
             );
           $report->add($employees);
-        } else {
+        } elseif ($action == 'awareness') {
+          foreach ($ids as $id) {
+              $employee = Employee::find($id);
+              if ($employee) {
+
+                  $report->add($employee);
+              }
+          }
+        }
+        else {
             foreach ($ids as $id) {
                 $employee = Employee::find($id);
                 if ($employee) {

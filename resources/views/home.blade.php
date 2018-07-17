@@ -14,6 +14,7 @@
                         <a href="{{ URL::to('/form_prestart') }}" class="list-group-item list-group-item-action ">Prestart</a>
                         <a href="{{ URL::to('/form_checklist') }}" class="list-group-item list-group-item-action ">Daily Plant Inspection Checklist</a>
                         <a href="{{ URL::to('/form_service_sheet') }}" class="list-group-item list-group-item-action ">Service Sheet</a>
+                        <a href="{{ URL::to('/fire_identification/scan') }}" class="list-group-item list-group-item-action ">Scan Penetration Tag</a>
                     @endif
                 </div>
             </div>

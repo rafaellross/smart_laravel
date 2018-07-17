@@ -66,18 +66,18 @@ class EmployeeEntryController extends Controller
       //Check if $employee_id is null
       if (is_null($employee_id)) {
 
-        $employee = null;
+        $employees = null;
 
       } else {
 
         //Load employee
-        $employee = Employee::find($employee_id);
+        $employees = Employee::whereRaw("id in ($employee_id)")->get();
 
         $last_entry = (EmployeeEntry::where('entry_dt', '=', Carbon::now('Australia/Sydney')->format('Y-m-d'))->where('employee_id', '=', $employee_id)->orderBy('entry_time', 'desc')->first());
 
       }
 
-        return view('employee_entries.create', ['employee' => $employee, 'now' => Carbon::now('Australia/Sydney')->diffInRealMinutes(Carbon::now('Australia/Sydney')->format('Y-m-d')), 'last_entry' => $last_entry]);
+        return view('employee_entries.create', ['employees' => $employees, 'now' => Carbon::now('Australia/Sydney')->diffInRealMinutes(Carbon::now('Australia/Sydney')->format('Y-m-d')), 'last_entry' => $last_entry]);
     }
 
 
@@ -87,54 +87,47 @@ class EmployeeEntryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-      //Validate entries
-/*        $entry_in = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $request->get('employee_id'))->where('in_out', '=', 1)->first();
+     public function store(Request $request)
+     {
 
-        $entry_out = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $request->get('employee_id'))->where('in_out', '=', 0)->first();
+         $errors = [];
 
-        $errors = [];
+         foreach ($request->get('employees') as $employee) {
 
-        if (!is_null($entry_in) && $request->get('in_out')) {
+           //Check if employee has another same type entry on the same sday
 
-          array_push($errors, 'The employee ' . $entry_in->employee->name . "already has one 'IN' entry for this date " . $entry_in->entry);
+           $emp_entry = EmployeeEntry::where('entry_dt', '=', $request->get('entry_dt'))->where('employee_id', '=', $employee['id'])->whereBetween('entry_time', [$request->get('entry_time')-30, $request->get('entry_time')])->first();
+           
+           if (!empty($emp_entry)) {
 
-          array_push($errors, 'Entry Time: ' . Hour::convertToHour($entry_in->entry_time));
+             array_push($errors, 'The employee ' . $emp_entry->employee->name . "  already has entry in the last 30 minutes!");
 
-          array_push($errors, 'Notes: ' . $entry_in->notes);
+           } else {
 
-          array_push($errors, 'Create by: ' . $entry_in->user->username);
+             $entry = new EmployeeEntry();
+             $entry->employee_id = $employee['id'];
+             $entry->in_out      = $request->get('in_out');
+             $entry->notes       = $request->get('notes');
+             $entry->entry_dt    = $request->get('entry_dt');
+             $entry->entry_time  = $request->get('entry_time');
+             $entry->user_id     = Auth::user()->id;
 
-          return redirect('/employee_entries')->withInput()->with('error', $errors);
+             $entry->save();
 
-        }
+           }
+         }
 
-        if (!is_null($entry_out) && !$request->get('in_out')) {
+         if (count($errors) > 0) {
 
-          array_push($errors, 'The employee ' . $entry_in->employee->name . "  already has one 'OUT' entry for this date " . $entry_out->entry);
-          array_push($errors, 'Entry Time: ' . Hour::convertToHour($entry_out->entry_time));
-          array_push($errors, 'Notes: ' . $entry_out->notes);
-          array_push($errors, 'Create by: ' . $entry_out->user->username);
-          return redirect('/employee_entries')->withInput()->with('error', $errors);
+           return redirect('/employee_entries')->with('error', $errors);
 
-        }
-*/
-        //Check if IN entry is less than OUT
-        //return $entries;
+         } else {
 
+           return redirect('/employee_entries')->with('success', 'Employee entry has been added');
 
-        $entry = new EmployeeEntry();
-        $entry->employee_id = $request->get('employee_id');
-        $entry->in_out      = $request->get('in_out');
-        $entry->notes       = $request->get('notes');
-        $entry->entry_dt    = $request->get('entry_dt');
-        $entry->entry_time  = $request->get('entry_time');
-        $entry->user_id     = Auth::user()->id;
-        $entry->save();
+         }
 
-        return redirect('/employee_entries')->with('success', 'Employee entry has been added');
-    }
+     }
 
     /**
      * Display the specified resource.
@@ -191,12 +184,27 @@ class EmployeeEntryController extends Controller
         //
     }
 
+    public function action($id, $action) {
+        
+        switch ($action) {
+          case 'delete':
+            
+            DB::table('employee_entries')->whereRaw("id in ($id)")->delete();
+            return redirect('/employee_entries')->with('success', 'Employees entries has been deleted');
+            break;
+          
+          default:
+            # code...
+            break;
+        }
+    }
+
     public function generateTimeSheet($id) {
       //Load all entries for parameter week end
 
       // TODO: fix where to get only entries from the current week
-      $employee_entries = EmployeeEntry::where('employee_id', '=', $id)->whereRaw('1=1')->get();
-
+      $employee_entries = EmployeeEntry::where('employee_id', '=', $id)->whereRaw('YEARWEEK(entry_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))')->get();
+      
       //check if employee has any entry
       if ($employee_entries->count() <= 0) {
 

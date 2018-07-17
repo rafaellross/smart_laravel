@@ -104,8 +104,27 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/employee_entries/create', 'EmployeeEntryController@create');
 	Route::get('/employee_entries/generate/{id}', 'EmployeeEntryController@generateTimeSheet');
 	
+	Route::get('/employee_entries/action/{id?}/{action?}', 'EmployeeEntryController@action');
 	
 	Route::resource('employee_entries', 'EmployeeEntryController');
+	
+
+	//Fire Identification
+	Route::get('/fire_identification/scan', function () {
+		return view('job.fire_identification.scan');
+	});
+
+	Route::get('/fire_identification/{job}', 'FireIdentificationController@index');
+	Route::get('/fire_identification/{job}/action/{id}/{action}', 'FireIdentificationController@action');
+	Route::get('/fire_identification/create/{job}', 'FireIdentificationController@create');
+	Route::get('/fire_identification/edit/{id}', 'FireIdentificationController@edit');
+	Route::post('/fire_identification/{job}', 'FireIdentificationController@store');
+	Route::post('/fire_identification/{job}', 'FireIdentificationController@multiple');
+	Route::patch('/fire_identification/{fire_seal}', 'FireIdentificationController@update');
+
+	
+
+	//Route::resource('fire_identification', 'FireIdentificationController');
 
 
 

@@ -74,7 +74,7 @@
                             <h5 style="text-align: center;">Certificate {{$certificate->certificate_number}}</h5>
                             <div class="input-group col-12 mb-3">
                               <div class="custom-file" id="medical_certificates_list">
-                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]"/>
+                                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[{{$certificate->certificate_number}}]" name="medical_certificates[{{$certificate->certificate_number}}]" accept="image/*"/>
                                 <label class="custom-file-label" for="medical_certificates[{{$certificate->certificate_number}}]">Choose files</label>
                               </div>
                             </div>

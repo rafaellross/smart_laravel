@@ -743,6 +743,11 @@ $(document).ready(function() {
     $('#modalUpdateEntitlements').modal('show');
   });
 
+  $('#btn_create_mult_fire').click(function() {
+    $('#modalCreateMultipleFire').modal('show');
+  });
+
+
   $('.btnPrintEmployee').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
     if (selecteds > 0) {
@@ -755,6 +760,21 @@ $(document).ready(function() {
       window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
     }
   });
+
+  $('.btnPrintFire').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      let urlArray = window.location.href.split("/");
+      window.open("fire_identification/action/" + ids.join(",") + "/" + this.id, '_blank');
+    }
+  });
+
+
 
   $('#btnGenerateTimeSheets').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

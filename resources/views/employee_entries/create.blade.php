@@ -14,28 +14,14 @@
                         <div class="form-group row">
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Employee') }}</label>
                             <div class="col-md-6">
-                              @if(is_null($employee))
-                              <select class="custom-select" name="employee_id">
-                                  @foreach (App\Employee::all() as $employee)
-                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
-                                  @endforeach
 
-                               </select>
-                              @else
-                              <input type="text" class="form-control-plaintext" name="employee_name" required value="{{$employee->name}}" readonly>
-                              <input type="hidden" name="employee_id" required value="{{$employee->id}}">
+                              @foreach($employees as $employee)
+                                  <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
+                                  <input type="hidden" name="employees[{{$employee->id}}][id]" value="{{$employee->id}}">
 
-                              @endif
+                              @endforeach
+
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('In / Out') }}</label>
-                            <div class="col-md-6">
-                              <select class="custom-select" name="in_out">
-                                  <option value="0">Out</option>
-                                  <option value="1">In</option>                                
-                               </select>
-                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Notes') }}</label>
@@ -55,14 +41,21 @@
                             <div class="col-md-6">
 
                               <select class="custom-select" name="entry_time">
-                              @for ($i = (isset($last_entry->entry_time) ? $last_entry->entry_time : 0 ); $i <= (24*60)-15; $i += 15)
-                                  @if (($i - $now) < 15 && ($i - $now) >= 0)
+
+                              @for ($i = (isset($last_entry->entry_time) && Auth::user()->administrator == 0 ? $last_entry->entry_time : 0 ); $i <= (24*60)-1; $i+=15)
+
+                                  @if (Auth::user()->administrator == 0 && $i == $now)
+
                                     <option value="{{$i}}" selected>{{ date('i:s', $i)}}</option>
+
                                   @elseif(Auth::user()->administrator == 1)
-                                    <option value="{{$i}}" >{{ date('i:s', $i)}}</option>
+
+                                    <option value="{{$i}}" {{$i == $now ? 'selected' : ''}}>{{ date('i:s', $i)}}</option>
+
                                   @endif
 
                               @endfor
+                              
                             </select>
                              </div>
                         </div>
