@@ -171,7 +171,7 @@
 
           beepError.play();
 
-          alert("Code wasn't recognised!");
+          alert(JSON.stringify(content));
 
         }
 
