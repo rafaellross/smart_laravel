@@ -49,7 +49,7 @@
       #camera video {
         width: 100%;
 
-        height: 200px;
+        height: 370px;
       }
 
     </style>
@@ -101,15 +101,15 @@
         <div class="row">
 
           <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-                <button id="`+employee.id+`" class="btn btn-danger btn-lg btn-block" style="" onclick="clear()">Clear</button>
+                <button id="`+employee.id+`" class="btn btn-danger btn-lg btn-block" style="" onclick="_clear()">Clear</button>
           </div>
 
           <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-            <a id="btnCancel" href="./" class="btn btn-secondary btn-lg btn-block">Cancel</a>
+            <a id="btnCancel" href="{{ URL::to('/') }}" class="btn btn-secondary btn-lg btn-block">Cancel</a>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
 
-            <button id="btn-continue" class="btn btn-primary btn-lg btn-block">Continue</button>
+            <button id="btn-continue" class="btn btn-primary btn-lg btn-block" onclick="_continue()">Continue</button>
 
           </div>
         </div>
@@ -119,7 +119,7 @@
 
       let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
-      let scannedEmployees = [];
+      let selected = null;
 
       let beepOk = new Audio('https://www.soundjay.com/button/beep-01a.wav');
 
@@ -150,91 +150,42 @@
       scanner.addListener('scan', function (content) {
        try {
 
-              let fireSeal = JSON.parse(fireSeal);
+              let fireSeal = JSON.parse(content);
 
               beepOk.play();
-                document.getElementById('project').innerHTML = JSON.stringify(content);
-              if (!findObjectByKey(scannedEmployees, 'project', fireSeal.project)) {
+            
+              document.getElementById('project').innerHTML = fireSeal.project;
+              document.getElementById('fire_number').innerHTML = fireSeal.fire_number;
+              
+              document.getElementById('fire_seal_ref').innerHTML = fireSeal.fire_seal_ref;
+              document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
+              document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
+              document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;  
+              selected = fireSeal.id;
 
-                  document.getElementById('project').innerHTML = fireSeal.project;
-                  document.getElementById('fire_seal_ref').innerHTML = fireSeal.fire_seal_ref;
-                  document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
-                  document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
-                  document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;                  
-                  
-
-                  scannedEmployees.push(JSON.parse(fireSeal));                  
-
-              }
 
         } catch (e) {
 
-          beepError.play();
-
-          alert(JSON.stringify(content));
+          beepError.play();          
+          alert("Code wasn't recognised!");             
 
         }
 
       });
 
 
-      function playSound() {
 
-            var sound = document.getElementById("audio");
-
-            sound.play();
-
-      }
-
-      function findObjectByKey(array, key, value) {
-
-          for (var i = 0; i < array.length; i++) {
-
-              if (array[i][key] === value) {
-
-                  return key;
-
-              }
-          }
-
-          return false;
+      function _clear(){
+          document.getElementById('project').innerHTML = "";
+          document.getElementById('fire_number').innerHTML = "";          
+          document.getElementById('fire_seal_ref').innerHTML = "";
+          document.getElementById('fire_resist_level').innerHTML = "";
+          document.getElementById('fire_resist_level').innerHTML = "";
+          document.getElementById('manufacturer').innerHTML = "";
+          selected = null;
 
       }
 
-
-      function employeeRow(employee){
-        return `<div id="emp-2" class="active select-employee card ">
-            <div class="select-employee card-header" role="tab" id="heading-undefined">
-              <div class="row">
-                <div class="col-md-11 col-lg-11">
-                  <h6>`+employee.name+`</h6>
-                </div>
-                <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px; display: block">
-                  <button id="`+employee.id+`" class="btn btn-danger btn-select" style="" onclick="deleteEmployee(`+employee.id+`)">Delete</button>
-                </div>
-                </div>
-            </div>
-          </div>`;
-
-      }
-
-      function deleteEmployee(key){
-
-        var result = confirm("Are you sure you want unselect this employee?");
-
-        if (result == true) {
-
-          scannedEmployees.splice(key, 1);
-
-          renderEmployees(scannedEmployees);
-
-        }
-
-      }
-
-      function debug(){
-        console.log(scannedEmployees);
-      }
 
       Instascan.Camera.getCameras().then(function (cameras) {
 
@@ -264,14 +215,17 @@
 
       });
 
-      $("#btn-continue").click(function() {
+      function _continue() {
 
-        if (scannedEmployees.length > 0) {
+        if (selected === null) {
 
-          window.location = "create/" + scannedEmployees.join(",");
+          alert("Please, scan tag to continue" + selected);
           
+          
+        } else {
+          window.location = "./edit/" + selected;
         }
-      });
+      };
 
 
     </script>

@@ -37,13 +37,15 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
     $this->Cell($this->width , 10, 'Manufacturer of Fire Stopping System:' . $fire_identification->manufacturer, 'LRB', 1, 'L');
 
     $qr_code = new QR_Text(
-        '{
-            "id": "' . $fire_identification->id . '",' .
-            '"project": "' . $fire_identification->description . '", "'.
-            '"fire_number": "'. $fire_identification->fire_number . '", "'.
-            '"fire_seal_ref" :  "'.$fire_identification->fire_seal_ref . '", "'.
-            '"fire_resist_level" :  "'.$fire_identification->fire_resist_level . '", "'.
-            '"manufacturer" :  "'.$fire_identification->manufacturer.'"}');
+        "{
+            \"id\": $fire_identification->id, 
+            \"project\": \"$fire_identification->description\", 
+            \"fire_number\": \"$fire_identification->fire_number\", 
+            \"fire_seal_ref\" :  \"$fire_identification->fire_seal_ref\", 
+            \"fire_resist_level\" :  \"$fire_identification->fire_resist_level\", 
+            \"manufacturer\" :  \"$fire_identification->manufacturer\"
+
+        }");
 
 
     $qr_code->setMargin(0);
