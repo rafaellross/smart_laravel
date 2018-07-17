@@ -150,20 +150,20 @@
       scanner.addListener('scan', function (content) {
        try {
 
-              let fireSeal = JSON.parse(content);
+              let fireSeal = JSON.parse(fireSeal);
 
               beepOk.play();
 
-              if (!findObjectByKey(scannedEmployees, 'id', fireSeal.id)) {
+              if (!findObjectByKey(scannedEmployees, 'project', fireSeal.project)) {
 
-                  document.getElementById('project').innerHTML = content.project;
-                  document.getElementById('fire_seal_ref').innerHTML = content.fire_seal_ref;
-                  document.getElementById('fire_resist_level').innerHTML = content.fire_resist_level;
-                  document.getElementById('fire_resist_level').innerHTML = content.fire_resist_level;
-                  document.getElementById('manufacturer').innerHTML = content.manufacturer;                  
+                  document.getElementById('project').innerHTML = fireSeal.project;
+                  document.getElementById('fire_seal_ref').innerHTML = fireSeal.fire_seal_ref;
+                  document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
+                  document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
+                  document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;                  
                   
 
-                  scannedEmployees.push(JSON.parse(content));                  
+                  scannedEmployees.push(JSON.parse(fireSeal));                  
 
               }
 
