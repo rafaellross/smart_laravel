@@ -29,7 +29,7 @@
                 </div>
 
             </div>
-            <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary mobile" id="btnDelete">Scan Penetration Tag</a>            
+            <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>            
 
         </div>
 
