@@ -168,6 +168,29 @@ class FireIdentificationController extends Controller
                 return $label->output();
 
                 break;
+            case 'report':
+                $report = new \App\PenetrationList ();
+                $job_obj = Job::find($job);
+                $report->job = $job_obj->description;
+                $report->address = $job_obj->address;
+                $report->AddPage('L');
+                
+                $fire_identifications = DB::select(
+                    DB::raw(
+                        "select jobs.description, fire_identifications.* 
+                        from fire_identifications
+                        inner join jobs
+                        on jobs.id = fire_identifications.job_id
+                        where fire_identifications.job_id = $job
+                        order by fire_number
+                         "));
+                foreach ($fire_identifications as $fire_identification) {
+                    $report->add($fire_identification);
+                }
+                return $report->output();
+
+                break;
+
         }
     }
 }

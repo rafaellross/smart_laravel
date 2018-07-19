@@ -1,0 +1,183 @@
+<?php
+
+namespace App;
+
+use Codedge\Fpdf\Fpdf\Fpdf;
+use Carbon\Carbon;
+
+
+class PenetrationList extends Fpdf
+{
+    //
+private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
+
+  private $width = 150;
+  private $height = 53.98;
+
+  private $title = 'SERVICES PENETRATION FIRE SEAL';
+
+  public $job;
+  public $address;
+
+  protected $y = 0;
+  protected $rowHeight = 15;
+
+  
+
+  function Header()
+  {
+      // Select Arial bold 15
+      $this->SetFont('Arial','B',15);
+      // Move to the right
+      $this->SetFillColor(255,154,0);
+      // Framed title
+
+      $widthField   = 150;
+      $widthImage   = 65;
+      $this->Cell(265, 10,'PENETRATION INSPECTION',1,1,'C', true);
+      $this->SetFont('Arial','B',12);
+      $this->Cell(50, 5,'Project Name:',1,0,'C');
+      $this->Cell($widthField, 5, $this->job,1,0,'L');
+
+      $this->Cell($widthImage, 5, '','R',1,'L');
+
+      $this->Cell(50, 5,'Contact:',1,0,'C');
+      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthImage, 5, '','R',1,'L');
+      
+
+      $this->Cell(50, 5,'Phone:',1,0,'C');
+      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthImage, 5, '','R',1,'L');
+
+      $this->Cell(50, 5,'Address:',1,0,'C');
+      $this->Cell($widthField, 5, $this->address,1,0,'L');
+      $this->Cell($widthImage, 5, '','R',1,'L');
+
+      $this->Cell(50, 5,'Class:',1,0,'C');      
+      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthImage, 5, '','R',1,'L');
+
+      $this->Cell(50, 5,'Notes:',1,0,'C');  
+      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthImage, 5, '','R',1,'L');
+
+      $this->Cell(50, 5,'Date:',1,0,'C');  
+      $this->Cell($widthField, 5, Carbon::now()->format('d/m/Y'),1,0,'L');
+      $this->Cell($widthImage, 5, '','BR',1,'L');
+
+      $this->Image('img/logo.jpg', 223, 23, 40);
+
+      //$this->SetXY(60, 10);
+
+      
+      
+
+      // Line break
+      $this->Ln(10);
+
+
+      $this->Cell(15 , 5, 'Peno No', 'LTRB', 0, 'C');      
+      $this->Cell(35 , 5, 'Reference', 'LTRB', 0, 'C');    
+      $this->Cell(35 , 5, 'Drawing', 'LTRB', 0, 'C');    
+      $this->Cell(40 , 5, 'Photo', 'LTRB', 0, 'C');    
+      $this->Cell(35 , 5, 'FRL', 'LTRB', 0, 'C');    
+      $this->Cell(35 , 5, 'Installed By', 'LTRB', 0, 'C');    
+      $this->Cell(35 , 5, 'Installation Date', 'LTRB', 0, 'C');    
+      $this->Cell(35 , 5, 'Manufacturer', 'LTRB', 0, 'C');    
+      $this->Ln();
+  }  
+
+  var $angle=0;
+  function Rotate($angle,$x=-1,$y=-1)
+  {
+    if($x==-1)
+      $x=$this->x;
+    if($y==-1)
+      $y=$this->y;
+    if($this->angle!=0)
+      $this->_out('Q');
+    $this->angle=$angle;
+    if($angle!=0)
+    {
+      $angle*=M_PI/180;
+      $c=cos($angle);
+      $s=sin($angle);
+      $cx=$x*$this->k;
+      $cy=($this->h-$y)*$this->k;
+      $this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm',$c,$s,-$s,$c,$cx,$cy,-$cx,-$cy));
+    }
+  }
+
+  function RotatedImage($file,$x,$y,$w,$h,$angle, $type)
+  {
+      //Image rotated around its upper-left corner
+      $this->Rotate($angle,$x,$y);
+      $this->Image($file,$x,$y,$w,$h,$type);
+      $this->Rotate(0);
+  }
+
+  private function front($fire_identification, $ln = 0) {
+        
+    $this->SetFont('Arial','', 7);  
+    $this->Cell(15 , $this->rowHeight, $fire_identification->fire_number, 'LTRB', 0, 'C');
+    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');    
+    $this->Cell(35 , $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');    
+
+    //Render Photo
+		if (!is_null($fire_identification->fire_photo)) {
+			
+      list($width, $height, $type, $attr) = getimagesize($fire_identification->fire_photo);
+      if($width >= $height) {
+        
+        $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 40,15, str_replace("image/", "", image_type_to_mime_type($type)));
+      } else {
+        $this->RotatedImage($fire_identification->fire_photo, $this->GetX()+35, $this->GetY(), 15, 30, 270, str_replace("image/", "", image_type_to_mime_type($type)));
+      }
+            
+  
+}
+
+    $this->Cell(40 , $this->rowHeight, '', 'LTRB', 0, 'C');    
+
+
+
+
+    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_resist_level, 'LTRB', 0, 'C');    
+    $this->Cell(35 , $this->rowHeight, $fire_identification->install_by, 'LTRB', 0, 'C');    
+    $this->Cell(35 , $this->rowHeight, is_null($fire_identification->install_dt) ? '' : Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LTRB', 0, 'C');    
+    $this->Cell(35 , $this->rowHeight, $fire_identification->manufacturer, 'LTRB', 0, 'C');    
+    
+    $this->Ln();
+
+
+
+/*    
+    $this->Cell($this->width , 10, $this->title, 'LTR', 1, 'C');
+    $this->Cell($this->width , 10, 'DO NOT DISTURB', 'LR', 1, 'C');
+    $this->SetFont('Arial','B', $this->font["label"]);  
+    $this->Cell($this->width , 10, 'This fire seal is compliant with the requirements of: AS4072.1, AS1530.4', 'LR', 1, 'C');
+    
+    $this->SetFont('Arial','B', $this->font["label"]);  
+    $this->Cell($this->width , 10, 'Fire Seal Reference:' . $fire_identification->fire_seal_ref, 'BLR', 1, 'L');
+    $this->Cell($this->width , 10, 'Fire Resistance Level (FRL):' . $fire_identification->fire_resist_level, 'LR', 1, 'L');
+    $this->Cell($this->width , 10, 'Installed By:' . $fire_identification->install_by, 'LR', 1, 'L');
+    $this->Cell($this->width , 10, 'Installation Date:' . Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LR', 1, 'L');
+    $this->Cell($this->width , 10, 'Manufacturer of Fire Stopping System:' . $fire_identification->manufacturer, 'LRB', 1, 'L');
+
+    
+    $this->y = $this->GetY();*/
+
+  }
+
+
+  public function add($fire_identification)
+  {
+    //Render Front
+
+    $this->front($fire_identification);
+    
+
+    
+  }
+}
