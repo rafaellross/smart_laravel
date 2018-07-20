@@ -8,7 +8,7 @@
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">                                          
         <div class="btn-group">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary dropdown-toggle mobile" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Create New
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -24,7 +24,7 @@
                 Print Selected(s)
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPrint">
-                <a class="dropdown-item btnPrintFire" href="#" id="label">Print Labels</a>              
+                <a class="dropdown-item btnPrintFireLabel" href="#" id="label">Print Labels</a>              
                 <a class="dropdown-item btnPrintFire" href="#" id="report">Print Penetration Report</a>
                 </div>
 

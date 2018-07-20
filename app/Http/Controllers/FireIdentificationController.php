@@ -147,7 +147,7 @@ class FireIdentificationController extends Controller
                     return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been deleted');;              
             case 'label':
                 $label = new \App\LabelPenetration ();
-                $label->AddPage();
+                $label->AddPage('L');
                 
                 $fire_identifications = DB::select(
                     DB::raw(
@@ -159,11 +159,12 @@ class FireIdentificationController extends Controller
                         order by fire_number
                          "));
                 foreach ($fire_identifications as $fire_identification) {
-                    if ($label->GetY() > 200) {
-                        $label->AddPage();
-                      }                        
     
                     $label->add($fire_identification);
+                    if ($label->labelNumber == 4) {
+                        //$label->AddPage('L');
+                    }
+
                 }
                 return $label->output();
 
