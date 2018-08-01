@@ -758,19 +758,31 @@ $(document).ready(function() {
 
       let urlArray = window.location.href.split("/");
       window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
-      
+
     }
   });
 
-  
-  $('.btnPrintFire').click(function() {      
+
+  $('.btnPrintFire').click(function() {
       window.open(window.location.href.replace("#", "") +"/action/0/report", '_blank');
-    
+
   });
 
-  $('.btnPrintFireLabel').click(function() {      
-    window.open(window.location.href.replace("#", "") +"/action/0/report", '_blank');
-  
+  $('.btnPrintFireLabel').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      let urlArray = window.location.href.split("/");
+      //window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
+      window.open(window.location.href.replace("#", "") +"/action/" + ids.join(",") +"/label", '_blank');
+
+    }
+
+
   });
 
   $('.btnPrintFireLabel').click(function() {
@@ -783,7 +795,7 @@ $(document).ready(function() {
 
       let urlArray = window.location.href.split("/");
       window.open("fire_identification/action/" + ids.join(",") + "/" + this.id + "/label", '_blank');
-      
+
     }
   });
 
