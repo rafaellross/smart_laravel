@@ -39,10 +39,10 @@ class FireIdentificationController extends Controller
      */
     public function store($job, Request $request)
     {
-        
+
         $fire = new FireIdentification();
         $fire->job_id = $job;
-        $fire->fire_seal_ref            = $request->get('fire_seal_ref');
+        $fire->fire_seal_ref            = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
         $fire->drawing                  = $request->get('drawing');
         $fire->fire_number              =  DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
         $fire->fire_resist_level        = $request->get('fire_resist_level');
@@ -50,34 +50,34 @@ class FireIdentificationController extends Controller
 
         $fire->install_by               = $request->get('install_by');
         $fire->manufacturer             = $request->get('manufacturer');
-        $fire->fire_photo         = $request->get('photo_hidden');    
-        
+        $fire->fire_photo         = $request->get('photo_hidden');
+
         $fire->save();
 
-        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');;        
+        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');;
     }
 
     public function multiple($job, Request $request){
-        for ($i=1; $i <= $request->get('quantity'); $i++) { 
+        for ($i=1; $i <= $request->get('quantity'); $i++) {
             $fire = new FireIdentification();
             $fire->job_id = $job;
-            $fire->fire_number              =  DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
+            $fire->fire_number              = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
             $fire->drawing                  = $request->get('drawing');
-            $fire->fire_seal_ref            = $request->get('fire_seal_ref');
+            $fire->fire_seal_ref            = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
             $fire->fire_resist_level        = $request->get('fire_resist_level');
             $fire->install_dt               = Carbon::createFromFormat('d/m/Y', $request->get('install_dt'));
-    
+
             $fire->install_by               = $request->get('install_by');
             $fire->manufacturer             = $request->get('manufacturer');
-            $fire->fire_photo               = $request->get('photo_hidden');    
-            
+            $fire->fire_photo               = $request->get('photo_hidden');
+
             $fire->save();
-                
+
         }
-                
+
         return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');;
 
-    }    
+    }
 
     /**
      * Display the specified resource.
@@ -112,19 +112,19 @@ class FireIdentificationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $fire = FireIdentification::find($id);        
+
+        $fire = FireIdentification::find($id);
         $fire->fire_seal_ref            = $request->get('fire_seal_ref');
         $fire->fire_resist_level        = $request->get('fire_resist_level');
         $fire->install_dt               = Carbon::createFromFormat('d/m/Y', $request->get('install_dt'));
-
+        $fire->fire_number              = $request->get('fire_number');
         $fire->install_by               = $request->get('install_by');
         $fire->manufacturer             = $request->get('manufacturer');
-        $fire->fire_photo               = $request->get('photo_hidden');    
-        
+        $fire->fire_photo               = $request->get('photo_hidden');
+
         $fire->save();
-        return redirect('/fire_identification/' . $fire->job_id)->with('success', 'Fire Seal has been updated');;        
-        
+        return redirect('/fire_identification/' . $fire->job_id)->with('success', 'Fire Seal has been updated');;
+
     }
 
 
@@ -144,14 +144,14 @@ class FireIdentificationController extends Controller
         switch ($action) {
             case 'delete':
                     DB::table('fire_identifications')->whereRaw("id in ($id)")->delete();
-                    return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been deleted');;              
+                    return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been deleted');;
             case 'label':
                 $label = new \App\LabelPenetration ();
                 $label->AddPage('L');
-                
+
                 $fire_identifications = DB::select(
                     DB::raw(
-                        "select jobs.description, fire_identifications.* 
+                        "select jobs.description, fire_identifications.*
                         from fire_identifications
                         inner join jobs
                         on jobs.id = fire_identifications.job_id
@@ -159,7 +159,7 @@ class FireIdentificationController extends Controller
                         order by fire_number
                          "));
                 foreach ($fire_identifications as $fire_identification) {
-    
+
                     $label->add($fire_identification);
                     if ($label->labelNumber == 4) {
                         //$label->AddPage('L');
@@ -175,10 +175,10 @@ class FireIdentificationController extends Controller
                 $report->job = $job_obj->description;
                 $report->address = $job_obj->address;
                 $report->AddPage('L');
-                
+
                 $fire_identifications = DB::select(
                     DB::raw(
-                        "select jobs.description, fire_identifications.* 
+                        "select jobs.description, fire_identifications.*
                         from fire_identifications
                         inner join jobs
                         on jobs.id = fire_identifications.job_id

@@ -6,16 +6,14 @@
     <h2 style="text-align: center;">SERVICES PENETRATION FIRE SEAL {{strtoupper(App\Job::find($job)->description)}}  ({{count($fire_seals)}})</h2>
     <hr/>
     <div class="form-group row">
-        <div class="col-md-12 col-lg-12 col-12">                                          
+        <div class="col-md-12 col-lg-12 col-12">
         <div class="btn-group">
             <button class="btn btn-primary dropdown-toggle mobile" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Create New
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{ URL::to('/fire_identification/create/' . $job) }}">Create Single</a>
-                
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
                 <button class="dropdown-item" id="btn_create_mult_fire">Create Multiple</buttona>
-            </div>            
+            </div>
 
         </div>
             <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
@@ -24,32 +22,32 @@
                 Print Selected(s)
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPrint">
-                <a class="dropdown-item btnPrintFireLabel" href="#" id="label">Print Labels</a>              
+                <a class="dropdown-item btnPrintFireLabel" href="#" id="label">Print Labels</a>
                 <a class="dropdown-item btnPrintFire" href="#" id="report">Print Penetration Report</a>
                 </div>
 
             </div>
-            <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>            
+            <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>
 
         </div>
 
-    </div> 
+    </div>
     <table class="table table-hover table-responsive-sm table-striped">
         <thead>
             <tr>
-                <th scope="col"><input type="checkbox" id="chkRow"></th>                          
+                <th scope="col"><input type="checkbox" id="chkRow"></th>
                 <th scope="col">#</th>
                 <th scope="col">Drawing</th>
                 <th scope="col">Fire Seal Ref.</th>
-                <th scope="col">Fire Resistance Level (FRL)</th>      
-                <th scope="col">Installed By</th>                
-                <th scope="col">Installed Date</th>                
+                <th scope="col">Fire Resistance Level (FRL)</th>
+                <th scope="col">Installed By</th>
+                <th scope="col">Installed Date</th>
             </tr>
         </thead>
-        <tbody>  
-                  
+        <tbody>
+
     @foreach ($fire_seals as $fire_seal)
-                  <tr>                    
+                  <tr>
                         <th>
                             <input type="checkbox" id="chkRow-{{ $fire_seal->id }}">
                         </th>
@@ -65,12 +63,12 @@
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                    
-                                    <a class="dropdown-item" href="{{action('FireIdentificationController@edit', $fire_seal->id)}}">Edit</a>                    
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{action('FireIdentificationController@edit', $fire_seal->id)}}">Edit</a>
                                     <a class="dropdown-item delete" id="{{$fire_seal->id}}" href="#">Delete</
                                 </div>
-                            </div>        
-                        </td>                    
+                            </div>
+                        </td>
                   </tr>
             @endforeach
         </tbody>
@@ -90,19 +88,7 @@
           </div>
 
           <div class="modal-body">
-                <div class="form-group row">
-                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Fire Seal Reference') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="code" type="text" class="form-control{{ $errors->has('fire_seal_ref') ? ' is-invalid' : '' }}" name="fire_seal_ref" value="{{ old('fire_seal_ref') }}" required autofocus>
-
-                                @if ($errors->has('fire_seal_ref'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('fire_seal_ref') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="drawing" class="col-md-4 col-form-label text-md-right">{{ __('Drawing') }}</label>
 

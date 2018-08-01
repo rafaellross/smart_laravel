@@ -83,22 +83,11 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="fire_number" class="col-md-4 col-form-label text-md-right">{{ __('Penetration Number:') }}</label>
-                            <div class="col-md-6">
-                                <input id="fire_number" readonly type="text" class="form-control{{ $errors->has('fire_number') ? ' is-invalid' : '' }}" name="fire_number" value="{{ $fire_seal->fire_number }}">
-                                @if ($errors->has('fire_number'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('fire_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
 
                         <hr/>
                         <h4 style="text-align: center;">Photo</h4>
-                        <div class="form-group row" role="alert">                            
-                            <div class="alert alert-secondary col-12">                                
+                        <div class="form-group row" role="alert">
+                            <div class="alert alert-secondary col-12">
 
                                 <div class="input-group col-12 mb-3">
                                     <div class="custom-file" id="medical_certificates_list">
@@ -108,7 +97,7 @@
 
                                     <div class="input-group col-12 mt-3">
                                         <img id="medical_certificates[1]_img" src="{{$fire_seal->fire_photo}}" class="img-fluid" style="">
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
                                 <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="photo_hidden" value="{{$fire_seal->fire_photo}}">
