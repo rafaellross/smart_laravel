@@ -55,6 +55,11 @@ Route::get('employees/{name}', function($name) {
 
 });
 
+Route::get('penetration/{id}', function($id) {
+    return \App\FireIdentification::find($id);
+
+});
+
 Route::get('myob/', function() {
 
     $client = new GuzzleHttp\Client();
