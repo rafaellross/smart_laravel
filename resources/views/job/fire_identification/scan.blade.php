@@ -73,17 +73,17 @@
         <div class="card-body">
             <h5 class="card-title">Project</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="project"></h6>
-            
+
             <hr/>
 
             <h5 class="card-title">Penetration Number</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="fire_number"></h6>
-            
+
             <hr/>
 
             <h5 class="card-title">Fire Seal Reference</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="fire_seal_ref"></h6>
-            
+
             <hr/>
 
             <h5 class="card-title">Fire Resistance Level (FRL)</h5>
@@ -117,7 +117,7 @@
 
     <script type="text/javascript">
 
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
 
       let selected = null;
 
@@ -153,21 +153,21 @@
               let fireSeal = JSON.parse(content);
 
               beepOk.play();
-            
+
               document.getElementById('project').innerHTML = fireSeal.project;
               document.getElementById('fire_number').innerHTML = fireSeal.fire_number;
-              
+
               document.getElementById('fire_seal_ref').innerHTML = fireSeal.fire_seal_ref;
               document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
               document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
-              document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;  
+              document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;
               selected = fireSeal.id;
 
 
         } catch (e) {
 
-          beepError.play();          
-          alert("Code wasn't recognised!");             
+          beepError.play();
+          alert("Code wasn't recognised!");
 
         }
 
@@ -177,7 +177,7 @@
 
       function _clear(){
           document.getElementById('project').innerHTML = "";
-          document.getElementById('fire_number').innerHTML = "";          
+          document.getElementById('fire_number').innerHTML = "";
           document.getElementById('fire_seal_ref').innerHTML = "";
           document.getElementById('fire_resist_level').innerHTML = "";
           document.getElementById('fire_resist_level').innerHTML = "";
@@ -220,8 +220,8 @@
         if (selected === null) {
 
           alert("Please, scan tag to continue" + selected);
-          
-          
+
+
         } else {
           window.location = "./edit/" + selected;
         }
