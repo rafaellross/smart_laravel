@@ -17,8 +17,8 @@ class FireIdentificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($job)
-    {
-        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->get()]);
+    {        
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_number')->get()]);
     }
 
     /**

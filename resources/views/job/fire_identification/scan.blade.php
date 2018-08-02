@@ -41,7 +41,7 @@
 
 
     <style type="text/css">
-
+/*
       #camera {
         width: 100vw;
       }
@@ -51,23 +51,26 @@
 
         height: 370px;
       }
-
+*/
     </style>
 
   </head>
 
   <body>
 
-    <h1 class="text-center" style="font-family: "Whitney A", "Whitney B", sans-serif;">SCAN PENETRATION TAG</h1>
+
+
+    <div class="container">
+        <div class="col-12">
+ <h1 class="text-center" style="font-family: "Whitney A", "Whitney B", sans-serif;">SCAN PENETRATION TAG</h1>
 
     <div id="camera">
 
-      <video id="preview"></video>
+      <video class="offset-md-3 col-md-6 bg-light" id="preview"></video>
 
     </div>
     <hr/>
-
-    <div class="container">
+        </div>
 
         <div class="card" style="">
         <div class="card-body">
