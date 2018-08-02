@@ -27,7 +27,7 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
   function Header()
   {
       // Select Arial bold 15
-      $this->SetFont('Arial','B',15);
+      $this->SetFont('Arial','B',14);
       // Move to the right
       $this->SetFillColor(255,154,0);
       // Framed title
@@ -78,13 +78,13 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
 
 
-      $this->Cell(35 , 10, 'Reference', 'LTRB', 0, 'C', 1);
-      $this->Cell(45 , 10, 'Drawing', 'LTRB', 0, 'C', 1);
+      $this->Cell(29 , 10, 'Reference', 'LTRB', 0, 'C', 1);
+      $this->Cell(43 , 10, 'Drawing', 'LTRB', 0, 'C', 1);
       $this->Cell(40 , 10, 'Photo', 'LTRB', 0, 'C', 1);
       $this->Cell(35 , 10, 'FRL', 'LTRB', 0, 'C', 1);
-      $this->Cell(40 , 10, 'Installed By', 'LTRB', 0, 'C', 1);
+      $this->Cell(42 , 10, 'Installed By', 'LTRB', 0, 'C', 1);
       $this->Cell(35 , 10, 'Installation Date', 'LTRB', 0, 'C', 1);
-      $this->Cell(35 , 10, 'Manufacturer', 'LTRB', 0, 'C', 1);
+      $this->Cell(41 , 10, 'Manufacturer', 'LTRB', 0, 'C', 1);
       $this->Ln();
   }
 
@@ -121,8 +121,8 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
     $this->SetFont('Arial','', 10);
 
-    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');
-    $this->Cell(45, $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');
+    $this->Cell(29 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');
+    $this->Cell(43, $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');
 
     //Render Photo
 		if (!is_null($fire_identification->fire_photo)) {
@@ -145,9 +145,9 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
 
     $this->Cell(35 , $this->rowHeight, $fire_identification->fire_resist_level, 'LTRB', 0, 'C');
-    $this->Cell(40 , $this->rowHeight, $fire_identification->install_by, 'LTRB', 0, 'C');
+    $this->Cell(42 , $this->rowHeight, substr($fire_identification->install_by, 0, 24), 'LTRB', 0, 'C');
     $this->Cell(35 , $this->rowHeight, is_null($fire_identification->install_dt) ? '' : Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LTRB', 0, 'C');
-    $this->Cell(35 , $this->rowHeight, $fire_identification->manufacturer, 'LTRB', 0, 'C');
+    $this->Cell(41 , $this->rowHeight, substr($fire_identification->manufacturer, 0, 24), 'LTRB', 0, 'C');
 
     $this->Ln();
 
