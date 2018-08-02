@@ -17,8 +17,8 @@ class FireIdentificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($job)
-    {        
-        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_number')->get()]);
+    {
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_seal_ref')->get()]);
     }
 
     /**
@@ -117,7 +117,7 @@ class FireIdentificationController extends Controller
         $fire->fire_seal_ref            = $request->get('fire_seal_ref');
         $fire->fire_resist_level        = $request->get('fire_resist_level');
         $fire->install_dt               = Carbon::createFromFormat('d/m/Y', $request->get('install_dt'));
-        $fire->fire_number              = $request->get('fire_number');
+        //$fire->fire_number              = $request->get('fire_number');
         $fire->install_by               = $request->get('install_by');
         $fire->manufacturer             = $request->get('manufacturer');
         $fire->fire_photo               = $request->get('photo_hidden');

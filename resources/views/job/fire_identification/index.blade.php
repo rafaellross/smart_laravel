@@ -11,7 +11,7 @@
             <button class="btn btn-primary dropdown-toggle mobile" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Create New
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <button class="dropdown-item" id="btn_create_mult_fire">Create Multiple</buttona>
             </div>
 
@@ -51,7 +51,7 @@
                         <th>
                             <input type="checkbox" id="chkRow-{{ $fire_seal->id }}">
                         </th>
-                        <td>{{ $fire_seal->fire_number }}</td>
+                        <td>{{ $fire_seal->id }}</td>
                         <td>{{ $fire_seal->drawing }}</td>
                         <td>{{ $fire_seal->fire_seal_ref }}</td>
                         <td>{{ $fire_seal->fire_resist_level }}</td>
