@@ -18,7 +18,14 @@ class FireIdentificationController extends Controller
      */
     public function index($job)
     {
-        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_seal_ref')->get()]);
+      $drawing_filter = filter_input(INPUT_GET, 'drawing', FILTER_SANITIZE_SPECIAL_CHARS);
+      $drawings = DB::select(DB::raw("select DISTINCT drawing from fire_identifications where job_id = $job order by drawing"));
+      if (is_null($drawing_filter) || $drawing_filter == "all") {
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_seal_ref')->get(), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+      } else {
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->where('drawing', $drawing_filter)->orderBy('fire_seal_ref')->get(), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+      }
+
     }
 
     /**
@@ -58,7 +65,8 @@ class FireIdentificationController extends Controller
     }
 
     public function multiple($job, Request $request){
-        for ($i=1; $i <= $request->get('quantity'); $i++) {
+      //return $request;
+        for ($i= intval($request->get('start_number')); $i <= intval($request->get('end_number')); $i++) {
             $fire = new FireIdentification();
             $fire->job_id = $job;
             $fire->fire_number              = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;

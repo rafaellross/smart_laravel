@@ -639,6 +639,17 @@ $(document).ready(function() {
       window.location = window.location.href += "&company=" + $(this).val();
   });
 
+  $('#selectDrawing').change(function() {
+    let urlArray = window.location.href.split("/");        
+    if (urlArray[urlArray.length - 1].indexOf("?") !== -1) {
+      window.location = window.location.href += "&drawing=" + $(this).val();
+    } else {
+      window.location = window.location.href += "?drawing=" + $(this).val();
+    }
+
+
+  });
+
   $('#selectStatus').change(function() {
       console.log(this);
       window.location = window.location.href += "&status=" + $(this).val();

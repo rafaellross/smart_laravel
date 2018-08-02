@@ -6,7 +6,7 @@
     <h2 style="text-align: center;">SERVICES PENETRATION FIRE SEAL {{strtoupper(App\Job::find($job)->description)}}  ({{count($fire_seals)}})</h2>
     <hr/>
     <div class="form-group row">
-        <div class="col-md-12 col-lg-12 col-12">
+        <div class="col-md-10 col-lg-10 col-10">
         <div class="btn-group">
             <button class="btn btn-primary dropdown-toggle mobile" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Create New
@@ -25,11 +25,22 @@
                 <a class="dropdown-item btnPrintFireLabel" href="#" id="label">Print Labels</a>
                 <a class="dropdown-item btnPrintFire" href="#" id="report">Print Penetration Report</a>
                 </div>
-
             </div>
             <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>
 
         </div>
+
+        <div class="col-md-2 col-lg-2 col-2">
+          <select class="custom-select" id="selectDrawing">
+            <option selected="">Filter Drawing...</option>
+            <option value="all">All</option>
+            @foreach ($drawings as $drawing)
+              <option>{{$drawing->drawing}}</option>
+            @endforeach
+          </select>
+
+        </div>
+
 
     </div>
     <table class="table table-hover table-responsive-sm table-striped">
@@ -42,6 +53,7 @@
                 <th scope="col">Fire Resistance Level (FRL)</th>
                 <th scope="col">Installed By</th>
                 <th scope="col">Installed Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -65,10 +77,11 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{{action('FireIdentificationController@edit', $fire_seal->id)}}">Edit</a>
-                                    <a class="dropdown-item delete" id="{{$fire_seal->id}}" href="#">Delete</
+                                    <a class="dropdown-item delete" id="{{$fire_seal->id}}" href="#">Delete</a>
                                 </div>
                             </div>
                         </td>
+                        <td></td>
                   </tr>
             @endforeach
         </tbody>
@@ -149,12 +162,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Quantity:') }}</label>
+                            <label for="start_number" class="col-md-4 col-form-label text-md-right">{{ __('Start Number:') }}</label>
                             <div class="col-md-6">
-                                <input id="quantity" type="number" class="form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" name="quantity" value="" required>
-                                @if ($errors->has('quantity'))
+                                <input id="start_number" type="number" class="form-control{{ $errors->has('start_number') ? ' is-invalid' : '' }}" name="start_number" value="{{ $max_id }}" required>
+                                @if ($errors->has('start_number'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('quantity') }}</strong>
+                                        <strong>{{ $errors->first('start_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="end_number" class="col-md-4 col-form-label text-md-right">{{ __('End Number:') }}</label>
+                            <div class="col-md-6">
+                                <input id="end_number" type="number" class="form-control{{ $errors->has('end_number') ? ' is-invalid' : '' }}" name="end_number" value="{{ $max_id }}" required>
+                                @if ($errors->has('end_number'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('end_number') }}</strong>
                                     </span>
                                 @endif
                             </div>
