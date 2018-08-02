@@ -22,7 +22,7 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
   protected $y = 0;
   protected $rowHeight = 15;
 
-  
+
 
   function Header()
   {
@@ -44,7 +44,7 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
       $this->Cell(50, 5,'Contact:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
-      
+
 
       $this->Cell(50, 5,'Phone:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
@@ -54,15 +54,15 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
       $this->Cell($widthField, 5, $this->address,1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
 
-      $this->Cell(50, 5,'Class:',1,0,'C');      
+      $this->Cell(50, 5,'Class:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
 
-      $this->Cell(50, 5,'Notes:',1,0,'C');  
+      $this->Cell(50, 5,'Notes:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
 
-      $this->Cell(50, 5,'Date:',1,0,'C');  
+      $this->Cell(50, 5,'Date:',1,0,'C');
       $this->Cell($widthField, 5, Carbon::now()->format('d/m/Y'),1,0,'L');
       $this->Cell($widthImage, 5, '','BR',1,'L');
 
@@ -70,23 +70,23 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
       //$this->SetXY(60, 10);
 
-      
-      
+
+
 
       // Line break
-      $this->Ln(10);
+      $this->Ln(7);
 
 
-      $this->Cell(15 , 5, 'Peno No', 'LTRB', 0, 'C');      
-      $this->Cell(35 , 5, 'Reference', 'LTRB', 0, 'C');    
-      $this->Cell(35 , 5, 'Drawing', 'LTRB', 0, 'C');    
-      $this->Cell(40 , 5, 'Photo', 'LTRB', 0, 'C');    
-      $this->Cell(35 , 5, 'FRL', 'LTRB', 0, 'C');    
-      $this->Cell(35 , 5, 'Installed By', 'LTRB', 0, 'C');    
-      $this->Cell(35 , 5, 'Installation Date', 'LTRB', 0, 'C');    
-      $this->Cell(35 , 5, 'Manufacturer', 'LTRB', 0, 'C');    
+
+      $this->Cell(35 , 10, 'Reference', 'LTRB', 0, 'C', 1);
+      $this->Cell(45 , 10, 'Drawing', 'LTRB', 0, 'C', 1);
+      $this->Cell(40 , 10, 'Photo', 'LTRB', 0, 'C', 1);
+      $this->Cell(35 , 10, 'FRL', 'LTRB', 0, 'C', 1);
+      $this->Cell(40 , 10, 'Installed By', 'LTRB', 0, 'C', 1);
+      $this->Cell(35 , 10, 'Installation Date', 'LTRB', 0, 'C', 1);
+      $this->Cell(35 , 10, 'Manufacturer', 'LTRB', 0, 'C', 1);
       $this->Ln();
-  }  
+  }
 
   var $angle=0;
   function Rotate($angle,$x=-1,$y=-1)
@@ -118,54 +118,55 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
   }
 
   private function front($fire_identification, $ln = 0) {
-        
-    $this->SetFont('Arial','', 7);  
-    $this->Cell(15 , $this->rowHeight, $fire_identification->fire_number, 'LTRB', 0, 'C');
-    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');    
-    $this->Cell(35 , $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');    
+
+    $this->SetFont('Arial','', 10);
+
+    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');
+    $this->Cell(45, $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');
 
     //Render Photo
 		if (!is_null($fire_identification->fire_photo)) {
-			
+
       list($width, $height, $type, $attr) = getimagesize($fire_identification->fire_photo);
       if($width >= $height) {
-        
-        $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 40,15, str_replace("image/", "", image_type_to_mime_type($type)));
+
+        $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 45,15, str_replace("image/", "", image_type_to_mime_type($type)));
       } else {
-        $this->RotatedImage($fire_identification->fire_photo, $this->GetX()+35, $this->GetY(), 15, 30, 270, str_replace("image/", "", image_type_to_mime_type($type)));
+
+        $this->RotatedImage($fire_identification->fire_photo, $this->GetX()+40, $this->GetY(), 15, 40, 270, str_replace("image/", "", image_type_to_mime_type($type)));
       }
-            
-  
+
+
 }
 
-    $this->Cell(40 , $this->rowHeight, '', 'LTRB', 0, 'C');    
+    $this->Cell(40, $this->rowHeight, '', 'LTRB', 0, 'C');
 
 
 
 
-    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_resist_level, 'LTRB', 0, 'C');    
-    $this->Cell(35 , $this->rowHeight, $fire_identification->install_by, 'LTRB', 0, 'C');    
-    $this->Cell(35 , $this->rowHeight, is_null($fire_identification->install_dt) ? '' : Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LTRB', 0, 'C');    
-    $this->Cell(35 , $this->rowHeight, $fire_identification->manufacturer, 'LTRB', 0, 'C');    
-    
+    $this->Cell(35 , $this->rowHeight, $fire_identification->fire_resist_level, 'LTRB', 0, 'C');
+    $this->Cell(40 , $this->rowHeight, $fire_identification->install_by, 'LTRB', 0, 'C');
+    $this->Cell(35 , $this->rowHeight, is_null($fire_identification->install_dt) ? '' : Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LTRB', 0, 'C');
+    $this->Cell(35 , $this->rowHeight, $fire_identification->manufacturer, 'LTRB', 0, 'C');
+
     $this->Ln();
 
 
 
-/*    
+/*
     $this->Cell($this->width , 10, $this->title, 'LTR', 1, 'C');
     $this->Cell($this->width , 10, 'DO NOT DISTURB', 'LR', 1, 'C');
-    $this->SetFont('Arial','B', $this->font["label"]);  
+    $this->SetFont('Arial','B', $this->font["label"]);
     $this->Cell($this->width , 10, 'This fire seal is compliant with the requirements of: AS4072.1, AS1530.4', 'LR', 1, 'C');
-    
-    $this->SetFont('Arial','B', $this->font["label"]);  
+
+    $this->SetFont('Arial','B', $this->font["label"]);
     $this->Cell($this->width , 10, 'Fire Seal Reference:' . $fire_identification->fire_seal_ref, 'BLR', 1, 'L');
     $this->Cell($this->width , 10, 'Fire Resistance Level (FRL):' . $fire_identification->fire_resist_level, 'LR', 1, 'L');
     $this->Cell($this->width , 10, 'Installed By:' . $fire_identification->install_by, 'LR', 1, 'L');
     $this->Cell($this->width , 10, 'Installation Date:' . Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LR', 1, 'L');
     $this->Cell($this->width , 10, 'Manufacturer of Fire Stopping System:' . $fire_identification->manufacturer, 'LRB', 1, 'L');
 
-    
+
     $this->y = $this->GetY();*/
 
   }
@@ -176,8 +177,8 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
     //Render Front
 
     $this->front($fire_identification);
-    
 
-    
+
+
   }
 }
