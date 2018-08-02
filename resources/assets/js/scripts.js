@@ -784,7 +784,7 @@ $(document).ready(function() {
 
 
   });
-
+/*
   $('.btnPrintFireLabel').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
     if (selecteds > 0) {
@@ -798,7 +798,7 @@ $(document).ready(function() {
 
     }
   });
-
+*/
 
 
   $('#btnGenerateTimeSheets').click(function() {
