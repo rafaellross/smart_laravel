@@ -19,7 +19,11 @@
               <a class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</a>
               <a class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</a>
             </div>
-            <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>
+            @if (isset(Auth::user()->tester) && Auth::user()->tester)
+              <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>
+            @endif
+
+
           </div>
 
         </div>

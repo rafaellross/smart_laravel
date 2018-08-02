@@ -16,14 +16,14 @@
             </div>
 
         </div>
-            <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
+            <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
             <div class="btn-group">
                 <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButtonPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Print Selected(s)
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPrint">
-                <a class="dropdown-item btnPrintFireLabel" href="#" id="label">Print Labels</a>
-                <a class="dropdown-item btnPrintFire" href="#" id="report">Print Penetration Report</a>
+                <button class="dropdown-item btnPrintFireLabel" id="label">Print Labels</button>
+                <a class="dropdown-item" href="{{$job}}/action/0/report" target="_blank">Print Penetration Report</a>
                 </div>
             </div>
             <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>
@@ -77,7 +77,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{{action('FireIdentificationController@edit', $fire_seal->id)}}">Edit</a>
-                                    <a class="dropdown-item delete" id="{{$fire_seal->id}}" href="#">Delete</a>
+                                    <buttton class="dropdown-item delete" id="{{$fire_seal->id}}">Delete</buttton>
                                 </div>
                             </div>
                         </td>

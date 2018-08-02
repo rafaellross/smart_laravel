@@ -614,6 +614,8 @@ $(document).ready(function() {
       if (result == true) {
         $(location).attr('href', url + ids.join(",") + "/delete");
       }
+    } else {
+      alert('Please, selected records you want to delete!');
     }
   });
 
@@ -640,7 +642,7 @@ $(document).ready(function() {
   });
 
   $('#selectDrawing').change(function() {
-    let urlArray = window.location.href.split("/");        
+    let urlArray = window.location.href.split("/");
     if (urlArray[urlArray.length - 1].indexOf("?") !== -1) {
       window.location = window.location.href += "&drawing=" + $(this).val();
     } else {
@@ -774,10 +776,7 @@ $(document).ready(function() {
   });
 
 
-  $('.btnPrintFire').click(function() {
-      window.open(window.location.href.replace("#", "") +"/action/0/report", '_blank');
 
-  });
 
   $('.btnPrintFireLabel').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
@@ -788,8 +787,29 @@ $(document).ready(function() {
       });
 
       let urlArray = window.location.href.split("/");
+      let job_id;
+      if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
+
+        job_id = urlArray[urlArray.length - 1];
+        alert(job_id);
+
+      } else {
+        job_id = urlArray[urlArray.length - 1].split("?")[0];
+
+      }
+      urlArray.splice(urlArray.length - 1, 1);
+
+      window.open(urlArray.join("/") + "/" + job_id + "/action/" + ids.join(",") + "/label", '_blank')
+/*
+      let urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1].indexOf("?") !== -1) {
+        window.location = window.location.href += "&drawing=" + $(this).val();
+      } else {
+        window.location = window.location.href += "?drawing=" + $(this).val();
+      }
+  */
       //window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
-      window.open(window.location.href.replace("#", "") +"/action/" + ids.join(",") +"/label", '_blank');
+
 
     }
 
