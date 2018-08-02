@@ -165,7 +165,7 @@
               document.getElementById('fire_resist_level').innerHTML = fireSeal.fire_resist_level;
               document.getElementById('manufacturer').innerHTML = fireSeal.manufacturer;
               selected = fireSeal.id;
-              alert("QR Code loaded!");
+              alert("Loaded penetration No" + fireSeal.fire_number);
 
 
         } catch (e) {
