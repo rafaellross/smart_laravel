@@ -17,11 +17,9 @@
         <div style="float: right;" id="statusSelect">
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
-                <option value="all">All</option>
-                <option value="A">Approved</option>
-                <option value="F">Finalised</option>
-                <option value="P">Pending</option>
-                <option value="C">Cancelled</option>
+                @foreach ($filter['status'] as $status)
+                    <option value="{{ $status['code'] }}">{{ $status['description'] }}</option>
+                @endforeach
             </select>
 
         </div>

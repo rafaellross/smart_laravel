@@ -800,17 +800,6 @@ $(document).ready(function() {
       urlArray.splice(urlArray.length - 1, 1);
 
       window.open(urlArray.join("/") + "/" + job_id + "/action/" + ids.join(",") + "/label", '_blank')
-/*
-      let urlArray = window.location.href.split("/");
-      if (urlArray[urlArray.length - 1].indexOf("?") !== -1) {
-        window.location = window.location.href += "&drawing=" + $(this).val();
-      } else {
-        window.location = window.location.href += "?drawing=" + $(this).val();
-      }
-  */
-      //window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
-
-
     }
 
 

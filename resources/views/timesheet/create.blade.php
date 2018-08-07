@@ -39,6 +39,7 @@
                         <input type="hidden" name="employees[{{$employee->id}}][pld_bal]" value="{{$employee->pld}}" />
                         <input type="hidden" name="employees[{{$employee->id}}][rdo_bal]" value="{{$employee->rdo_bal}}" />
                         <input type="hidden" name="employees[{{$employee->id}}][anl_bal]" value="{{$employee->anl}}" />
+                        <input type="hidden" name="employees[{{$employee->id}}][sick_bal]" value="{{$employee->sick_bal}}" />
 
                     @endforeach
                 </div>

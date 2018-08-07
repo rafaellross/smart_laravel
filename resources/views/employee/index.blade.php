@@ -66,8 +66,10 @@
                 <th scope="col">Phone</th>
                 <th scope="col">RDO Balance</th>
                 <th scope="col">PLD Balance</th>
-                <th scope="col">Role</th>
+                <th scope="col">Sick Leave</th>
                 <th scope="col">Annual Leave Balance</th>
+
+                <th scope="col">Role</th>
                 <th scope="col">Apprentice Year</th>
                 <th scope="col">Apprentice Rollover</th>
                 <th scope="col">Time Sheet</th>
@@ -86,8 +88,10 @@
                         <td class="text-center">{{$employee->phone}}</td>
                         <td class="text-center">{{$employee->rdo_bal}}</td>
                         <td class="text-center">{{$employee->pld}}</td>
-                        <td class="text-center">{{isset($employee->location) ? $employee->location : ''}}</td>
+                        <td class="text-center">{{$employee->sick_bal}}</td>
                         <td class="text-center">{{$employee->anl}}</td>
+
+                        <td class="text-center">{{isset($employee->location) ? $employee->location : ''}}</td>
                         <td class="text-center">{{isset($employee->apprentice_year) ? $employee->apprentice_year : ''}}</td>
                         <td data-toggle="tooltip" data-placement="bottom" title="{{$employee->rollover ?  'The apprenticeship rollover of this employee occurred this week' : ''}}" class="text-center {{$employee->rollover ?  'bg-warning text-white' : ''}}">{{isset($employee->anniversary_dt) ? Carbon::parse($employee->anniversary_dt)->format('d/m/Y') : ''}}</td>
 

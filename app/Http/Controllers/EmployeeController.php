@@ -42,6 +42,7 @@ class EmployeeController extends Controller
                                 CAST(emp.rdo_bal AS DECIMAL(12,2)) as rdo_bal,
                                 CAST(emp.pld AS DECIMAL(12,2)) as pld,
                                 CAST(emp.anl AS DECIMAL(12,2)) as anl,
+                                CAST(emp.sick_bal AS DECIMAL(12,2)) as sick_bal,
                                 if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) as rollover,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
@@ -286,6 +287,40 @@ class EmployeeController extends Controller
                 }
             }
         }
+
+
+        //Getting Sick Leave
+        $isSick = false;
+        foreach ($contents as $key => $line) {
+
+            if (strtolower(substr($line, 0, 4)) == 'sick') {
+                $isSick = true;
+            }
+
+            if ($isSick && (substr($line, 0, 1) != '"' && strtolower(substr($line, 0, 4)) != 'sick')) {
+                $isSick = false;
+            }
+
+            if ($isSick && substr($line, 0, 1) == '"') {
+                $line = str_replace('"', '', str_replace('",', ';', $line));
+                $entitlement = explode(";", $line);
+                $value = rtrim(ltrim($entitlement[1]));
+                $name = explode(",", $entitlement[0]);
+                $lastName = rtrim(ltrim(strtolower($name[0])));
+                $firstName = isset($name[1]) ? rtrim(ltrim(strtolower($name[1]))) : '';
+
+                if (isset($entitlements['sick_bal'])) {
+                    array_push($entitlements['sick_bal'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));
+                } else {
+                    $entitlements['sick_bal'] = [];
+                    array_push($entitlements['sick_bal'], array("firstName" => $firstName, "lastName" => $lastName, "value" => $value));
+                }
+            }
+        }
+
+
+
+
         $result = [];
 
         foreach ($entitlements as $entitlement => $employees) {

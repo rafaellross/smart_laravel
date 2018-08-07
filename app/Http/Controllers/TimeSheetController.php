@@ -31,6 +31,20 @@ class TimeSheetController extends Controller
           $status = 'P';
         }
 
+        //Filters
+
+        $filter = array();
+
+        $filter["status"] = [
+              ["code" => "all", "description" => "All"],
+              ["code" => "A", "description" => "Approved"],
+              ["code" => "F", "description" => "Finalised"],
+              ["code" => "P", "description" => "Pending"],
+              ["code" => "C", "description" => "Cancelled"],
+              ["code" => "T", "description" => "Mais Um"]
+        ];
+
+
         $timesheets = DB::select(
                     DB::raw(
                         "select ts.id,
@@ -55,7 +69,7 @@ class TimeSheetController extends Controller
                     )
                   );
 
-        return view('timesheet.index', ['timesheets' => $timesheets]);
+        return view('timesheet.index', ['timesheets' => $timesheets, 'filter' => $filter]);
     }
 
     /**
@@ -98,10 +112,12 @@ class TimeSheetController extends Controller
             $rdo = 0;
             $pld = 0;
             $anl = 0;
+            $sick = 0;
 
             $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
             $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;
             $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
+            $sick += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
             foreach ($request->get('days') as $key => $day) {
                 foreach ($day as $key => $job) {
                     if (isset($job["job"])) {
@@ -115,6 +131,10 @@ class TimeSheetController extends Controller
                         if ($job["job"] == "anl") {
                             $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
+                        if ($job["job"] == "sick") {
+                            $sick += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
+                        }
+
                     }
                 }
             }
@@ -129,6 +149,11 @@ class TimeSheetController extends Controller
             if ($anl > 0 && ($anl) > $employee->anl) {
                 array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $employee->anl);
             }
+
+            if ($sick > 0 && ($sick) > $employee->sick_bal) {
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Sick Leave to request " . round($sick, 2) . " hours! Balance: " . $employee->sick_bal);
+            }
+
 
         }
         if (count($errors) > 0) {
