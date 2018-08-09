@@ -263,4 +263,33 @@ if($('#chk_policy').is(':checked')) {
     }
   });
 
+  $(document).on('click', '#chk_no_super', function(event) {
+    if(this.checked) {
+        $('input[name=superannuation]').prop('disabled', true).prop('required', false);
+    } else {
+        $('input[name=superannuation]').prop('disabled', false).prop('required', true);
+    }
+  });
+
+  $(document).on('click', '#chk_no_redudancy', function(event) {
+    if(this.checked) {
+        $('input[name=redundancy]').prop('disabled', true).prop('required', false);
+
+    } else {
+        $('input[name=redundancy]').prop('disabled', false).prop('required', true);
+
+    }
+  });
+
+  $(document).on('click', '#chk_no_long_service', function(event) {
+    if(this.checked) {
+        $('input[name=long_service_number]').prop('disabled', true).prop('required', false);
+
+    } else {
+        $('input[name=long_service_number]').prop('disabled', false).prop('required', true);
+
+    }
+  });
+
+
 });

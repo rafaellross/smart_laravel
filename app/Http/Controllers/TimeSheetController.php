@@ -40,8 +40,8 @@ class TimeSheetController extends Controller
               ["code" => "A", "description" => "Approved"],
               ["code" => "F", "description" => "Finalised"],
               ["code" => "P", "description" => "Pending"],
-              ["code" => "C", "description" => "Cancelled"],
-              ["code" => "T", "description" => "Mais Um"]
+              ["code" => "C", "description" => "Cancelled"]
+
         ];
 
 

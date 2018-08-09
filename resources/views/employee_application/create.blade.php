@@ -52,7 +52,7 @@
                                             <label>
                                                 <strong>Date of Birth:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="dob" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="dob" value="" required>
                                         </div>
                                         <div class="col-md-6 col-12 mb-6">
                                             <label>
@@ -81,7 +81,7 @@
                                             <label>
                                                 <strong>Street Address:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="street_address" value="" required>
+                                            <input type="text" class="form-control form-control-lg" name="street_address" value="">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -89,7 +89,7 @@
                                             <label>
                                                 <strong>Suburb:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="suburb" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="suburb" value="">
                                         </div>
                                         <div class="col-md-2 col-12 mb-3">
                                             <label>
@@ -255,7 +255,13 @@
                                             <label>
                                                 <strong>Superannuation Details:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="superannuation" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="superannuation" value="" required>
+                                            <div class="custom-control custom-checkbox mt-2">
+                                              <input type="checkbox" class="custom-control-input" id="chk_no_super" value="accept">
+                                              <label class="custom-control-label" for="chk_no_super">
+                                                I don't have any superannuation details!
+                                              </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -263,7 +269,14 @@
                                             <label>
                                                 <strong>Redundancy Details:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="redundancy" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="redundancy" value="" required>
+                                            <div class="custom-control custom-checkbox input-group-lg mt-2">
+                                              <input type="checkbox" class="custom-control-input" id="chk_no_redudancy" value="accept">
+                                              <label class="custom-control-label" for="chk_no_redudancy">
+                                                I don't have any redudancy details!
+                                              </label>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -271,7 +284,14 @@
                                             <label>
                                                 <strong>Long Service Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="long_service_number" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="long_service_number" value="" required>
+                                            <div class="custom-control custom-checkbox input-group-lg mt-2">
+                                              <input type="checkbox" class="custom-control-input" id="chk_no_long_service" value="accept">
+                                              <label class="custom-control-label" for="chk_no_long_service">
+                                                I don't have any long service details!
+                                              </label>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="form-row">

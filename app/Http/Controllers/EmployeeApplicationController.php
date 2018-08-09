@@ -222,6 +222,7 @@ public function action($id, $action, $status = null)
                     if ($employee_application) {
                         $report->add($employee_application);
                     }
+                    $report->add_policy($employee_application);
                 }
                 return $report->output();
                 break;
