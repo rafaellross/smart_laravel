@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">{{ __('Edit Parameters') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ isset($parameter->week_end_timesheet) ? route('parameters.update', $parameter->id) : route('parameters.store') }}">

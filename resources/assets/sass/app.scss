@@ -14,17 +14,18 @@
 }
 
 .card:not(.select-employee) {
-	border: 3px #6c757d solid;
+	//border: 3px #6c757d solid;
+  
 }
 
 .card-header:not(.select-employee) {
   background-color: #6c757d;
   color: #fff;
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 .card-header:first-child {
-	border-radius: 0;	
+	border-radius: 0;
 }
 
 .alert h4 {
@@ -34,7 +35,7 @@
 }
 
 label {
- font-weight: bold; 
+ font-weight: bold;
 }
 
 
@@ -42,7 +43,7 @@ label {
     .mobile {
         display: none;
     }
-    
+
     .btn, #statusSelect {
         width: 100%;
         padding: 10px;
@@ -50,16 +51,16 @@ label {
     }
     #flash-message {
       position: fixed;
-      bottom: -10px;      
+      bottom: -10px;
       z-index: 10;
-      width: 90%;      
+      width: 90%;
       left: 5%;
-    }    
-}        
+    }
+}
 
 #flash-message {
   position: fixed;
-  bottom: 20px;  
+  bottom: 20px;
   z-index: 10;
 }
 
@@ -69,11 +70,11 @@ label {
     margin: 0 auto;
     top: calc(50% - 24px);
   }
-  
+
 #modalLoading .modal-dialog .modal-content{
   background-color: transparent;
   border: none;
-}        
+}
 
 .div-signature {
   border: 0.5px black solid;
@@ -94,7 +95,7 @@ label {
     padding: 0.5rem 1rem;
     font-size: 1.125rem;
     line-height: 1.5;
-    border-radius: 0.3rem;  
+    border-radius: 0.3rem;
 }
 
 /*
@@ -103,11 +104,11 @@ width: 100%;
 display: inline-table;
 height:60px;
 table-layout: fixed;
-  
+
 }
 
 table{
- height:300px; 
+ height:300px;
  display: -moz-groupbox;
 }
 tbody{

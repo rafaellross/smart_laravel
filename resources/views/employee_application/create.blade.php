@@ -26,7 +26,7 @@
                 <form action="{{ route('employee_application.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <!-- Personal Details -->
-                        <div class="card" style="padding: 0;"  id="personalDetails">
+                        <div class="card shadow" style=""  id="personalDetails">
                             <h5 class="card-header">Personal Details</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -71,7 +71,7 @@
                         <!-- End Personal Details -->
                         <br>
                         <!-- Address Details -->
-                        <div class="card" id="addressDetails">
+                        <div class="card shadow" id="addressDetails">
                             <h5 class="card-header">Address Details</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -119,7 +119,7 @@
                         <!-- End Address Details -->
                         <br>
                         <!-- Contact Details -->
-                        <div class="card" id="contactDetails">
+                        <div class="card shadow" id="contactDetails">
                             <h5 class="card-header">Contact Details</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -150,8 +150,6 @@
                                         </div>
 
                                     </div>
-
-
                                     <!-- End Card -->
                                 </div>
                             </div>
@@ -159,7 +157,7 @@
                         <!-- End Contact Details -->
                         <br>
                         <!-- Emergency Contact -->
-                        <div class="card" id="emergencyDetails">
+                        <div class="card shadow" id="emergencyDetails">
                             <h5 class="card-header">Emergency Details</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -197,7 +195,7 @@
 
 
                         <br>
-                        <div class="card" id="employmentDetails">
+                        <div class="card shadow" id="employmentDetails">
                             <h5 class="card-header">Employment Details</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -210,26 +208,7 @@
                                             <input type="text" class="form-control form-control-lg" name="tax_file_number" value="" >
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4 col-sm-12 mb-3">
-                                            <label>
-                                                <strong>Date Employment Commenced:</strong>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" >
-                                        </div>
-                                        <div class="col-md-8 col-sm-12 mb-3">
-                                            <label>
-                                                <strong>Employment Type:</strong>
-                                            </label>
-                                            <select name="paid_basis" class="form-control form-control-lg">
-                                                <option value="F">Full-time</option>
-                                                <option value="P">Part-time</option>
-                                                <option value="C">Casual</option>
-                                                <option value="L">Labour hire</option>
-                                                <option value="S">Superannuation or annuity income stream</option>
-                                            </select>
-                                        </div>
-                                    </div>
+
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -319,10 +298,89 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <div class="card shadow">
+                            <h5 class="card-header">Tax Declaration</h5>
 
+                            <div class="card-body">
+                                <!-- Start Card -->
+                                <div class="form-row">
+                                    <div class="col-md-4 col-4 mb-3">
+                                        <label>
+                                            <strong>Date Employment Commenced:</strong>
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" required>
+                                    </div>
+                                    <div class="col-md-4 col-4 mb-3">
+                                        <label>
+                                            <strong>Employment Type:</strong>
+                                        </label>
+                                        <select name="paid_basis" class="form-control form-control-lg">
+                                            <option value="">Select employment type</option>
+                                            <option value="F">Full-time</option>
+                                            <option value="P">Part-time</option>
+                                            <option value="C">Casual</option>
+                                            <option value="L">Labour hire</option>
+                                            <option value="S">Superannuation or annuity income stream</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-4 mb-3">
+                                        <label>
+                                            <strong>Are you:</strong><span></span>
+                                        </label>
+                                        <select name="tax_status" class="form-control form-control-lg">
+                                            <option value="">Select Tax Status</option>
+                                            <option value="R">An Australian resident for tax purposes</option>
+                                            <option value="F">A foreign resident for tax purposes</option>
+                                            <option value="H">A working holiday maker</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 col-12 mb-3">
+                                        <label>
+                                            <strong>Do you want to claim the tax-free threshold from Smart Plumbing Solutions?</strong>
+                                        </label>
+                                        <br>
+                                        <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
+                                        <select name="claim_threshold" class="form-control form-control-lg">
+                                            <option value="">Select an option</option>
+                                            <option value="1">YES</option>
+                                            <option value="0">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 col-12 mb-3">
+                                        <label>
+                                            <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
+                                        </label>
+                                        <br>
+                                        <select name="educational_loan" class="form-control form-control-lg">
+                                            <option value="">Select an option</option>
+                                            <option value="1">YES</option>
+                                            <option value="0">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 col-12 mb-3">
+                                        <label>
+                                            <strong>Do you have a Financial Supplement debt?</strong>
+                                        </label>
+                                        <br>
+                                        <select name="financial_supplement" class="form-control form-control-lg">
+                                            <option value="">Select an option</option>
+                                            <option value="1">YES</option>
+                                            <option value="0">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br>
 
-                        <div class="card" style="padding: 0;" id="licenses-list">
+                        <div class="card shadow" style="padding: 0;" id="licenses-list">
                             <h5 class="card-header">Current Licenses</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -453,7 +511,7 @@
                         </div>
                         <br>
                         <!-- Additional Licenses Card-->
-                        <div class="card" id="additionalLicenses">
+                        <div class="card shadow" id="additionalLicenses">
                             <h5 class="card-header">Additional Licenses</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -481,7 +539,7 @@
                         <!-- End Additional Licenses Card-->
                         <br>
                         <!-- Signature-->
-                        <div class="card" id="additionalLicenses">
+                        <div class="card shadow" id="additionalLicenses">
                             <h5 class="card-header">Signature</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
@@ -516,39 +574,12 @@
                         </div>
                         <!-- End Signature-->
 
-                        <br>
-                        <div class="card">
-                            <h5 class="card-header">Tax Declaration</h5>
 
-                            <div class="card-body">
-                                <!-- Start Card -->
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                  <div class="form-row mb-3">
-                                    <a href="{{ asset('templates/TFN_declaration_form_signature.pdf') }}" class="btn btn-primary">Download Tax Declaration Form</a>
-                                  </div>
-                                  <div class="form-row " id="tax_declaration">
-                                    <label for="">Upload Tax Declaration Form</label>
-                                    <div class="input-group mb-3">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="tax_declaration_file" accept="application/pdf" >
-                                            <label class="custom-file-label">Choose file</label>
-                                            <input type="hidden" name="tax_declaration"/>
-                                        </div>
-                                    </div>
-                                    <div class="alert alert-primary" role="alert" id="selected_tax_declaration" style="display: none;">
-
-                                    </div>
-
-                                  </div>
-                                    <!-- End Card -->
-                                </div>
-                            </div>
-                        </div>
                         <!-- End Signature-->
 
                         <br>
                         <!-- Actions Card-->
-                        <div class="card" id="actions">
+                        <div class="card shadow" id="actions">
                             <h5 class="card-header">Actions</h5>
                             <div class="card-body">
                                 <!-- Start Card -->
