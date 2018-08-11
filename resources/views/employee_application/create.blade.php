@@ -587,7 +587,7 @@
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
                                             <input id="submit_application" type="submit" class="btn btn-warning" value="Submit"/>
-                                            <a href="index.php" class="btn btn-secondary">Cancel</a>
+                                            <a href="{{ URL::to('/employee_application') }}" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                     <!-- End Card -->
