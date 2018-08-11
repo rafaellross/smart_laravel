@@ -384,6 +384,7 @@
                         <div class="card" style="padding: 0;" id="licenses-list">
                           <h5 class="card-header">Current Licenses</h5>
                           @foreach ($employee_application->licenses as $license)
+                          <input type="hidden" name="license[{{$license->id}}][license_id]" placeholder="License Number" value="{{$license->license_id}}" required>
                           <div class="card-body">
                               <!-- Start Card -->
                               <h5 class="card-title">{{$license->license->description}} :</h5>

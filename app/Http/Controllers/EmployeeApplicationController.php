@@ -72,7 +72,7 @@ class EmployeeApplicationController extends Controller
             $employee_application->claim_threshold          = $request->get('claim_threshold');
             $employee_application->educational_loan         = $request->get('educational_loan');
             $employee_application->financial_supplement     = $request->get('financial_supplement');
-            $employee_application->tax_status               = $request->get('tax_status');            
+            $employee_application->tax_status               = $request->get('tax_status');
 
             $employee_application->employee_signature       = $request->get('signature');
 
@@ -190,7 +190,7 @@ class EmployeeApplicationController extends Controller
 
                 $application_license = new EmployeeLicense();
                 $application_license->application_id = $employee_application->id;
-                $application_license->license_id = $key;
+                $application_license->license_id = $value["license_id"];
                 $application_license->issue_date = is_null($issue_date) ? null : Carbon::createFromFormat('d/m/Y', $issue_date);
                 $application_license->issuer = $value["issuer"];
                 $application_license->number = $value["number"];
