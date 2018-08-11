@@ -119,7 +119,7 @@ class EmployeeApplicationForm extends \TCPDI
               $this->Image($license->image_front, 15,75, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
 
               //Picture Back
-              list($width, $height, $type, $attr) = getimagesize($license->image_front);
+              list($width, $height, $type, $attr) = getimagesize($license->image_back);
               $this->Image($license->image_back, 15,178, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
 
 
