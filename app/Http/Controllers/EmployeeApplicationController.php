@@ -68,6 +68,11 @@ class EmployeeApplicationController extends Controller
             $employee_application->paid_basis               = $request->get('paid_basis');
             $employee_application->form_dt                  = is_null($request->get('form_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
 
+            //Tax
+            $employee_application->claim_threshold          = $request->get('claim_threshold');
+            $employee_application->educational_loan         = $request->get('educational_loan');
+            $employee_application->financial_supplement     = $request->get('financial_supplement');
+            $employee_application->tax_status               = $request->get('tax_status');            
 
             $employee_application->employee_signature       = $request->get('signature');
 
@@ -132,6 +137,7 @@ class EmployeeApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
+
             $employee_application                           = EmployeeApplication::find($id);
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
@@ -159,6 +165,14 @@ class EmployeeApplicationController extends Controller
             $employee_application->gender                   = $request->get('gender');
             $employee_application->paid_basis               = $request->get('paid_basis');
             $employee_application->form_dt                  = is_null($request->get('form_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
+
+            //Tax
+            $employee_application->claim_threshold          = $request->get('claim_threshold');
+            $employee_application->educational_loan         = $request->get('educational_loan');
+            $employee_application->financial_supplement     = $request->get('financial_supplement');
+            $employee_application->tax_status               = $request->get('tax_status');
+
+
 
 
             $employee_application->employee_signature       = $request->get('signature');

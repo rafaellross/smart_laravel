@@ -23,8 +23,9 @@
             <br>
                 <div class="row "  style="padding: 0;">
                 <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-12" style="padding: 0;">
-                <form action="{{ route('employee_application.store') }}" method="post" enctype="multipart/form-data">
-                    @csrf
+                  <form method="post" action="{{ route('employee_application.update', $employee_application->id) }}">
+                      @csrf
+                      @method('PATCH')
                         <!-- Personal Details -->
                         <div class="card shadow" style=""  id="personalDetails">
                             <h5 class="card-header">Personal Details</h5>
@@ -506,7 +507,7 @@
                                           <label>
                                               <strong>Date:</strong>
                                           </label>
-                                          <input type="text" class="form-control form-control-lg" name="business_dt" value="{{ Carbon::parse($employee_application->business_dt)->format('d/m/Y') ? Carbon::parse($employee_application->business_dt)->format('d/m/Y') : '' }}" required>
+                                          <input type="text" class="form-control form-control-lg" name="form_dt" value="{{ Carbon::parse($employee_application->business_dt)->format('d/m/Y') ? Carbon::parse($employee_application->business_dt)->format('d/m/Y') : '' }}" required>
                                       </div>
                                   </div>
                                     <!-- End Card -->

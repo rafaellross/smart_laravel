@@ -565,7 +565,7 @@
                                           <label>
                                               <strong>Date:</strong>
                                           </label>
-                                          <input type="text" class="form-control form-control-lg date-picker" name="business_dt" value="{{Carbon::now('Australia/Sydney')->format('d/m/Y')}}" >
+                                          <input type="text" class="form-control form-control-lg date-picker" name="form_dt" value="{{Carbon::now('Australia/Sydney')->format('d/m/Y')}}" >
                                       </div>
                                   </div>
                                     <!-- End Card -->
