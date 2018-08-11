@@ -249,6 +249,10 @@ $(document).ready(function () {
     'decor-color': 'transparent'
   });
 
+  if ($("input[name=signature]").val() !== "") {
+    $('#div_signature').jSignature("setData", $("input[name=signature]").val());
+  }
+
   $('form').submit(function () {
     $('input[name=signature]').val($('#div_signature').jSignature("getData"));
   });

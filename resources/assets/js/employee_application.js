@@ -236,9 +236,16 @@ $('#selected_tax_declaration').show().text(this.files[0].name);
 
 
 
+
 $('#div_signature').jSignature({
   'decor-color': 'transparent',
 });
+
+
+if ($("input[name=signature]").val() !== "") {
+  $('#div_signature').jSignature("setData", $("input[name=signature]").val());
+}
+
 
 $('form').submit(function(){
     $('input[name=signature]').val($('#div_signature').jSignature("getData"));

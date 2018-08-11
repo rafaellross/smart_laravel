@@ -14,7 +14,7 @@ class AddTaxStatusEmpApp extends Migration
     public function up()
     {
         Schema::table('employee_applications', function (Blueprint $table) {
-            $table->string('tax_status')->nullable();
+            //$table->string('tax_status')->nullable();
             $table->boolean('claim_threshold')->default(true);
             $table->boolean('educational_loan')->default(false);
             $table->boolean('financial_supplement')->default(false);

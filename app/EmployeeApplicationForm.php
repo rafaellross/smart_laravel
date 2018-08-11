@@ -11,6 +11,7 @@ class EmployeeApplicationForm extends \TCPDI
 {
     public function add(EmployeeApplication $application)
     {
+        $this->SetTitle("Employee Application");
     		// initiate FPDI
     		// add a page
     		$this->AddPage();
