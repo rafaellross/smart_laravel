@@ -128,12 +128,15 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 		if (!is_null($fire_identification->fire_photo)) {
 
       list($width, $height, $type, $attr) = getimagesize($fire_identification->fire_photo);
+      $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 45,15, str_replace("image/", "", image_type_to_mime_type($type)));
+
+
       if($width >= $height) {
 
-        $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 45,15, str_replace("image/", "", image_type_to_mime_type($type)));
+        //$this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 45,15, str_replace("image/", "", image_type_to_mime_type($type)));
       } else {
 
-        $this->RotatedImage($fire_identification->fire_photo, $this->GetX()+40, $this->GetY(), 15, 40, 270, str_replace("image/", "", image_type_to_mime_type($type)));
+        //$this->RotatedImage($fire_identification->fire_photo, $this->GetX()+40, $this->GetY(), 15, 40, 270, str_replace("image/", "", image_type_to_mime_type($type)));
       }
 
 
