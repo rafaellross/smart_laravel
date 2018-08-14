@@ -33,7 +33,7 @@ class TimeSheetReport extends Fpdf
 	    $this->Cell(17,10,'Name:');
 	    $this->Cell(80,10, substr ($timeSheet->employee->name , 0, 30 ), 'B');
 	    $this->Cell(15,10,'W/E:');
-	    $this->Cell(30,10, Carbon::parse($timeSheet->created_at)->format('d/m/Y'), 'B');
+	    $this->Cell(30,10, Carbon::parse($timeSheet->week_end)->format('d/m/Y'), 'B');
 	    $this->Ln();
 	    $this->Ln();
 

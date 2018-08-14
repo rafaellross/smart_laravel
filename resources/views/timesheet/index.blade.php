@@ -2,6 +2,14 @@
 
 @section('content')
 
+<?php
+
+$curr_filter = array();
+$curr_filter['status'] = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+$curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_SPECIAL_CHARS);
+
+?>
+
 <div class="container">
     <h2 style="text-align: center;">Time Sheet ({{count($timesheets)}})</h2>
     <hr>
@@ -14,11 +22,21 @@
         @if(Auth::user()->administrator)
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
         @endif
-        <div style="float: right;" id="statusSelect">
+        <div id="statusSelect" class="mt-2">
+            <select class="custom-select mb-4" id="selectWeekEnd">
+                <option selected="">Week End...</option>
+                @foreach ($filter['week_end'] as $week)
+                    <option value="{{ $week }}" {{$week == $curr_filter['week_end'] ? 'selected' : ''}}>{{ Carbon::parse($week)->format('d/m/Y') }}</option>
+                @endforeach
+            </select>
+
+        </div>
+
+        <div id="statusSelect">
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
                 @foreach ($filter['status'] as $status)
-                    <option value="{{ $status['code'] }}">{{ $status['description'] }}</option>
+                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] ? 'selected' : ''}}>{{ $status['description'] }}</option>
                 @endforeach
             </select>
 

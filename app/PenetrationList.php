@@ -26,6 +26,7 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
   function Header()
   {
+      
       // Select Arial bold 15
       $this->SetFont('Arial','B',14);
       // Move to the right
@@ -132,13 +133,6 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
       $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 40,15, str_replace("image/", "", image_type_to_mime_type($type)));
 
 
-      if($width >= $height) {
-
-        //$this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 45,15, str_replace("image/", "", image_type_to_mime_type($type)));
-      } else {
-
-        //$this->RotatedImage($fire_identification->fire_photo, $this->GetX()+40, $this->GetY(), 15, 40, 270, str_replace("image/", "", image_type_to_mime_type($type)));
-      }
 
 
 }
@@ -154,24 +148,6 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
     $this->Cell(41 , $this->rowHeight, substr($fire_identification->manufacturer, 0, 24), 'LTRB', 0, 'C');
 
     $this->Ln();
-
-
-
-/*
-    $this->Cell($this->width , 10, $this->title, 'LTR', 1, 'C');
-    $this->Cell($this->width , 10, 'DO NOT DISTURB', 'LR', 1, 'C');
-    $this->SetFont('Arial','B', $this->font["label"]);
-    $this->Cell($this->width , 10, 'This fire seal is compliant with the requirements of: AS4072.1, AS1530.4', 'LR', 1, 'C');
-
-    $this->SetFont('Arial','B', $this->font["label"]);
-    $this->Cell($this->width , 10, 'Fire Seal Reference:' . $fire_identification->fire_seal_ref, 'BLR', 1, 'L');
-    $this->Cell($this->width , 10, 'Fire Resistance Level (FRL):' . $fire_identification->fire_resist_level, 'LR', 1, 'L');
-    $this->Cell($this->width , 10, 'Installed By:' . $fire_identification->install_by, 'LR', 1, 'L');
-    $this->Cell($this->width , 10, 'Installation Date:' . Carbon::parse($fire_identification->install_dt)->format('d/m/Y'), 'LR', 1, 'L');
-    $this->Cell($this->width , 10, 'Manufacturer of Fire Stopping System:' . $fire_identification->manufacturer, 'LRB', 1, 'L');
-
-
-    $this->y = $this->GetY();*/
 
   }
 

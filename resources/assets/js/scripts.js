@@ -657,6 +657,10 @@ $(document).ready(function() {
       window.location = window.location.href += "&status=" + $(this).val();
   });
 
+  $('#selectWeekEnd').change(function() {
+      console.log(this);
+      window.location = window.location.href += "&week_end=" + $(this).val();
+  });
 
 
   $('#btnSaveStatus').click(function() {

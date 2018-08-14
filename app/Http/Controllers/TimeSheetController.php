@@ -26,6 +26,7 @@ class TimeSheetController extends Controller
     public function index($status = null)
     {
         $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+        $week_filter = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if (is_null($status)) {
           $status = 'P';
@@ -44,6 +45,17 @@ class TimeSheetController extends Controller
 
         ];
 
+        $filter["week_end"] = array();
+
+        $start_dt = Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet);
+
+        for ($start = 0; $start <= 10; $start++) {
+
+          array_push($filter["week_end"], $start_dt->subWeeks(1)->format('Y-m-d'));
+
+        }
+
+        
 
         $timesheets = DB::select(
                     DB::raw(
@@ -64,7 +76,8 @@ class TimeSheetController extends Controller
                       on emp.id = ts.employee_id
                       where " .
                       (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
-                      ($status == 'all' ? "1=1" : "ts.status = '" . $status . "'") . " " .
+                      ($status == 'all' ? "1=1" : "ts.status = '" . $status . "'") . " and " .
+                      (is_null($week_filter) ? "1=1" : "ts.week_end = '$week_filter'") .
                       " order by emp.name asc"
                     )
                   );
