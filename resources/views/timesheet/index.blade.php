@@ -26,7 +26,12 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
             <select class="custom-select mb-4" id="selectWeekEnd">
                 <option selected="">Week End...</option>
                 @foreach ($filter['week_end'] as $week)
-                    <option value="{{ $week }}" {{$week == $curr_filter['week_end'] ? 'selected' : ''}}>{{ Carbon::parse($week)->format('d/m/Y') }}</option>
+                    @if ($loop->first)
+                        <option value="{{ $week }}" selected>{{ Carbon::parse($week)->format('d/m/Y') }}</option>
+                    @else
+                        <option value="{{ $week }}" {{$week == $curr_filter['week_end'] ? 'selected' : ''}}>{{ Carbon::parse($week)->format('d/m/Y') }}</option>
+                    @endif
+
                 @endforeach
             </select>
 
@@ -36,7 +41,7 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
                 @foreach ($filter['status'] as $status)
-                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] ? 'selected' : ''}}>{{ $status['description'] }}</option>
+                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] || $status['code'] == 'P' ? 'selected' : ''}}>{{ $status['description'] }}</option>
                 @endforeach
             </select>
 
@@ -54,6 +59,7 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
                 <th scope="col">Hours 1.5</th>
                 <th scope="col">Hours 2.0</th>
                 <th scope="col">Week End</th>
+                <th scope="col">Job</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
@@ -69,6 +75,7 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
                 <td>{{$timesheet->total_15}}</td>
                 <td>{{$timesheet->total_20}}</td>
                 <td>{{Carbon::parse($timesheet->week_end)->format('d/m/Y')}}</td>
+                <th scope="col">{{$timesheet->job}}</th>
                 <td>{{$timesheet->status}}</td><td style="text-align: center;">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

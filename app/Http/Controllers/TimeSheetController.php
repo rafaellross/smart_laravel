@@ -50,12 +50,16 @@ class TimeSheetController extends Controller
         $start_dt = Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet);
 
         for ($start = 0; $start <= 10; $start++) {
+          if ($start == 0) {
+            array_push($filter["week_end"], $start_dt->format('Y-m-d'));
+          } else {
+            array_push($filter["week_end"], $start_dt->subWeeks(1)->format('Y-m-d'));
+          }
 
-          array_push($filter["week_end"], $start_dt->subWeeks(1)->format('Y-m-d'));
 
         }
 
-        
+
 
         $timesheets = DB::select(
                     DB::raw(
@@ -67,7 +71,22 @@ class TimeSheetController extends Controller
                               ts.total_15,
                               ts.total_20,
                               ts.week_end,
-                              ts.status
+                              ts.status,
+                              (
+                              select code from (
+                              	select
+                              	jobs.code,
+                              	sum(job.end - job.start) as total,
+                              	time_sheets.id as ts_id
+                              	from time_sheets
+                              	join days
+                              	on time_sheets.id = days.time_sheet_id
+                              	join day_jobs job
+                              	on job.day_id = days.id
+                              	join jobs
+                              	on jobs.id = job.job_id
+                              	group by jobs.code, time_sheets.id
+                              ) as job where ts_id = ts.id order by total desc limit 1 ) as job
 
                       from time_sheets ts
                       inner join users

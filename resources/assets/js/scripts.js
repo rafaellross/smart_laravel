@@ -654,12 +654,18 @@ $(document).ready(function() {
 
   $('#selectStatus').change(function() {
       console.log(this);
-      window.location = window.location.href += "&status=" + $(this).val();
+      if ($(this).val() !== "") {
+          window.location = window.location.href += "&status=" + $(this).val();
+      }
+
   });
 
   $('#selectWeekEnd').change(function() {
       console.log(this);
-      window.location = window.location.href += "&week_end=" + $(this).val();
+      if ($(this).val() !== "") {
+          window.location = window.location.href += "&week_end=" + $(this).val();
+      }
+
   });
 
 
