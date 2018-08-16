@@ -69,9 +69,9 @@ class FireIdentificationController extends Controller
         for ($i= intval($request->get('start_number')); $i <= intval($request->get('end_number')); $i++) {
             $fire = new FireIdentification();
             $fire->job_id = $job;
-            $fire->fire_number              = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
+            $fire->fire_number              = $i;
             $fire->drawing                  = $request->get('drawing');
-            $fire->fire_seal_ref            = DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1;
+            $fire->fire_seal_ref            = $i;
             $fire->fire_resist_level        = $request->get('fire_resist_level');
             $fire->install_dt               = Carbon::createFromFormat('d/m/Y', $request->get('install_dt'));
 

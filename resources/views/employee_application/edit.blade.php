@@ -138,7 +138,7 @@
                                             <label>
                                                 <strong>Phone:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="phone" value="{{$employee_application->phone}}"  maxlength="20" required>
+                                            <input type="text" class="form-control form-control-lg" name="phone" value="{{$employee_application->phone}}"  maxlength="20">
                                         </div>
                                     </div>
 
@@ -529,7 +529,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
-                                            <input id="submit_application" type="submit" class="btn btn-warning" value="Submit"/>
+                                            <input id="submit_application" type="submit" class="btn btn-warning" value="Save & Continue"/>
                                             <a href="{{ URL::to('/employee_application') }}" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>

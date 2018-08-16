@@ -668,6 +668,14 @@ $(document).ready(function() {
 
   });
 
+  $('#selectJob').change(function() {
+      console.log(this);
+      if ($(this).val() !== "") {
+          window.location = window.location.href += "&job=" + $(this).val();
+      }
+
+  });
+
 
   $('#btnSaveStatus').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

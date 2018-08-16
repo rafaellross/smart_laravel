@@ -7,6 +7,7 @@
 $curr_filter = array();
 $curr_filter['status'] = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
 $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_SPECIAL_CHARS);
+$curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHARS);
 
 ?>
 
@@ -23,6 +24,7 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
         @endif
         <div id="statusSelect" class="mt-2">
+            <label for="">Week End:</label>
             <select class="custom-select mb-4" id="selectWeekEnd">
                 <option selected="">Week End...</option>
                 @foreach ($filter['week_end'] as $week)
@@ -38,14 +40,25 @@ $curr_filter['week_end'] = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_S
         </div>
 
         <div id="statusSelect">
+          <label for="">Status:</label>
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
                 @foreach ($filter['status'] as $status)
-                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] || $status['code'] == 'P' ? 'selected' : ''}}>{{ $status['description'] }}</option>
+                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] || $status['code'] == 'all' ? 'selected' : ''}}>{{ $status['description'] }}</option>
                 @endforeach
             </select>
-
         </div>
+        <div id="statusSelect">
+            <label for="">Job:</label>
+            <select class="custom-select mb-4" id="selectJob">
+                <option selected="">Job...</option>
+                <option selected="all">All</option>
+                @foreach (\App\Job::all() as $job)
+                    <option value="{{ $job->code }}" {{$job->code == $curr_filter['job'] ? 'selected' : ''}}>{{ $job->description }}</option>
+                @endforeach
+            </select>
+        </div>
+        <a href="{{ URL::to('/timesheets?filter=1') }}" class="btn btn-outline-dark">Clear Filters</a>
     </div>
     <table class="table table-hover table-responsive-sm table-striped">
         <thead>

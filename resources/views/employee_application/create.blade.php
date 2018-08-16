@@ -81,7 +81,7 @@
                                             <label>
                                                 <strong>Street Address:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="street_address" value="">
+                                            <input type="text" class="form-control form-control-lg" name="street_address" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -89,13 +89,13 @@
                                             <label>
                                                 <strong>Suburb:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="suburb" value="">
+                                            <input type="text" class="form-control form-control-lg" name="suburb" value="" required>
                                         </div>
                                         <div class="col-md-2 col-12 mb-3">
                                             <label>
                                                 <strong>Post Code:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="post_code"  value="" maxlength="4" >
+                                            <input type="text" class="form-control form-control-lg" name="post_code"  value="" maxlength="4" required>
                                         </div>
                                     </div>
 
@@ -104,7 +104,7 @@
                                             <label>
                                                 <strong>State:</strong>
                                             </label>
-                                            <select class="form-control form-control-lg custom-select" name="state" >
+                                            <select class="form-control form-control-lg custom-select" name="state" required>
                                                 <option value="">Select State</option>
                                                 @foreach (App\States::all() as $state)
                                                     <option value="{{$state->id}}">{{$state->description}}</option>
@@ -129,7 +129,7 @@
                                             <label>
                                                 <strong>Mobile:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="mobile" value=""  maxlength="10" >
+                                            <input type="text" class="form-control form-control-lg" name="mobile" value=""  maxlength="10" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -205,7 +205,7 @@
                                             <label>
                                                 <strong>Tax File Number:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="tax_file_number" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="tax_file_number" value="" required>
                                         </div>
                                     </div>
 
@@ -214,19 +214,19 @@
                                             <label>
                                                 <strong>Bank A/C Name:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bank_acc_name" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="bank_acc_name" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
                                                 <strong>BSB Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bsb" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="bsb" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
                                                 <strong>A/C Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="account_number" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="account_number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -315,7 +315,7 @@
                                         <label>
                                             <strong>Employment Type:</strong>
                                         </label>
-                                        <select name="paid_basis" class="form-control form-control-lg">
+                                        <select name="paid_basis" class="form-control form-control-lg" required>
                                             <option value="">Select employment type</option>
                                             <option value="F">Full-time</option>
                                             <option value="P">Part-time</option>
@@ -328,7 +328,7 @@
                                         <label>
                                             <strong>Are you:</strong><span></span>
                                         </label>
-                                        <select name="tax_status" class="form-control form-control-lg">
+                                        <select name="tax_status" class="form-control form-control-lg" required>
                                             <option value="">Select Tax Status</option>
                                             <option value="R">An Australian resident for tax purposes</option>
                                             <option value="F">A foreign resident for tax purposes</option>
@@ -343,7 +343,7 @@
                                         </label>
                                         <br>
                                         <i>Only claim the tax-free threshold from one payer at time, unless your total income from all soures for the financial year will be less than the tax-free threshold.</i>
-                                        <select name="claim_threshold" class="form-control form-control-lg">
+                                        <select name="claim_threshold" class="form-control form-control-lg" required>
                                             <option value="">Select an option</option>
                                             <option value="1">YES</option>
                                             <option value="0">NO</option>
@@ -356,7 +356,7 @@
                                             <strong>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</strong>
                                         </label>
                                         <br>
-                                        <select name="educational_loan" class="form-control form-control-lg">
+                                        <select name="educational_loan" class="form-control form-control-lg" required>
                                             <option value="">Select an option</option>
                                             <option value="1">YES</option>
                                             <option value="0">NO</option>
@@ -369,7 +369,7 @@
                                             <strong>Do you have a Financial Supplement debt?</strong>
                                         </label>
                                         <br>
-                                        <select name="financial_supplement" class="form-control form-control-lg">
+                                        <select name="financial_supplement" class="form-control form-control-lg" required>
                                             <option value="">Select an option</option>
                                             <option value="1">YES</option>
                                             <option value="0">NO</option>
@@ -392,19 +392,19 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[1][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" >
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[1][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][issuer]" placeholder="Issued by" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="license[1][issuer]" placeholder="Issued by" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[1][number]" placeholder="License Number" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="license[1][number]" placeholder="License Number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -414,7 +414,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*, application/pdf" >
+                                                    <input type="file" class="custom-file-input" name="license[1][image][front]" accept="image/*" required>
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[1][image][front][img]"/>
                                                 </div>
@@ -429,7 +429,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[1][image][back]" accept="image/*, application/pdf" >
+                                                    <input type="file" class="custom-file-input" name="license[1][image][back]" accept="image/*" required>
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[1][image][back][img]"/>
                                                 </div>
@@ -456,19 +456,19 @@
                                             <label>
                                                 <strong>Issue Date:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" >
+                                            <input type="text" class="form-control form-control-lg date-picker" name="license[16][issue_date]" placeholder="dd/mm/yyyy" value=""  maxlength="10" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3 ml-auto">
                                             <label>
                                                 <strong>State / Issuer *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="license[16][issuer]" placeholder="Issued by" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 ml-auto">
                                             <label>
                                                 <strong>Card / Licence No *:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="license[16][number]" placeholder="License Number" value="" >
+                                            <input type="text" class="form-control form-control-lg" name="license[16][number]" placeholder="License Number" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -478,7 +478,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[16][image][front]" accept="image/*, application/pdf" >
+                                                    <input type="file" class="custom-file-input" name="license[16][image][front]" accept="image/*" required>
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[16][image][front][img]"/>
                                                 </div>
@@ -493,7 +493,7 @@
                                             </label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="license[16][image][back]" accept="image/*, application/pdf" >
+                                                    <input type="file" class="custom-file-input" name="license[16][image][back]" accept="image/*" required>
                                                     <label class="custom-file-label">Choose file</label>
                                                     <input type="hidden" name="license[16][image][back][img]"/>
                                                 </div>
@@ -586,7 +586,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
                                         <div class="col-md-5 col-12 mb-3">
-                                            <input id="submit_application" type="submit" class="btn btn-warning" value="Submit"/>
+                                            <input id="submit_application" type="submit" class="btn btn-warning" value="Save & Continue"/>
                                             <a href="{{ URL::to('/employee_application') }}" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>

@@ -351,4 +351,140 @@ class EmployeeApplicationForm extends \TCPDI
 
     }
 
+    public function apprentice_form(EmployeeApplication $application) {
+        $this->AddPage();
+        $this->Image('img/megt.png', 20,10,30,0,'png');
+        $this->Image('img/aus-apprenticeship.png', 150,13,30,0,'png');
+        $this->SetY(35);
+
+        $line_height = 6;
+
+        $this->SetFont('Helvetica', 'U', 18);
+        $this->Cell(0,10, 'Apprenticeship/Traineeship Details',0,1,'C', 0);
+
+        $this->SetFont('Helvetica', '', 12);
+        $this->Cell(0,10, 'Traineeship/Apprenticeship qualification to be completed (i.e. Certificate III in Carpentry)',0,1,'C', 0);
+
+        $this->Cell(47,10, 'QUALIFICATION NAME',0,0,'L', 0);
+        $this->Cell(0,7, '', 'B',0,'L', 0);
+        $this->Ln(20);
+
+        $this->SetFillColor(108,117,125);
+        $this->SetFont('Helvetica', 'B', 14);
+        $this->Cell(0,$line_height, 'Apprentice/Trainee Details',1,1,'C', 1);
+        $this->SetFont('Helvetica', '', 14);
+
+        $this->Cell(65,$line_height, 'Full Legal Name:',1,0,'L', 0);
+        $this->Cell(0,$line_height, strtoupper($application->first_name) . " " .  strtoupper($application->last_name),1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Date of Birth:',1,0,'L', 0);
+        $this->Cell(0,$line_height, Carbon::parse($application->dob)->format('d/m/Y'),1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Start date at the business:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->date_commenced,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Address:',1,0,'L', 0);
+        $this->Cell(0,$line_height, strtoupper($application->street_address) . " - " . strtoupper($application->suburb) . " - " . $application->post_code,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Phone:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->phone,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Mobile:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->mobile,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Email:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->email,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Full-time or Part time:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->paid_basis == "F" ? 'Full-time' : 'Part time' ,1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Hours per week:',1,0,'L', 0);
+        $this->Cell(0,$line_height, $application->paid_basis == "F" ? '40' : '20',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Pay Award name:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Ln();
+
+        $this->SetFont('Helvetica', 'B', 14);
+        $this->Cell(0,$line_height, 'Employer Details',1,1,'C', 1);
+        $this->SetFont('Helvetica', '', 14);
+
+        $this->Cell(65,$line_height, 'ABN:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Entity/ Legal Name:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Trading Name:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, "Employer's Name:",1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Address:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'PO Address:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Phone:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Contact Person:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Email:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->Cell(65,$line_height, 'Mobile:',1,0,'L', 0);
+        $this->Cell(0,$line_height, '',1,1,'L', 0);
+
+        $this->MultiCell(65,$line_height, 'Registered training organisation preference',1, 'L');
+        $this->SetXY($this->GetX()+65, $this->GetY() - 12.5);
+        $this->Cell(0,12.5, '',1,1,'L', 0);
+
+        $this->Ln(5);
+
+        $this->SetFont('Helvetica', 'U', 14);
+        $this->Cell(65,7, 'Office Use Only',0,1,'L', 0);
+
+        $this->SetFont('Helvetica', '', 10);
+        $this->Cell(31,5, 'RTO - NTIS Code:',0,0,'L', 0);
+        $this->Cell(65,5, '', 'B',1,'L', 0);
+
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(15,5, 'Campus',0,0,'L', 0);
+        $this->Cell(75,5, '', 'B',0,'L', 0);
+        $this->Cell(4,5, '', 0,0,'L', 0);//space
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(15,5, 'work based',0,1,'L', 0);
+        $this->Cell(46,5, 'Qualification National Code:',0,0,'L', 0);
+        $this->Cell(75,5, '', 'B',0,'L', 0);
+
+        $this->Cell(4,5, '', 0,0,'L', 0);//space
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(15,5, 'on current RTO scope',0,1,'L', 0);
+
+        $this->Cell(37,5, 'Sign up date and time:',0,0,'L', 0);
+        $this->Cell(75,5, '', 'B',1,'L', 0);
+
+        $this->Ln();
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(25,5, 'TYIMS Check',0,0,'L', 0);
+
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(25,5, 'IVETS Check',0,0,'L', 0);
+
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(25,5, 'ABN Check',0,0,'L', 0);
+
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(20,5, 'NTC',0,0,'L', 0);
+
+        $this->Cell(6,5, '', 1,0,'L', 0);
+        $this->Cell(25,5, 'Smart form',0,0,'L', 0);
+
+        //$this->Image('img/logo.jpg', 150, 95, 40);
+    }
+
 }

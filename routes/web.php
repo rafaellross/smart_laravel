@@ -42,14 +42,6 @@ Route::group(['middleware' => ['test']], function () {
 	Route::resource('form_service_sheet', 'FormServiceSheetController');
 	Route::get('/form_service_sheet/action/{id}/{action}', 'FormServiceSheetController@action');
 
-	//Employee application
-	Route::get('/employee_application', 'EmployeeApplicationController@index');
-	Route::get('/employee_application/create', 'EmployeeApplicationController@create');
-
-	Route::get('/employee_application/tfn', 'EmployeeApplicationController@tfn');
-
-	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicationController@action');
-	Route::get('/employee_application/{id}/edit', 'EmployeeApplicationController@edit');
 
 });
 
@@ -98,16 +90,16 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/employee_entries/scan', function () {
 		return view('employee_entries.scan');
 	});
-	
+
 	Route::get('/employee_entries/{id?}', 'EmployeeEntryController@index');
 	Route::get('/employee_entries', 'EmployeeEntryController@index');
 	Route::get('/employee_entries/create', 'EmployeeEntryController@create');
 	Route::get('/employee_entries/generate/{id}', 'EmployeeEntryController@generateTimeSheet');
-	
+
 	Route::get('/employee_entries/action/{id?}/{action?}', 'EmployeeEntryController@action');
-	
+
 	Route::resource('employee_entries', 'EmployeeEntryController');
-	
+
 
 	//Fire Identification
 	Route::get('/fire_identification/scan', function () {
@@ -122,7 +114,18 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/fire_identification/{job}', 'FireIdentificationController@multiple');
 	Route::patch('/fire_identification/{fire_seal}', 'FireIdentificationController@update');
 
-	
+
+	//Employee application
+	Route::get('/employee_application', 'EmployeeApplicationController@index');
+	Route::get('/employee_application/create', 'EmployeeApplicationController@create');
+
+	Route::get('/employee_application/tfn', 'EmployeeApplicationController@tfn');
+
+	Route::get('/employee_application/action/{id}/{action}', 'EmployeeApplicationController@action');
+	Route::get('/employee_application/{id}/edit', 'EmployeeApplicationController@edit');
+
+
+	Route::get('/employee_application/{id}/agreement', 'EmployeeApplicationController@agreement');
 
 	//Route::resource('fire_identification', 'FireIdentificationController');
 

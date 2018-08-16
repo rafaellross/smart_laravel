@@ -159,7 +159,7 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Codedge\Fpdf\FpdfServiceProvider::class, 
+        Codedge\Fpdf\FpdfServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Backup\BackupServiceProvider::class,
 

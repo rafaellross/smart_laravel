@@ -27,10 +27,8 @@ class TimeSheetController extends Controller
     {
         $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
         $week_filter = filter_input(INPUT_GET, 'week_end', FILTER_SANITIZE_SPECIAL_CHARS);
+        $job_filter = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if (is_null($status)) {
-          $status = 'P';
-        }
 
         //Filters
 
@@ -63,41 +61,44 @@ class TimeSheetController extends Controller
 
         $timesheets = DB::select(
                     DB::raw(
-                        "select ts.id,
-                      		users.username,
-                              ts.created_at,
-                              emp.name,
-                              ts.total,
-                              ts.total_15,
-                              ts.total_20,
-                              ts.week_end,
-                              ts.status,
-                              (
-                              select code from (
-                              	select
-                              	jobs.code,
-                              	sum(job.end - job.start) as total,
-                              	time_sheets.id as ts_id
-                              	from time_sheets
-                              	join days
-                              	on time_sheets.id = days.time_sheet_id
-                              	join day_jobs job
-                              	on job.day_id = days.id
-                              	join jobs
-                              	on jobs.id = job.job_id
-                              	group by jobs.code, time_sheets.id
-                              ) as job where ts_id = ts.id order by total desc limit 1 ) as job
+                        "
+                        select * from (
+                            select ts.id,
+                          		users.username,
+                                  ts.created_at,
+                                  emp.name,
+                                  ts.total,
+                                  ts.total_15,
+                                  ts.total_20,
+                                  ts.week_end,
+                                  ts.status,
+                                  (
+                                  select code from (
+                                  	select
+                                  	jobs.code,
+                                  	sum(job.end - job.start) as total,
+                                  	time_sheets.id as ts_id
+                                  	from time_sheets
+                                  	join days
+                                  	on time_sheets.id = days.time_sheet_id
+                                  	join day_jobs job
+                                  	on job.day_id = days.id
+                                  	join jobs
+                                  	on jobs.id = job.job_id
+                                  	group by jobs.code, time_sheets.id
+                                  ) as job where ts_id = ts.id order by total desc limit 1 ) as job
 
-                      from time_sheets ts
-                      inner join users
-                      on ts.user_id = users.id
-                      inner join employees emp
-                      on emp.id = ts.employee_id
-                      where " .
-                      (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
-                      ($status == 'all' ? "1=1" : "ts.status = '" . $status . "'") . " and " .
-                      (is_null($week_filter) ? "1=1" : "ts.week_end = '$week_filter'") .
-                      " order by emp.name asc"
+                          from time_sheets ts
+                          inner join users
+                          on ts.user_id = users.id
+                          inner join employees emp
+                          on emp.id = ts.employee_id
+                          where " .
+                          (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
+                          ($status == 'all' || is_null($status) ? "1=1" : "ts.status = '" . $status . "'") . " and " .
+                          (is_null($week_filter) ? "1=1" : "ts.week_end = '$week_filter'") . ") timesheets " .
+                          "where " . (is_null($job_filter) || strtolower($job_filter) == "all"  ? "1=1" : "job = '" . $job_filter . "'" ) .
+                          " order by name asc"
                     )
                   );
 

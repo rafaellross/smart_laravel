@@ -7,6 +7,7 @@ use App\EmployeeApplication;
 use App\EmployeeLicense;
 use App\EmployeeApplicationForm;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class EmployeeApplicationController extends Controller
@@ -18,7 +19,13 @@ class EmployeeApplicationController extends Controller
      */
     public function index()
     {
+
+      if (Auth::user()->administrator) {
         $employee_applications = EmployeeApplication::all();
+      } else {
+        $employee_applications = EmployeeApplication::where('user_id', Auth::user()->id)->get();
+      }
+
         return view('employee_application.index', ['employee_applications' => $employee_applications]);
     }
 
@@ -94,7 +101,7 @@ class EmployeeApplicationController extends Controller
                 $application_license->image_back = $value["image"]["back"]["img"];
                 $application_license->save();
             }
-            return redirect('employee_application');
+            return redirect('employee_application/' . $employee_application->id);
     }
 
     /**
@@ -105,15 +112,18 @@ class EmployeeApplicationController extends Controller
      */
     public function show($id)
     {
-      //$app = EmployeeApplication::find($id);
-      //return view('employee_application.show',['tax_declaration' => $app->tax_declaration]);
+      $app = EmployeeApplication::find($id);
 
+      return view('employee_application.agreement', ['id' => $id, 'application' => $app]);
 
-      //$pdf = base64_decode($app->tax_declaration);
-
-      //return (new Response($pdf,200))->header('ContentType','application/pdf');
     }
 
+    public function agreement($id){
+      $app = EmployeeApplication::find($id);
+      $app->agree_term = true;
+      $app->save();
+      return redirect('employee_application')->with('success','Application has been added!');;
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -135,70 +145,81 @@ class EmployeeApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $agree = false)
     {
 
+
             $employee_application                           = EmployeeApplication::find($id);
-            $employee_application->first_name               = $request->get('first_name');
-            $employee_application->last_name                = $request->get('last_name');
-            $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
-            $employee_application->street_address           = $request->get('street_address');
-            $employee_application->suburb                   = $request->get('suburb');
-            $employee_application->post_code                = $request->get('post_code');
-            $employee_application->state                    = $request->get('state');
-            $employee_application->mobile                   = $request->get('mobile');
-            $employee_application->phone                    = $request->get('phone');
-            $employee_application->email                    = $request->get('email');
-            $employee_application->emergency_name           = $request->get('emergency_name');
-            $employee_application->emergency_phone          = $request->get('emergency_phone');
-            $employee_application->emergency_relationship   = $request->get('emergency_relationship');
-            $employee_application->tax_file_number          = $request->get('tax_file_number');
-            $employee_application->date_commenced           = $request->get('date_commenced');
-            $employee_application->bank_acc_name            = $request->get('bank_acc_name');
-            $employee_application->bsb                      = $request->get('bsb');
-            $employee_application->account_number           = $request->get('account_number');
-            $employee_application->superannuation           = $request->get('superannuation');
-            $employee_application->redundancy               = $request->get('redundancy');
-            $employee_application->long_service_number      = $request->get('long_service_number');
-            $employee_application->apprentice               = $request->get('apprentice');
-            $employee_application->apprentice_year          = $request->get('apprentice_year');
-            $employee_application->gender                   = $request->get('gender');
-            $employee_application->paid_basis               = $request->get('paid_basis');
-            $employee_application->form_dt                  = is_null($request->get('form_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
 
-            //Tax
-            $employee_application->claim_threshold          = $request->get('claim_threshold');
-            $employee_application->educational_loan         = $request->get('educational_loan');
-            $employee_application->financial_supplement     = $request->get('financial_supplement');
-            $employee_application->tax_status               = $request->get('tax_status');
+            if ($agree) {
+              $employee_application->agree_term = true;
+              $employee_application->save();
+              return redirect('employee_application')->with('success','Application has been submitted!');
+            } else {
+
+                          $employee_application->first_name               = $request->get('first_name');
+                          $employee_application->last_name                = $request->get('last_name');
+                          $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
+                          $employee_application->street_address           = $request->get('street_address');
+                          $employee_application->suburb                   = $request->get('suburb');
+                          $employee_application->post_code                = $request->get('post_code');
+                          $employee_application->state                    = $request->get('state');
+                          $employee_application->mobile                   = $request->get('mobile');
+                          $employee_application->phone                    = $request->get('phone');
+                          $employee_application->email                    = $request->get('email');
+                          $employee_application->emergency_name           = $request->get('emergency_name');
+                          $employee_application->emergency_phone          = $request->get('emergency_phone');
+                          $employee_application->emergency_relationship   = $request->get('emergency_relationship');
+                          $employee_application->tax_file_number          = $request->get('tax_file_number');
+                          $employee_application->date_commenced           = $request->get('date_commenced');
+                          $employee_application->bank_acc_name            = $request->get('bank_acc_name');
+                          $employee_application->bsb                      = $request->get('bsb');
+                          $employee_application->account_number           = $request->get('account_number');
+                          $employee_application->superannuation           = $request->get('superannuation');
+                          $employee_application->redundancy               = $request->get('redundancy');
+                          $employee_application->long_service_number      = $request->get('long_service_number');
+                          $employee_application->apprentice               = $request->get('apprentice');
+                          $employee_application->apprentice_year          = $request->get('apprentice_year');
+                          $employee_application->gender                   = $request->get('gender');
+                          $employee_application->paid_basis               = $request->get('paid_basis');
+                          $employee_application->form_dt                  = is_null($request->get('form_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
+
+                          //Tax
+                          $employee_application->claim_threshold          = $request->get('claim_threshold');
+                          $employee_application->educational_loan         = $request->get('educational_loan');
+                          $employee_application->financial_supplement     = $request->get('financial_supplement');
+                          $employee_application->tax_status               = $request->get('tax_status');
 
 
 
 
-            $employee_application->employee_signature       = $request->get('signature');
-            $employee_application->business                 = $request->get('business');
-            $employee_application->business_dt              = is_null($request->get('business_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('business_dt'));
+                          $employee_application->employee_signature       = $request->get('signature');
+                          $employee_application->business                 = $request->get('business');
+                          $employee_application->business_dt              = is_null($request->get('business_dt')) ? Carbon::now() : Carbon::createFromFormat('d/m/Y', $request->get('business_dt'));
 
-            $employee_application->save();
+                          $employee_application->save();
 
-            foreach ($employee_application->licenses as $license) {
-                $license->delete();
+                          foreach ($employee_application->licenses as $license) {
+                              $license->delete();
+                          }
+
+                          foreach ($request->get('license') as $key => $value) {
+                              $issue_date = $value['issue_date'];
+
+                              $application_license = new EmployeeLicense();
+                              $application_license->application_id = $employee_application->id;
+                              $application_license->license_id = $value["license_id"];
+                              $application_license->issue_date = is_null($issue_date) ? null : Carbon::createFromFormat('d/m/Y', $issue_date);
+                              $application_license->issuer = $value["issuer"];
+                              $application_license->number = $value["number"];
+                              $application_license->image_front = $value["image"]["front"]["img"];
+                              $application_license->image_back = $value["image"]["back"]["img"];
+                              $application_license->save();
+                          }
+                          //return redirect('employee_application');
+                          return redirect('employee_application/' . $employee_application->id);
             }
 
-            foreach ($request->get('license') as $key => $value) {
-                $issue_date = $value['issue_date'];
-
-                $application_license = new EmployeeLicense();
-                $application_license->application_id = $employee_application->id;
-                $application_license->license_id = $value["license_id"];
-                $application_license->issue_date = is_null($issue_date) ? null : Carbon::createFromFormat('d/m/Y', $issue_date);
-                $application_license->issuer = $value["issuer"];
-                $application_license->number = $value["number"];
-                $application_license->image_front = $value["image"]["front"]["img"];
-                $application_license->image_back = $value["image"]["back"]["img"];
-                $application_license->save();
-            }
-            return redirect('employee_application');
     }
 
     /**
@@ -230,7 +251,7 @@ public function action($id, $action, $status = null)
             case 'print':
 
                 $report = new EmployeeApplicationForm();
-                $report->SetCompression(true);
+                //$report->SetCompression(true);
                 foreach ($ids as $id) {
                     $employee_application = EmployeeApplication::find($id);
                     if ($employee_application) {
@@ -239,6 +260,10 @@ public function action($id, $action, $status = null)
                     $report->add_tfn($employee_application);
                     $report->add_licences($employee_application);
                     $report->add_policy($employee_application);
+
+                    if ($employee_application->apprentice) {
+                      $report->apprentice_form($employee_application);
+                    }
 
                 }
                 return $report->output();
