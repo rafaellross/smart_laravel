@@ -48,6 +48,7 @@ class EmployeeApplicationController extends Controller
     public function store(Request $request)
     {
             $employee_application                           = new EmployeeApplication();
+            $timeSheet->user_id                             = Auth::id();
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
@@ -246,7 +247,7 @@ public function action($id, $action, $status = null)
                 foreach ($ids as $id) {
                     EmployeeApplication::find($id)->delete();
                 }
-                return redirect('employee_application')->with('success','Time Sheet(s) has been deleted');
+                return redirect('employee_application')->with('success','Employees Application(s) has been deleted');
                 break;
             case 'print':
 
@@ -302,7 +303,7 @@ public function action($id, $action, $status = null)
                     break;
 
             case 'update':
-                return redirect('employee_application')->with('success','Time Sheet(s) has been updated');
+                return redirect('employee_application')->with('success','Employees Application(s) has been updated');
                 break;
             default:
                 return redirect('employee_application')->with('error','There was no action selected');

@@ -87,21 +87,7 @@ class EmployeesList extends Fpdf
         $this->Cell(20 , 5, (is_null($employee->dob) ? '' : Carbon::parse($employee->dob)->format('d/m/Y')), 'LB', 0, 'C', $this->odd);
         $this->Cell(20 , 5, $employee->phone, 'LB', 0, 'C', $this->odd);
 
-        //Define role
-        $role = '';
-        if ($employee->location == 'P') {
-
-          $role = 'Plumber';
-        } elseif ($employee->location == 'L') {
-
-          $role = 'Labourer';
-        } else {
-
-          $role = 'Office';
-
-        }
-
-        $this->Cell(20 , 5, $role, 'LB', 0, 'C', $this->odd);
+        $this->Cell(20 , 5, $employee->location, 'LB', 0, 'C', $this->odd);
 
         $this->Cell(25 , 5, ($employee->company == 'M' ? 'Maintenance' : 'Construction'), 'LB', 0, 'C', $this->odd);
 
