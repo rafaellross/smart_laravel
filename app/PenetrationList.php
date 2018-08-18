@@ -26,7 +26,7 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
   function Header()
   {
-      
+      ini_set("memory_limit","-1");
       // Select Arial bold 15
       $this->SetFont('Arial','B',14);
       // Move to the right
