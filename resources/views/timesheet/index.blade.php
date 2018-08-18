@@ -44,7 +44,7 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
             <select class="custom-select mb-4" id="selectStatus">
                 <option selected="">Status...</option>
                 @foreach ($filter['status'] as $status)
-                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] || $status['code'] == 'all' ? 'selected' : ''}}>{{ $status['description'] }}</option>
+                    <option value="{{ $status['code'] }}" {{$status['code'] == $curr_filter['status'] || $status['code'] == 'P' ? 'selected' : ''}}>{{ $status['description'] }}</option>
                 @endforeach
             </select>
         </div>
