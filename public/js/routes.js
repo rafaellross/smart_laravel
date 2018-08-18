@@ -60,89 +60,23 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 46:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(47);
+module.exports = __webpack_require__(40);
 
 
 /***/ }),
 
-/***/ 47:
+/***/ 40:
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
-
-  var signatures = {
-    "signature_1": {
-      "div": "#div_signature_1",
-      "modal": "#modal_signature_1",
-      "hidden": "#img_signature_1",
-      "opened": false
-    }
-  };
-
-  for (var i = 1; i <= 20; i++) {
-    signatures["signature_" + i] = {
-      "div": "#div_signature_" + i,
-      "modal": "#modal_signature_" + i,
-      "hidden": "#img_signature_" + i,
-      "opened": false
-    };
-  }
-
-  $('.btn-signature').click(function () {
-
-    var modal = $(signatures[this.id].modal);
-    var div = $(signatures[this.id].div);
-    var hidden = $(signatures[this.id].hidden);
-    var opened = signatures[this.id].opened;
-    modal.modal('show');
-
-    if (!signatures[this.id].opened) {
-      signatures[this.id].opened = true;
-      div.jSignature(); // inits the jSignature widget.
-      if (hidden.val() !== "") {
-        div.jSignature("setData", hidden.val());
-      }
-    }
-  });
-
-  $('.btn-save-sign').click(function () {
-    var signature = this.id.replace("save", "");
-    var div = $("#div" + signature);
-    var img = div.jSignature("getData");
-    $('#preview' + signature).attr('src', img);
-    $('#img' + signature).val(img);
-  });
-
-  // after some doodling...
-  $('.btn-clear-sign').click(function () {
-    var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
-    $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
-  });
-
-  $('#btnPrintPreStart').click(function () {
-    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-    if (selecteds > 0) {
-      var ids = Array();
-      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
-        ids.push(this.id.split("-")[1]);
-      });
-      var urlArray = window.location.href.split("/");
-      if (urlArray[urlArray.length - 1] == "form_prestart") {
-        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
-      } else {
-        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));
-      }
-    }
-  });
-});
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'c:\\xampp\\htdocs\\smart_laravel\\resources\\assets\\js\\routes.js'\n    at Error (native)");
 
 /***/ })
 

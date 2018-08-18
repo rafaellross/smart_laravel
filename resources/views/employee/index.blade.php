@@ -15,9 +15,9 @@
               Print Selected(s)
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</a>
-              <a class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</a>
-              <a class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</a>
+              <button class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</button>
+              <button class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</button>
+              <button class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</button>
             </div>
             @if (isset(Auth::user()->tester) && Auth::user()->tester)
               <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>

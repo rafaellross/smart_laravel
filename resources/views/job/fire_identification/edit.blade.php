@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <input id="medical_certificates[1]-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">
-                                <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="photo_hidden" value="{{$fire_seal->fire_photo}}">
+                                <input type="hidden" class="custom-file-input" id="medical_certificates[1]_hidden" name="photo_hidden" value="{{ $fire_seal->fire_photo}}">
                             </div>
                         </div>
 

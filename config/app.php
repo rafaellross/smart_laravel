@@ -163,6 +163,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Backup\BackupServiceProvider::class,
 
+        Lord\Laroute\LarouteServiceProvider::class,
+
     ],
 
     /*

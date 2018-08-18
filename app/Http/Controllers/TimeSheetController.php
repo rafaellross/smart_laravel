@@ -95,9 +95,13 @@ class TimeSheetController extends Controller
                           on emp.id = ts.employee_id
                           where " .
                           (Auth::user()->administrator ? "1=1" : 'ts.user_id = ' . Auth::user()->id) . " and " .
-                          ($status == 'all' || is_null($status) ? "1=1" : "ts.status = '" . $status . "'") . " and " .
-                          (is_null($week_filter) ? "1=1" : "ts.week_end = '$week_filter'") . ") timesheets " .
+
+                          ($status == 'all' ? "1=1" : "ts.status = '" . (is_null($status) ? 'P' : $status) . "'") . " and " .
+
+                          (is_null($week_filter) ?  "ts.week_end = '" .  Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->format('Y-m-d') . "'" : "ts.week_end = '$week_filter'") . ") timesheets " .
+
                           "where " . (is_null($job_filter) || strtolower($job_filter) == "all"  ? "1=1" : "job = '" . $job_filter . "'" ) .
+
                           " order by name asc"
                     )
                   );
