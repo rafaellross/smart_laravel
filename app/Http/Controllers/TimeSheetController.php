@@ -197,7 +197,7 @@ class TimeSheetController extends Controller
             array_push($errors, "");
             array_push($errors, "");
             array_push($errors, "Fix it and try again! ");
-            return redirect('/timesheets')->withInput()->with('error', $errors);
+            return redirect('/timesheets?filter=1')->withInput()->with('error', $errors);
         }
 
 
@@ -274,7 +274,7 @@ class TimeSheetController extends Controller
 
         }
 
-        return redirect('/timesheets')->with('success', 'Time Sheet has been added');
+        return redirect('/timesheets?filter=1')->with('success', 'Time Sheet has been added');
     }
 
     /**
@@ -408,7 +408,7 @@ class TimeSheetController extends Controller
 
           return "<script>window.close();</script>";
         } else {
-            return redirect('/timesheets')->with('success', 'Time Sheet has been updated');
+            return redirect('/timesheets?filter=1')->with('success', 'Time Sheet has been updated');
         }
 
 
@@ -425,7 +425,7 @@ class TimeSheetController extends Controller
     {
         $timesheet = TimeSheet::find($id);
         $timesheet->delete();
-        return redirect('timesheets')->with('success','Time Sheet has been  deleted');
+        return redirect('timesheets?filter=1')->with('success','Time Sheet has been  deleted');
     }
 
     public function action($id, $action, $status = null)
@@ -449,7 +449,7 @@ class TimeSheetController extends Controller
                     $timesheet->delete();
 
                 }
-                return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');
+                return redirect('timesheets?filter=1')->with('success','Time Sheet(s) has been deleted');
                 break;
             case 'update':
                 foreach ($ids as $id) {
