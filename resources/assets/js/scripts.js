@@ -601,6 +601,24 @@ $(document).ready(function() {
     }
   });
 
+  $('#btnPrintSummary').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+      let urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/print_summary", '_blank'));
+      }
+    }
+  });
+
+
+
   $('#btnDelete').click(function() {
 
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

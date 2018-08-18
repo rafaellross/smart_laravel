@@ -19,7 +19,15 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
         @if(Auth::user()->administrator)
             <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
         @endif
-        <button class="btn btn-info mobile" id="btnPrint" style="">Print Selected(s)</button>
+        <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Print Selected(s)
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button class="dropdown-item" id="btnPrint" style="">Time Sheets</button>
+          <button class="dropdown-item" id="btnPrintSummary" style="">Time Sheets Summary</button>
+        </div>
+
+
         @if(Auth::user()->administrator)
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
         @endif

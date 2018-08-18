@@ -632,6 +632,22 @@ $(document).ready(function () {
     }
   });
 
+  $('#btnPrintSummary').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/print_summary", '_blank'));
+      }
+    }
+  });
+
   $('#btnDelete').click(function () {
 
     var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

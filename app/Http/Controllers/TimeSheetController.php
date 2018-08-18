@@ -10,6 +10,7 @@ use App\DayJob;
 use App\Hour;
 use App\Job;
 use App\TimeSheetReport;
+use App\TimeSheetSummary;
 use App\TimeSheetCertificate;
 use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Http\Request;
@@ -471,6 +472,55 @@ class TimeSheetController extends Controller
                 }
                 return $report->output();
                 break;
+
+                case 'print_summary':
+
+                    $report = new TimeSheetSummary();
+                    $report->SetCompression(true);
+
+                    $timesheets = DB::select(
+                                DB::raw(
+                            "select * from (
+                                select ts.id,
+                                users.username,
+                                ts.created_at,
+                                emp.name,
+                                ts.total,
+                                ts.normal,
+                                ts.total_15,
+                                ts.total_20,
+                                ts.week_end,
+                                ts.status,
+                                (
+                                select code from (
+                                select
+                                jobs.code,
+                                sum(job.end - job.start) as total,
+                                time_sheets.id as ts_id
+                                from time_sheets
+                                join days
+                                on time_sheets.id = days.time_sheet_id
+                                join day_jobs job
+                                on job.day_id = days.id
+                                join jobs
+                                on jobs.id = job.job_id
+                                group by jobs.code, time_sheets.id
+                                ) as job where ts_id = ts.id order by total desc limit 1 ) as job
+                                from time_sheets ts
+                                inner join users
+                                on ts.user_id = users.id
+                                inner join employees emp
+                                on emp.id = ts.employee_id
+                              ) timesheets where id in ($id) order by name asc"
+                                )
+                              );
+
+
+
+                    $report->add($timesheets);
+                    return $report->output();
+                    break;
+
 
             default:
                 return redirect('timesheets')->with('error','There was no action selected');
