@@ -34,8 +34,8 @@ class TimeSheetSummary extends Fpdf
 
 
       $header_height = 9;
-      $this->MultiCell(20 , $header_height, 'User', 'LTB', 'C', 1);
-      $this->SetXY($x+20, $y);
+      $this->MultiCell(30 , $header_height, 'User', 'LTB', 'C', 1);
+      $this->SetXY($x+30, $y);
       $y = $this->GetY();
       $x = $this->GetX();
 
@@ -75,7 +75,7 @@ class TimeSheetSummary extends Fpdf
       $this->MultiCell(25 , $header_height, 'Week End', 'LTB', 'C', 1);
       $this->SetXY($x+25, $y);
 
-      $this->MultiCell(30 , $header_height, 'Job', 'LTRB', 'C', 1);
+      $this->MultiCell(25 , $header_height, 'Job', 'LTRB', 'C', 1);
 
 
 
@@ -106,12 +106,12 @@ class TimeSheetSummary extends Fpdf
 
 
         $this->Cell(10 , 5, $timesheet->id, 'LB', 0, 'C', $this->odd);
-        $this->Cell(20 , 5, $timesheet->username, 'LB', 0, 'C', $this->odd);
+        $this->Cell(30 , 5, $timesheet->username, 'LB', 0, 'C', $this->odd);
 
         $this->Cell(20 , 5, Carbon::parse($timesheet->created_at)->format('d/m/Y'), 'LB', 0, 'C', $this->odd);
 
 
-        $this->Cell(70 , 5, $timesheet->name, 'LB', 0, 'C', $this->odd);
+        $this->Cell(70 , 5, $timesheet->name, 'LB', 0, 'L', $this->odd);
         $this->Cell(20 , 5, $timesheet->total, 'LB', 0, 'C', $this->odd);
 
         $this->Cell(30 , 5, $timesheet->normal, 'LB', 0, 'C', $this->odd);
@@ -121,7 +121,7 @@ class TimeSheetSummary extends Fpdf
         $this->Cell(25 , 5, $timesheet->total_20, 'LB', 0, 'C', $this->odd);
 
         $this->Cell(25 , 5, Carbon::parse($timesheet->week_end)->format('d/m/Y'), 'LB', 0, 'C', $this->odd);
-        $this->Cell(30 , 5, $timesheet->job, 'LBR', 1, 'C', $this->odd);
+        $this->Cell(25 , 5, $timesheet->job, 'LBR', 1, 'C', $this->odd);
 
       }
 
@@ -131,6 +131,8 @@ class TimeSheetSummary extends Fpdf
       $total_normal = 0;
       $total_15 = 0;
       $total_20 = 0;
+      $this->SetDrawColor(200,200,200);
+      $this->SetFillColor(255,154,0);
 
       foreach ($timesheets as $timesheet) {
         $total_hours += Hour::convertToInteger($timesheet->total);
@@ -138,14 +140,19 @@ class TimeSheetSummary extends Fpdf
         $total_15 += Hour::convertToInteger($timesheet->total_15);
         $total_20 += Hour::convertToInteger($timesheet->total_20);
       }
+      $this->Ln();
+      $this->SetFont('Arial','B', 8);
+      $this->Cell(80 , 5, 'TOTALS', 'LB', 1, 'C', 1);
+      $this->Cell(40 , 5, 'TOTAL HOURS', 'LB', 0, 'L', 0);
+      $this->Cell(40 , 5, Hour::convertToHour($total_hours), 'LBR', 1, 'C', 0);
 
-      $this->Cell(20 , 5, Hour::convertToHour($total_hours), 'LB', 0, 'C', $this->odd);
-      $this->Cell(20 , 5, Hour::convertToHour($total_hours), 'LB', 0, 'C', $this->odd);
+      $this->Cell(40 , 5, 'TOTAL NORMAL', 'LB', 0, 'L', 0);
+      $this->Cell(40 , 5, Hour::convertToHour($total_normal), 'LBR', 1, 'C', 0);
 
-      $this->Cell(30 , 5, Hour::convertToHour($total_normal), 'LB', 0, 'C', $this->odd);
+      $this->Cell(40 , 5, 'TOTAL 1.5', 'LB', 0, 'L', 0);
+      $this->Cell(40 , 5, Hour::convertToHour($total_15), 'LBR', 1, 'C', 0);
 
-      $this->Cell(20 , 5, Hour::convertToHour($total_15), 'LB', 0, 'C', $this->odd);
-
-      $this->Cell(25 , 5, Hour::convertToHour($total_20), 'LB', 0, 'C', $this->odd);
+      $this->Cell(40 , 5, 'TOTAL 2.0', 'LB', 0, 'L', 0);
+      $this->Cell(40 , 5, Hour::convertToHour($total_20), 'LBR', 1, 'C', 0);
     }
 }
