@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register Employee') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{action('EmployeeController@update', $id)}}">
+                    <form method="POST" action="{{action('EmployeeController@update', $employee->id)}}">
                         {{csrf_field()}}
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="form-group row">
@@ -173,7 +173,59 @@
                         </div>
                     </form>
                 </div>
+
             </div>
+
+        </div>
+        <div class="timesheets card mt-5 pt-5">
+          <h4 class="text-center">Time Sheets</h4>
+          <table class="table table-hover table-responsive-sm table-striped">
+              <thead>
+                  <tr>
+                      <th scope="col" class="mobile"><input type="checkbox" id="chkRow"></th>
+                      <th scope="col" class="mobile">#</th>
+                      <th scope="col">User</th>
+                      <th scope="col" class="mobile">Date</th>
+
+                      <th scope="col">Total Hours</th>
+                      <th scope="col">Hours 1.5</th>
+                      <th scope="col">Hours 2.0</th>
+                      <th scope="col">Week End</th>
+
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+              @foreach ($timesheets as $timesheet)
+                  <tr>
+                  </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
+                      <td>{{$timesheet->user->username}}</td>
+                      <td class="mobile">{{ Carbon::parse($timesheet->created_at)->format('d/m/Y') }}</td>
+
+                      <td>{{$timesheet->total}}</td>
+                      <td>{{$timesheet->total_15}}</td>
+                      <td>{{$timesheet->total_20}}</td>
+                      <td>{{Carbon::parse($timesheet->week_end)->format('d/m/Y')}}</td>
+
+                      <td>{{$timesheet->status}}</td><td style="text-align: center;">
+                          <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Actions
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="{{ route('action_timesheet', ['id' => $timesheet->id, 'action' => 'print']) }}" target="_blank">View</a>
+                                  <a class="dropdown-item" href="{{ action('TimeSheetController@edit', ['id' => $timesheet->id])}}">Edit</a>
+                                  @if(Auth::user()->administrator || $timesheet->status == 'P')
+                                      <a class="dropdown-item delete" id="{{$timesheet->id}}" href="#">Delete</a>
+                                  @endif
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+                  @endforeach
+              </tbody>
+          </table>
         </div>
     </div>
 </div>

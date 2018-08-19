@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
 use DB;
+use App\TimeSheet;
 use Carbon\Carbon;
 use LaravelQRCode\Facades\QRCode;
 use QR_Code\Types\QR_Text;
@@ -123,7 +124,9 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
-        return view('employee.edit',compact('employee','id'));
+        $timesheets = TimeSheet::where('employee_id', $id)->get();
+
+        return view('employee.edit', ['employee' =>$employee, 'timesheets' => $timesheets]);
     }
 
     /**

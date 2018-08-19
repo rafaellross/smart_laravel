@@ -135,11 +135,14 @@ class TimeSheetSummary extends Fpdf
       $this->SetFillColor(255,154,0);
 
       foreach ($timesheets as $timesheet) {
+
         $total_hours += Hour::convertToInteger($timesheet->total);
         $total_normal += Hour::convertToInteger($timesheet->normal);
         $total_15 += Hour::convertToInteger($timesheet->total_15);
         $total_20 += Hour::convertToInteger($timesheet->total_20);
+
       }
+      
       $this->Ln();
       $this->SetFont('Arial','B', 8);
       $this->Cell(80 , 5, 'TOTALS', 'LB', 1, 'C', 1);
