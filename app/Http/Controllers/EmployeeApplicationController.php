@@ -48,7 +48,7 @@ class EmployeeApplicationController extends Controller
     public function store(Request $request)
     {
             $employee_application                           = new EmployeeApplication();
-            $timeSheet->user_id                             = Auth::id();
+            $timeSheet->user_id                             = Auth::user()->id;
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
