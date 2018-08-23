@@ -125,7 +125,7 @@ class FireIdentificationController extends Controller
         $fire->fire_seal_ref            = $request->get('fire_seal_ref');
         $fire->fire_resist_level        = $request->get('fire_resist_level');
         $fire->install_dt               = Carbon::createFromFormat('d/m/Y', $request->get('install_dt'));
-        //$fire->fire_number              = $request->get('fire_number');
+        $fire->drawing                  = $request->get('drawing');
         $fire->install_by               = $request->get('install_by');
         $fire->manufacturer             = $request->get('manufacturer');
         $fire->fire_photo               = $request->get('photo_hidden');
@@ -190,7 +190,9 @@ class FireIdentificationController extends Controller
                         from fire_identifications
                         inner join jobs
                         on jobs.id = fire_identifications.job_id
-                        where fire_identifications.drawing = '" . $drawing . "'
+                        where
+                         fire_identifications.drawing = '" . $drawing . "'
+
                          and fire_identifications.fire_photo is ".($null == 0 ? 'not' : '')." null
                         order by fire_seal_ref
                          "));
