@@ -43,18 +43,18 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
       $this->Cell($widthImage, 5, '','R',1,'L');
 
       $this->Cell(50, 5,'Contact:',1,0,'C');
-      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthField, 5, 'Smart Plumbing Solutions',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
 
 
       $this->Cell(50, 5,'Phone:',1,0,'C');
-      $this->Cell($widthField, 5, '',1,0,'L');
+      $this->Cell($widthField, 5, '1300 007 6278',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
 
       $this->Cell(50, 5,'Address:',1,0,'C');
-      $this->Cell($widthField, 5, $this->address,1,0,'L');
+      $this->Cell($widthField, 5, '1/17 Chester Street, Annandale NSW 2038',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
-
+/*
       $this->Cell(50, 5,'Class:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
@@ -62,12 +62,12 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
       $this->Cell(50, 5,'Notes:',1,0,'C');
       $this->Cell($widthField, 5, '',1,0,'L');
       $this->Cell($widthImage, 5, '','R',1,'L');
-
+*/
       $this->Cell(50, 5,'Date:',1,0,'C');
       $this->Cell($widthField, 5, Carbon::now()->format('d/m/Y'),1,0,'L');
       $this->Cell($widthImage, 5, '','BR',1,'L');
 
-      $this->Image('img/logo.jpg', 223, 23, 40);
+      $this->Image('img/logo.jpg', 228, 23, 30);
 
       //$this->SetXY(60, 10);
 
