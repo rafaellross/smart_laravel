@@ -192,7 +192,7 @@ class FireIdentificationController extends Controller
                         on jobs.id = fire_identifications.job_id
                         where fire_identifications.drawing = '" . $drawing . "'
                          and fire_identifications.fire_photo is not null
-                        order by fire_number
+                        order by fire_seal_ref
                          "));
                 foreach ($fire_identifications as $fire_identification) {
                     $report->add($fire_identification);
