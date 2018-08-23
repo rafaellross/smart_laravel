@@ -190,7 +190,7 @@ class FireIdentificationController extends Controller
                         from fire_identifications
                         inner join jobs
                         on jobs.id = fire_identifications.job_id
-                        where fire_identifications.job_id = $job
+                        where fire_identifications.id in ($id)
                         order by fire_number
                          "));
                 foreach ($fire_identifications as $fire_identification) {

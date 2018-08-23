@@ -827,7 +827,7 @@ $(document).ready(function() {
       if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
 
         job_id = urlArray[urlArray.length - 1];
-        alert(job_id);
+        
 
       } else {
         job_id = urlArray[urlArray.length - 1].split("?")[0];
@@ -840,6 +840,34 @@ $(document).ready(function() {
 
 
   });
+
+  $('.btnPrintFireReport').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      let urlArray = window.location.href.split("/");
+      let job_id;
+      if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
+
+        job_id = urlArray[urlArray.length - 1];
+
+
+      } else {
+        job_id = urlArray[urlArray.length - 1].split("?")[0];
+
+      }
+      urlArray.splice(urlArray.length - 1, 1);
+
+      window.open(urlArray.join("/") + "/" + job_id + "/action/" + ids.join(",") + "/report", '_blank')
+    }
+
+
+  });
+
 
 
   $('#btnGenerateTimeSheets').click(function() {

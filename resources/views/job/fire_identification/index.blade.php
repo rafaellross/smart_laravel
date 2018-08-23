@@ -23,7 +23,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPrint">
                 <button class="dropdown-item btnPrintFireLabel" id="label">Print Labels</button>
-                <a class="dropdown-item" href="{{$job}}/action/0/report" target="_blank">Print Penetration Report</a>
+                <button class="dropdown-item btnPrintFireReport" id="label">Print Report</button>
+
                 </div>
             </div>
             <a href="{{ URL::to('/fire_identification/scan') }}" class="btn btn-secondary" id="btnDelete">Scan Penetration Tag</a>
