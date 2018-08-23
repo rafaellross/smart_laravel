@@ -148,7 +148,7 @@ class FireIdentificationController extends Controller
         //
     }
 
-    public function action($job, $id, $action) {
+    public function action($job, $id, $action, $drawing = null) {
         switch ($action) {
             case 'delete':
                     DB::table('fire_identifications')->whereRaw("id in ($id)")->delete();
@@ -190,7 +190,8 @@ class FireIdentificationController extends Controller
                         from fire_identifications
                         inner join jobs
                         on jobs.id = fire_identifications.job_id
-                        where fire_identifications.id in ($id)
+                        where fire_identifications.drawing = '" . $drawing . "'
+                         and fire_identifications.fire_photo is not null
                         order by fire_number
                          "));
                 foreach ($fire_identifications as $fire_identification) {
