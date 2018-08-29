@@ -48,6 +48,15 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Other Given Names:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="given_names" placeholder="Type your other given names" maxlength="19" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
                                         <div class="col-md-3 col-12 mb-3">
                                             <label>
                                                 <strong>Date of Birth:</strong>

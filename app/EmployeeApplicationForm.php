@@ -209,6 +209,15 @@ class EmployeeApplicationForm extends \TCPDI
   			$this->Write(0, $char);
   		}
 
+      $this->SetXY($nameX = 3.2, 89.5);
+      //Write Given Names
+      $given_names = str_split(strtoupper($application->given_names));
+      foreach ($given_names as $char) {
+        $this->SetXY($nameX+=5, 97);
+        $this->Write(0, $char);
+      }
+
+
       //Write Street Address
   		$this->SetXY($nameX = 3.2, 89.5+9.5);
   		$street_address = str_split(strtoupper($application->street_address));
