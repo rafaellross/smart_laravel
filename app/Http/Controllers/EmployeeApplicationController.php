@@ -258,11 +258,11 @@ public function action($id, $action, $status = null)
                 foreach ($ids as $id) {
                     $employee_application = EmployeeApplication::find($id);
                     if ($employee_application) {
-                        //$report->add($employee_application);
+                        $report->add($employee_application);
                     }
                     $report->add_tfn($employee_application);
-                    //$report->add_licences($employee_application);
-                    //$report->add_policy($employee_application);
+                    $report->add_licences($employee_application);
+                    $report->add_policy($employee_application);
 
                     if ($employee_application->apprentice) {
                       $report->apprentice_form($employee_application);
