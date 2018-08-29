@@ -349,6 +349,145 @@ class EmployeeApplicationForm extends \TCPDI
         $this->Image($application->employee_signature, 113,129,40,0,'png');
       }
 
+
+      //To be completed by the Payer
+      //Write ABN number
+      $this->SetXY($nameX = 3.2, 135);
+      $abn = str_split("69133559350");
+      foreach ($abn as $key => $char) {
+        if (in_array($key, [2, 5, 8])) {
+          $nameX+=5;
+        }
+        $this->SetXY($nameX+=5, 182);
+        $this->Write(0, $char);
+      }
+
+
+      //Write E-mail
+      $this->SetXY($nameX = 106.8, 178);
+
+      $email = str_split("admin@smartplumbingsolutions.com.au");
+      foreach ($email as $key => $char) {
+
+        if ($key == 19) {
+
+          $nameX = 106.8;
+
+        }
+        if ($key >= 19) {
+
+          $this->SetXY($nameX+=5, 187);
+
+        } else {
+
+          $this->SetXY($nameX+=5, 178);
+
+        }
+
+        $this->Write(0, $char);
+
+      }
+
+
+      //Write Legal Name
+      $this->SetXY($nameX = 3.2, 207);
+
+      $legal_name = str_split("SMART PLUMBING ADMIN SERVICES PTY LTD");
+      foreach ($legal_name as $key => $char) {
+
+        if ($key == 19) {
+
+          $nameX = 3.2;
+
+        }
+        if ($key >= 19) {
+
+          $this->SetXY($nameX+=5, 215.5);
+
+        } else {
+
+          $this->SetXY($nameX+=5, 207);
+
+        }
+
+        $this->Write(0, $char);
+
+      }
+
+
+      //Write Contact person
+      $this->SetXY($nameX = 106.6, 200);
+
+      $contact = str_split("MIRIANA");
+      foreach ($contact as $key => $char) {
+
+        $this->SetXY($nameX+=5, 200);
+        $this->Write(0, $char);
+
+      }
+
+
+      //Write Phone Number
+      $this->SetXY($nameX = 136.6, 208);
+
+      $phone = str_split("0295691576");
+      foreach ($phone as $key => $char) {
+
+        $this->SetXY($nameX+=5, 208);
+        $this->Write(0, $char);
+
+      }
+
+
+      //Write Business address
+      $this->SetXY($nameX = 3.2, 207);
+
+      $business_address = str_split("1/17 CHESTER STREET");
+      foreach ($business_address as $key => $char) {
+
+        $this->SetXY($nameX+=5, 236.4);
+        $this->Write(0, $char);
+
+      }
+
+      //Write Business suburb
+      $this->SetXY($nameX = 3.2, 247);
+
+      $business_suburb = str_split("CAMPERDOWN");
+      foreach ($business_suburb as $key => $char) {
+
+        $this->SetXY($nameX+=5, 255);
+        $this->Write(0, $char);
+
+      }
+
+      //Write Business state
+      $this->SetXY($nameX = 3.3, 264);
+
+      $business_state = str_split("NSW");
+      foreach ($business_state as $key => $char) {
+
+        $this->SetXY($nameX+=4.7, 264);
+        $this->Write(0, $char);
+
+      }
+
+      //Write Business post code
+      $this->SetXY($nameX+=11, 264);
+
+      $business_state = str_split("2050");
+      foreach ($business_state as $key => $char) {
+
+        $this->SetXY($nameX+=5, 264);
+        $this->Write(0, $char);
+
+      }
+
+
+
+
+
+
     }
 
     public function apprentice_form(EmployeeApplication $application) {

@@ -48,7 +48,7 @@ class EmployeeApplicationController extends Controller
     public function store(Request $request)
     {
             $employee_application                           = new EmployeeApplication();
-            $timeSheet->user_id                             = Auth::user()->id;
+            $employee_application->user_id                  = Auth::user()->id;
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
@@ -256,11 +256,11 @@ public function action($id, $action, $status = null)
                 foreach ($ids as $id) {
                     $employee_application = EmployeeApplication::find($id);
                     if ($employee_application) {
-                        $report->add($employee_application);
+                        //$report->add($employee_application);
                     }
                     $report->add_tfn($employee_application);
-                    $report->add_licences($employee_application);
-                    $report->add_policy($employee_application);
+                    //$report->add_licences($employee_application);
+                    //$report->add_policy($employee_application);
 
                     if ($employee_application->apprentice) {
                       $report->apprentice_form($employee_application);
