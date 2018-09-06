@@ -89,9 +89,8 @@
     </div>
 
     <script type="text/javascript">
-
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-
+      
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
       let scannedEmployees = [];
 
       let beepOk = new Audio('https://www.soundjay.com/button/beep-01a.wav');
@@ -250,7 +249,7 @@
         if (scannedEmployees.length > 0) {
 
           window.location = "create/" + scannedEmployees.join(",");
-          
+
         }
       });
 
