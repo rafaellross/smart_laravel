@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use Illuminate\Http\Resources\Json\Resource;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
+use App\Hour;
+use App\EmployeeEntry;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,27 @@ use GuzzleHttp\Client;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::post('employees_entries', function(Request $request){
+
+  //return $request;
+  $result = [];
+ foreach ($request->get('ids') as $employee) {
+    $entry = new EmployeeEntry();
+    $entry->employee_id = $employee;
+    $entry->in_out      = strtolower($request->get('in_out')) == "in" ? 1 : 0;
+    $entry->notes       = $request->get('entry_notes');
+    $entry->entry_dt    = Carbon::createFromFormat('d/m/Y', $request->get('entry_dt'));
+    $entry->entry_time  = Hour::convertToInteger($request->get('entry_time'));
+    $entry->user_id     = 1;
+    $entry->save();
+    array_push($result, $entry->id);
+}
+
+
+  return $request;
 });
 
 
