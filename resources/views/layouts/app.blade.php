@@ -38,7 +38,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ URL::to('/') }}/img/brand.ico" width="30" height="30" alt="{{ config('app.name', 'Administration - Smart Plumbing Solutions') }}"/>
+                    <img src="{{ URL::to('/') }}/img/brand.ico" width="30" height="30" alt="{{ 'Administration - Smart Plumbing Solutions') }}"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
