@@ -57,13 +57,16 @@
                                     </div>
 
                                     <div class="form-row">
-                                        <div class="col-md-3 col-12 mb-3">
+                                        <div class="col-md-6 col-12">
                                             <label>
                                                 <strong>Date of Birth:</strong>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg" name="dob" value="" required>
+                                            </label>                                            
+                                            <input type="date" class="form-control form-control-lg" name="dob" value="" required>                                            
                                         </div>
-                                        <div class="col-md-6 col-12 mb-6">
+
+
+
+                                        <div class="col-md-4 col-12 mb-3">
                                             <label>
                                                 <strong>Gender:</strong>
                                             </label>
@@ -73,6 +76,21 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Pants Size:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="pants_size" value="" required>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Shirt Size:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="shirt_size" value="" required>
+                                        </div>
+                                    </div>
+
                                     <!-- End Card -->
                                 </div>
                             </div>
@@ -210,13 +228,25 @@
                                 <!-- Start Card -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Role:</strong>
+                                            </label>
+                                            <select class="form-control form-control-lg" name="role" required>
+                                                <option value="P">Plumber</option>
+                                                <option value="A">Apprentice</option>
+                                                <option value="L">Labourer</option>
+                                            </select>                                            
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-3">
                                             <label>
                                                 <strong>Tax File Number:</strong>
                                             </label>
                                             <input type="text" class="form-control form-control-lg" name="tax_file_number" value="" required>
                                         </div>
+
                                     </div>
+
 
                                     <div class="form-row">
                                         <div class="col-md-4 col-12 mb-3">
@@ -229,7 +259,7 @@
                                             <label>
                                                 <strong>BSB Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bsb" value="" required>
+                                            <input type="text" class="form-control form-control-lg" name="bsb" minlength="6" value="" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>
@@ -318,7 +348,7 @@
                                         <label>
                                             <strong>Date Employment Commenced:</strong>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg date-picker" name="date_commenced" value="" required>
+                                        <input type="date" class="form-control form-control-lg" name="date_commenced" value="" required>
                                     </div>
                                     <div class="col-md-4 col-4 mb-3">
                                         <label>

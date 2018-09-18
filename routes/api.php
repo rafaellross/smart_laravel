@@ -37,13 +37,14 @@ Route::post('employees_entries', function(Request $request){
     $entry->notes       = $request->get('entry_notes');
     $entry->entry_dt    = Carbon::createFromFormat('d/m/Y', $request->get('entry_dt'));
     $entry->entry_time  = Hour::convertToInteger($request->get('entry_time'));
+    $entry->entry_number = DB::select(DB::raw('select if(max(entry_number) is null, 0, max(entry_number)) as entry_number from employee_entries where employee_id = ' . $employee ." and entry_dt = '" . Carbon::createFromFormat('d/m/Y', $request->get('entry_dt'))->format('Y-m-d') . "';"))[0]->entry_number+1;
     $entry->user_id     = 1;
     $entry->save();
     array_push($result, $entry->id);
 }
 
 
-  return $requestapp;
+  return $request;
 });
 
 

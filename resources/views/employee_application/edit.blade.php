@@ -62,7 +62,8 @@
                                             <label>
                                                 <strong>Date of Birth:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg date-picker" name="dob" value="{{ Carbon::parse($employee_application->dob)->format('d/m/Y') }}" required>
+
+                                            <input type="date" class="form-control form-control-lg date-picker" name="dob" value="{{ Carbon::parse($employee_application->dob)->format('Y-m-d') }}" required>
                                         </div>
                                         <div class="col-md-6 col-12 mb-6">
                                             <label>
@@ -74,6 +75,21 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Pants Size:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="pants_size" value="{{ $employee_application->pants_size }}" required>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Shirt Size:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="shirt_size" value="{{ $employee_application->shirt_size }}" required>
+                                        </div>
+                                    </div>
+
                                     <!-- End Card -->
                                 </div>
                             </div>
@@ -211,7 +227,18 @@
                                 <!-- Start Card -->
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-row">
-                                        <div class="col-md-12 col-12 mb-3">
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <label>
+                                                <strong>Role:</strong>
+                                            </label>
+                                            <select class="form-control form-control-lg" name="role" required>
+                                                <option value="P" {{$employee_application->role == 'P' ? 'selected' : ''}}>Plumber</option>
+                                                <option value="A" {{$employee_application->role == 'A' ? 'selected' : ''}}>Apprentice</option>
+                                                <option value="L" {{$employee_application->role == 'L' ? 'selected' : ''}}>Labourer</option>
+                                            </select>                                            
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-3">
                                             <label>
                                                 <strong>Tax File Number:</strong>
                                             </label>
@@ -230,7 +257,7 @@
                                             <label>
                                                 <strong>BSB Nº:</strong>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg" name="bsb" value="{{$employee_application->bsb}}" required>
+                                            <input type="text" class="form-control form-control-lg" name="bsb" minlength="6" value="{{$employee_application->bsb}}" required>
                                         </div>
                                         <div class="col-md-4 col-12 mb-3">
                                             <label>

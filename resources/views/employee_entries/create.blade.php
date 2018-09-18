@@ -15,11 +15,21 @@
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Employee') }}</label>
                             <div class="col-md-6">
 
-                              @foreach($employees as $employee)
-                                  <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
-                                  <input type="hidden" name="employees[{{$employee->id}}][id]" value="{{$employee->id}}">
 
-                              @endforeach
+                              @if(is_null($employees))
+                                  <select class="custom-select" name="employee_id[]">
+                                     @foreach (App\Employee::all() as $employee)
+                                       <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                     @endforeach
+                                   </select>
+                              @else
+                                @foreach($employees as $employee)
+                                    <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
+                                    <input type="hidden" name="employees[{{$employee->id}}][id]" value="{{$employee->id}}">
+
+                                @endforeach
+                              @endif
+
 
                             </div>
                         </div>
@@ -55,7 +65,7 @@
                                   @endif
 
                               @endfor
-                              
+
                             </select>
                              </div>
                         </div>

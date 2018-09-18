@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTaxStatusEmpApp extends Migration
+class AddPantsSizeRoleEmplApp extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,9 @@ class AddTaxStatusEmpApp extends Migration
     public function up()
     {
         Schema::table('employee_applications', function (Blueprint $table) {
-            $table->string('tax_status')->nullable();
-            $table->boolean('claim_threshold')->default(true);
-            $table->boolean('educational_loan')->default(false);
-            $table->boolean('financial_supplement')->default(false);
-
+            $table->string('pants_size')->nullable();
+            $table->string('shirt_size')->nullable();
+            $table->string('role')->nullable();
         });
     }
 

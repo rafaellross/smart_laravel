@@ -16,7 +16,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <button class="dropdown-item btnPrintEmployee" href="#" id="awareness">Drug & Alcohol Awareness Card</button>
-              <button class="dropdown-item btnPrintEmployee" href="#" id="id">ID Card</button>
+              <button class="dropdown-item btnPrintEmployee" href="#" id="id" style="display: none">ID Card</button>
               <button class="dropdown-item btnPrintEmployee" href="#" id="list">Print List</button>
             </div>
             @if (isset(Auth::user()->tester) && Auth::user()->tester)
@@ -122,6 +122,10 @@
             @endforeach
         </tbody>
     </table>
+
+     <div class="col-md-10 offset-md-3">        
+            {{ $employees->links() }}                    
+    </div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="modalUpdateEntitlements">
   <div class="modal-dialog" role="document">

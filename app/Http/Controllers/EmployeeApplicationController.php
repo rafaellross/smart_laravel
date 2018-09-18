@@ -52,7 +52,12 @@ class EmployeeApplicationController extends Controller
             $employee_application->first_name               = $request->get('first_name');
             $employee_application->last_name                = $request->get('last_name');
             $employee_application->given_names              = $request->get('given_names');
-            $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
+
+            $employee_application->pants_size               = $request->get('pants_size');
+            $employee_application->shirt_size               = $request->get('shirt_size');
+            $employee_application->role                     = $request->get('role');
+            
+            $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('Y-m-d', $request->get('dob'));
             $employee_application->street_address           = $request->get('street_address');
             $employee_application->suburb                   = $request->get('suburb');
             $employee_application->post_code                = $request->get('post_code');
@@ -162,7 +167,15 @@ class EmployeeApplicationController extends Controller
                           $employee_application->first_name               = $request->get('first_name');
                           $employee_application->given_names              = $request->get('given_names');
                           $employee_application->last_name                = $request->get('last_name');
-                          $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('dob'));
+                          $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('Y-m-d', $request->get('dob'));
+
+                          $employee_application->pants_size               = $request->get('pants_size');
+                          $employee_application->shirt_size               = $request->get('shirt_size');
+                          $employee_application->role                     = $request->get('role');
+
+
+
+
                           $employee_application->street_address           = $request->get('street_address');
                           $employee_application->suburb                   = $request->get('suburb');
                           $employee_application->post_code                = $request->get('post_code');

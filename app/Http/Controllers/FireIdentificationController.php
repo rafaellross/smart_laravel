@@ -19,11 +19,17 @@ class FireIdentificationController extends Controller
     public function index($job)
     {
       $drawing_filter = filter_input(INPUT_GET, 'drawing', FILTER_SANITIZE_SPECIAL_CHARS);
+
       $drawings = DB::select(DB::raw("select DISTINCT drawing from fire_identifications where job_id = $job order by drawing"));
+
       if (is_null($drawing_filter) || $drawing_filter == "all") {
-        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_seal_ref')->get(['id', 'drawing', 'fire_seal_ref', 'fire_resist_level', 'install_by', 'install_dt']), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->orderBy('fire_seal_ref')->select(['id', 'drawing', 'fire_seal_ref', 'fire_resist_level', 'install_by', 'install_dt'])->paginate(20), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+
       } else {
-        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->where('drawing', $drawing_filter)->orderBy('fire_seal_ref')->get(['id', 'drawing', 'fire_seal_ref', 'fire_resist_level', 'install_by', 'install_dt']), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+
+        return view('job.fire_identification.index', ['job' => $job, 'fire_seals' => FireIdentification::where('job_id', $job)->where('drawing', $drawing_filter)->orderBy('fire_seal_ref')->select(['id', 'drawing', 'fire_seal_ref', 'fire_resist_level', 'install_by', 'install_dt'])->paginate(20), 'max_id' => DB::select(DB::raw('select if(max(fire_number) is null, 0, max(fire_number))  as fire_number from fire_identifications where job_id = ' . $job .';'))[0]->fire_number+1, 'drawings' => $drawings]);
+
       }
 
     }

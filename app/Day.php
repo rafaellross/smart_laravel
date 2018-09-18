@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Hour;
 
 class Day extends Model
 {
+
     public function dayJobs(){
         return $this->hasMany('App\DayJob')->orderBy('number');
     }
@@ -69,6 +71,44 @@ class Day extends Model
             }
         }
         return $work;
+    }
+
+    public function updateHours() {
+
+        $normal     = 0;
+        $extra_15   = 0;
+        $extra_20   = 0;
+
+        foreach ($this->dayJobs as $job) {
+
+            $hours = $job->end > $job->start ? ($job->end - $job->start) : 0;
+
+            if($normal < (8*60) && $this->week_day < 7){
+
+                $normal += $hours;
+
+            } elseif ($extra_15 < (2*60) && $this->week_day < 7) {
+
+                $extra_15 += $hours;
+
+            } else {
+
+                $extra_20 += $hours;
+
+            }            
+        }
+
+        if ($this->week_day < 7 && $normal > 0) {
+            $normal -= 15;
+        }
+
+        $this->total = Hour::convertToHour($normal + $extra_15 + $extra_20);
+        $this->normal = Hour::convertToHour($normal);
+        $this->total_15 = Hour::convertToHour($extra_15);
+        $this->total_20 = Hour::convertToHour($extra_20);
+
+        $this->save();
+        return ["normal" => $normal, "total_15" => $extra_15, "total_20" => $extra_20];
     }
 
 }

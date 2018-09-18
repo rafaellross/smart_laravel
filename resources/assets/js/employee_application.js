@@ -21,11 +21,6 @@ $(document).ready(function(){
         });
 
 
-        $('input[name=dob]').datepicker({
-            format: 'dd/mm/yyyy',
-            startView: 4
-        });
-
         //If employee is apprentice, then show selection of year
         $('select[name=apprentice]').change(function(){
             if ($(this).val() === "1") {

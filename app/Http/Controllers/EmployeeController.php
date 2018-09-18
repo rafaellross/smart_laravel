@@ -20,7 +20,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $company = filter_input(INPUT_GET, 'company', FILTER_SANITIZE_SPECIAL_CHARS);
         $type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -55,6 +55,7 @@ class EmployeeController extends Controller
                                 . " and "
                                 . ($type == 'missing' ? '(select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) is null' : " 1=1")
                                 . " order by emp.name asc"));
+        $employees = $this->arrayPaginator($employees, $request, 50);
 
         return view('employee.index', ['employees' => $employees, 'params' => $_GET]);
     }

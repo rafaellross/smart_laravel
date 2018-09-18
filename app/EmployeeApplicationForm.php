@@ -63,6 +63,32 @@ class EmployeeApplicationForm extends \TCPDI
           $this->Rect(76, 149.5, 5.5, 4);
         }
 
+        
+        $this->Text(19, 155, "PANTS SIZE: " . str_repeat(".", 30) . "SHIRT SIZE: " . str_repeat(".", 30));        
+        $this->Text(45, 154, $application->pants_size);        
+        $this->Text(95, 154, $application->shirt_size);        
+
+        $this->Text(19, 160, "ROLE: " . str_repeat(".", 130));        
+
+        $role = '';
+        if($application->role == 'P') {
+
+          $role = 'Plumber';
+
+        } elseif ($application->role == 'A') {
+
+          $role = 'Apprentice';
+
+        } elseif ($application->role == 'L') {
+
+          $role = 'Labourer';
+
+        }
+
+
+        
+        $this->Text(35, 159, $role);        
+
         $this->Text(51, 167.4, strtoupper($application->first_name) . " " .  strtoupper($application->last_name));
 
         if (!is_null($application->employee_signature)) {

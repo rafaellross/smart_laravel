@@ -24,6 +24,7 @@
                 <th scope="col">Notes</th>
                 <th scope="col">Entry Date</th>
                 <th scope="col">Entry Time</th>
+                <th scope="col">Entry Number</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Created by</th>
             </tr>
@@ -39,6 +40,7 @@
                         <td>{{ $employee_entry->notes }}</td>
                         <td>{{ Carbon::parse($employee_entry->entry_dt)->format('d/m/Y') }}</td>
                         <td>{{ App\Hour::convertToHour($employee_entry->entry_time) }}</td>
+                        <td>{{ $employee_entry->entry_number}}</td>
                         <td>{{Carbon::parse($employee_entry->created_at)->format('d/m/Y - H:i')}}</td>
                         <td>{{ $employee_entry->username }}</td>
 

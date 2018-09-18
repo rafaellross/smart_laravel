@@ -171,7 +171,6 @@ class TimeSheet extends Model
 	    return $workDays;
 	}
 
-
 	public function bonus(){
 		if ($this->workDays() >= 5 || $this->employee->bonus == 0) {
 			return $this->employee->bonus;
@@ -182,6 +181,31 @@ class TimeSheet extends Model
 			$bonus = $this->employee->bonus - ((5-$this->workDays()) * $deductBonusDay);
 			return $bonus;
 		}
+	}
+
+	public function updateHours() {
+		$total     = 0;
+		$normal     = 0;
+        $total_15   = 0;
+        $total_20   = 0;
+
+		foreach ($this->days as $day) {
+			$day->updateHours();
+
+			$total 		+= Hour::convertToInteger($day->total);
+			$normal 	+= Hour::convertToInteger($day->normal);
+			$total_15 	+= Hour::convertToInteger($day->total_15);
+			$total_20 	+= Hour::convertToInteger($day->total_20);
+
+		}
+
+		$this->total 		= Hour::convertToInteger($total);
+		$this->normal 		= Hour::convertToInteger($normal);
+		$this->total_15 	= Hour::convertToInteger($total_15);
+		$this->total_20 	= Hour::convertToInteger($total_20);
+	
+
+		$this->save();
 	}
 
 
