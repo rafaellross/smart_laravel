@@ -597,10 +597,10 @@ class EmployeeApplicationForm extends \TCPDI
         $this->Cell(0,$line_height, '69 133 559 350',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Entity/ Legal Name:',1,0,'L', 0);
-        $this->Cell(0,$line_height, ' Smart Plumbing Admin Services P/L',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'Smart Plumbing Admin Services P/L',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Trading Name:',1,0,'L', 0);
-        $this->Cell(0,$line_height, ' Smart Plumbing Solutions',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'Smart Plumbing Solutions',1,1,'L', 0);
 
         $this->Cell(65,$line_height, "Employer's Name:",1,0,'L', 0);
         $this->Cell(0,$line_height, 'Smart Plumbing Solutions',1,1,'L', 0);
@@ -615,7 +615,7 @@ class EmployeeApplicationForm extends \TCPDI
         $this->Cell(0,$line_height, '9569 1576',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Contact Person:',1,0,'L', 0);
-        $this->Cell(0,$line_height, ' Miriana Krimizis',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'Miriana Krimizis',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Email:',1,0,'L', 0);
         $this->Cell(0,$line_height, 'admin@smartplumbingsolutions.com.au',1,1,'L', 0);
