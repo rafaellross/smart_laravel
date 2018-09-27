@@ -63,12 +63,12 @@ class EmployeeApplicationForm extends \TCPDI
           $this->Rect(76, 149.5, 5.5, 4);
         }
 
-        
-        $this->Text(19, 155, "PANTS SIZE: " . str_repeat(".", 30) . "SHIRT SIZE: " . str_repeat(".", 30));        
-        $this->Text(45, 154, $application->pants_size);        
-        $this->Text(95, 154, $application->shirt_size);        
 
-        $this->Text(19, 160, "ROLE: " . str_repeat(".", 130));        
+        $this->Text(19, 155, "PANTS SIZE: " . str_repeat(".", 30) . "SHIRT SIZE: " . str_repeat(".", 30));
+        $this->Text(45, 154, $application->pants_size);
+        $this->Text(95, 154, $application->shirt_size);
+
+        $this->Text(19, 160, "ROLE: " . str_repeat(".", 130));
 
         $role = '';
         if($application->role == 'P') {
@@ -86,8 +86,8 @@ class EmployeeApplicationForm extends \TCPDI
         }
 
 
-        
-        $this->Text(35, 159, $role);        
+
+        $this->Text(35, 159, $role);
 
         $this->Text(51, 167.4, strtoupper($application->first_name) . " " .  strtoupper($application->last_name));
 
@@ -141,13 +141,23 @@ class EmployeeApplicationForm extends \TCPDI
               $this->Cell(0,95, "", 'LRB',0,'L');
 
 
-              //Picture Front
-              list($width, $height, $type, $attr) = getimagesize($license->image_front);
-              $this->Image($license->image_front, 15,75, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
+      				$image = @imagecreatefrompng($license->image_front);
+      			    if (!$image)
+      			    {
+      			        //maybe delete bad image?
+      			        unlink($imagePath);
+      			        continue;//do nothing in this iteration anymore
+      			    } else {
 
-              //Picture Back
-              list($width, $height, $type, $attr) = getimagesize($license->image_back);
-              $this->Image($license->image_back, 15,178, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
+      	              //Picture Front
+      	              list($width, $height, $type, $attr) = getimagesize($license->image_front);
+      	              $this->Image($license->image_front, 15,75, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
+
+      	              //Picture Back
+      	              list($width, $height, $type, $attr) = getimagesize($license->image_back);
+      	              $this->Image($license->image_back, 15,170, $this->GetPageWidth()-125,0, str_replace("image/", "", image_type_to_mime_type($type)));
+
+      			    }
 
 
 
@@ -584,31 +594,31 @@ class EmployeeApplicationForm extends \TCPDI
         $this->SetFont('Helvetica', '', 14);
 
         $this->Cell(65,$line_height, 'ABN:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, '69 133 559 350',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Entity/ Legal Name:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, ' Smart Plumbing Admin Services P/L',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Trading Name:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, ' Smart Plumbing Solutions',1,1,'L', 0);
 
         $this->Cell(65,$line_height, "Employer's Name:",1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'Smart Plumbing Solutions',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Address:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'Unit 1, 17 Chester St, Campedown, 2050',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'PO Address:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'POBOX 466, Leichhardt NSW 2040',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Phone:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, '9569 1576',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Contact Person:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, ' Miriana Krimizis',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Email:',1,0,'L', 0);
-        $this->Cell(0,$line_height, '',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'admin@smartplumbingsolutions.com.au',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Mobile:',1,0,'L', 0);
         $this->Cell(0,$line_height, '',1,1,'L', 0);

@@ -123,9 +123,6 @@
         </tbody>
     </table>
 
-     <div class="col-md-10 offset-md-3">        
-            {{ $employees->links() }}                    
-    </div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="modalUpdateEntitlements">
   <div class="modal-dialog" role="document">
