@@ -267,9 +267,14 @@ if($('#chk_policy').is(':checked')) {
 
   $(document).on('click', '#chk_no_super', function(event) {
     if(this.checked) {
+
         $('input[name=superannuation]').prop('disabled', true).prop('required', false);
+        $('input[name=superannuation_number]').prop('disabled', true).prop('required', false);
+
     } else {
+
         $('input[name=superannuation]').prop('disabled', false).prop('required', true);
+        $('input[name=superannuation_number]').prop('disabled', false).prop('required', true);
     }
   });
 

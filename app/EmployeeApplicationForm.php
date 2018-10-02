@@ -51,7 +51,7 @@ class EmployeeApplicationForm extends \TCPDI
         $this->Text(49, 123.5, strtoupper($application->bank_acc_name));
         $this->Text(128, 123, $application->bsb);
         $this->Text(173, 123.3, $application->account_number);
-        $this->Text(70, 130, $application->superannuation);
+        $this->Text(70, 130, $application->superannuation . " - " . $application->superannuation_number);
         $this->Text(63, 135.5, $application->redundancy);
         $this->Text(57, 141.5, $application->long_service_number);
 
@@ -609,7 +609,7 @@ class EmployeeApplicationForm extends \TCPDI
         $this->Cell(0,$line_height, 'Unit 1, 17 Chester St, Campedown, 2050',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'PO Address:',1,0,'L', 0);
-        $this->Cell(0,$line_height, 'POBOX 466, Leichhardt NSW 2040',1,1,'L', 0);
+        $this->Cell(0,$line_height, 'PO BOX 466, Leichhardt NSW 2040',1,1,'L', 0);
 
         $this->Cell(65,$line_height, 'Phone:',1,0,'L', 0);
         $this->Cell(0,$line_height, '9569 1576',1,1,'L', 0);
