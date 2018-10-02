@@ -74,6 +74,7 @@ class EmployeeApplicationController extends Controller
             $employee_application->bsb                      = $request->get('bsb');
             $employee_application->account_number           = $request->get('account_number');
             $employee_application->superannuation           = $request->get('superannuation');
+            $employee_application->superannuation_number    = $request->get('superannuation_number');
             $employee_application->redundancy               = $request->get('redundancy');
             $employee_application->long_service_number      = $request->get('long_service_number');
             $employee_application->apprentice               = $request->get('apprentice');
@@ -192,6 +193,7 @@ class EmployeeApplicationController extends Controller
                           $employee_application->bsb                      = $request->get('bsb');
                           $employee_application->account_number           = $request->get('account_number');
                           $employee_application->superannuation           = $request->get('superannuation');
+                          $employee_application->superannuation_number    = $request->get('superannuation_number');
                           $employee_application->redundancy               = $request->get('redundancy');
                           $employee_application->long_service_number      = $request->get('long_service_number');
                           $employee_application->apprentice               = $request->get('apprentice');

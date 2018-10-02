@@ -269,9 +269,15 @@
                                     <div class="form-row">
                                         <div class="col-md-12 col-12 mb-3">
                                             <label>
-                                                <strong>Superannuation Details:</strong>
+                                                <strong>Superannuation Fund Name:</strong>
                                             </label>
                                             <input type="text" class="form-control form-control-lg" name="superannuation" value="{{$employee_application->superannuation}}" {{is_null($employee_application->superannuation) ? 'disabled' : 'required'}}>
+                                        </div>                                    
+                                        <div class="col-md-12 col-12 mb-3">
+                                            <label>
+                                                <strong>Superannuation Member Number:</strong>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" name="superannuation" value="{{$employee_application->superannuation_number}}" {{is_null($employee_application->superannuation_number) ? 'disabled' : 'required'}}>
                                             <div class="custom-control custom-checkbox mt-2">
                                               <input type="checkbox" class="custom-control-input" id="chk_no_super" value="accept" {{is_null($employee_application->superannuation) ? 'checked' : ''}}>
                                               <label class="custom-control-label" for="chk_no_super">
@@ -280,6 +286,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-row">
                                         <div class="col-md-12 col-12 mb-3">
                                             <label>
