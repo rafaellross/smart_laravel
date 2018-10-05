@@ -30,6 +30,7 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
 
         @if(Auth::user()->administrator)
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
+        <button class="btn btn-secondary mobile" id="btnTextFile" style="">Generate Text File</button>
         @endif
         <div id="statusSelect" class="mt-2">
             <label for="">Week End:</label>

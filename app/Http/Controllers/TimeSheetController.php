@@ -17,6 +17,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Storage;
+
+
 class TimeSheetController extends Controller
 {
     /**
@@ -521,6 +524,29 @@ class TimeSheetController extends Controller
                     return $report->output();
                     break;
 
+            case 'file':
+                Storage::put('timesheets.txt', 'Employee Co./Last Name,Employee First Name,Payroll Category,Job,Customer Co./Last Name,Customer First Name,Notes,Date,Units,Employee Card ID,Employee Record ID,Start/Stop Time,Customer Card ID,Customer Record ID');
+                foreach ($ids as $id) {
+                    $timesheet = TimeSheet::find($id);
+                    foreach ($timesheet->days as $day) {
+                      foreach ($day as $job) {
+
+                        //Normal Hours
+
+                        Storage::append('timesheets.txt',  $timesheet->employee->name . ',Base Hourly,001,,,,10/09/2018,9.00,*None,,,,');
+
+                        if (isset($job->id)) {
+                          //$job->delete();
+                        }                      
+
+                      }
+                      //$day->delete();
+                    }
+                    //$timesheet->delete();
+
+                }
+                return redirect('timesheets?filter=1')->with('success','Time Sheet(s) has been deleted');
+                break;              
 
             default:
                 return redirect('timesheets')->with('error','There was no action selected');
