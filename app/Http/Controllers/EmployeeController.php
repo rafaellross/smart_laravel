@@ -487,7 +487,7 @@ class EmployeeController extends Controller
 
                 foreach ($employees as $employee) {
 
-                  if (!in_array($employee->job, ["sick", "anl", "pld", "tafe", "holiday", "rdo"])) {
+                  if (!in_array($employee->job, [""])) {
                     $emp = Employee::find($employee->emp_id);
                     $emp->job_id = Job::where("code", $employee->job)->value('id');
                     $emp->save();
