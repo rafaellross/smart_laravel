@@ -40,7 +40,9 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{{action('FireIdentificationController@index', $job->id)}}">Fire Identification</a>
-                                    <a class="dropdown-item" href="{{action('TmvLogController@index', $job->id)}}">TMV Service Log</a>
+                                    @if (isset(Auth::user()->tester) && Auth::user()->tester)
+                                      <a class="dropdown-item" href="{{action('TmvLogController@index', $job->id)}}">TMV Service Log</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{action('JobController@edit', $job->id)}}">Edit</a>
                                     <a class="dropdown-item delete" id="{{$job->id}}" href="#">Delete</
                                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
@@ -11,7 +12,7 @@ use App\TimeSheet;
 use Carbon\Carbon;
 use LaravelQRCode\Facades\QRCode;
 use QR_Code\Types\QR_Text;
-
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -32,6 +33,7 @@ class EmployeeController extends Controller
                                 emp.name,
                                 emp.phone,
                                 emp.dob,
+                                jobs.code as job_id,
                                 case
                                 when emp.location = 'P' then 'Plumber'
                                 when emp.location = 'O' then 'Office'
@@ -47,6 +49,8 @@ class EmployeeController extends Controller
                                 if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) as rollover,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
+                                left join jobs
+                                on emp.job_id = jobs.id
                                 where
                                 ".($company == 'all' || is_null($company) ? 'emp.company is not null' : "emp.company = '$company'" )."
                                 and
@@ -55,7 +59,7 @@ class EmployeeController extends Controller
                                 . " and "
                                 . ($type == 'missing' ? '(select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) is null' : " 1=1")
                                 . " order by emp.name asc"));
-        
+
 
         return view('employee.index', ['employees' => $employees, 'params' => $_GET]);
     }
@@ -383,7 +387,9 @@ class EmployeeController extends Controller
 
                   return response()->download($file_path)->deleteFileAfterSend(true);
 
-
+            case 'update_job':
+                return $this->updateJob();
+                break;
 
             default:
                 return redirect('employees')->with('error','There was no action selected');
@@ -443,8 +449,52 @@ class EmployeeController extends Controller
         }
 
         return $report->output();
+    }
 
+    public function updateJob()
+    {
+      $employees = DB::select(
+                  DB::raw(
+                      "
+                      select * from (
+                          select
+                                emp.id as emp_id,
+                                (
+                                select code from (
+                                  select
+                                  jobs.code,
+                                  sum(job.end - job.start) as total,
+                                  time_sheets.id as ts_id
+                                  from time_sheets
+                                  join days
+                                  on time_sheets.id = days.time_sheet_id
+                                  join day_jobs job
+                                  on job.day_id = days.id
+                                  join jobs
+                                  on jobs.id = job.job_id
+                                  group by jobs.code, time_sheets.id
+                                ) as job where ts_id = ts.id order by total desc limit 1 ) as job
+                        from time_sheets ts
+                        inner join users
+                        on ts.user_id = users.id
+                        inner join employees emp
+                        on emp.id = ts.employee_id
+                        where ts.status <> 'C' and " .
+                        "ts.week_end = '" .  Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->format('Y-m-d') . "'" . ") timesheets "
 
+                  )
+                );
+
+                foreach ($employees as $employee) {
+
+                  if (!in_array($employee->job, ["sick", "anl", "pld", "tafe", "holiday", "rdo"])) {
+                    $emp = Employee::find($employee->emp_id);
+                    $emp->job_id = Job::where("code", $employee->job)->value('id');
+                    $emp->save();
+                  }
+                }
+
+          return redirect('/employees?params=true')->with('success', 'Employee Job has been updated');
 
     }
 }

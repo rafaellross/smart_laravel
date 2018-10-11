@@ -21,6 +21,7 @@
             </div>
             @if (isset(Auth::user()->tester) && Auth::user()->tester)
               <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>
+              <a href="{{ 'employees/action/0/update_job'}}" class="btn btn-warning mobile" id="btnUpdateJob" style="">Update Job</a>
             @endif
 
 
@@ -73,6 +74,7 @@
                 <th scope="col">Apprentice Year</th>
                 <th scope="col">Apprentice Rollover</th>
                 <th scope="col">Time Sheet</th>
+                <th scope="col">Job</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -104,7 +106,7 @@
                                 </small>
                             @endif
                         </td>
-
+                        <td class="text-center">{{$employee->job_id}}</td>
                         <td style="text-align: center;">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

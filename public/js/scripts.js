@@ -913,6 +913,8 @@ $(document).ready(function () {
   }
 
   console.log($.urlParam('generate'));
+
+  $('#btnUpdateJob').click(function () {});
 });
 
 /***/ })
