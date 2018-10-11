@@ -25,6 +25,7 @@ class EmployeeController extends Controller
     {
         $company = filter_input(INPUT_GET, 'company', FILTER_SANITIZE_SPECIAL_CHARS);
         $type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
+        $job = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
         $employees = DB::select(
@@ -53,6 +54,8 @@ class EmployeeController extends Controller
                                 on emp.job_id = jobs.id
                                 where
                                 ".($company == 'all' || is_null($company) ? 'emp.company is not null' : "emp.company = '$company'" )."
+                                and
+                                ".(is_null($job) ? 'jobs.id is not null' : "jobs.id = '$job'" )."
                                 and
                                 " . ($company == 'all' ? 'emp.inactive is not null' :  'emp.inactive = 0'). "
                                 and " . ($type == 'all' || $type == 'missing'  || is_null($type) ? '1=1' : " emp.location = '$type'")

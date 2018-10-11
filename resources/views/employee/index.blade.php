@@ -37,6 +37,15 @@
           </select>
         </div>
         <div class="form-group row">
+          <select class="custom-select" id="selectJob">
+              <option selected="">Job...</option>
+            @foreach (App\Job::all() as $job)
+              <option value="{{ $job->id }}" {{isset($params['company']) && $params['company'] == 'C' ? 'selected' : '' }}>{{ $job->description}}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group row">
             <select class="custom-select mb-4" id="selectLocation">
                 <option selected="">Role...</option>
                 <option value="missing" {{isset($params['type']) && $params['type'] == 'missing' ? 'selected' : '' }}>Missing Time Sheet</option>
