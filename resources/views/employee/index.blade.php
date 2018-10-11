@@ -40,7 +40,7 @@
           <select class="custom-select" id="selectJob">
               <option selected="">Job...</option>
             @foreach (App\Job::all() as $job)
-              <option value="{{ $job->id }}" {{isset($params['company']) && $params['company'] == 'C' ? 'selected' : '' }}>{{ $job->description}}</option>
+              <option value="{{ $job->id }}" {{isset($params['job']) && $params['job'] == $job->id ? 'selected' : '' }}>{{ $job->description}}</option>
             @endforeach
           </select>
         </div>
