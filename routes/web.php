@@ -42,6 +42,16 @@ Route::group(['middleware' => ['test']], function () {
 	Route::resource('form_service_sheet', 'FormServiceSheetController');
 	Route::get('/form_service_sheet/action/{id}/{action}', 'FormServiceSheetController@action');
 
+	//TMV Service Log
+	Route::get('/tmv_log/{job}', 'TmvLogController@index');
+	Route::get('/tmv_log/{job}/create', 'TmvLogController@create');
+	Route::get('/tmv_log/{job}/edit', 'TmvLogController@edit');
+	Route::post('/tmv_log/{job}', 'TmvLogController@store');
+	Route::patch('/tmv_log/{tmv}', 'TmvLogController@update');
+	Route::get('/tmv_log/{job}/action/{ids}/{action}', 'TmvLogController@action');
+	//Route::resource('tmv_log', 'TmvLogController');
+	//Route::resource('tmv_log', 'TmvLogController');
+
 
 });
 

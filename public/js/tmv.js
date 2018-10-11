@@ -60,87 +60,59 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 45:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 44:
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
 
-  var signatures = {
-    "signature_1": {
-      "div": "#div_signature_1",
-      "modal": "#modal_signature_1",
-      "hidden": "#img_signature_1",
-      "opened": false
-    }
-  };
+  //Endorsed by 1
+  $("#div_endorsed1_sig").jSignature();
 
-  for (var i = 1; i <= 20; i++) {
-    signatures["signature_" + i] = {
-      "div": "#div_signature_" + i,
-      "modal": "#modal_signature_" + i,
-      "hidden": "#img_signature_" + i,
-      "opened": false
-    };
+  if ($("input[name=hidden_endorsed1_sig]").val() !== "") {
+
+    $('#div_endorsed1_sig').jSignature("setData", $("input[name=hidden_endorsed1_sig]").val());
   }
 
-  $('.btn-signature').click(function () {
+  //Serviceman 2
+  $("#div_serviceman2_sig").jSignature();
 
-    var modal = $(signatures[this.id].modal);
-    var div = $(signatures[this.id].div);
-    var hidden = $(signatures[this.id].hidden);
-    var opened = signatures[this.id].opened;
-    modal.modal('show');
+  if ($("input[name=hidden_serviceman2_sig]").val() !== "") {
 
-    if (!signatures[this.id].opened) {
-      signatures[this.id].opened = true;
-      div.jSignature(); // inits the jSignature widget.
-      if (hidden.val() !== "") {
-        div.jSignature("setData", hidden.val());
-      }
-    }
+    $('#div_serviceman2_sig').jSignature("setData", $("input[name=hidden_serviceman2_sig]").val());
+  }
+
+  //Endorsed by 1
+  $("#div_endorsed2_sig").jSignature();
+
+  if ($("input[name=hidden_endorsed2_sig]").val() !== "") {
+
+    $('#div_endorsed2_sig').jSignature("setData", $("input[name=hidden_endorsed2_sig]").val());
+  }
+
+  $('form').submit(function () {
+
+    $("input[name=hidden_serviceman2_sig]").val($('#div_serviceman2_sig').jSignature("getData"));
+
+    $("input[name=hidden_endorsed1_sig]").val($('#div_endorsed1_sig').jSignature("getData"));
+    $("input[name=hidden_endorsed2_sig]").val($('#div_endorsed2_sig').jSignature("getData"));
   });
 
-  $('.btn-save-sign').click(function () {
-    var signature = this.id.replace("save", "");
-    var div = $("#div" + signature);
-    var img = div.jSignature("getData");
-    $('#preview' + signature).attr('src', img);
-    $('#img' + signature).val(img);
-  });
-
-  // after some doodling...
   $('.btn-clear-sign').click(function () {
     var $sigdiv = $("#" + this.id.replace("clear", "div", 1));
     $sigdiv.jSignature("reset"); // clears the canvas and rerenders the decor on it.
-  });
-
-  $('#btnPrintPreStart').click(function () {
-    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
-    if (selecteds > 0) {
-      var ids = Array();
-      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
-        ids.push(this.id.split("-")[1]);
-      });
-      var urlArray = window.location.href.split("/");
-      if (urlArray[urlArray.length - 1] == "form_prestart") {
-        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
-      } else {
-        window.open(window.location.href.replace(/\/[^\/]*$/, '/action/' + ids.join(",") + "/print", '_blank'));
-      }
-    }
   });
 });
 

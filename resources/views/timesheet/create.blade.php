@@ -34,7 +34,7 @@
                         <h5>Name:</h5>
                     </label>
                     @foreach($employees as $employee)
-                        <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name}}">
+                        <input readonly="" type="text" class="form-control form-control-lg" id="empname" placeholder="Type employee name" value="{{ $employee->name }}">
                         <input type="hidden" name="employees[{{$employee->id}}]" value="{{$employee->id}}">
                         <input type="hidden" name="employees[{{$employee->id}}][pld_bal]" value="{{$employee->pld}}" />
                         <input type="hidden" name="employees[{{$employee->id}}][rdo_bal]" value="{{$employee->rdo_bal}}" />
@@ -169,9 +169,6 @@
             </form>
         </div>
     </div>
-    @if(count(old()) > 0)
-    {{dd( old())}}
-    @endif
 
 @include('timesheet.partial.description')
 @endsection

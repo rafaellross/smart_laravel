@@ -37,13 +37,13 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $job = $this->validate(request(), [
-            'code' => 'required|string|max:10|unique:jobs',
-            'description' => 'required|string|max:100',            
-            'address' => 'nullable',            
+            'code' => 'required|string|max:10',
+            'description' => 'required|string|max:100',
+            'address' => 'nullable',
         ]);
         Job::create($job);
         return redirect('/jobs')->with('success', 'Job has been added');
-        
+
     }
 
     /**
@@ -70,8 +70,8 @@ class JobController extends Controller
         $job = Job::find($id);
         $this->validate(request(), [
             'code' => 'required|string|max:10',
-            'description' => 'required|string|max:100',            
-            'address' => 'nullable',            
+            'description' => 'required|string|max:100',
+            'address' => 'nullable',
         ]);
         $job->code = $request->get('code');
         $job->description = $request->get('description');
@@ -89,28 +89,28 @@ class JobController extends Controller
     protected function destroy($id){
         $job = Job::find($id);
         $job->delete();
-        return redirect('jobs')->with('success','Job has been  deleted');        
+        return redirect('jobs')->with('success','Job has been  deleted');
     }
 
     public function action($id, $action, $status = null)
-    {        
+    {
 
         $ids = explode(",", $id);
         if ($action == "delete") {
-            
+
         }
 
         switch ($action) {
             case 'delete':
                 foreach ($ids as $id) {
                     Job::find($id)->delete();
-                }                
-                return redirect('jobs')->with('success','Job(s) has been deleted');        
+                }
+                return redirect('jobs')->with('success','Job(s) has been deleted');
                 break;
             default:
-                return redirect('jobs')->with('error','There was no action selected');        
+                return redirect('jobs')->with('error','There was no action selected');
                 break;
-        }        
+        }
     }
 
 }

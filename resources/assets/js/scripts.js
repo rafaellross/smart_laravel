@@ -10,7 +10,6 @@ $(document).ready(function() {
       }
   }
 
-
   $('form').not('#timesheet_form').submit(function(event) {
     /* Act on the event */
     $('#modalLoading').modal({backdrop: 'static', keyboard: false});
@@ -769,6 +768,7 @@ $(document).ready(function() {
       window.location = "create/" + employeesSelected.join(",");
     }
   });
+
   $('#btnSearch').click(function() {
 
     $('#employee').empty();
@@ -848,7 +848,7 @@ $(document).ready(function() {
       if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
 
         job_id = urlArray[urlArray.length - 1];
-        
+
 
       } else {
         job_id = urlArray[urlArray.length - 1].split("?")[0];

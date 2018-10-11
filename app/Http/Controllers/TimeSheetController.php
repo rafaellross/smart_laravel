@@ -138,7 +138,7 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+
 
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
@@ -180,28 +180,29 @@ class TimeSheetController extends Controller
                 }
             }
             if ($rdo > 0 && ($rdo) > $employee->rdo_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $employee->rdo_bal);
             }
+            array_push($errors, "Employee: " . $employee->name . " doesn't have enough RDO to request " . round($rdo, 2) . " hours! Balance: " . $employee->rdo_bal . '\n');
 
             if ($pld > 0 && ($pld) > $employee->pld) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $employee->pld);
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough PLD to request " . round($pld, 2) . " hours! Balance: " . $employee->pld . '\n');
             }
 
             if ($anl > 0 && ($anl) > $employee->anl) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $employee->anl);
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round($anl, 2) . " hours! Balance: " . $employee->anl . '\n');
             }
 
             if ($sick > 0 && ($sick) > $employee->sick_bal) {
-                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Sick Leave to request " . round($sick, 2) . " hours! Balance: " . $employee->sick_bal);
+                array_push($errors, "Employee: " . $employee->name . " doesn't have enough Sick Leave to request " . round($sick, 2) . " hours! Balance: " . $employee->sick_bal . '\n');
             }
 
 
         }
         if (count($errors) > 0) {
-            array_push($errors, "");
-            array_push($errors, "");
-            array_push($errors, "Fix it and try again! ");
-            return redirect('/timesheets?filter=1')->withInput()->with('error', $errors);
+            array_push($errors, '\n');
+            array_push($errors, '\n');
+            array_push($errors, "Fix it and try again! " . '\n');
+            return '<script>alert("' . implode(" ", $errors) . '"); window.history.back();</script>';
+            //return redirect('/timesheets?filter=1')->withInput()->with('error', $errors);
         }
 
 
@@ -537,7 +538,7 @@ class TimeSheetController extends Controller
 
                         if (isset($job->id)) {
                           //$job->delete();
-                        }                      
+                        }
 
                       }
                       //$day->delete();
@@ -546,7 +547,7 @@ class TimeSheetController extends Controller
 
                 }
                 return redirect('timesheets?filter=1')->with('success','Time Sheet(s) has been deleted');
-                break;              
+                break;
 
             default:
                 return redirect('timesheets')->with('error','There was no action selected');

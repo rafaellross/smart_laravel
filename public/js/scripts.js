@@ -786,6 +786,7 @@ $(document).ready(function () {
       window.location = "create/" + employeesSelected.join(",");
     }
   });
+
   $('#btnSearch').click(function () {
 
     $('#employee').empty();

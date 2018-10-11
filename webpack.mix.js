@@ -21,5 +21,8 @@ mix.js('resources/assets/js/scripts.js', 'public/js');
 
 mix.js('resources/assets/js/employee_application.js', 'public/js');
 mix.js('resources/assets/js/qa.js', 'public/js');
+
+mix.js('resources/assets/js/tmv.js', 'public/js');
+
 mix.js('resources/assets/js/forms.js', 'public/js');
 mix.js('resources/assets/js/parameters.js', 'public/js');
