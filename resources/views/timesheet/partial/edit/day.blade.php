@@ -41,27 +41,4 @@
         </div>
     </div>
     <!-- End Total day -->
-    <!-- Night Work -->
-    <h4 class="text-center">Night Work</h4>
-    <div class="form-row overtime " style="text-align: center;">
-        <div class="col-md-6 mb-3">
-            <label>Normal Hours</label>
-            <input readonly="" type="text" class="form-control form-control-lg time horNormal" id="{{$weekDay->short}}_nor_night" value="{{$day->normal_night}}" maxlength="5" name="days[{{$weekDay->short}}][total][normal_night]">
-        </div>
-        <div class="col-md-6 mb-3">
-            <label>Hours 1.5</label>
-            <input readonly="" type="text" class="form-control form-control-lg time hor15" id="{{$weekDay->short}}_15_night" value="{{$day->total_15_night}}" maxlength="5" name="days[{{$weekDay->short}}][total][total_15_night]">
-        </div>
-    </div>
-    <div class="form-row overtime " style="text-align: center;">
-        <div class="col-md-6 mb-3">
-            <label>Hours 2.0</label>
-            <input readonly="" type="text" class="form-control form-control-lg time hor20" value="{{$day->total_20_night}}" maxlength="5" id="{{$weekDay->short}}_20_night" name="days[{{$weekDay->short}}][total][total_20_night]">
-        </div>
-        <div class="col-md-6 mb-3">
-            <label>Total Hours</label>
-            <input readonly="" type="text" class="form-control form-control-lg time hours-total" value="{{$day->total_night}}" maxlength="5" id="{{$weekDay->short}}_total_night" name="days[{{$weekDay->short}}][total][total_night]">
-        </div>
-    </div>
-    <!--End of Night Work -->
 </div>

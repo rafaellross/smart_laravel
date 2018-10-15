@@ -137,8 +137,7 @@ class TimeSheetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    {        
 
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
@@ -240,11 +239,6 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->total_15        = $day['total']['1.5'];
                 $dayTimeSheet->total_20        = $day['total']['2.0'];
 
-                $dayTimeSheet->total_night           = $day['total']['total_night'];
-                $dayTimeSheet->normal_night          = $day['total']['normal_night'];
-                $dayTimeSheet->total_15_night        = $day['total']['total_15_night'];
-                $dayTimeSheet->total_20_night        = $day['total']['total_20_night'];
-
                 $dayTimeSheet->time_sheet_id    = $timeSheet->id;
                 $dayTimeSheet->save();
 
@@ -258,7 +252,7 @@ class TimeSheetController extends Controller
                         $dayJob->description  = $job["description"];
                         $dayJob->start        = !isset($job["start"]) ? null : $job["start"];
                         $dayJob->end          = !isset($job["end"]) ? null : $job["end"];
-                        $dayJob->night_work   = !isset($job["night_work"]) ? false : $job["night_work"];
+                        $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
                         $dayJob->save();
                     }
                 }
@@ -365,11 +359,6 @@ class TimeSheetController extends Controller
             $dayTimeSheet->total_15        = $day['total']['1.5'];
             $dayTimeSheet->total_20        = $day['total']['2.0'];
 
-            $dayTimeSheet->total_night           = $day['total']['total_night'];
-            $dayTimeSheet->normal_night          = $day['total']['normal_night'];
-            $dayTimeSheet->total_15_night        = $day['total']['total_15_night'];
-            $dayTimeSheet->total_20_night        = $day['total']['total_20_night'];
-
             $dayTimeSheet->time_sheet_id    = $timeSheet->id;
             $dayTimeSheet->save();
 
@@ -384,11 +373,12 @@ class TimeSheetController extends Controller
                     $dayJob->description  = $job["description"];
                     $dayJob->start        = $job["start"];
                     $dayJob->end          = $job["end"];
-                    $dayJob->night_work   = !isset($job["night_work"]) ? false : $job["night_work"];
+                    $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
                     $dayJob->save();
                 }
             }
         }
+
         $certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
 
         foreach ($timeSheet->certificates as $certificate) {
