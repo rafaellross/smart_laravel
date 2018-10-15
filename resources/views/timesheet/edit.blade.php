@@ -16,7 +16,7 @@
 
 }
 </style>
-
+<script src="{{ asset('js/timesheet.js') }}"></script>
 <div class="container">
         <!-- Logo -->
             <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center">

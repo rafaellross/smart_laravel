@@ -58,13 +58,6 @@
             </select>
             <a href="{{ URL::to('/employees?params=true') }}" class="btn btn-outline-dark">Clear Filters</a>
         </div>
-
-
-
-
-
-
-
     </div>
     <table class="table table-hover table-responsive-sm table-striped table-fixed">
         <thead>

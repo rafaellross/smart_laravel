@@ -530,6 +530,7 @@ class TimeSheetController extends Controller
                 Storage::put('timesheets.txt', 'Employee Co./Last Name,Employee First Name,Payroll Category,Job,Customer Co./Last Name,Customer First Name,Notes,Date,Units,Employee Card ID,Employee Record ID,Start/Stop Time,Customer Card ID,Customer Record ID');
                 foreach ($ids as $id) {
                     $timesheet = TimeSheet::find($id);
+
                     foreach ($timesheet->days as $day) {
                       foreach ($day as $job) {
 
@@ -547,7 +548,7 @@ class TimeSheetController extends Controller
                     //$timesheet->delete();
 
                 }
-                return redirect('timesheets?filter=1')->with('success','Time Sheet(s) has been deleted');
+                return Storage::download('timesheets.txt');
                 break;
 
             default:

@@ -19,7 +19,7 @@
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
 
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/laroute.js') }}"></script>
+    
 
 
     <!-- Fonts -->

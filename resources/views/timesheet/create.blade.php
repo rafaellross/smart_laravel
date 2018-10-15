@@ -16,6 +16,7 @@
 
 }
 </style>
+<script src="{{ asset('js/timesheet.js') }}"></script>
 <div class="container">
 
         <!-- Logo -->
