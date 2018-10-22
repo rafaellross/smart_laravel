@@ -4,6 +4,7 @@ namespace App;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 
 class PenetrationList extends Fpdf
@@ -125,17 +126,17 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
     $this->Cell(29 , $this->rowHeight, $fire_identification->fire_seal_ref, 'LTRB', 0, 'C');
     $this->Cell(43, $this->rowHeight, $fire_identification->drawing, 'LTRB', 0, 'C');
 
+
+    //Storage::put($fire_identification->fire_number . '_' . $fire_identification->drawing . ".jpg", base64_decode($fire_identification->fire_photo));
+
     //Render Photo
 		if (!is_null($fire_identification->fire_photo)) {
 
       list($width, $height, $type, $attr) = getimagesize($fire_identification->fire_photo);
+      //dd($this->createImageFromBase64($fire_identification->fire_photo));
+      $this->Image($this->createImageFromBase64($fire_identification->fire_photo, $fire_identification->fire_seal_ref), $this->GetX(), $this->GetY(), 40,15, str_replace("image/", "", image_type_to_mime_type($type)));
 
-      $this->Image($fire_identification->fire_photo, $this->GetX(), $this->GetY(), 40,15, str_replace("image/", "", image_type_to_mime_type($type)));
-
-
-
-
-}
+    }
 
     $this->Cell(40, $this->rowHeight, '', 'LTRB', 0, 'C');
 
@@ -158,7 +159,17 @@ private $font = ["header" => 15, "label" => 10, "field" => 9, "values" => 7];
 
     $this->front($fire_identification);
 
+  }
 
-
+  public function createImageFromBase64($data, $path = ""){
+     $file_data = $data;
+     $file_name = $path . time().'.png'; //generating unique file name;
+     @list($type, $file_data) = explode(';', $file_data);
+     @list(, $file_data) = explode(',', $file_data);
+     if($file_data!=""){ // storing image in storage/app/public Folder
+            \Storage::disk('public')->put($file_name,base64_decode($file_data));
+      }
+      return \Storage::disk('public')->path($file_name);
+      //return 'storage/app/public/'.$file_name;
   }
 }
