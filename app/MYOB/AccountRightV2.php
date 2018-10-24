@@ -34,28 +34,28 @@ class AccountRightV2 {
      *
      * @var string
      */
-    private $_apikey;
+    public $_apikey;
 
     /**
      * The MYOB OAuth API secret.
      *
      * @var string
      */
-    private $_apisecret;
+    public $_apisecret;
 
     /**
      * The callback URL.
      *
      * @var string
      */
-    private $_callbackurl;
+    public $_callbackurl;
 
     /**
      * The user access token.
      *
      * @var string
      */
-    private $_accesstoken;
+    public $_accesstoken;
 
 
     /**
@@ -63,35 +63,35 @@ class AccountRightV2 {
      *
      * @var string
      */
-    private $_scope;
+    public $_scope;
 
     /**
      * The CompanyFile GUID.
      *
      * @var string
      */
-    private $_guid;
+    public $_guid;
 
     /**
      * The user Username.
      *
      * @var string
      */
-    private $_username;
+    public $_username;
 
     /**
      * The user Password.
      *
      * @var string
      */
-    private $_password;
+    public $_password;
 
     /**
      * The location of a saved object.
      *
      * @var string
      */
-    private $_location;
+    public $_location;
 
     /**
      *  The API Methods.
@@ -132,6 +132,25 @@ class AccountRightV2 {
         } else {
             throw new \Exception('Error: __construct() - Configuration data is invalid.');
         }
+
+
+        if( isset($_GET['code']) ) {
+
+          $this->getAccessToken($_GET['code']);
+
+          return redirect('/myob');
+
+        } else if ($_SESSION['access_token']){
+
+          $this->refreshToken($_SESSION['refresh_token']);
+
+        } else {
+
+          return redirect('home');
+
+        }
+
+
     }
 
     /**
@@ -201,7 +220,7 @@ class AccountRightV2 {
         }
 
         $_SESSION['access_token'] = $json->access_token;
-        $_SESSION['refresh'] = $json->refresh_token;
+        $_SESSION['refresh_token'] = $json->refresh_token;
 
         $date = new \DateTime('NOW');
         $date->add(new \DateInterval('PT'.$json->expires_in.'S'));
@@ -223,7 +242,7 @@ class AccountRightV2 {
             $currentDate = new \DateTime('NOW');
 
             if($_SESSION['expires'] < $currentDate) {
-                $this->refreshToken($_SESSION['refresh']);
+                $this->refreshToken($_SESSION['refresh_token']);
             }
 
             $this->_accesstoken = $_SESSION['access_token'];
@@ -275,7 +294,7 @@ class AccountRightV2 {
      *
      * @return json object
      */
-    private function _makeRequest($url, $params) {
+    public function _makeRequest($url, $params) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -296,7 +315,7 @@ class AccountRightV2 {
      *
      * @return json object or string
      */
-    private function _doCurl($function = '', $method = self::GET, $data = array()) {
+    public function _doCurl($function = '', $method = self::GET, $data = array()) {
         $url = 'https://api.myob.com/accountright/';
         $headers = array(
             'Authorization: Bearer '.$this->_accesstoken,
@@ -322,7 +341,6 @@ class AccountRightV2 {
 
         if($method == self::POST) {
             curl_setopt($ch, CURLOPT_POST, true);
-
             $data_string = json_encode($data);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 
@@ -336,6 +354,16 @@ class AccountRightV2 {
             } elseif(!is_array($data) && strlen($data) > 0) {
                 $url.='/?'.$data;
             }
+        } elseif ($method == self::PUT) {
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+          $data_string = json_encode($data);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+
+          array_push($headers, 'Content-Type: application/json');
+          array_push($headers, 'Content-Length: '.strlen($data_string));
+
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
         }
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -371,7 +399,7 @@ class AccountRightV2 {
      *
      * @return json object or string
      */
-    private function _makeGetRequest($function = '', $data = array()) {
+    public function _makeGetRequest($function = '', $data = array()) {
         return $this->_doCurl($function, self::GET, $data);
     }
 
@@ -380,16 +408,27 @@ class AccountRightV2 {
      *
      * @return json object or string
      */
-    private function _makePostRequest($function = '', $data) {
+    public function _makePostRequest($function = '', $data) {
         return $this->_doCurl($function, self::POST, $data);
     }
+
+
+    /**
+     * Makes POST curl requests to MYOB for most actions
+     *
+     * @return json object or string
+     */
+    public function _makePutRequest($function = '', $data) {
+        return $this->_doCurl($function, self::PUT, $data);
+    }
+
 
     /**
      * Checks if a string is JSON or something else
      *
      * @return bool
      */
-    private function isJson($string) {
+    public function isJson($string) {
         json_decode($string);
 
         return (json_last_error() == JSON_ERROR_NONE);

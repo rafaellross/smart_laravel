@@ -137,7 +137,7 @@ class TimeSheetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
 
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
@@ -156,8 +156,7 @@ class TimeSheetController extends Controller
 
             $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
             $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;
-            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
-            $sick += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
+            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;            
             foreach ($request->get('days') as $key => $day) {
                 foreach ($day as $key => $job) {
                     if (isset($job["job"])) {

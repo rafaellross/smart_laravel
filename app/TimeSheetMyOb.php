@@ -32,7 +32,7 @@ class TimeSheetMyOb extends Model
 	public function Lines()
 	{
 		//dd($this);
-
+		$arr_lines = array();
 		foreach ($this->timesheet->days as $day) {
 			$total_15 = 0;
 			$total_20 = 0;
@@ -80,7 +80,7 @@ class TimeSheetMyOb extends Model
 
 								$line->Entries = $line->Entries;
 
-							array_push($this->obj['Lines'], $line);
+							array_push($arr_lines, $line);
 
 						}
 					}
@@ -119,7 +119,7 @@ class TimeSheetMyOb extends Model
 
 								$line->Entries = $line->Entries;
 
-							array_push($this->obj['Lines'], $line);
+							array_push($arr_lines, $line);
 
 						}
 					}
@@ -158,7 +158,7 @@ class TimeSheetMyOb extends Model
 
 								$line->Entries = $line->Entries;
 
-							array_push($this->obj['Lines'], $line);
+							array_push($arr_lines, $line);
 
 						}
 					}
@@ -197,7 +197,7 @@ class TimeSheetMyOb extends Model
 
 								$line->Entries = $line->Entries;
 
-							array_push($this->obj['Lines'], $line);
+							array_push($arr_lines, $line);
 
 						}
 					}
@@ -267,7 +267,7 @@ class TimeSheetMyOb extends Model
 
 						$line->Entries = $line->Entries;
 
-					array_push($this->obj['Lines'], $line);
+					array_push($arr_lines, $line);
 
 				}
 			}
@@ -294,7 +294,7 @@ class TimeSheetMyOb extends Model
 
 						$line->Entries = $line->Entries;
 
-					array_push($this->obj['Lines'], $line);
+					array_push($arr_lines, $line);
 				}
 			}
 
@@ -342,7 +342,7 @@ class TimeSheetMyOb extends Model
 
 						$line->Entries = $line->Entries;
 
-					array_push($this->obj['Lines'], $line);
+					array_push($arr_lines, $line);
 
 				}
 			}
@@ -397,7 +397,7 @@ class TimeSheetMyOb extends Model
 
 						$line->Entries = $line->Entries;
 
-					array_push($this->obj['Lines'], $line);
+					array_push($arr_lines, $line);
 
 				}
 			}
@@ -438,7 +438,7 @@ class TimeSheetMyOb extends Model
 							));
 
 						$line->Entries = $line->Entries;
-						array_push($this->obj['Lines'], $line);
+						array_push($arr_lines, $line);
 		}
 
 
@@ -460,7 +460,7 @@ class TimeSheetMyOb extends Model
 							));
 
 						$line->Entries = $line->Entries;
-						array_push($this->obj['Lines'], $line);
+						array_push($arr_lines, $line);
 		}
 
 		if ($this->timesheet->pld > 0) {
@@ -480,7 +480,7 @@ class TimeSheetMyOb extends Model
 							));
 
 						$line->Entries = $line->Entries;
-						array_push($this->obj['Lines'], $line);
+						array_push($arr_lines, $line);
 		}
 
 		if ($this->timesheet->anl > 0) {
@@ -500,14 +500,15 @@ class TimeSheetMyOb extends Model
 							));
 
 						$line->Entries = $line->Entries;
-						array_push($this->obj['Lines'], $line);
+						array_push($arr_lines, $line);
 		}
 
 
 
-		$this->obj['Lines'] = $this->obj['Lines'];
-		$this->obj = (object)$this->obj;
+		$this->obj{'Lines'} = $arr_lines;
+		//$this->obj = (object)$this->obj;
 		//dd($this);
+		return $this->obj;
 	}
 
 

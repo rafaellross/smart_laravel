@@ -21,6 +21,11 @@ Route::get('mail/send', 'MailController@send');
 
 //Middleware used for testing
 Route::group(['middleware' => ['test']], function () {
+
+	Route::get('/myob', 'MyObController@index');
+	Route::get('/myob/employees', 'MyObController@employees');
+	Route::get('/myob/integrate', 'MyObController@integrate');
+
 	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
 	Route::get('/qa_users/action/{id}/{action}', 'QAUserController@action');

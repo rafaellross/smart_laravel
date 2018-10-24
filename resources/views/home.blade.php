@@ -16,6 +16,7 @@
                         <a href="{{ URL::to('/form_checklist') }}" class="list-group-item list-group-item-action ">Daily Plant Inspection Checklist</a>
                         <a href="{{ URL::to('/form_service_sheet') }}" class="list-group-item list-group-item-action ">Service Sheet</a>
                         <a href="{{ URL::to('/fire_identification/scan') }}" class="list-group-item list-group-item-action ">Scan Penetration Tag</a>
+                        <a href="{{ env('API_OAUTH_URL', '') . '?client_id=' . env('API_KEY', '') . '&redirect_uri=' . env('API_CALLBACK', '') . '&response_type=code&scope=CompanyFile' }}" class="list-group-item list-group-item-action ">MYOB Integration</a>
                     @endif
                 </div>
             </div>
