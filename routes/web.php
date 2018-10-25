@@ -24,7 +24,8 @@ Route::group(['middleware' => ['test']], function () {
 
 	Route::get('/myob', 'MyObController@index');
 	Route::get('/myob/employees', 'MyObController@employees');
-	Route::get('/myob/integrate', 'MyObController@integrate');
+	Route::post('/myob/integrate', 'MyObController@integrate');
+	Route::get('/myob/jobs', 'MyObController@jobs');
 
 	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');
@@ -47,11 +48,21 @@ Route::group(['middleware' => ['test']], function () {
 	Route::resource('form_service_sheet', 'FormServiceSheetController');
 	Route::get('/form_service_sheet/action/{id}/{action}', 'FormServiceSheetController@action');
 
+
+	//TMV
+	Route::get('/tmv/{job}', 'TmvController@index');
+	Route::get('/tmv/{job}/create', 'TmvController@create');
+	Route::get('/tmv/{job}/edit', 'TmvController@edit');
+	Route::post('/tmv/{job}', 'TmvController@store');
+	Route::patch('/tmv/{id}', 'TmvController@update');
+	Route::get('/tmv/{job}/action/{ids}/{action}', 'TmvController@action');
+
+
 	//TMV Service Log
-	Route::get('/tmv_log/{job}', 'TmvLogController@index');
+	Route::get('/tmv_log/{tmv}', 'TmvLogController@index');
 	Route::get('/tmv_log/{job}/create', 'TmvLogController@create');
 	Route::get('/tmv_log/{job}/edit', 'TmvLogController@edit');
-	Route::post('/tmv_log/{job}', 'TmvLogController@store');
+	Route::post('/tmv_log/{id}', 'TmvLogController@store');
 	Route::patch('/tmv_log/{tmv}', 'TmvLogController@update');
 	Route::get('/tmv_log/{job}/action/{ids}/{action}', 'TmvLogController@action');
 	//Route::resource('tmv_log', 'TmvLogController');

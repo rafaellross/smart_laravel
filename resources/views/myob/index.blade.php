@@ -10,7 +10,7 @@
 
 
                     @foreach ($companies as $company)
-                        <a href="{{ URL::to('/myob/employees?guid=') . $company->Id }}" class="list-group-item list-group-item-action ">{{$company->Name}}</a>
+                        <a href="/home" class="list-group-item list-group-item-action ">{{$company->Name}}</a>
                     @endforeach
                 </div>
             </div>

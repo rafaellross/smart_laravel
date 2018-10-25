@@ -76,6 +76,8 @@ class TimeSheetController extends Controller
                                   ts.total_20,
                                   ts.week_end,
                                   ts.status,
+                                  ts.integrated,
+                                  ts.integration_message,
                                   (
                                   select code from (
                                   	select
@@ -156,7 +158,7 @@ class TimeSheetController extends Controller
 
             $rdo += $request->get('rdo') > 0 ? $request->get('rdo')/60 : 0;
             $pld += $request->get('pld') > 0 ? $request->get('pld')/60 : 0;
-            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;            
+            $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
             foreach ($request->get('days') as $key => $day) {
                 foreach ($day as $key => $job) {
                     if (isset($job["job"])) {

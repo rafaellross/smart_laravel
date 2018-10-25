@@ -15,25 +15,8 @@ class CreateTmvLogsTable extends Migration
     {
         Schema::create('tmv_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('job_id');
             $table->date('log_dt');
-
             $table->string('type')->nullable();
-            $table->string('name_establishment')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
-
-            $table->string('room_number')->nullable();
-            $table->string('location_number')->nullable();
-            $table->string('location')->nullable();
-
-            $table->string('type_valve')->nullable();
-
-            $table->string('size')->nullable();
-
-            $table->string('serial_number')->nullable();
-
-            $table->string('temp_range')->nullable();
 
 
             $table->boolean('task_tk_1')->default(false);
@@ -71,10 +54,12 @@ class CreateTmvLogsTable extends Migration
             $table->string('endorsed_position2')->nullable();
 
 
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
 
 
             $table->timestamps();
+            
+            $table->unsignedInteger('tmv_id');
+            $table->foreign('tmv_id')->references('id')->on('tmvs')->onDelete('cascade');
         });
 
         DB::statement("ALTER TABLE tmv_logs ADD serviceman2_sig LONGBLOB NULL DEFAULT NULL");
@@ -83,7 +68,6 @@ class CreateTmvLogsTable extends Migration
         DB::statement("ALTER TABLE tmv_logs ADD endorsed2_sig LONGBLOB NULL DEFAULT NULL");
 
         DB::statement("ALTER TABLE tmv_logs ADD photo LONGBLOB NULL DEFAULT NULL");
-
 
     }
 

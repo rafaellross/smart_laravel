@@ -30,7 +30,7 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
 
         @if(Auth::user()->administrator)
         <button class="btn btn-secondary mobile" id="btnStatus" style="">Change Status</button>
-        <button class="btn btn-secondary mobile" id="btnTextFile" style="">Generate Text File</button>
+        <button class="btn btn-secondary mobile" id="btnIntegrate" style="">Integrate to MYOB</button>
         @endif
         <div id="statusSelect" class="mt-2">
             <label for="">Week End:</label>
@@ -82,14 +82,18 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
                 <th scope="col">Hours 2.0</th>
                 <th scope="col">Week End</th>
                 <th scope="col">Job</th>
-                <th scope="col">Status</th>
+                @if(Auth::user()->administrator)
+                <th scope="col">Integrated MYOB?</th>
+                <th scope="col">Integration Message</th>
+                @endif
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach ($timesheets as $timesheet)
             <tr>
-            </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
+            </tr>
+            <tr class="P {{$timesheet->integrated ? 'bg-success' : ''}} {{is_null($timesheet->integration_message) ? '' : 'bg-danger'}}"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
                 <td>{{$timesheet->username}}</td>
                 <td class="mobile">{{ Carbon::parse($timesheet->created_at, 'Australia/Sydney')->format('d/m/Y H:i') }}</td>
                 <td>{{$timesheet->name}}</td>
@@ -98,7 +102,11 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
                 <td>{{$timesheet->total_20}}</td>
                 <td>{{Carbon::parse($timesheet->week_end)->format('d/m/Y')}}</td>
                 <th scope="col">{{$timesheet->job}}</th>
-                <td>{{$timesheet->status}}</td><td style="text-align: center;">
+                @if(Auth::user()->administrator)
+                <td>{{$timesheet->integrated ? 'Yes' : 'No'}}</td>
+                <td>{{ implode('<br/>', explode ('|', $timesheet->integration_message)) }}</td>
+                @endif
+                <td style="text-align: center;">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Actions
@@ -144,5 +152,35 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
     </div>
   </div>
 </div>
+@csrf
+<div class="modal" tabindex="-1" role="dialog" id="modalIntegrateMyOb">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Integration MYOB</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Progress:</label>
+            <div class="progress">
+              <div id="integration_progress" class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="integration_details">Details:</label>
+            <textarea class="form-control" id="integration_details" rows="10" readonly style="resize: none;"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnStartIntegration">Start</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @endsection

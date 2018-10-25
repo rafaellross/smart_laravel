@@ -3,7 +3,7 @@
 return [
     'settings' => [
       'auth'  => 'Basic QWRtaW5pc3RyYXRvcjoxMjM0NTY=',
-      'UID'   => 'efaea9a2-7946-4284-8db2-ffa28465df30',
+      'UID'   => '56898e01-acd6-484e-b658-20429c8703ca',
       'base_url' => 'http://localhost:8080/AccountRight/'
     ],
     'payroll' => [

@@ -12,10 +12,10 @@ class TmvLogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($job)
+    public function index($tmv)
     {
 
-        return view('job.tmv_log.index', ['tmvs' => TmvLog::where('job_id', $job)->paginate(20), 'job' => $job]);
+        return view('job.tmv_log.index', ['logs' => TmvLog::where('tmv_id', $tmv)->paginate(20), 'tmv' =>$tmv]);
 
     }
 
@@ -24,9 +24,9 @@ class TmvLogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($job)
+    public function create($tmv)
     {
-        return view('job.tmv_log.create', ['job' => $job]);
+        return view('job.tmv_log.create', ['tmv' => $tmv]);
     }
 
     /**
@@ -35,24 +35,13 @@ class TmvLogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($job, Request $request)
+    public function store($id, Request $request)
     {
 
         $tmv = new TmvLog();
-        $tmv->job_id = $job;
         $tmv->log_dt = $request->get('log_dt');
-
+        $tmv->tmv_id = $id;
         $tmv->type  = $request->get('type');
-        $tmv->name_establishment  = $request->get('name_establishment');
-        $tmv->address             = $request->get('address');
-
-        $tmv->room_number = $request->get('room_number');
-        $tmv->location_number = $request->get('location_number');
-        $tmv->location = $request->get('location');
-        $tmv->type_valve = $request->get('type_valve');
-        $tmv->size = $request->get('size');
-        $tmv->serial_number = $request->get('serial_number');
-        $tmv->temp_range = $request->get('temp_range');
 
         $tmv->task_tk_1 = $request->get('task_tk_1') == "on" ? true : false;
         $tmv->task_tk_2 = $request->get('task_tk_2') == "on" ? true : false;
@@ -97,7 +86,7 @@ class TmvLogController extends Controller
 
         $tmv->save();
 
-        return redirect('/tmv_log/' . $job)->with('success', 'TMV Log has been added');
+        return redirect('/tmv_log/' . $id)->with('success', 'TMV Log has been added');
 
 
     }
@@ -133,8 +122,6 @@ class TmvLogController extends Controller
      */
     public function update(Request $request, TmvLog $tmv)
     {
-
-
         $tmv->log_dt = $request->get('log_dt');
 
         $tmv->type  = $request->get('type');

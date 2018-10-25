@@ -647,6 +647,53 @@ $(document).ready(function() {
     }
   });
 
+  $('#btnIntegrate').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalIntegrateMyOb').modal({backdrop: 'static', keyboard: false});
+      $('#btnStartIntegration').removeAttr('disabled');
+    }
+  });
+
+  $('#btnStartIntegration').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+
+      //Get checked timesheets
+      var progress = 0;
+      var step = 100.00 / selecteds;
+      $('#integration_progress').css('width', '100%').html('Please, wait...');
+      $('#btnStartIntegration').attr("disabled", "disabled");
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+
+        $.post( "/myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
+          progress += step;
+          $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
+
+
+          $('#integration_details').append(data.name + ' - ' + data.result + '\n');
+          console.log(data);
+        })
+          .done(function() {
+            console.log( "second success" );
+          })
+          .fail(function() {
+            console.log( "error" );
+          })
+          .always(function() {
+            console.log( "finished" );
+          });
+
+      });
+
+    }
+
+  });
+
+
+
+
 
   $('#btnTextFile').click(function() {
     let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;

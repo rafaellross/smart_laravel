@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\TimeSheet;
 use App\TimeSheetMyOb;
 use App\Employee;
+use App\Job;
 
 class MyObController extends Controller
 {
@@ -21,32 +22,49 @@ class MyObController extends Controller
 
     public function integrate(Request $request) {
       $myob_auth = new \App\MYOB\AccountRightV2();
-      //$employees = $myob_auth->_makeGetRequest($request->get('guid') ."/Contact/Employee" . '?$orderby=LastName&&$filter=startswith(LastName,' .  "'WOO')");
-      //$employees = $myob_auth->_makeGetRequest($request->get('guid') .'/Contact/Employee?$select=LastName');
-      //$categories = $myob_auth->_makeGetRequest($request->get('guid') .'/Payroll/PayrollCategory');
-      //dd($categories);
-      //$url = $request->get('guid') ."/Contact/Employee" . '?$orderby=LastName&&$filter=not endswith(LastName' . ",'zz')";
 
-      $timesheet = TimeSheet::find(2407);
+      $timesheet = TimeSheet::find($request->get('id'));
       $timesheet_myob = new TimeSheetMyOb($timesheet);
-      $result = array();
+
 
       //array_push($result, $timesheet_myob->Lines());
 
       //dd($timesheet_myob->Lines());
-      dd($myob_auth->_makePutRequest($request->get('guid').'/Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj));
 
-      //dd($myob_auth);
+      $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
+      if (isset($req->Errors) && count($req->Errors) > 0) {
+        $errors = array();
 
-      //return view('myob.employees', ['employees' => $employees->Items]);
+        foreach ($req->Errors as $error) {
+          array_push($errors, $error->Message);
+        }
+
+        $timesheet->integration_message = implode("|", $errors);
+        $timesheet->integrated = false;
+      } else {
+        $timesheet->integration_message = null;
+        $timesheet->integrated = true;
+
+      }
+      $timesheet->save();
+
+      return response()->json(["name" => $timesheet->employee->name, "result" => is_null($timesheet->integration_message) ? 'Ok' : $timesheet->integration_message]);
+
 
     }
 
     public function employees(Request $request) {
       $myob_auth = new \App\MYOB\AccountRightV2();
-      $employees = $myob_auth->_makeGetRequest($request->get('guid') ."/Contact/Employee" . '?$orderby=LastName');
-
+      $employees = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/0005832e-cfce-43f9-bf05-dbf1183d194f");
+      //$employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
+      dd($employees);
       foreach ($employees->Items as $employee_myob) {
+        if ($employee_myob->Name) {
+          // code...
+        }
+      }
+      foreach ($employees->Items as $employee_myob) {
+
         //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
 
@@ -54,26 +72,25 @@ class MyObController extends Controller
           $emp->myob_id = $employee_myob->UID;
           $emp->save();
         }
-        //return $emp;
+
       }
-      //$employees = $myob_auth->_makeGetRequest($request->get('guid') .'/Contact/Employee?$select=LastName');
-      //$categories = $myob_auth->_makeGetRequest($request->get('guid') .'/Payroll/PayrollCategory');
-      dd($employees);
-      //$url = $request->get('guid') ."/Contact/Employee" . '?$orderby=LastName&&$filter=not endswith(LastName' . ",'zz')";
 
-      $timesheet = TimeSheet::find(2406);
-      $timesheet_myob = new TimeSheetMyOb($timesheet);
-      $result = array();
+    }
 
-      //array_push($result, $timesheet_myob->Lines());
+    public function jobs(Request $request) {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+      $jobs = $myob_auth->_makeGetRequest($request->get('guid') ."/GeneralLedger/Job");
+      //dd($jobs);
+      foreach ($jobs->Items as $job_myob) {
+        //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
+        $job = Job::where('code', $job_myob->Number)->get()->first();
 
-      //dd($timesheet_myob->Lines());
-      dd($myob_auth->_makePutRequest($request->get('guid').'/Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj));
+        if (count($job) > 0) {
+          $job->myob_id = $job_myob->UID;
+          $job->save();
+        }
 
-      //dd($myob_auth);
-
-      //return view('myob.employees', ['employees' => $employees->Items]);
-
+      }
 
     }
 

@@ -94,6 +94,14 @@ class AccountRightV2 {
     public $_location;
 
     /**
+     * The location of a saved object.
+     *
+     * @var string
+     */
+    public $_uid;
+
+
+    /**
      *  The API Methods.
      */
     const GET = 0;
@@ -129,6 +137,12 @@ class AccountRightV2 {
             if(isset($config['password'])) {
                 $this->_password = $config['password'];
             }
+
+            if(isset($config['UID'])) {
+                $this->_uid = $config['UID'];
+            }
+
+
         } else {
             throw new \Exception('Error: __construct() - Configuration data is invalid.');
         }
@@ -316,7 +330,7 @@ class AccountRightV2 {
      * @return json object or string
      */
     public function _doCurl($function = '', $method = self::GET, $data = array()) {
-        $url = 'https://api.myob.com/accountright/';
+        $url = 'https://api.myob.com/accountright/' . ($function == '' ? '' : $this->_uid) . '/';
         $headers = array(
             'Authorization: Bearer '.$this->_accesstoken,
             'x-myobapi-key: '.$this->_apikey,

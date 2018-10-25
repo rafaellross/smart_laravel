@@ -19,7 +19,7 @@
     <script src="{{ asset('js/jSignature.min.js') }}"></script>
 
     <script src="{{ asset('js/scripts.js') }}"></script>
-    
+
 
 
     <!-- Fonts -->
@@ -159,7 +159,7 @@
             @yield('content')
         </main>
     </div>
-    <div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoading" aria-hidden="true">
+    <div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoading" aria-hidden="true" style="z-index: 99999;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content" style="width: 48px">
                 <span class="fa fa-spinner fa-spin fa-3x"></span>
