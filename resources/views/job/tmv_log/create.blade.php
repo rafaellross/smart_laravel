@@ -15,7 +15,7 @@
                             <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Date:') }}</label>
 
                             <div class="col-md-6">
-                                <input type="date" class="form-control form-control-lg" name="log_dt" value="{{ old('log_dt') }}" required>
+                                <input type="date" class="form-control form-control-lg" name="log_dt" value="{{ Carbon::now()->format('Y-m-d') }}" required>
                                 @if ($errors->has('log_dt'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('log_dt') }}</strong>
@@ -34,29 +34,6 @@
                             </div>
                         </div>
 
-
-                        <div class="form-group row">
-                            <label for="serial_number" class="col-md-4 col-form-label text-md-right">{{ __('Serial Number:') }}</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control form-control-lg" name="serial_number" value="{{ old('serial_number') }}">
-                                @if ($errors->has('serial_number'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('serial_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="temp_range" class="col-md-4 col-form-label text-md-right">{{ __('Temperature Range:') }}</label>
-                            <div class="col-md-6">
-                              <select class="form-control form-control-lg custom-select" name="temp_range">
-                                  <option value="">Select Range</option>
-                                  <option value="C">Children 38 - 40.5 deg C</option>
-                                  <option value="A">Adults 40.5 - 43.5 deg C</option>
-                              </select>
-                            </div>
-                        </div>
 
                         <hr/>
 

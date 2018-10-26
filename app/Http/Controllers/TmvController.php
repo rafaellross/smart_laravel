@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tmv;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TmvController extends Controller
 {
@@ -42,7 +43,7 @@ class TmvController extends Controller
 
               $tmv->name_establishment  = $request->get('name_establishment');
               $tmv->address             = $request->get('address');
-              $tmv->phone             = $request->get('address');
+              $tmv->phone             = $request->get('phone');
               $tmv->room_number = $request->get('room_number');
               $tmv->location_number = $request->get('location_number');
               $tmv->location = $request->get('location');

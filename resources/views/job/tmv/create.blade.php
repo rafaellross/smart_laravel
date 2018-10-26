@@ -58,18 +58,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="location_number" class="col-md-4 col-form-label text-md-right">{{ __('Location Number:') }}</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control form-control-lg" name="location_number" value="{{ old('location_number') }}">
-                                @if ($errors->has('location_number'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('location_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="location" class="col-md-4 col-form-label text-md-right">{{ __('Location:') }}</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control form-control-lg" name="location" value="{{ old('location') }}">
@@ -127,11 +115,7 @@
                               </select>
                             </div>
                         </div>
-
                         <hr/>
-
-
-
                         <div class="form-group row mb-0">
                             <div class="col-md-6">
                                 <a href="{{ URL::to('/home') }}" class="btn btn-danger  btn-lg btn-block">{{ __('Cancel') }}</a>

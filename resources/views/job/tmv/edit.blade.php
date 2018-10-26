@@ -13,19 +13,6 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group row">
-                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Date:') }}</label>
-
-                            <div class="col-md-6">
-                                <input type="date" class="form-control form-control-lg" name="log_dt" value="{{ $tmv->log_dt }}" required>
-                                @if ($errors->has('log_dt'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('log_dt') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="room_number" class="col-md-4 col-form-label text-md-right">{{ __('Name of Establishment:') }}</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control form-control-lg" name="name_establishment" value="{{ $tmv->name_establishment }}" maxlength="96">
@@ -66,18 +53,6 @@
                                 @if ($errors->has('room_number'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('room_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="location_number" class="col-md-4 col-form-label text-md-right">{{ __('Location Number:') }}</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control form-control-lg" name="location_number" value="{{ $tmv->location_number }}">
-                                @if ($errors->has('location_number'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('location_number') }}</strong>
                                     </span>
                                 @endif
                             </div>

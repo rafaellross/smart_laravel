@@ -125,17 +125,6 @@ class TmvLogController extends Controller
         $tmv->log_dt = $request->get('log_dt');
 
         $tmv->type  = $request->get('type');
-        $tmv->name_establishment  = $request->get('name_establishment');
-        $tmv->address             = $request->get('address');
-
-
-        $tmv->room_number = $request->get('room_number');
-        $tmv->location_number = $request->get('location_number');
-        $tmv->location = $request->get('location');
-        $tmv->type_valve = $request->get('type_valve');
-        $tmv->size = $request->get('size');
-        $tmv->serial_number = $request->get('serial_number');
-        $tmv->temp_range = $request->get('temp_range');
 
         $tmv->task_tk_1 = $request->get('task_tk_1') == "on" ? true : false;
         $tmv->task_tk_2 = $request->get('task_tk_2') == "on" ? true : false;
@@ -181,7 +170,7 @@ class TmvLogController extends Controller
 
         $tmv->save();
 
-        return redirect('/tmv_log/' . $tmv->job_id)->with('success', 'TMV Log has been updated');
+        return redirect('/tmv_log/' . $tmv->tmv_id)->with('success', 'TMV Log has been updated');
 
     }
 
