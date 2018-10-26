@@ -7,6 +7,8 @@ use App\TimeSheet;
 use App\TimeSheetMyOb;
 use App\Employee;
 use App\Job;
+use App\ExpensesMyob;
+
 
 class MyObController extends Controller
 {
@@ -25,11 +27,6 @@ class MyObController extends Controller
 
       $timesheet = TimeSheet::find($request->get('id'));
       $timesheet_myob = new TimeSheetMyOb($timesheet);
-
-
-      //array_push($result, $timesheet_myob->Lines());
-
-      //dd($timesheet_myob->Lines());
 
       $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
       if (isset($req->Errors) && count($req->Errors) > 0) {
@@ -93,5 +90,66 @@ class MyObController extends Controller
       }
 
     }
+
+    public function expenses(Request $request) {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+
+      $emp = Employee::find(124);
+      $job = Job::find
+      //dd($emp);
+      $empMyob = $myob_auth->_makeGetRequest("Contact/Employee/" . $emp->myob_id);
+      //dd($employees->EmployeeStandardPay->UID);
+      $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/" . $empMyob->EmployeeStandardPay->UID);
+      //$employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
+
+      $exp = new ExpensesMyob($emp, $empMyob->EmployeeStandardPay->UID);
+
+      unset($empStdPay->EmployeePayrollDetails);
+      unset($empStdPay->PayFrequency);
+      unset($empStdPay->HoursPerPayFrequency);
+      unset($empStdPay->Category);
+      unset($empStdPay->Memo);
+      unset($empStdPay->URI);
+
+
+
+
+
+
+
+      dd([$empStdPay, $exp->obj]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      foreach ($employees->Items as $employee_myob) {
+        if ($employee_myob->Name) {
+          // code...
+        }
+      }
+      foreach ($employees->Items as $employee_myob) {
+
+        //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
+        $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
+
+        if (count($emp) > 0) {
+          $emp->myob_id = $employee_myob->UID;
+          $emp->save();
+        }
+
+      }
+
+    }
+
 
 }

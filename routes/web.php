@@ -26,6 +26,7 @@ Route::group(['middleware' => ['test']], function () {
 	Route::get('/myob/employees', 'MyObController@employees');
 	Route::post('/myob/integrate', 'MyObController@integrate');
 	Route::get('/myob/jobs', 'MyObController@jobs');
+	Route::get('/myob/expenses', 'MyObController@expenses');
 
 	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');

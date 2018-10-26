@@ -9,7 +9,7 @@ use Config;
 /**
 * This class is used to convert time
 */
-class TimeSheetMyOb extends Model
+class TimeSheetMyOb
 {
 
 	public $obj;
