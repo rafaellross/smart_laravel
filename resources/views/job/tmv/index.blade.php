@@ -59,7 +59,7 @@
                                     <a class="dropdown-item" href="{{action('TmvController@edit', $tmv->id)}}">Edit</a>
                                     <a class="dropdown-item" href="{{ $tmv->job_id . '/action/'. $tmv->id .'/report'}}">View</a>
 
-                                    <a class="dropdown-item" href="{{ 'tmv_log/'. $tmv->id }}">Log</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/tmv_log/' . $tmv->id . '/create') }}">Log</a>
                                     <buttton class="dropdown-item delete" id="{{$tmv->id}}">Delete</buttton>
                                 </div>
                             </div>
