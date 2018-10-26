@@ -50,7 +50,7 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{ $tmv->job_id . '/action/'. $tmv->id .'/report'}}">View</a>
+                                    <a class="dropdown-item" href="{{ 'action/'. $tmv->id .'/report'}}" target="_blank">View</a>
                                     <a class="dropdown-item" href="{{action('TmvLogController@edit', $tmv->id)}}">Edit</a>
                                     <buttton class="dropdown-item delete" id="{{$tmv->id}}">Delete</buttton>
                                 </div>

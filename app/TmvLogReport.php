@@ -33,25 +33,25 @@ class TmvLogReport extends \TCPDI {
     $this->Text(25, 41, Carbon::parse($tmv->log_dt)->format('d/m/Y'));
 
 
-    $this->Text(50, 48.5, $tmv->name_establishment);
-    $this->Text(28, 56.5, $tmv->address);
+    $this->Text(50, 48.5, $tmv->tmv->name_establishment);
+    $this->Text(28, 56.5, $tmv->tmv->address);
 
-    $this->Text(154, 56.5, $tmv->phone);
+    $this->Text(154, 56.5, $tmv->tmv->phone);
 
-    $this->Text(37, 64.5, $tmv->room_number);
+    $this->Text(37, 64.5, $tmv->tmv->room_number);
 
-    $this->Text(77, 64.5, $tmv->location_number);
+    $this->Text(77, 64.5, $tmv->tmv->location_number);
 
-    $this->Text(102.5, 64.5, $tmv->location);
+    $this->Text(102.5, 64.5, $tmv->tmv->location);
 
 
-    $this->Text(37, 72.5, $tmv->type_valve);
+    $this->Text(37, 72.5, $tmv->tmv->type_valve);
 
-    $this->Text(115, 72.5, $tmv->size);
+    $this->Text(115, 72.5, $tmv->tmv->size);
 
-    $this->Text(159, 72.5, $tmv->serial_number);
+    $this->Text(159, 72.5, $tmv->tmv->serial_number);
 
-    if ($tmv->temp_range == 'C') {
+    if ($tmv->tmv->temp_range == 'C') {
 
       $this->Image('img/tick.png', 111,79,5,0,'png');
 

@@ -185,7 +185,7 @@ class TmvLogController extends Controller
         //
     }
 
-    public function action($job, $ids, $action) {
+    public function action($ids, $action) {
 
       $arr_ids = explode(",", $ids);
 

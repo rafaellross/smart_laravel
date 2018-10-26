@@ -65,7 +65,7 @@ Route::group(['middleware' => ['test']], function () {
 	Route::get('/tmv_log/{job}/edit', 'TmvLogController@edit');
 	Route::post('/tmv_log/{id}', 'TmvLogController@store');
 	Route::patch('/tmv_log/{tmv}', 'TmvLogController@update');
-	Route::get('/tmv_log/{job}/action/{ids}/{action}', 'TmvLogController@action');
+	Route::get('/tmv_log/action/{ids}/{action}', 'TmvLogController@action');
 	//Route::resource('tmv_log', 'TmvLogController');
 	//Route::resource('tmv_log', 'TmvLogController');
 
