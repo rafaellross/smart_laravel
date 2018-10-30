@@ -23,131 +23,130 @@ class MyObController extends Controller
     }
 
     public function integrate(Request $request) {
-      $myob_auth = new \App\MYOB\AccountRightV2();
 
       $timesheet = TimeSheet::find($request->get('id'));
-      $timesheet_myob = new TimeSheetMyOb($timesheet);
+      //Check if system has employee Id from MYOB
+      if (is_null($timesheet->employee->myob_id)) {
 
-      $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
-      if (isset($req->Errors) && count($req->Errors) > 0) {
-        $errors = array();
+        $timesheet->integration_message = "Employee doesn't exist on MYOB or name is different";
+        $timesheet->save();
+        return response()->json(["name" => $timesheet->employee->name, "result" => $timesheet->integration_message]);
 
-        foreach ($req->Errors as $error) {
-          array_push($errors, $error->Message);
-        }
-
-        $timesheet->integration_message = implode("|", $errors);
-        $timesheet->integrated = false;
       } else {
-        $timesheet->integration_message = null;
-        $timesheet->integrated = true;
+
+        $myob_auth = new \App\MYOB\AccountRightV2();
+
+
+        $timesheet_myob = new TimeSheetMyOb($timesheet);
+
+        //Determine employee job
+
+        $this->expenses($timesheet->employee_id, 14, $myob_auth);
+
+
+        $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
+
+        if (isset($req->Errors) && count($req->Errors) > 0) {
+          $errors = array();
+
+          foreach ($req->Errors as $error) {
+            array_push($errors, $error->Message);
+          }
+
+          $timesheet->integration_message = implode("|", $errors);
+          $timesheet->integrated = false;
+        } else {
+          $timesheet->integration_message = null;
+          $timesheet->integrated = true;
+
+        }
+        $timesheet->save();
+
+        return response()->json(["name" => $timesheet->employee->name, "result" => is_null($timesheet->integration_message) ? 'Ok' : $timesheet->integration_message]);
+
 
       }
-      $timesheet->save();
-
-      return response()->json(["name" => $timesheet->employee->name, "result" => is_null($timesheet->integration_message) ? 'Ok' : $timesheet->integration_message]);
 
 
     }
 
+    /**
+     * Update all employees with MYOB Id.
+     *
+     * @return void
+     */
+
+
     public function employees(Request $request) {
+
       $myob_auth = new \App\MYOB\AccountRightV2();
-      $employees = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/0005832e-cfce-43f9-bf05-dbf1183d194f");
-      //$employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
-      dd($employees);
-      foreach ($employees->Items as $employee_myob) {
-        if ($employee_myob->Name) {
-          // code...
-        }
-      }
+
+      $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
+
       foreach ($employees->Items as $employee_myob) {
 
-        //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
 
         if (count($emp) > 0) {
+
           $emp->myob_id = $employee_myob->UID;
+
           $emp->save();
+
         }
 
       }
 
     }
 
+    /**
+     * Update all jobs with MYOB Id.
+     *
+     * @return void
+     */
     public function jobs(Request $request) {
+
       $myob_auth = new \App\MYOB\AccountRightV2();
+
       $jobs = $myob_auth->_makeGetRequest($request->get('guid') ."/GeneralLedger/Job");
-      //dd($jobs);
+
       foreach ($jobs->Items as $job_myob) {
-        //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
+
         $job = Job::where('code', $job_myob->Number)->get()->first();
 
         if (count($job) > 0) {
+
           $job->myob_id = $job_myob->UID;
+
           $job->save();
+
         }
 
       }
 
     }
 
-    public function expenses(Request $request) {
-      $myob_auth = new \App\MYOB\AccountRightV2();
+    public function expenses($employee_id, $job_id, $myob_auth) {
 
-      $emp = Employee::find(124);
-      $job = Job::find
-      //dd($emp);
+      $emp = Employee::find($employee_id);
+
+      $job = Job::find($job_id);
+
       $empMyob = $myob_auth->_makeGetRequest("Contact/Employee/" . $emp->myob_id);
-      //dd($employees->EmployeeStandardPay->UID);
+
       $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/" . $empMyob->EmployeeStandardPay->UID);
-      //$employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
 
-      $exp = new ExpensesMyob($emp, $empMyob->EmployeeStandardPay->UID);
+      foreach ($empStdPay->PayrollCategories as $category) {
 
-      unset($empStdPay->EmployeePayrollDetails);
-      unset($empStdPay->PayFrequency);
-      unset($empStdPay->HoursPerPayFrequency);
-      unset($empStdPay->Category);
-      unset($empStdPay->Memo);
-      unset($empStdPay->URI);
+        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation") {
 
+          $category->Job = (object)array('UID' => $job->myob_id);
 
-
-
-
-
-
-      dd([$empStdPay, $exp->obj]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      foreach ($employees->Items as $employee_myob) {
-        if ($employee_myob->Name) {
-          // code...
-        }
-      }
-      foreach ($employees->Items as $employee_myob) {
-
-        //return $employee_myob->LastName . ', ' . $employee_myob->FirstName;
-        $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
-
-        if (count($emp) > 0) {
-          $emp->myob_id = $employee_myob->UID;
-          $emp->save();
         }
 
       }
+
+      $req = $myob_auth->_makePutRequest("Contact/EmployeeStandardPay/" . $empMyob->EmployeeStandardPay->UID, $empStdPay);
 
     }
 

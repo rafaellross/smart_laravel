@@ -202,7 +202,7 @@
                         <div class="form-group row">
                             <label for="temp_reset" class="col-md-4 col-form-label text-md-right">Reset Temp (&#176;C):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control form-control-lg" name="temp_bfr_test" value="{{ $tmv->temp_bfr_test }}">
+                                <input type="text" class="form-control form-control-lg" name="temp_reset" value="{{ $tmv->temp_reset }}">
                                 @if ($errors->has('temp_reset'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('temp_reset') }}</strong>

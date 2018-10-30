@@ -55,7 +55,7 @@ class EmployeeController extends Controller
                                 where
                                 ".($company == 'all' || is_null($company) ? 'emp.company is not null' : "emp.company = '$company'" )."
                                 and
-                                ".(is_null($job) ? 'jobs.id is not null' : "jobs.id = '$job'" )."
+                                ".(is_null($job) ? '1=1' : "jobs.id = '$job'" )."
                                 and
                                 " . ($company == 'all' ? 'emp.inactive is not null' :  'emp.inactive = 0'). "
                                 and " . ($type == 'all' || $type == 'missing'  || is_null($type) ? '1=1' : " emp.location = '$type'")

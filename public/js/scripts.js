@@ -668,6 +668,12 @@ $(document).ready(function () {
     var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
     if (selecteds > 0) {
       var ids = Array();
+      var today = new Date();
+      var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date + ' ' + time;
+
+      $('#integration_details').append('Started at: ' + dateTime.toString() + '\n' + '\n');
 
       //Get checked timesheets
       var progress = 0;
