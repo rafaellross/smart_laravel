@@ -145,7 +145,7 @@ class TmvLogReport extends \TCPDI {
       $this->Image($tmv->endorsed2_sig, 156,221.5,40,0,'png');
     }
 
-    $month = 12;//Carbon::parse($tmv->log_dt)->month;
+    $month = Carbon::parse($tmv->log_dt)->month;
 
 
 
