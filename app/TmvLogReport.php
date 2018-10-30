@@ -81,6 +81,7 @@ class TmvLogReport extends \TCPDI {
 
     if ($tmv->task_tk_5) {
       $this->Image('img/tick.png', 109.5,135.5,5,0,'png');
+      $this->Image('img/tick.png', 122.2,135,3,0,'png');
     }
 
     if ($tmv->task_tk_6) {
