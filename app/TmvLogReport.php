@@ -99,8 +99,10 @@ class TmvLogReport extends \TCPDI {
 
 
     //Endorsed by Signature 1
+
+    $this->Image('img/harry.png', 163,180,13,0,'png');
     if (!is_null($tmv->endorsed1_sig)) {
-      $this->Image($tmv->endorsed1_sig, 156,180,40,0,'png');
+      //$this->Image($tmv->endorsed1_sig, 156,180,40,0,'png');
     }
 
     //Tests
@@ -128,8 +130,9 @@ class TmvLogReport extends \TCPDI {
 
 
     //Endorsed by Signature 1
+    $this->Image('img/harry.png', 153,205.3,13,0,'png');
     if (!is_null($tmv->serviceman2_sig)) {
-      $this->Image($tmv->serviceman2_sig, 148,205.3,40,0,'png');
+      //$this->Image($tmv->serviceman2_sig, 148,205.3,40,0,'png');
     }
 
 
@@ -141,8 +144,9 @@ class TmvLogReport extends \TCPDI {
 
 
     //Endorsed by Signature 2
+    $this->Image('img/harry.png', 163,220.5,13,0,'png');
     if (!is_null($tmv->endorsed2_sig)) {
-      $this->Image($tmv->endorsed2_sig, 156,221.5,40,0,'png');
+      //$this->Image($tmv->endorsed2_sig, 156,221.5,40,0,'png');
     }
 
     $month = Carbon::parse($tmv->log_dt)->month;
