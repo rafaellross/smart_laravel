@@ -181,6 +181,7 @@ class TmvController extends Controller
       $arr_ids = explode(",", $ids);
       $job = \App\Job::find($job);
       $report = new \App\TmvLogRegister();
+      $report->SetLeftMargin(15);
       $report->job = $job->description;
       $report->address = $job->address;
       $report->phone = $job->phone;
