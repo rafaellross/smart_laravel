@@ -938,6 +938,59 @@ $(document).ready(function () {
   }
 
   $('#btnUpdateJob').click(function () {});
+
+  $('#btnChangeJob').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalChangeJob').modal('show');
+    }
+  });
+
+  $('#btnSaveJob').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var _newJob = $("select[name=changeJob]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/change_job/' + ids.join(",") + "/" + _newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/change_job/' + ids.join(",") + "/" + _newJob);
+      }
+    }
+  });
+
+  $('#btnPrintTmv').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalPrintTmv').modal('show');
+    }
+  });
+
+  $('#btnContinuePrintTmv').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var selectYear = $("select[name=selectYear]").val();
+      var job = $("input[name=job]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/print/' + ids.join(",") + "/" + newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + job + '/print/' + ids.join(",") + "/" + selectYear);
+      }
+    }
+  });
 });
 
 /***/ })

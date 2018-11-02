@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tmv;
+use App\TmvLog;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -89,6 +90,7 @@ class TmvController extends Controller
      */
     public function update(Request $request, $id)
     {
+
           $tmv = Tmv::find($id);
           $tmv->name_establishment  = $request->get('name_establishment');
           $tmv->address             = $request->get('address');
@@ -153,6 +155,49 @@ class TmvController extends Controller
 
           $report->output();
         break;
+
+        case 'update':
+          return "here";
+        break;
       }
     }
+
+    public function changeJob($ids, $new_job) {
+      $arr_ids = explode(",", $ids);
+      foreach ($arr_ids as $id) {
+        $tmv = Tmv::find($id);
+        $tmv->job_id = $new_job;
+        $tmv->save();
+      }
+
+      return redirect('/tmv/' . $new_job)->with('success', 'TMV Job has been changed');
+    }
+
+    public function print($job, $ids, $year = null) {
+      if (is_null($year)) {
+        $year = Carbon::now()->year;
+      }
+
+      $arr_ids = explode(",", $ids);
+      $job = \App\Job::find($job);
+      $report = new \App\TmvLogRegister();
+      $report->job = $job->description;
+      $report->address = $job->address;
+      $report->phone = $job->phone;
+      $report->AddPage('L');
+      foreach ($arr_ids as $id) {
+
+        $logs = TmvLog::whereRaw("YEAR(log_dt) = ? and tmv_id = ?", [$year, $id])
+                        ->get();
+
+          $report->job = '$logs';
+          foreach ($logs as $log) {
+            $report->add($log);
+          }
+      }
+      $report->output();
+
+    }
+
+
 }

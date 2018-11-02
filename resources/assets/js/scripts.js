@@ -663,7 +663,7 @@ $(document).ready(function() {
       var date = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
-      
+
       $('#integration_details').append('Started at: ' + dateTime.toString() + '\n' + '\n');
 
       //Get checked timesheets
@@ -995,6 +995,67 @@ $(document).ready(function() {
   $('#btnUpdateJob').click(function(){
 
   });
+
+
+  $('#btnChangeJob').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalChangeJob').modal('show');
+    }
+  });
+
+  $('#btnSaveJob').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      let newJob = $("select[name=changeJob]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      let urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/change_job/' + ids.join(",") + "/" + newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/change_job/' + ids.join(",") + "/" + newJob);
+      }
+    }
+
+  });
+
+
+  $('#btnPrintTmv').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalPrintTmv').modal('show');
+    }
+  });
+
+  $('#btnContinuePrintTmv').click(function() {
+    let selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      let ids = Array();
+      let selectYear = $("select[name=selectYear]").val();
+      let job = $("input[name=job]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      let urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/print/' + ids.join(",") + "/" + newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + job + '/print/' + ids.join(",") + "/" + selectYear);
+      }
+    }
+
+  });
+
+
+
+
 
 
 });

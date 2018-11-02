@@ -122,6 +122,7 @@ class TmvLogController extends Controller
      */
     public function update(Request $request, TmvLog $tmv)
     {
+        //return $request;
         $tmv->log_dt = $request->get('log_dt');
 
         $tmv->type  = $request->get('type');
@@ -162,13 +163,26 @@ class TmvLogController extends Controller
 
 
         $tmv->serviceman2_sig = $request->get('hidden_serviceman2_sig');
-
+        $tmv->save();
         $tmv->endorsed1_sig = $request->get('hidden_endorsed1_sig');
+        $tmv->save();
         $tmv->endorsed2_sig = $request->get('hidden_endorsed2_sig');
+        $tmv->save();
 
-        $tmv->photo = $request->get('photo_hidden');
+
+        $photo = $this->createImageFromBase64($request->get('photo_hidden'), $tmv->id);
+        $this->compress($photo, $photo, 50);
+
+        $type = pathinfo($photo, PATHINFO_EXTENSION);
+        $data = file_get_contents($photo);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+
+        $tmv->photo = $base64;
 
         $tmv->save();
+        
+
 
         return redirect('/tmv_log/' . $tmv->tmv_id)->with('success', 'TMV Log has been updated');
 
@@ -223,4 +237,34 @@ class TmvLogController extends Controller
         break;
       }
     }
+
+    public function createImageFromBase64($data, $path = ""){
+       $file_data = $data;
+       $file_name = $path . time().'.png'; //generating unique file name;
+       @list($type, $file_data) = explode(';', $file_data);
+       @list(, $file_data) = explode(',', $file_data);
+       if($file_data!=""){ // storing image in storage/app/public Folder
+              \Storage::disk('public')->put($file_name,base64_decode($file_data));
+        }
+        return \Storage::disk('public')->path($file_name);
+    }
+
+    function compress($source, $destination, $quality) {
+
+    		$info = getimagesize($source);
+
+    		if ($info['mime'] == 'image/jpeg')
+    			$image = imagecreatefromjpeg($source);
+
+    		elseif ($info['mime'] == 'image/gif')
+    			$image = imagecreatefromgif($source);
+
+    		elseif ($info['mime'] == 'image/png')
+    			$image = imagecreatefrompng($source);
+
+    		imagejpeg($image, $destination, $quality);
+
+    		return $destination;
+    	}
+
 }

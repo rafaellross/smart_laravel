@@ -37,9 +37,10 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $job = $this->validate(request(), [
-            'code' => 'required|string|max:10',
+            'code' => 'string|max:10',
             'description' => 'required|string|max:100',
             'address' => 'nullable',
+            'phone' => 'nullable',
         ]);
         Job::create($job);
         return redirect('/jobs')->with('success', 'Job has been added');
@@ -76,6 +77,7 @@ class JobController extends Controller
         $job->code = $request->get('code');
         $job->description = $request->get('description');
         $job->address = $request->get('address');
+        $job->phone = $request->get('phone');
         $job->save();
         return redirect('/jobs')->with('success', 'Job has been updated');
     }

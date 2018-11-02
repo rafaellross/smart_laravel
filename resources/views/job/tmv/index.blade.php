@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
+<input type="hidden" name="job" value="{{$job}}"/>
 <div class="container">
     <h2 style="text-align: center;">TMV's | {{strtoupper(App\Job::find($job)->description)}}  ({{count($tmvs)}})</h2>
     <hr/>
     <div class="form-group row">
         <div class="col-md-10 col-lg-10 col-10">
-        <div class="btn-group">
-            <a href="{{ URL::to('/tmv/' . $job . '/create') }}" class="btn btn-primary">Create New</a>
-        </div>
+            <div class="btn-group">
+                <a href="{{ URL::to('/tmv/' . $job . '/create') }}" class="btn btn-primary">Create New</a>
+            </div>
             <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
             <div class="btn-group">
                 <button class="btn btn-info mobile dropdown-toggle" type="button" id="dropdownMenuButtonPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,9 +18,10 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPrint">
                   <button class="dropdown-item btnPrintFireLabel" id="label">Print Labels</button>
                   <button class="dropdown-item btnPrintFireReport" id="label">Print Service Log</button>
-                  <button class="dropdown-item btnPrintFireLabel" id="label">Print Register</button>
+                  <button class="dropdown-item" id="btnPrintTmv">Print Register</button>
                 </div>
             </div>
+            <button class="btn btn-danger mobile" id="btnChangeJob">Change Job</button>
         </div>
     </div>
     <table class="table table-hover table-responsive-sm table-striped">
@@ -74,4 +75,62 @@
     </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="modalChangeJob">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Job</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Select new Job:</label>
+            <select class="form-control" name="changeJob">
+              @foreach (App\Job::select('id', 'code','description')->get() as $job_select)
+                @if(!in_array($job_select->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
+                <option value="{{$job_select->id}}" {{$job == $job_select->id ? 'selected' : ''}}>{{$job_select->description}}</option>
+                @endif
+              @endforeach
+
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnSaveJob">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal TMV -->
+<div class="modal" tabindex="-1" role="dialog" id="modalPrintTmv">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Print Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Select Year:</label>
+            <select class="form-control" name="selectYear">
+              @for ($i = Carbon::now()->year; $i > Carbon::now()->year-20; $i--)
+                <option value="{{$i}}" {{$i == Carbon::now()->year ? 'selected' : ''}}>{{$i}}</option>
+              @endfor
+
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnContinuePrintTmv">Continue</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

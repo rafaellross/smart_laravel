@@ -57,7 +57,8 @@ Route::group(['middleware' => ['test']], function () {
 	Route::post('/tmv/{job}', 'TmvController@store');
 	Route::patch('/tmv/{id}', 'TmvController@update');
 	Route::get('/tmv/{job}/action/{ids}/{action}', 'TmvController@action');
-
+	Route::get('/tmv/change_job/{ids}/{new_job}', 'TmvController@changeJob');
+	Route::get('/tmv/{job}/print/{ids}/{date?}', 'TmvController@print');
 
 	//TMV Service Log
 	Route::get('/tmv_log/{tmv}', 'TmvLogController@index');
