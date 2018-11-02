@@ -70,9 +70,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="col-md-10 offset-md-3">
-            {{ $tmvs->links() }}
-    </div>
+
 </div>
 
 <div class="modal" tabindex="-1" role="dialog" id="modalChangeJob">

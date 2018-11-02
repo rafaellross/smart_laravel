@@ -16,7 +16,7 @@ class TmvController extends Controller
      */
     public function index($job)
     {
-        return view('job.tmv.index', ['tmvs' => Tmv::where('job_id', $job)->paginate(20), 'job' => $job]);
+        return view('job.tmv.index', ['tmvs' => Tmv::where('job_id', $job), 'job' => $job]);
     }
 
     /**
@@ -190,7 +190,7 @@ class TmvController extends Controller
         $logs = TmvLog::whereRaw("YEAR(log_dt) = ? and tmv_id = ?", [$year, $id])
                         ->get();
 
-          
+
           foreach ($logs as $log) {
             $report->add($log);
           }
