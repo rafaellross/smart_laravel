@@ -16,7 +16,7 @@ class TmvController extends Controller
      */
     public function index($job)
     {
-        return view('job.tmv.index', ['tmvs' => Tmv::where('job_id', $job), 'job' => $job]);
+        return view('job.tmv.index', ['tmvs' => Tmv::where('job_id', $job)->get(), 'job' => $job]);
     }
 
     /**
