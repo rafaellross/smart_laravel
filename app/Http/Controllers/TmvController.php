@@ -190,7 +190,7 @@ class TmvController extends Controller
         $logs = TmvLog::whereRaw("YEAR(log_dt) = ? and tmv_id = ?", [$year, $id])
                         ->get();
 
-          $report->job = '$logs';
+          
           foreach ($logs as $log) {
             $report->add($log);
           }
