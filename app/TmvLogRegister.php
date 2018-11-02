@@ -55,7 +55,7 @@ private $font = ["header" => 15, "label" => 7, "field" => 9, "values" => 7];
 
       $this->Cell(50, 6,'Address:',1,0,'C');
       $this->Cell($widthField, 6, $this->address,1,0,'L');
-      $this->Cell($widthImage, 6, '','R',1,'L');
+      $this->Cell($widthImage, 6, '','RB',1,'L');
 
 
 
@@ -66,7 +66,7 @@ private $font = ["header" => 15, "label" => 7, "field" => 9, "values" => 7];
 
 
       // Line break
-      $this->Ln(0);
+      $this->Ln(1);
 
       $this->SetFont('Arial','',8);
 
