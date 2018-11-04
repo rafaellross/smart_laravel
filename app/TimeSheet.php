@@ -203,10 +203,73 @@ class TimeSheet extends Model
 		$this->normal 		= Hour::convertToInteger($normal);
 		$this->total_15 	= Hour::convertToInteger($total_15);
 		$this->total_20 	= Hour::convertToInteger($total_20);
-	
 
 		$this->save();
 	}
+
+  public function topJob() {
+    $listHours = $this->listHours();
+    arsort($listHours);
+
+
+    //Sum tafe, sick and public holiday to the main job
+    if (isset($listHours["tafe"])) {
+      $listHours[key($listHours)] += $listHours["tafe"];
+      unset($listHours["tafe"]);
+    }
+
+    if (isset($listHours["sick"])) {
+      $listHours[key($listHours)] += $listHours["sick"];
+      unset($listHours["sick"]);
+    }
+
+    if (isset($listHours["holiday"])) {
+      $listHours[key($listHours)] += $listHours["holiday"];
+      unset($listHours["holiday"]);
+    }
+
+    if ($this->pldTaken()->integer > 0) {
+      if (isset($listHours["001"])) {
+        $listHours["001"] += $this->pldTaken()->integer;
+      } else {
+        $listHours["001"] = $this->pldTaken()->integer;
+      }
+    }
+
+    if (isset($listHours["rdo"])) {
+      unset($listHours["rdo"]);
+    }
+
+    if (isset($listHours["pld"])) {
+      unset($listHours["pld"]);
+    }
+
+    if (isset($listHours["anl"])) {
+      unset($listHours["anl"]);
+    }
+
+    if ($this->rdoTaken()->integer > 0) {
+      if (isset($listHours["001"])) {
+        $listHours["001"] += $this->rdoTaken()->integer;
+      } else {
+        $listHours["001"] = $this->rdoTaken()->integer;
+      }
+    }
+
+    if ($this->anlTaken()->integer > 0) {
+      if (isset($listHours["001"])) {
+        $listHours["001"] += $this->anlTaken()->integer;
+      } else {
+        $listHours["001"] = $this->anlTaken()->integer;
+      }
+    }
+    $topJob = "";
+    foreach ($listHours as $key => $value) {
+      $topJob = $key;
+      break;
+    }
+    return \App\Job::where('code', $topJob)->get()->first();
+  }
 
 
 }

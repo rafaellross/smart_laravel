@@ -233,7 +233,7 @@ class TimeSheetMyOb
 						$pct_deduct_entitlement = 1;
 					}
 
-					if (in_array($job->job->code, ['anl', 'rdo', 'pld'])) {
+					if (in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick'])) {
 						switch ($job->job->code) {
 							case 'anl':
 								$line->PayrollCategory = (object)array('UID' => $this->config['anl']);
@@ -244,6 +244,11 @@ class TimeSheetMyOb
 							case 'pld':
 								$line->PayrollCategory = (object)array('UID' => $this->config['pld']);
 								break;
+
+							case 'sick':
+								$line->PayrollCategory = (object)array('UID' => $this->config['sick']);
+								break;
+
 						}
 					} else {
 							$line->PayrollCategory = (object)array('UID' => $this->config['base_hourly']);
@@ -325,7 +330,19 @@ class TimeSheetMyOb
 
 						$pct_deduct_entitlement = 0.90;
 
-						$line->PayrollCategory = (object)array('UID' => $this->config['site_allow']);
+
+						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
+
+							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['apprentice'][$this->timesheet->employee->apprentice_year]);
+
+						} else {
+
+							$line->PayrollCategory = (object)array('UID' => $this->config['site_allow']['tradesman']);
+
+						}
+
+
+
 
 
 						if (is_null($job->job->myob_id)) {
@@ -382,8 +399,17 @@ class TimeSheetMyOb
 							dd($pct_of_total);
 						}
 
+						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
 
-						$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']);
+							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['apprentice'][$this->timesheet->employee->apprentice_year]);
+
+						} else {
+
+							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['tradesman']);
+
+						}
+
+
 						$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) ? 2 : 1 );
 
 						if (is_null($job->job->myob_id)) {
@@ -495,8 +521,7 @@ class TimeSheetMyOb
 
 		if ($this->timesheet->anl > 0) {
 
-				$line = new \stdClass();
-
+					$line = new \stdClass();
 					$line->PayrollCategory = (object)array('UID' => $this->config['anl']);
 					$line->Job = (object)array('UID' => $this->config['default_job']);
 
@@ -511,6 +536,26 @@ class TimeSheetMyOb
 
 						$line->Entries = $line->Entries;
 						array_push($arr_lines, $line);
+
+						//Annual Leave load
+
+						$line = new \stdClass();
+						$line->PayrollCategory = (object)array('UID' => $this->config['anl_load']);
+						$line->Job = (object)array('UID' => $this->config['default_job']);
+
+						$line->Entries = array();
+						$line->Entries =
+							array(array(
+									'UID' => '00000000-0000-0000-0000-000000000000',
+									'Date' => Carbon::parse($this->obj['EndDate'])->toDateTimeString(),
+									'Hours' => $this->timesheet->anl/60,
+									'Processed' => false
+								));
+
+							$line->Entries = $line->Entries;
+							array_push($arr_lines, $line);
+
+
 		}
 
 

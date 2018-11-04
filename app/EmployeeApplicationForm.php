@@ -44,7 +44,7 @@ class EmployeeApplicationForm extends \TCPDI
 
 
 
-        $this->Text(85, 117, $application->date_commenced);
+        $this->Text(85, 117, Carbon::parse($application->date_commenced)->format('d/m/Y'));
 
         //Bank details
 
@@ -669,7 +669,7 @@ class EmployeeApplicationForm extends \TCPDI
 
         $this->Cell(6,5, '', 1,0,'L', 0);
         $this->Cell(25,5, 'Smart form',0,0,'L', 0);
-        
+
     }
 
 }

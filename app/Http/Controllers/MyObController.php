@@ -40,8 +40,9 @@ class MyObController extends Controller
         $timesheet_myob = new TimeSheetMyOb($timesheet);
 
         //Determine employee job
+        
 
-        $this->expenses($timesheet->employee_id, 14, $myob_auth);
+        $this->expenses($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
 
 
         $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
@@ -82,7 +83,7 @@ class MyObController extends Controller
       $myob_auth = new \App\MYOB\AccountRightV2();
 
       $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
-
+      return json_encode($employees);
       foreach ($employees->Items as $employee_myob) {
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
@@ -126,7 +127,7 @@ class MyObController extends Controller
 
     }
 
-    public function expenses($employee_id, $job_id, $myob_auth) {
+    public function expenses($employee_id, $job_id, $myob_auth, $bonus = null) {
 
       $emp = Employee::find($employee_id);
 
@@ -138,7 +139,11 @@ class MyObController extends Controller
 
       foreach ($empStdPay->PayrollCategories as $category) {
 
-        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation") {
+        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus") {
+
+          if (strtolower($category->PayrollCategory->Name) == "bonus") {
+            $category->Amount = $bonus;
+          }
 
           $category->Job = (object)array('UID' => $job->myob_id);
 
@@ -150,5 +155,37 @@ class MyObController extends Controller
 
     }
 
+    public function categories() {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+      $categories = $myob_auth->_makeGetRequest("Payroll/PayrollCategory");
+      return json_encode($categories);
+    }
 
+    public function payroll() {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+      $payroll = $myob_auth->_makeGetRequest("Report/Payroll/EmployeePayrollAdvice");
+      return json_encode($payroll);
+
+    }
+
+    public function entitlements() {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+      $entitlements = $myob_auth->_makeGetRequest("Contact/EmployeePayrollDetails");
+      $result = array();
+      foreach ($entitlements->Items as $entitlement) {
+        $emp_entitlements = array();
+        foreach ($entitlement->Entitlements as $emp_entitlement) {
+          array_push($emp_entitlements, ["UID" => $emp_entitlement->EntitlementCategory->UID, 'Name' => $emp_entitlement->EntitlementCategory->Name,'Total' => $emp_entitlement->Total]);
+        }
+        array_push($result, ['employee' => $entitlement->Employee->UID, 'employee_name' => $entitlement->Employee->Name, 'entitlements' => $emp_entitlements]);
+
+      }
+      return json_encode($result);
+    }
+
+    public function bonus() {
+      $myob_auth = new \App\MYOB\AccountRightV2();
+      $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/bc41d277-709c-4146-9b5d-a930ca8a31ae");
+      return json_encode($empStdPay);
+    }
 }

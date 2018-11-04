@@ -124,12 +124,14 @@
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Apprentice Year') }}</label>
                             <div class="col-md-6">
-                                <input id="dob" type="text" class="form-control{{ $errors->has('apprentice_year') ? ' is-invalid' : '' }} " name="apprentice_year" value="{{ $employee->apprentice_year }}" autocomplete="Off">
-                                @if ($errors->has('apprentice_year'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('apprentice_year') }}</strong>
-                                    </span>
-                                @endif
+                                <select name="apprentice_year" class="form-control">
+                                  <option value="0" {{ $employee->apprentice_year == '' || $employee->apprentice_year == '0' ? 'selected' : '' }}>-</option>
+                                  <option value="1" {{ $employee->apprentice_year == '1' ? 'selected' : '' }}>1st</option>
+                                  <option value="2" {{ $employee->apprentice_year == '2' ? 'selected' : '' }}>2nd</option>
+                                  <option value="3" {{ $employee->apprentice_year == '3' ? 'selected' : '' }}>3rd</option>
+                                  <option value="4" {{ $employee->apprentice_year == '4' ? 'selected' : '' }}>4th</option>
+                                </select>
+
                             </div>
                         </div>
 
