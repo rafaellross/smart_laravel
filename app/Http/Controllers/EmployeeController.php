@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\EmployeeApplication;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -393,6 +394,45 @@ class EmployeeController extends Controller
             case 'update_job':
                 return $this->updateJob();
                 break;
+
+            case 'generate_employee':
+
+                    $app = EmployeeApplication::find($id);
+                    $exists = Employee::where('name', strtoupper($app->last_name . ", " . $app->first_name))->get()->first();
+                    if (count($exists) == 0) {
+
+                      $employee = new Employee();
+                      $employee->name = strtoupper($app->last_name . ", " . $app->first_name);
+                      $employee->phone = $app->mobile;
+                      $employee->bonus = 0;
+                      $employee->pld = 0;
+
+                      $employee->rdo_bal = 0;
+                      $employee->anl = 0;
+                      $employee->dob = $app->dob;
+
+                      $employee->anniversary_dt = null;
+
+                      $employee->apprentice_year = $app->apprentice_year;
+
+
+                      $employee->inactive = false;
+                      $employee->company = 'C';
+                      $employee->location = $app->role;
+                      $employee->rdo = $app->paid_basis == "F" ? true : false;
+                      $employee->travel = $app->paid_basis == "F" ? true : false;
+                      $employee->site_allow = $app->paid_basis == "F" ? true : false;
+                      $employee->save();
+
+
+                    echo "<script>alert('Employee ".strtoupper($app->last_name . ", " . $app->first_name)." Included!');</script>";
+
+                  } else {
+                    echo "<script>alert('Employee ".strtoupper($app->last_name . ", " . $app->first_name)." already exists!');</script>";
+                  }
+                  return "<script>window.close();</script>";
+                  break;
+
 
             default:
                 return redirect('employees')->with('error','There was no action selected');

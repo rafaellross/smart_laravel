@@ -144,8 +144,8 @@
         @if($erros = session('error'))
         <div class="col-md-5 offset-md-3">
             <div id="flash-message" class="alert alert-danger align-items-center" role="alert">
-                @foreach($erros as $error)
-                <strong class="mr-2">{{$error}}</strong>
+                @foreach($error as $err)
+                <strong class="mr-2">{{$err}}</strong>
                 <br/>
                 @endforeach
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

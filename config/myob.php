@@ -13,6 +13,7 @@ return [
         ],
         'base_hourly'     => 'e6ca2091-7c53-4256-8554-4f7c91eaa331',
         'anl'             => 'b0484276-29d3-45a0-9765-c9c757a3499f',
+        'holiday'         => 'fcfcdbc0-d428-42a8-92f1-8915079c266b',
         'anl_load'        => 'ad35f05b-8866-4b2b-ac36-08d9aa5c22fe',
         'rdo'             => 'f75663f7-859d-4fbe-9d66-278a42cd027e',
         'pld'             => 'a97167f0-4709-4c6a-940b-664636316417',

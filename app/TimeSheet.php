@@ -29,7 +29,7 @@ class TimeSheet extends Model
         return $this->belongsTo('App\Employee');
     }
 
-	public function listHours(){
+	   public function listHours(){
 
         $result = array();
         foreach ($this->days as $day) {

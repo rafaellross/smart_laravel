@@ -40,8 +40,8 @@ class MyObController extends Controller
         $timesheet_myob = new TimeSheetMyOb($timesheet);
 
         //Determine employee job
-        
 
+        //dd($timesheet_myob->obj);
         $this->expenses($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
 
 
@@ -83,7 +83,7 @@ class MyObController extends Controller
       $myob_auth = new \App\MYOB\AccountRightV2();
 
       $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
-      return json_encode($employees);
+      
       foreach ($employees->Items as $employee_myob) {
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();

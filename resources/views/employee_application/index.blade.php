@@ -11,6 +11,7 @@
             <a href="#" class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</a>
         </div>
 
+
     </div>
     <table class="table table-hover table-responsive-sm table-striped">
         <thead>
@@ -46,6 +47,7 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="employees/action/{{$employee_application->id}}/generate_employee" target="_blank">Include Employee</a>
                                     <a class="dropdown-item" href="employee_application/action/{{$employee_application->id}}/print" target="_blank">View</a>
                                     <a class="dropdown-item" href="employee_application/{{$employee_application->id}}/edit">Edit</a>
                                     <a class="dropdown-item delete" id="{{$employee_application->id}}" href="#">Delete</a>
