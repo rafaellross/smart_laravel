@@ -83,7 +83,7 @@ class MyObController extends Controller
       $myob_auth = new \App\MYOB\AccountRightV2();
 
       $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
-      
+
       foreach ($employees->Items as $employee_myob) {
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
@@ -109,8 +109,8 @@ class MyObController extends Controller
 
       $myob_auth = new \App\MYOB\AccountRightV2();
 
-      $jobs = $myob_auth->_makeGetRequest($request->get('guid') ."/GeneralLedger/Job");
-
+      $jobs = $myob_auth->_makeGetRequest("GeneralLedger/Job");
+      return json_encode($jobs);
       foreach ($jobs->Items as $job_myob) {
 
         $job = Job::where('code', $job_myob->Number)->get()->first();
@@ -183,9 +183,9 @@ class MyObController extends Controller
       return json_encode($result);
     }
 
-    public function bonus() {
+    public function stdPay() {
       $myob_auth = new \App\MYOB\AccountRightV2();
-      $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/bc41d277-709c-4146-9b5d-a930ca8a31ae");
+      $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay");
       return json_encode($empStdPay);
     }
 }

@@ -21,9 +21,9 @@
             </div>
             @if (isset(Auth::user()->tester) && Auth::user()->tester)
               <button class="btn btn-success mobile" id="btnGenerateTimeSheets" style="">Generate Time Sheets</button>
-              <a href="{{ 'employees/action/0/update_job'}}" class="btn btn-warning mobile" id="btnUpdateJob" style="">Update Job</a>
-            @endif
 
+            @endif
+            <a href="{{ 'employees/action/0/update_job'}}" class="btn btn-warning mobile" id="btnUpdateJob" style="">Update Job</a>
 
           </div>
 
