@@ -30,7 +30,7 @@ Route::group(['middleware' => ['test']], function () {
 	Route::get('/myob/categories', 'MyObController@categories');
 	Route::get('/myob/payroll', 'MyObController@payroll');
 	Route::get('/myob/entitlements', 'MyObController@entitlements');
-	Route::get('/myob/stdpay', 'MyObController@stdPay');
+	Route::get('/myob/stdpays', 'MyObController@stdPays');
 
 	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');

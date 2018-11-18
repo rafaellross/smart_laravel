@@ -124,7 +124,7 @@
                             <label for="apprentice_year" class="col-md-4 col-form-label text-md-right">{{ __('Apprentice Year') }}</label>
                             <div class="col-md-6">
                               <select name="apprentice_year" class="form-control">
-                                <option value="0" selected>-</option>
+                                <option value="" selected>-</option>
                                 <option value="1">1st</option>
                                 <option value="2">2nd</option>
                                 <option value="3">3rd</option>

@@ -42,7 +42,7 @@ class MyObController extends Controller
         //Determine employee job
 
         //dd($timesheet_myob->obj);
-        $this->expenses($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
+        $this->stdPay($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
 
 
         $req = $myob_auth->_makePutRequest('Payroll/Timesheet/' . $timesheet->employee->myob_id . '?api-version=v2', $timesheet_myob->obj);
@@ -127,7 +127,7 @@ class MyObController extends Controller
 
     }
 
-    public function expenses($employee_id, $job_id, $myob_auth, $bonus = null) {
+    public function stdPay($employee_id, $job_id, $myob_auth, $bonus = null) {
 
       $emp = Employee::find($employee_id);
 
@@ -183,9 +183,31 @@ class MyObController extends Controller
       return json_encode($result);
     }
 
-    public function stdPay() {
+    public function stdPays() {
+      $emps = Employee::all();
       $myob_auth = new \App\MYOB\AccountRightV2();
-      $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay");
-      return json_encode($empStdPay);
+      foreach ($emps as $emp) {
+        $empMyob = $myob_auth->_makeGetRequest("Contact/Employee/" . $emp->myob_id);
+        if (isset($empMyob->EmployeeStandardPay)) {
+
+
+          $empStdPay = $myob_auth->_makeGetRequest("Contact/EmployeeStandardPay/" . $empMyob->EmployeeStandardPay->UID);
+
+          foreach ($empStdPay->PayrollCategories as $category) {
+
+            if ($category->PayrollCategory->UID == "e6ca2091-7c53-4256-8554-4f7c91eaa331") {
+
+                $category->Hours = 0;
+                $category->Amount = 0;
+
+            }
+
+          }
+          $req = $myob_auth->_makePutRequest("Contact/EmployeeStandardPay/" . $empMyob->EmployeeStandardPay->UID, $empStdPay);
+          echo $emp->name;
+        }
+
+
+      }
     }
 }
