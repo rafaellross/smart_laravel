@@ -497,29 +497,68 @@ class EmployeeController extends Controller
     public function updateJob()
     {
 
-      $timesheets = TimeSheet::where('week_end', Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->format('Y-m-d'))->select(['employee_id'])->get();
+      $timesheets = DB::select(
+                  DB::raw(
+                      "
+                      select * from (
+                          select ts.id,
+                            users.username,
+                                ts.created_at,
+                                ts.employee_id,
+                                emp.name,
+                                ts.total,
+                                ts.total_15,
+                                ts.total_20,
+                                ts.week_end,
+                                ts.status,
+                                ts.integrated,
+                                ts.integration_message,
+                                (
+                                select code from (
+                                  select
+                                  jobs.code,
+                                  sum(job.end - job.start) as total,
+                                  time_sheets.id as ts_id
+                                  from time_sheets
+                                  join days
+                                  on time_sheets.id = days.time_sheet_id
+                                  join day_jobs job
+                                  on job.day_id = days.id
+                                  join jobs
+                                  on jobs.id = job.job_id
+                                  group by jobs.code, time_sheets.id
+                                ) as job where ts_id = ts.id order by total desc limit 1 ) as job
+
+                        from time_sheets ts
+                        inner join users
+                        on ts.user_id = users.id
+                        inner join employees emp
+                        on emp.id = ts.employee_id
+                        where " .
+
+                        ("ts.week_end = '" .  Carbon::parse(\App\Parameters::all()->first()->week_end_timesheet)->format('Y-m-d') . "'")
+                          . ") timesheets " .
+
+                        "where " . ("1=1") .
+
+                        " order by name asc"
+                  )
+                );
 
       foreach ($timesheets as $timesheet) {
 
-        $listHours = $timesheet->listHours();
-        arsort($listHours);
+        $emp = Employee::find($timesheet->employee_id);
 
-        foreach ($listHours as $key => $value) {
+        if (count($emp) > 0) {
 
-          $emp = Employee::find($timesheet->employee_id);
+          $emp->job_id = Job::where("code", $timesheet->job)->value('id');
 
-          if (count($emp) > 0) {
-
-            $emp->job_id = Job::where("code", $key)->value('id');
-            $emp->save();
-          }
-
-          break;
+          $emp->save();
+          
         }
-
       }
 
     return redirect('/employees?params=true')->with('success', 'Employee Job has been updated. Total (' . count($timesheets) .')' );
   }
-  
+
 }
