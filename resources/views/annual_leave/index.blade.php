@@ -21,12 +21,12 @@
                 <th scope="col">Employee</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">Return Date</th>
-
+                <th scope="col" class="text-center">Time Sheets Generated?</th>
             </tr>
         </thead>
         <tbody>
     @foreach ($annual_leaves as $annual_leave)
-                  <tr>
+                  <tr class="{{$annual_leave->generated ? 'bg-success' : ''}}">
                         <th>
                             <input type="checkbox" id="chkRow-{{ $annual_leave->id }}">
                         </th>
@@ -34,6 +34,7 @@
                         <td>{{ strtoupper($annual_leave->employee->name) }}</td>
                         <td>{{ Carbon::parse($annual_leave->start_dt)->format('d/m/Y')}}</td>
                         <td>{{ Carbon::parse($annual_leave->return_dt)->format('d/m/Y') }}</td>
+                        <td class="text-center">{{ $annual_leave->generated ? 'Yes' : 'No' }}</td>
 
                         <td>
                         </td>
@@ -44,7 +45,7 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="annual_leave/action/{{$annual_leave->id}}/generate_timesheets" target="_blank">Generate Timesheets</a>
+                                    <a class="dropdown-item" href="annual_leave/action/{{$annual_leave->id}}/generate_timesheets">Generate Timesheets</a>
                                     <a class="dropdown-item" href="employee_application/action/{{$annual_leave->id}}/print" target="_blank">View</a>
                                     <a class="dropdown-item" href="employee_application/{{$annual_leave->id}}/edit">Edit</a>
                                     <a class="dropdown-item delete" id="{{$annual_leave->id}}" href="#">Delete</a>
