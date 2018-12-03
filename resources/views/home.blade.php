@@ -17,6 +17,7 @@
                         <a href="{{ URL::to('/form_service_sheet') }}" class="list-group-item list-group-item-action ">Service Sheet</a>
                         <a href="{{ URL::to('/fire_identification/scan') }}" class="list-group-item list-group-item-action ">Scan Penetration Tag</a>
                         <a href="{{ env('API_OAUTH_URL', '') . '?client_id=' . env('API_KEY', '') . '&redirect_uri=' . env('API_CALLBACK', '') . '&response_type=code&scope=CompanyFile' }}" class="list-group-item list-group-item-action ">MYOB Integration</a>
+                        <a href="{{ URL::to('/annual_leave') }}" class="list-group-item list-group-item-action ">Annual Leave Request</a>
                     @endif
                 </div>
             </div>

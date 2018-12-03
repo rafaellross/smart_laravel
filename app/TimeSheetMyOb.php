@@ -384,7 +384,19 @@ class TimeSheetMyOb
 
 			//Travel Days
 			if ($this->timesheet->employee->travel) {
+
+
+				$jobs = 0;
 				foreach ($day->dayJobs as $job) {
+					if (!is_null($job->start)) {
+							$jobs++;
+					}
+				}
+
+				foreach ($day->dayJobs as $job) {
+
+
+
 					$line = new \stdClass();
 					$deductions = 0;
 					if (isset($job->job->code) && $day->week_day < 9) {
@@ -407,7 +419,7 @@ class TimeSheetMyOb
 						}
 
 						if ($day->hasNight()) {
-							dd($pct_of_total);
+
 						}
 
 						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
@@ -421,7 +433,7 @@ class TimeSheetMyOb
 						}
 
 
-						$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) ? 2 : 1 );
+						$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) && ($jobs > 1) ? 2 : 1 );
 
 						if (is_null($job->job->myob_id)) {
 							$line->Job = (object)array('UID' => $this->config['default_job']);

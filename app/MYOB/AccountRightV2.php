@@ -138,8 +138,8 @@ class AccountRightV2 {
                 $this->_password = $config['password'];
             }
 
-            if(isset($config['UID'])) {
                 $this->_uid = $config['UID'];
+                if(isset($config['UID'])) {
             }
 
 
@@ -378,6 +378,15 @@ class AccountRightV2 {
 
           curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
+        } elseif ($method == self::DELETE) {
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+          $data_string = json_encode($data);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+
+          array_push($headers, 'Content-Type: application/json');
+          array_push($headers, 'Content-Length: '.strlen($data_string));
+
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -428,13 +437,23 @@ class AccountRightV2 {
 
 
     /**
-     * Makes POST curl requests to MYOB for most actions
+     * Makes PUT curl requests to MYOB for most actions
      *
      * @return json object or string
      */
     public function _makePutRequest($function = '', $data) {
         return $this->_doCurl($function, self::PUT, $data);
     }
+
+    /**
+     * Makes DELETE curl requests to MYOB for most actions
+     *
+     * @return json object or string
+     */
+    public function _makeDeleteRequest($function = '', $data) {
+        return $this->_doCurl($function, self::DELETE, $data);
+    }
+
 
 
     /**
@@ -475,59 +494,5 @@ class AccountRightV2 {
         return $this->_makeGetRequest('Contact', $data);
     }
 
-    /**
-     *  Return, update, create and delete a customer contact for an AccountRight company file
-     *  http://developer.myob.com/api/accountright/v2/contact/customer/
-     *
-     *  @return json
-     */
-    public function ContactCustomer($json = array()) {
-        if(!empty($json)) {
-            return $this->_makePostRequest('Contact/Customer', $json);
-        } else {
-            return $this->_makeGetRequest('Contact/Customer');
-        }
-    }
 
-    /**
-     *  Return all sale invoice types for an AccountRight company file
-     *  http://developer.myob.com/api/accountright/v2/sale/invoice/
-     *
-     *  @return json
-     */
-    public function SaleInvoice() {
-        return $this->_makeGetRequest('Sale/Invoice');
-    }
-
-    /**
-     *  Returns all item type sale invoices for an AccountRight company file
-     *  http://developer.myob.com/api/accountright/v2/sale/invoice/invoice_item/
-     *
-     *  @return json
-     */
-    public function GetSaleInvoiceItem($json) {
-        return $this->_makeGetRequest('Sale/Invoice/Item', $json);
-    }
-
-    /**
-     *  Returns all item type sale invoices for an AccountRight company file
-     *  http://developer.myob.com/api/accountright/v2/sale/invoice/invoice_item/
-     *
-     *  @return json
-     */
-    public function PostSaleInvoiceItem($json) {
-        return $this->_makePostRequest('Sale/Invoice/Item', $json);
-    }
-
-    /**
-     *  Returns item type sale invoices for an AccountRight company file
-     *  http://developer.myob.com/api/accountright/v2/sale/invoice/
-     *
-     *  @return json
-     */
-    public function SaveInvoiceItemGet($uid) {
-        $json = array('UID' => $uid);
-
-        return $this->_makeGetRequest('Sale/Invoice/Item', $json);
-    }
 }

@@ -25,6 +25,7 @@ class MyObController extends Controller
     public function integrate(Request $request) {
 
       $timesheet = TimeSheet::find($request->get('id'));
+
       //Check if system has employee Id from MYOB
       if (is_null($timesheet->employee->myob_id)) {
 
@@ -37,7 +38,9 @@ class MyObController extends Controller
         $myob_auth = new \App\MYOB\AccountRightV2();
 
 
+
         $timesheet_myob = new TimeSheetMyOb($timesheet);
+        
 
         //Determine employee job
 
@@ -84,6 +87,24 @@ class MyObController extends Controller
 
       $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
 
+
+
+      $count = 0;
+/*
+      foreach ($employees->Items as $emp) {
+        $count++;
+        if ($count > 300) {
+          break;
+        } else {
+            echo $emp->LastName . ", " .$emp->FirstName . "<br>";
+            $myob_auth->_makeDeleteRequest($myob_auth->_uid ."/Contact/Employee/" . $emp->UID, $emp);
+        }
+
+      }
+*/
+
+
+
       foreach ($employees->Items as $employee_myob) {
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
@@ -93,7 +114,7 @@ class MyObController extends Controller
           $emp->myob_id = $employee_myob->UID;
 
           $emp->save();
-
+          echo $emp->name . "<br>";
         }
 
       }
@@ -110,7 +131,7 @@ class MyObController extends Controller
       $myob_auth = new \App\MYOB\AccountRightV2();
 
       $jobs = $myob_auth->_makeGetRequest("GeneralLedger/Job");
-      return json_encode($jobs);
+
       foreach ($jobs->Items as $job_myob) {
 
         $job = Job::where('code', $job_myob->Number)->get()->first();
@@ -195,7 +216,7 @@ class MyObController extends Controller
 
           foreach ($empStdPay->PayrollCategories as $category) {
 
-            if ($category->PayrollCategory->UID == "e6ca2091-7c53-4256-8554-4f7c91eaa331") {
+            if ($category->PayrollCategory->UID == "944fef3e-8ecd-46a8-88f3-c45062ad5a35") {
 
                 $category->Hours = 0;
                 $category->Amount = 0;

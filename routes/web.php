@@ -71,10 +71,9 @@ Route::group(['middleware' => ['test']], function () {
 	Route::post('/tmv_log/{id}', 'TmvLogController@store');
 	Route::patch('/tmv_log/{tmv}', 'TmvLogController@update');
 	Route::get('/tmv_log/action/{ids}/{action}', 'TmvLogController@action');
-	//Route::resource('tmv_log', 'TmvLogController');
-	//Route::resource('tmv_log', 'TmvLogController');
 
-
+	Route::resource('annual_leave', 'AnnualLeaveController');
+	Route::get('/annual_leave/action/{id?}/{action?}', 'AnnualLeaveController@action');
 });
 
 

@@ -9,42 +9,42 @@ use Carbon\Carbon;
 class TimeSheet extends Model
 {
 
-    public function days(){
+  public function days(){
 
-        return $this->hasMany('App\Day')->orderBy('week_day');
-    }
+      return $this->hasMany('App\Day')->orderBy('week_day');
+  }
 
-    public function certificates(){
+  public function certificates(){
 
-        return $this->hasMany('App\TimeSheetCertificate');
-    }
+      return $this->hasMany('App\TimeSheetCertificate');
+  }
 
-    public function user(){
+  public function user(){
 
-        return $this->belongsTo('App\User');
-    }
+      return $this->belongsTo('App\User');
+  }
 
-    public function employee(){
+  public function employee(){
 
-        return $this->belongsTo('App\Employee');
-    }
+      return $this->belongsTo('App\Employee');
+  }
 
-	   public function listHours(){
+  public function listHours(){
 
-        $result = array();
-        foreach ($this->days as $day) {
-            foreach ($day->dayJobs as $job) {
-                if (isset($job->job->code)) {
-                    if (isset($result[$job->job->code])) {
-                        $result[$job->job->code] += $job->hours();
-                    } else {
-                        $result[$job->job->code] = $job->hours();
-                    }
-                }
-            }
-        }
-        return $result;
-	}
+      $result = array();
+      foreach ($this->days as $day) {
+          foreach ($day->dayJobs as $job) {
+              if (isset($job->job->code)) {
+                  if (isset($result[$job->job->code])) {
+                      $result[$job->job->code] += $job->hours();
+                  } else {
+                      $result[$job->job->code] = $job->hours();
+                  }
+              }
+          }
+      }
+      return $result;
+  }
 
 	public static function D($J){
 	    return ($J<10? '0':'') . $J;
@@ -103,15 +103,11 @@ class TimeSheet extends Model
             $travelDays = 0;
             foreach ($this->days as $day) {
 
-
                 if ($day->work()) {
                     $travelDays++;
                     //Pay one more travel if employee had worked at night
                 }
-
-
                 $jobs = 0;
-
 
                 foreach ($day->dayJobs as $job) {
                   if (!is_null($job->start)) {

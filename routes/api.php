@@ -57,6 +57,7 @@ Route::get('employees/', function() {
                             emp.phone,
                             (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                             from employees emp
+                            where inactive = 0
                             order by emp.name asc
                      ")
                 );
@@ -72,7 +73,7 @@ Route::get('employees/{name}', function($name) {
                                 emp.phone,
                                 (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                 from employees emp
-                                where name like '%" . addslashes($name) . "%'
+                                where name like '%" . addslashes($name) . "%' and inactive = 0
                                 order by emp.name asc
                          ")
                     );
