@@ -13,7 +13,6 @@
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Code') }}</label>
-
                             <div class="col-md-6">
                                 <input id="code" readonly type="text" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" value="{{ $job->code }}" required autofocus>
                                 @if ($errors->has('code'))
@@ -55,6 +54,15 @@
                                         <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Inactive ?') }}</label>
+                            <div class="col-md-6">
+                                <select name="inactive" class="form-control">
+                                    <option value="1" {{ $job->inactive == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $job->inactive == 0 ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
                         </div>
 

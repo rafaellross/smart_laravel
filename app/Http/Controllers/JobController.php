@@ -15,7 +15,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        return view('job.index', ['jobs' => Job::all()]);
+        return view('job.index', ['jobs' => Job::orderByRaw("code * 1")->get()]);
     }
 
     /**
@@ -78,6 +78,7 @@ class JobController extends Controller
         $job->description = $request->get('description');
         $job->address = $request->get('address');
         $job->phone = $request->get('phone');
+        $job->inactive = $request->get('inactive');
         $job->save();
         return redirect('/jobs')->with('success', 'Job has been updated');
     }

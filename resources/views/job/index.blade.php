@@ -24,7 +24,7 @@
         </thead>
         <tbody>
     @foreach ($jobs as $job)
-                  <tr>
+                  <tr class="{{$job->inactive ? 'bg-danger' : ''}}">
                         <th>
                             <input type="checkbox" id="chkRow-{{ $job->id }}">
                         </th>
