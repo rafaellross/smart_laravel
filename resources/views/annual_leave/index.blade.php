@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h2 style="text-align: center;">Annual Leave Request</h2>
+    <h2 style="text-align: center;">Annual Leave Request {{count($annual_leaves)}}</h2>
     <hr/>
     <div class="form-group row">
         <div class="col-md-12 col-lg-12 col-12">
