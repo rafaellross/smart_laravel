@@ -150,7 +150,7 @@ class AnnualLeaveController extends Controller
 
           if ( $annual_leave->generated ) {
             //If not return alert to user
-            //return '<script>alert("' . "Time Sheets already generated!"  . '"); window.history.back();</script>';
+            return '<script>alert("' . "Time Sheets already generated!"  . '"); window.history.back();</script>';
 
           }
 
