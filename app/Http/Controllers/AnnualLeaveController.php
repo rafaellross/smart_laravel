@@ -61,9 +61,9 @@ class AnnualLeaveController extends Controller
         }
 
         //Check if employee has enough entitlement for Annual Leave
-        if ( ($days * 8) > $employee->anl ) {
+        if ( ($days * 8) > ($employee->anl + (3.077 * 3)) ) {
           //If not return alert to user
-          return '<script>alert("' . "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round(($days * 8), 2) . " hours! Balance: " . $employee->anl . '"); window.history.back();</script>';
+          return '<script>alert("' . "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round(($days * 8), 2) . " hours! Balance: " . $employee->anl . "(Future balance: ". $employee->anl + (3.077 * 3) .")" . '"); window.history.back();</script>';
 
         }
 
