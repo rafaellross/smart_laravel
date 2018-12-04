@@ -150,7 +150,7 @@ class AnnualLeaveController extends Controller
 
           if ( $annual_leave->generated ) {
             //If not return alert to user
-            return '<script>alert("' . "Time Sheets already generated!"  . '"); window.history.back();</script>';
+            //return '<script>alert("' . "Time Sheets already generated!"  . '"); window.history.back();</script>';
 
           }
 
@@ -223,8 +223,8 @@ class AnnualLeaveController extends Controller
                     $dayTimeSheet                   = new \App\Day();
                     $dayTimeSheet->week_day         = $weekDay->number;
                     $dayTimeSheet->day_dt           = $day["date"];
-                    $dayTimeSheet->total           = $weekDay->number < 7 ? "08:00" : "00:00";
-                    $dayTimeSheet->normal          = $weekDay->number < 7 ? "08:00" : "00:00";
+                    $dayTimeSheet->total           = $weekDay->number < 7 && Carbon::parse($annual_leave->return_dt)->greaterThanOrEqualTo(Carbon::parse($day["date"]))? "08:00" : "00:00";
+                    $dayTimeSheet->normal          = $weekDay->number < 7 && Carbon::parse($annual_leave->return_dt)->greaterThanOrEqualTo(Carbon::parse($day["date"]))? "08:00" : "00:00";
                     $dayTimeSheet->total_15        = "00:00";
                     $dayTimeSheet->total_20        = "00:00";
 
@@ -243,7 +243,7 @@ class AnnualLeaveController extends Controller
                               $start = (7 * 60);
                               $end = (15.25 * 60);
 
-                            } elseif (!in_array($day["date"], $holidays) && $job == 1 && $weekDay->number < 7 && Carbon::parse($annual_leave->return_dt)->greaterThan(Carbon::parse($day["date"]))) {
+                            } elseif (!in_array($day["date"], $holidays) && $job == 1 && $weekDay->number < 7 && Carbon::parse($annual_leave->return_dt)->greaterThanOrEqualTo(Carbon::parse($day["date"]))) {
                               $job_code = \App\Job::where("code", 'anl')->value('id');
                               $start = (7 * 60);
                               $end = (15.25 * 60);
@@ -261,7 +261,8 @@ class AnnualLeaveController extends Controller
                             $dayJob->save();
 
                     }
-
+                    $timeSheet->updateHours();
+                    $timeSheet->save();
           }
           $annual_leave->generated = true;
           $annual_leave->save();

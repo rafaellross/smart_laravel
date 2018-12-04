@@ -180,8 +180,8 @@ class TimeSheet extends Model
 	}
 
 	public function updateHours() {
-		$total     = 0;
-		$normal     = 0;
+    		$total      = 0;
+    		$normal     = 0;
         $total_15   = 0;
         $total_20   = 0;
 
@@ -195,10 +195,10 @@ class TimeSheet extends Model
 
 		}
 
-		$this->total 		= Hour::convertToInteger($total);
-		$this->normal 		= Hour::convertToInteger($normal);
-		$this->total_15 	= Hour::convertToInteger($total_15);
-		$this->total_20 	= Hour::convertToInteger($total_20);
+		$this->total 		= Hour::convertToHour($total);
+		$this->normal 		= Hour::convertToHour($normal);
+		$this->total_15 	= Hour::convertToHour($total_15);
+		$this->total_20 	= Hour::convertToHour($total_20);
 
 		$this->save();
 	}
