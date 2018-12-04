@@ -156,6 +156,8 @@ class AnnualLeaveController extends Controller
 
 
           $curr_week_end = Carbon::parse($annual_leave->start_dt)->endOfWeek()->format('Y-m-d');
+          //Get the timesheets ID to update hours
+          $time_sheets_id = array();
 
           $timeSheet = new TimeSheet();
           $timeSheet->emp_signature   = null;
@@ -174,6 +176,7 @@ class AnnualLeaveController extends Controller
           $timeSheet->status          = "P";
           $timeSheet->save();
 
+          array_push($time_sheets_id, $timeSheet->id);
           $days = array();
 
 
@@ -211,7 +214,7 @@ class AnnualLeaveController extends Controller
                 $timeSheet->user_id         = Auth::id();
                 $timeSheet->status          = "P";
                 $timeSheet->save();
-
+                array_push($time_sheets_id, $timeSheet->id);
 
 
 
@@ -261,11 +264,17 @@ class AnnualLeaveController extends Controller
                             $dayJob->save();
 
                     }
-                    $timeSheet->updateHours();
-                    $timeSheet->save();
+
+
           }
           $annual_leave->generated = true;
           $annual_leave->save();
+
+          foreach ($time_sheets_id as $id) {
+            $timesheet = TimeSheet::find($id);
+            $timeSheet->updateHours();
+          }
+
           return redirect('/annual_leave')->with('success', 'Time Sheets has been generated');
           break;
       }
