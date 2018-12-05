@@ -46,8 +46,8 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="annual_leave/action/{{$annual_leave->id}}/generate_timesheets">Generate Timesheets</a>
-                                    <a class="dropdown-item" href="employee_application/action/{{$annual_leave->id}}/print" target="_blank">View</a>
-                                    <a class="dropdown-item" href="employee_application/{{$annual_leave->id}}/edit">Edit</a>
+                                    <a class="dropdown-item" href="annual_leave/action/{{$annual_leave->id}}/print" target="_blank">View</a>
+                                    <a class="dropdown-item" href="annual_leave/{{$annual_leave->id}}/edit">Edit</a>
                                     <a class="dropdown-item delete" id="{{$annual_leave->id}}" href="#">Delete</a>
                                 </div>
                             </div>

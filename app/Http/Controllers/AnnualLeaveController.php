@@ -102,7 +102,7 @@ class AnnualLeaveController extends Controller
      */
     public function edit(AnnualLeave $annualLeave)
     {
-        //
+        return view('annual_leave.edit', ['annual_leave' => $annualLeave]);
     }
 
     /**
@@ -112,9 +112,42 @@ class AnnualLeaveController extends Controller
      * @param  \App\AnnualLeave  $annualLeave
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AnnualLeave $annualLeave)
+    public function update(Request $request, AnnualLeave $annual_leave)
     {
-        //
+      $holidays = ["2018-12-25", "2018-12-26", "2019-01-01", "2019-01-28"];
+     //return $request;
+      //Load variables
+      $employee = \App\Employee::find($request->get('employee_id'));
+      $start_dt = Carbon::createFromFormat('Y-m-d', $request->get('start_dt'));
+      $return_dt = Carbon::createFromFormat('Y-m-d', $request->get('return_dt'));
+
+      //Count annual leave days
+      $days = 0;
+      for ($i=$start_dt; $i < $return_dt; $i = $i->addDay()) {
+        if (!$i->isWeekend() && !in_array($i->format('Y-m-d'), $holidays)) {
+          $days++;
+        }
+      }
+
+      //Check if employee has enough entitlement for Annual Leave
+      if ( ($days * 8) > ($employee->anl + (3.077 * 3)) ) {
+        //If not return alert to user
+        return '<script>alert("' . "Employee: " . $employee->name . " doesn't have enough Annual Leave to request " . round(($days * 8), 2) . " hours! Balance: " . $employee->anl . '"); window.history.back();</script>';
+
+      }
+
+
+      $annual_leave->employee_id = $request->get('employee_id');
+      $annual_leave->request_dt = Carbon::parse($request->get('form_dt'));
+      $annual_leave->start_dt = Carbon::createFromFormat('Y-m-d', $request->get('start_dt'));;
+      $annual_leave->emp_signature = $request->get('emp_signature');
+      $annual_leave->return_dt = $return_dt;
+      $annual_leave->user_id         = Auth::id();
+
+
+      $annual_leave->save();
+
+      return redirect('/annual_leave')->with('success', 'Annual Leave Request has been updated');
     }
 
     /**
@@ -277,6 +310,13 @@ class AnnualLeaveController extends Controller
 
           return redirect('/annual_leave')->with('success', 'Time Sheets has been generated');
           break;
+
+        case 'print':
+        $report = new \App\AnnualLeaveReport();
+        $annual_leave = AnnualLeave::find($id);
+        $report->add($annual_leave);
+        return $report->output();
+        break;
       }
     }
 }
