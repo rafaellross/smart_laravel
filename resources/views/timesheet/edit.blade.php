@@ -52,7 +52,7 @@
                 </div>
                 <?php
 
-                    $jobDB = App\Job::select('code','description')->where('inactive', 0)->orderByRaw("code * 1")->get();
+                    $jobDB = App\Job::all()->orderByRaw("code * 1")->get();
                 ?>
 
                 @include('timesheet.partial.autofill')

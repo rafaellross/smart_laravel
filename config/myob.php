@@ -2,9 +2,8 @@
 
 return [
     'settings' => [
-
       'UID'   => '191efe23-c432-4565-a4ba-b53ea9d967cc',
-      'base_url' => 'http://localhost:8080/AccountRight/'
+      'base_url' => 'http://127.0.0.1:8000/AccountRight/'
     ],
     'payroll' => [
         'overtime' => [
