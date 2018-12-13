@@ -95,7 +95,7 @@ class Day extends Model
 
                 $extra_20 += $hours;
 
-            }            
+            }
         }
 
         if ($this->week_day < 7 && $normal > 0) {

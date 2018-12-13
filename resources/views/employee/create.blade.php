@@ -59,6 +59,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="bonus_type" class="col-md-4 col-form-label text-md-right">{{ __('Bonus Type') }}</label>
+                            <div class="col-md-6">
+                                <select name="location" class="form-control">
+                                  <option value="" selected>None</option>
+                                  <option value="F">Foreman</option>
+                                  <option value="L">Leading Hand</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="rdo_bal" class="col-md-4 col-form-label text-md-right">{{ __('RDO Balance') }}</label>
                             <div class="col-md-6">
                                 <input id="rdo_bal" type="number" step="any" class="form-control{{ $errors->has('rdo_bal') ? ' is-invalid' : '' }}" name="rdo_bal" value="0.00" required>

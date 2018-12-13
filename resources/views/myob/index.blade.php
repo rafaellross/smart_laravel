@@ -9,7 +9,7 @@
                 <div class="card-body">
 
                     @foreach ($companies as $company)
-                        <a href="/home" class="list-group-item list-group-item-action ">{{$company->Name}} - {{$company->Id}}</a>
+                        <a href="/home" class="list-group-item list-group-item-action ">{{$company->Name}}</a>
                     @endforeach
                 </div>
             </div>

@@ -131,7 +131,7 @@ class MyObController extends Controller
       $myob_auth = new \App\MYOB\AccountRightV2();
 
       $jobs = $myob_auth->_makeGetRequest("GeneralLedger/Job");
-      return json_encode($jobs);
+      //return json_encode($jobs);
       foreach ($jobs->Items as $job_myob) {
 
         $job = Job::where('code', $job_myob->Number)->get()->first();
@@ -160,9 +160,9 @@ class MyObController extends Controller
 
       foreach ($empStdPay->PayrollCategories as $category) {
 
-        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus") {
+        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
 
-          if (strtolower($category->PayrollCategory->Name) == "bonus") {
+          if (strtolower($category->PayrollCategory->Name) == "bonus" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
             $category->Amount = $bonus;
           }
 

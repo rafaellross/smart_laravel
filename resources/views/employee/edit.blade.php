@@ -58,6 +58,19 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="bonus_type" class="col-md-4 col-form-label text-md-right">{{ __('Bonus Type') }}</label>
+                            <div class="col-md-6">
+                                <select name="location" class="form-control">
+                                  <option value="" {{ $employee->bonus_type == '' ? 'selected' : '' }}>None</option>
+                                  <option value="F" {{ $employee->bonus_type == 'F' ? 'selected' : '' }}>Foreman</option>
+                                  <option value="L" {{ $employee->bonus_type == 'L' ? 'selected' : '' }}>Leading Hand</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="form-group row">
                             <label for="rdo_bal" class="col-md-4 col-form-label text-md-right">{{ __('RDO Balance') }}</label>
                             <div class="col-md-6">
