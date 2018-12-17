@@ -264,7 +264,7 @@ class TimeSheet extends Model
       $topJob = $key;
       break;
     }
-    return \App\Job::where('code', $topJob)->get()->first();
+    return \App\Job::where('code', is_null($topJob) || $topJob == "" ? "001" : $topJob)->get()->first();
   }
 
 

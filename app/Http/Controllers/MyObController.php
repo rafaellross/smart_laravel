@@ -45,6 +45,7 @@ class MyObController extends Controller
         //Determine employee job
 
         //dd($timesheet_myob->obj);
+        
         $this->stdPay($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
 
 

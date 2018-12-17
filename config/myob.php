@@ -16,7 +16,7 @@ return [
         'holiday'         => 'e6ca2091-7c53-4256-8554-4f7c91eaa331',
         'rdo'             => '67fc10eb-0bc4-4b58-9be0-2ceb3ab4872a',
         'pld'             => '10a46b55-913c-49b8-afb7-bd330124d901',
-        'sick'             => 'abc070f6-fa2b-4d5d-815e-ca1c96f42f7e',
+        'sick'            => 'abc070f6-fa2b-4d5d-815e-ca1c96f42f7e',
         'site_allow'      => [
             'tradesman' => 'f0c6364f-6149-4464-9665-55ac38b73800',
             'apprentice' => [
