@@ -70,7 +70,7 @@ class AnnualLeaveController extends Controller
         $annual_leave = new AnnualLeave();
         $annual_leave->employee_id = $request->get('employee_id');
         $annual_leave->request_dt = Carbon::createFromFormat('d/m/Y', $request->get('form_dt'));
-        $annual_leave->start_dt = Carbon::createFromFormat('Y-m-d', $request->get('start_dt'));;
+        $annual_leave->start_dt = Carbon::createFromFormat('d/m/Y', $request->get('start_dt'));;
         $annual_leave->emp_signature = $request->get('emp_signature');
         $annual_leave->return_dt = $return_dt;
         $annual_leave->user_id         = Auth::id();

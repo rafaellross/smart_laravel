@@ -204,5 +204,5 @@
         </div>
     </div>
 
-
+@include('timesheet.partial.description')
 @endsection
