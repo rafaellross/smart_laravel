@@ -100,6 +100,7 @@ class EmployeeController extends Controller
         $employee->name = $request->get('name');
         $employee->phone = $request->get('phone');
         $employee->bonus = $request->get('bonus');
+        $employee->car_allowance = $request->get('car_allowance');
         $employee->pld = $request->get('pld');
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');
@@ -148,6 +149,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+      
         $employee = $this->validate(request(), [
             'name' => 'required|string|max:255',
             'bonus' => 'required|numeric|min:0',
@@ -161,6 +163,7 @@ class EmployeeController extends Controller
         $employee->name = $request->get('name');
         $employee->phone = $request->get('phone');
         $employee->bonus = $request->get('bonus');
+        $employee->car_allowance = $request->get('car_allowance');
         $employee->pld = $request->get('pld');
         $employee->rdo_bal = $request->get('rdo_bal');
         $employee->anl = $request->get('anl');

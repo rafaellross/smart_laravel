@@ -61,11 +61,22 @@
                         <div class="form-group row">
                             <label for="bonus_type" class="col-md-4 col-form-label text-md-right">{{ __('Bonus Type') }}</label>
                             <div class="col-md-6">
-                                <select name="location" class="form-control">
+                                <select name="bonus_type" class="form-control">
                                   <option value="" selected>None</option>
                                   <option value="F">Foreman</option>
                                   <option value="L">Leading Hand</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="car_allowance" class="col-md-4 col-form-label text-md-right">{{ __('Car Allowance') }}</label>
+                            <div class="col-md-6">
+                                <input id="car_allowance" type="number" step="any" class="form-control{{ $errors->has('car_allowance') ? ' is-invalid' : '' }}" name="car_allowance" value="0.00" required>
+                                @if ($errors->has('car_allowance'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('car_allowance') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 

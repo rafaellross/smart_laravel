@@ -293,13 +293,20 @@ class TimeSheetReport extends Fpdf
 		$this->Cell($tb_right_width,5,'TOTAL HOLIDAY TAKEN',1,2,'R');
 		$this->Cell($tb_right_width,5,'TOTAL TRAVEL DAYS',1,2,'R');
 		$this->Cell($tb_right_width,5,'TOTAL SITE ALLOW.',1,2,'R');
-		$this->Cell($tb_right_width,5,'',0,2,'R');
+
 
 			if ($timeSheet->bonus() > 0 && Auth::user()->administrator) {
-				$this->Cell($tb_right_width,5,'BONUS',1,0,'R');
+				$this->Cell($tb_right_width,5,'BONUS',1,2,'R');
+			} else {
+				$this->Cell($tb_right_width,5,'',0,2,'R');
+			}
+
+			if ($timeSheet->employee->car_allowance > 0 && Auth::user()->administrator) {
+				$this->Cell($tb_right_width,5,'CAR ALLOWANCE',1,0,'R');
 			} else {
 				$this->Cell($tb_right_width,5,'',0,0,'R');
 			}
+
 
 		$this->SetY($this->GetY()-(50), false);
 		$this->Cell(10,5, $timeSheet->normalLessRdo(),1,2,'C', true);
@@ -312,10 +319,15 @@ class TimeSheetReport extends Fpdf
 		$this->Cell(10,5, $timeSheet->anlTaken()->decimal == 0 ? null : $timeSheet->anlTaken()->decimal,1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->travelDays() == 0 ? null : $timeSheet->travelDays(),1,2,'C', true);
 		$this->Cell(10,5, $timeSheet->siteAllow() == 0 ? null : $timeSheet->siteAllow()/60,1,2,'C', true);
-		$this->Cell(10,5, "",0,2,'C', false);
+
 		if ($timeSheet->bonus() > 0 && Auth::user()->administrator) {
 			$this->Cell(10,5, $timeSheet->bonus() == 0 ? null : round($timeSheet->bonus(), 2),1,2,'C', true);
 		}
+
+		if ($timeSheet->employee->car_allowance > 0 && Auth::user()->administrator) {
+			$this->Cell(10,5, $timeSheet->employee->car_allowance == 0 ? null : round($timeSheet->employee->car_allowance, 2),1,2,'C', true);
+		}
+
 
 		//Write job descriptions
 		$start_descriptionsY = 165;
