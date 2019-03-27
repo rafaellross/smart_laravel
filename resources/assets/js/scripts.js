@@ -136,9 +136,7 @@ $(document).ready(function() {
     var duration = $('#' + day[0] + '_hours_' + row);
     var start = Number($('#' + day[0] + "_start_" + row).val());
     var end = Number($(this).val());
-    var lunch = (row === 1 && day[0] !== "sat" && day[0] !== "sun")
-      ? 15
-      : 0;
+    var lunch = (row === 1) ? 15 : 0;
 
 
     //Calculate duration of job

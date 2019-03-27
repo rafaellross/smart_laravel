@@ -125,7 +125,7 @@ class TimeSheet extends Model
             if ($this->rdo > 0) {
               //Check if quantity of RDO is more than 6
               //if ($this->rdo > (4*60) && $this->rdo <= (8*60) ) {
-            	if ($this->rdo > (6*60) && $this->rdo <= (8*60) ) {
+            	if ($this->rdo >= (6*60) && $this->rdo <= (8*60) ) {
             		$travelDays++;
             	} else {
             		$int = floor(($this->rdo/60)/8);

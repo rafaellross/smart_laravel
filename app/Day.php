@@ -30,7 +30,7 @@ class Day extends Model
 
     public function work(){
         $work = false;
-        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday");
+        $deductCodes = array("sick", "anl", "pld", "rdo", "tafe", "holiday");
 
         foreach ($this->dayJobs as $job) {
 
