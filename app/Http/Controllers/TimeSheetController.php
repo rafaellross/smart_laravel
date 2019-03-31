@@ -95,7 +95,7 @@ class TimeSheetController extends Controller
                                   ) as job where ts_id = ts.id order by total desc limit 1 ) as job
 
                           from time_sheets ts
-                          inner join users
+                          left join users
                           on ts.user_id = users.id
                           inner join employees emp
                           on emp.id = ts.employee_id
