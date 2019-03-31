@@ -30,7 +30,7 @@ class DayJob extends Model
 
         if ($this->end > $this->start) {
 
-            return ($this->end - $this->start) < 0 ? 0 : ($this->end - $this->start)-15;
+            return ($this->end - $this->start) < 0 ? 0 : ($this->end - $this->start);
 
         } else if (!is_null($this->start) && !is_null($this->end)) {
 
