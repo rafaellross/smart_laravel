@@ -226,7 +226,7 @@
               @foreach ($timesheets as $timesheet)
                   <tr>
                   </tr><tr class="P"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
-                      <td>{{$timesheet->user->username}}</td>
+                      <td>{{isset($timesheet->user->username) ? $timesheet->user->username : ''}}</td>
                       <td class="mobile">{{ Carbon::parse($timesheet->created_at)->format('d/m/Y') }}</td>
 
                       <td>{{$timesheet->total}}</td>
