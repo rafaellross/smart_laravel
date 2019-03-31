@@ -16,7 +16,7 @@ class DayJob extends Model
 
     public function hours(){
 
-    	if ($this->number == 1 && $this->day->week_day < 7 && (!is_null($this->start) && !is_null($this->end))) {
+    	if ($this->number == 1 && (!is_null($this->start) && !is_null($this->end))) {
         if ($this->end > $this->start) {
 
           return ($this->end - $this->start)-15 < 0 ? 0 : ($this->end - $this->start)-15;
