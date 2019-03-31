@@ -96,7 +96,7 @@ $curr_filter['job'] = filter_input(INPUT_GET, 'job', FILTER_SANITIZE_SPECIAL_CHA
             <tr>
             </tr>
             <tr class="P {{$timesheet->integrated ? 'bg-success' : ''}} {{is_null($timesheet->integration_message) ? '' : 'bg-danger'}}"><th class="mobile"><input type="checkbox" id="chkRow-{{$timesheet->id}}"></th><th class="mobile" scope="row">{{$timesheet->id}}</th>
-                <td>{{$timesheet->username}}</td>
+                <td>{{isset($timesheet->username) ? $timesheet->username : ''}}</td>
                 <td class="mobile">{{ Carbon::parse($timesheet->created_at, 'Australia/Sydney')->format('d/m/Y H:i') }}</td>
                 <td>{{$timesheet->name}}</td>
                 <td>{{$timesheet->total}}</td>
