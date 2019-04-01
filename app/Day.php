@@ -34,7 +34,21 @@ class Day extends Model
 
         foreach ($this->dayJobs as $job) {
 
-            if ((isset($job->job->code)) && !in_array($job->job->code, $deductCodes)) {
+            if (
+            		isset($job->job->code) &&
+    				(
+		            	(
+
+			        		!in_array($job->job->code, $deductCodes)
+		        		)
+		        		||
+		        		(
+		        			$job->job->code == "rdo" &&	($job->hours() > (6*60))
+		        		)
+
+    				)
+	        	)
+            {
                 $work = true;
             }
         }
