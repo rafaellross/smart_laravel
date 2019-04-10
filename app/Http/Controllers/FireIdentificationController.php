@@ -161,7 +161,7 @@ class FireIdentificationController extends Controller
         //
     }
 
-    public function action($job, $id, $action, $drawing = null, $null = 0) {
+    public function action($job, $id, $action, $drawing = null, $null = 0, $startEnd = 0) {
         switch ($action) {
             case 'delete':
                     DB::table('fire_identifications')->whereRaw("id in ($id)")->delete();
@@ -197,6 +197,7 @@ class FireIdentificationController extends Controller
                 $report->address = $job_obj->address;
                 $report->AddPage('L');
 
+
                 $fire_identifications = DB::select(
                     DB::raw(
                         "select jobs.description, fire_identifications.*
@@ -207,7 +208,12 @@ class FireIdentificationController extends Controller
                          fire_identifications.drawing = '" . $drawing . "'
 
                          and fire_identifications.fire_photo is ".($null == 0 ? 'not' : '')." null
-                        order by fire_seal_ref
+
+
+                         and " . ($startEnd == 0 ? " 1=1 " : "fire_identifications.fire_seal_ref between " . (explode("-", $startEnd)[0]) . " and " . (explode("-", $startEnd)[1]) )
+
+
+                        ." order by fire_seal_ref
                          "));
                 foreach ($fire_identifications as $fire_identification) {
                     $report->add($fire_identification);

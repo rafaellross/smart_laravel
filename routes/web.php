@@ -138,7 +138,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 
 	Route::get('/fire_identification/{job}', 'FireIdentificationController@index');
-	Route::get('/fire_identification/{job}/action/{id}/{action}/{drawing?}/{null?}', 'FireIdentificationController@action');
+	Route::get('/fire_identification/{job}/action/{id}/{action}/{drawing?}/{null?}/{startEnd?}', 'FireIdentificationController@action');
 	Route::get('/fire_identification/create/{job}', 'FireIdentificationController@create');
 	Route::get('/fire_identification/edit/{id}', 'FireIdentificationController@edit');
 	Route::post('/fire_identification/{job}', 'FireIdentificationController@store');
