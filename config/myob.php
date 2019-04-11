@@ -2,44 +2,44 @@
 
 return [
     'settings' => [
-      'UID'   => '191efe23-c432-4565-a4ba-b53ea9d967cc',
+      'UID'   => '8e2498be-ff96-4fd5-80af-2221363e6d92',
       'base_url' => 'http://127.0.0.1:8000/AccountRight/'
     ],
     'payroll' => [
         'overtime' => [
-          '15' =>   'c7585ed8-6937-4d8f-9c5f-ea0aef8bdd25',
-          '20' =>   '93cdddb6-88e9-4d82-948a-23d5ea5b2076',
+          '15' =>   '0aeaf2d7-fefd-4dbe-b7c5-62a12b3cec46',
+          '20' =>   '6ecf7c5f-021e-4ca1-ad1d-acdb330ca851',
         ],
-        'base_hourly'     => '944fef3e-8ecd-46a8-88f3-c45062ad5a35',
-        'anl'             => 'c4d34271-301c-45ca-8513-df71426b6812',
-        'anl_load'        => '2cccd5ea-fad0-4df3-9c09-feab031cafd2',
+        'base_hourly'     => '4c2adb96-a2b0-4ee0-9736-8c29ecf8dacc',
+        'anl'             => '7060502d-72d8-4f87-944f-c2e391adbee2',
+        'anl_load'        => '94a0d4f4-f585-4e13-85de-a75c5ee7ee23',
         'holiday'         => 'e6ca2091-7c53-4256-8554-4f7c91eaa331',
-        'rdo'             => '67fc10eb-0bc4-4b58-9be0-2ceb3ab4872a',
-        'pld'             => '10a46b55-913c-49b8-afb7-bd330124d901',
-        'sick'            => 'abc070f6-fa2b-4d5d-815e-ca1c96f42f7e',
+        'rdo'             => '710d5168-03de-4b16-8f8a-75d84c27fbdb',
+        'pld'             => '5508e3da-7e9e-4ca8-9f39-3ee42af80464',
+        'sick'            => '2ce4cc98-4bdc-446b-98c6-35c23c913d26',
         'site_allow'      => [
-            'tradesman' => 'f0c6364f-6149-4464-9665-55ac38b73800',
+            'tradesman' => 'e7ffd3ca-ff2f-489b-93e0-d12c6a5f2b9f',
             'apprentice' => [
-              '1' => '0fac0dea-0499-415e-b16e-90cfffd103b9',
-              '2' => 'b629901e-a2b9-4acf-8927-88549684dbea',
-              '3' => 'd9efe95c-a7b2-4d91-be70-1fdcef85966f',
-              '4' => 'c8bb9ecf-57d6-4a83-9e8c-45c13858a013'
+              '1' => '1571ebc3-ea03-42ef-8c6a-d6e077332452',
+              '2' => '86e1186c-dce4-4c02-a75d-5afc64565a7d',
+              '3' => '75e1aa30-fce8-4aa5-8934-b02e2e69a4d1',
+              '4' => 'e0e5bff1-2abc-4bea-ae6c-2ce8690a0b6d'
             ]
           ],
-        'default_job'     => 'bf6303f1-a39c-4543-b5bd-6644ad8a1473',
+        'default_job'     => '24a6a4dd-c6de-43e2-b84f-3220e3bdb099',
         'travel_days'     => [
-          'tradesman' => 'f202aa19-5163-43ab-8d6c-4702c2e30c6f',
+          'tradesman' => '4b9b9714-e87b-47b4-be41-a27ecf1e825e',
           'apprentice' => [
-              '1' => '79576026-186c-4f6f-9ea2-92d397103512',
-              '2' => '65151096-a65f-40c0-91ef-31febd2a527b',
-              '3' => '65151096-a65f-40c0-91ef-31febd2a527b',
-              '4' => '53b84389-2bac-45b7-8d55-43a3845a5ba6'
+              '1' => '11fe8795-cb33-4209-b6f2-40887e59e47e',
+              '2' => 'c887fcec-0f28-45ea-ad5c-b74c03d65a38',
+              '3' => 'c887fcec-0f28-45ea-ad5c-b74c03d65a38',
+              '4' => '6edbe8cd-80cb-4a6c-8bdf-31b4a24fe676'
             ]
           ]
     ],
     'entitlements' => [
-      'anl'             => 'fb1ad0b1-e2b4-4254-843a-c68bc2529681',
-      'rdo'             => 'aff9ffdd-73ca-40fb-9c7c-47e9522fcd4c',
-      'pld'             => 'cde563b9-3919-46d4-9fa0-303f20304e57',
+      'anl'             => 'c991aeac-acef-49cd-a796-3e23d2944e5c',
+      'rdo'             => '323ef565-44e6-46e7-b26f-827e6326c472',
+      'pld'             => 'bff683c7-a812-45c9-9e60-b4fe1f5b4b90',
     ]
 ];
