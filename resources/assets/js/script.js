@@ -671,7 +671,7 @@ $(document).ready(function() {
       $('#btnStartIntegration').attr("disabled", "disabled");
       $("input[type=checkbox]:checked").not('#chkRow').each(function() {
 
-        $.post( "/myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
+        $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
           progress += step;
           $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
 
