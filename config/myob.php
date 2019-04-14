@@ -28,7 +28,7 @@ return [
           ],
         'default_job'     => '24a6a4dd-c6de-43e2-b84f-3220e3bdb099',
         'travel_days'     => [
-          'tradesman' => '4b9b9714-e87b-47b4-be41-a27ecf1e825e',
+          'tradesman' => 'c386d0e8-8fdd-4d88-859b-65c1e4a30774',
           'apprentice' => [
               '1' => '11fe8795-cb33-4209-b6f2-40887e59e47e',
               '2' => 'c887fcec-0f28-45ea-ad5c-b74c03d65a38',
