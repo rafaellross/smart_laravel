@@ -13,7 +13,7 @@ return [
         'base_hourly'     => '4c2adb96-a2b0-4ee0-9736-8c29ecf8dacc',
         'anl'             => '7060502d-72d8-4f87-944f-c2e391adbee2',
         'anl_load'        => '94a0d4f4-f585-4e13-85de-a75c5ee7ee23',
-        'holiday'         => 'e6ca2091-7c53-4256-8554-4f7c91eaa331',
+        'holiday'         => '4c2adb96-a2b0-4ee0-9736-8c29ecf8dacc',
         'rdo'             => '710d5168-03de-4b16-8f8a-75d84c27fbdb',
         'pld'             => '5508e3da-7e9e-4ca8-9f39-3ee42af80464',
         'sick'            => '2ce4cc98-4bdc-446b-98c6-35c23c913d26',

@@ -55,9 +55,8 @@ class MyObController extends Controller
 
           foreach ($req->Errors as $error) {
             array_push($errors, $error->Message);
-
+            
           }
-          array_push($errors, $timesheet_myob->obj);
 
           $timesheet->integration_message = implode("|", $errors);
           $timesheet->integrated = false;
