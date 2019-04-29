@@ -43,8 +43,8 @@ class MyObController extends Controller
 
 
         //Determine employee job
-       
-        
+
+
         $this->stdPay($timesheet->employee_id, $timesheet->topJob()->id, $myob_auth, $timesheet->bonus());
 
 
@@ -55,6 +55,7 @@ class MyObController extends Controller
 
           foreach ($req->Errors as $error) {
             array_push($errors, $error->Message);
+            array_push($errors, $timesheet_myob->obj);
           }
 
           $timesheet->integration_message = implode("|", $errors);
@@ -160,9 +161,9 @@ class MyObController extends Controller
 
       foreach ($empStdPay->PayrollCategories as $category) {
 
-        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
+        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
 
-          if (strtolower($category->PayrollCategory->Name) == "bonus" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
+          if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
             $category->Amount = $bonus;
           }
 
