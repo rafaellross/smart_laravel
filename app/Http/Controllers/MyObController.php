@@ -26,7 +26,7 @@ class MyObController extends Controller
 
       $timesheet = TimeSheet::find($request->get('id'));
 
-      //Check if system has employee Id from MYOB
+      //Check if system has no employee Id from MYOB
       if (is_null($timesheet->employee->myob_id)) {
 
         $timesheet->integration_message = "Employee doesn't exist on MYOB or name is different";
