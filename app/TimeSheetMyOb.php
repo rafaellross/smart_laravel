@@ -211,12 +211,12 @@ class TimeSheetMyOb
 				$deductions = 0;
 				$pct_of_total = 0;
 				if (isset($job->job->code) && $day->week_day < 7) {
-					if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld']) || isset($day->listHours()['holiday'])) {
+					if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld']) /*|| isset($day->listHours()['holiday']) */) {
 						$dedu_rdo = isset($day->listHours()['rdo']) ? $day->listHours()['rdo'] : 0;
 						$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
 						$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
-						$dedu_holiday = isset($day->listHours()['holiday']) ? $day->listHours()['holiday'] : 0;
-						$deductions = $dedu_rdo + $dedu_pld + $dedu_anl + $dedu_holiday;
+						/*$dedu_holiday = isset($day->listHours()['holiday']) ? $day->listHours()['holiday'] : 0;*/
+						$deductions = $dedu_rdo + $dedu_pld + $dedu_anl /*+ $dedu_holiday*/;
 						$pct_of_total = (Hour::convertToInteger($day->total) - ($deductions)) > 0 ? ($job->hours()) / (Hour::convertToInteger($day->total) - ($deductions)) : 0;
 
 
@@ -233,7 +233,7 @@ class TimeSheetMyOb
 						$pct_deduct_entitlement = 1;
 					}
 
-					if (in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday'])) {
+					if (in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick'/*, 'holiday'*/])) {
 						switch ($job->job->code) {
 							case 'anl':
 								$line->PayrollCategory = (object)array('UID' => $this->config['anl']);
@@ -248,11 +248,11 @@ class TimeSheetMyOb
 							case 'sick':
 								$line->PayrollCategory = (object)array('UID' => $this->config['sick']);
 								break;
-
+/*
 							case 'holiday':
 								$line->PayrollCategory = (object)array('UID' => $this->config['holiday']);
 								break;
-
+*/
 
 						}
 					} else {
@@ -269,7 +269,7 @@ class TimeSheetMyOb
 					$line->Entries = array();
 
 
-					$hrs_temp = in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday']) ? $job->hours()/60 : (((Hour::convertToInteger($day->normal) * $pct_of_total)/60.0) - ($deductions/60));
+					$hrs_temp = in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick'/*, 'holiday'*/]) ? $job->hours()/60 : (((Hour::convertToInteger($day->normal) * $pct_of_total)/60.0) - ($deductions/60));
 					$pct_of_total = $this->totalNormal() > 0 ?  $hrs_temp / $this->totalNormal() : 0;
 
 
@@ -278,7 +278,7 @@ class TimeSheetMyOb
 								'UID' => '00000000-0000-0000-0000-000000000000',
 								'Date' => Carbon::parse($day->day_dt)->toDateTimeString(),
 								'Hours' =>
-									in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday']) ? $job->hours()/60 : $hrs_temp - (($this->timesheet->employee->rdo ? $pct_of_total * 4 : 0)),
+									in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick'/*, 'holiday'*/]) ? $job->hours()/60 : $hrs_temp - (($this->timesheet->employee->rdo ? $pct_of_total * 4 : 0)),
 								'Processed' => false
 							));
 
@@ -607,14 +607,14 @@ class TimeSheetMyOb
 
 				$deductions = 0;
 				$pct_of_total = 0;
-				if (isset($job->job->code) && $day->week_day < 7 && !in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday'])) {
-					if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld']) || isset($day->listHours()['holiday'])) {
+				if (isset($job->job->code) && $day->week_day < 7 && !in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick'/*, 'holiday'*/])) {
+					if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld']) /*|| isset($day->listHours()['holiday'])*/) {
 						$dedu_rdo = isset($day->listHours()['rdo']) ? $day->listHours()['rdo'] : 0;
 						$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
 						$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
 						$dedu_sick = isset($day->listHours()['sick']) ? $day->listHours()['sick'] : 0;
-						$dedu_holiday = isset($day->listHours()['holiday']) ? $day->listHours()['holiday'] : 0;
-						$deductions = $dedu_rdo + $dedu_pld + $dedu_anl + $dedu_sick + $dedu_holiday;
+						/*$dedu_holiday = isset($day->listHours()['holiday']) ? $day->listHours()['holiday'] : 0;*/
+						$deductions = $dedu_rdo + $dedu_pld + $dedu_anl + $dedu_sick /*+ $dedu_holiday*/;
 						$pct_of_total = (Hour::convertToInteger($day->total) - ($deductions)) > 0 ? ($job->hours()) / (Hour::convertToInteger($day->total) - ($deductions)) : 0;
 
 					} else {
@@ -630,7 +630,7 @@ class TimeSheetMyOb
 						$pct_deduct_entitlement = 1;
 					}
 
-					$total += in_array($job->job->code, ['anl', 'rdo', 'pld', 'holiday', 'sick']) ? $job->hours()/60 : (((Hour::convertToInteger($day->normal) * $pct_of_total) * $pct_deduct_entitlement)/60.0) - ($deductions/60);
+					$total += in_array($job->job->code, ['anl', 'rdo', 'pld', /*'holiday', */'sick']) ? $job->hours()/60 : (((Hour::convertToInteger($day->normal) * $pct_of_total) * $pct_deduct_entitlement)/60.0) - ($deductions/60);
 
 				}
 			}
