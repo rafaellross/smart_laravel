@@ -110,12 +110,13 @@ class MyObController extends Controller
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
 
+        echo $employee_myob->LastName . ', ' . $employee_myob->FirstName . " | " . $employee_myob->UID . "<br>";
         if (count($emp) > 0) {
 
           $emp->myob_id = $employee_myob->UID;
 
           $emp->save();
-          echo $emp->name . "<br>";
+          //echo $emp->name . "<br>";
         }
 
       }

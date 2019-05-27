@@ -171,7 +171,7 @@ class TimeSheet extends Model
 
 	public function bonus(){
 
-		if ($this->workDays() >= 5 || $this->employee->bonus == 0) {
+		if (($this->workDays() >= 5) || $this->employee->bonus == 0) {
 
 			return $this->employee->bonus;
 
@@ -181,11 +181,13 @@ class TimeSheet extends Model
 
 		} else {
 
-			$multiplier = ($this->employee->bonus_type == "L" ? 5 : 6);
+      $total = $this->employee->bonus;
 
-			$bonusDay = $this->employee->bonus/$multiplier;
+      $deduction = $total / ($this->employee->bonus_type == "L" ? 5 : 6);
 
-			$bonus = $this->workDays() * $bonusDay;
+      $notWorkedDays = 5 - $this->workDays();
+
+      $bonus = $total - ($deduction * $notWorkedDays);
 
 			return $bonus;
 
