@@ -328,7 +328,8 @@ class TimeSheetMyOb
 							$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
 							$dedu_sick = isset($day->listHours()['sick']) ? $day->listHours()['sick'] : 0;
 							$dedu_holiday = isset($day->listHours()['holiday']) ? $day->listHours()['holiday'] : 0;
-							$deductions = $dedu_rdo + $dedu_pld + $dedu_anl + $dedu_sick + $dedu_holiday;
+							$dedu_tafe = isset($day->listHours()['tafe']) ? $day->listHours()['tafe'] : 0;
+							$deductions = $dedu_rdo + $dedu_pld + $dedu_anl + $dedu_sick + $dedu_holiday + $dedu_tafe;
 							$pct_of_total = (Hour::convertToInteger($day->total) - ($deductions)) > 0 ? ($job->hours()) / (Hour::convertToInteger($day->total) - ($deductions)) : 0;
 
 
@@ -368,7 +369,7 @@ class TimeSheetMyOb
 							array(array(
 									'UID' => '00000000-0000-0000-0000-000000000000',
 									'Date' => Carbon::parse($day->day_dt)->toDateTimeString(),
-									'Hours' => in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday']) ? 0 : $job->hours()/60,
+									'Hours' => in_array($job->job->code, ['anl', 'rdo', 'pld', 'sick', 'holiday', 'tafe']) ? 0 : $job->hours()/60,
 									'Processed' => false
 								))
 							;

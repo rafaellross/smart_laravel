@@ -55,7 +55,7 @@ class MyObController extends Controller
 
           foreach ($req->Errors as $error) {
             array_push($errors, $error->Message);
-            
+
           }
 
           $timesheet->integration_message = implode("|", $errors);
@@ -132,8 +132,8 @@ class MyObController extends Controller
 
       $myob_auth = new \App\MYOB\AccountRightV2();
 
-      $jobs = $myob_auth->_makeGetRequest("GeneralLedger/Job");
-      //return json_encode($jobs);
+      $jobs = $myob_auth->_makeGetRequest('GeneralLedger/Job');
+
       foreach ($jobs->Items as $job_myob) {
 
         $job = Job::where('code', $job_myob->Number)->get()->first();
@@ -162,9 +162,9 @@ class MyObController extends Controller
 
       foreach ($empStdPay->PayrollCategories as $category) {
 
-        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
+        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand" || strtolower($category->PayrollCategory->Name) == "foreman") {
 
-          if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
+          if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand" || strtolower($category->PayrollCategory->Name) == "foreman") {
             $category->Amount = $bonus;
           }
 
