@@ -168,9 +168,10 @@ class MyObController extends Controller
             strtolower($category->PayrollCategory->Name) == "bonus foremen" || 
             strtolower($category->PayrollCategory->Name) == "bonus leading hand" ||
             substr(strtolower($category->PayrollCategory->Name), 0, 13) == "car allowance"
+
             ) {
 
-          if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand") {
+          if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand" || strtolower($category->PayrollCategory->Name) == "foreman") {
             $category->Amount = $bonus;
           }
 
