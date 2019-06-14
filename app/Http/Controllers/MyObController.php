@@ -162,10 +162,26 @@ class MyObController extends Controller
 
       foreach ($empStdPay->PayrollCategories as $category) {
 
-        if ($category->PayrollCategory->Type == "Expense" || $category->PayrollCategory->Type == "Superannuation" || strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand" || strtolower($category->PayrollCategory->Name) == "foreman") {
+        if (
+            $category->PayrollCategory->Type == "Expense" ||
+            $category->PayrollCategory->Type == "Superannuation" ||
+            strtolower($category->PayrollCategory->Name) == "bonus foremen" ||
+            strtolower($category->PayrollCategory->Name) == "bonus leading hand" ||
+            strtolower($category->PayrollCategory->Name) == "foreman" ||
+            strtolower($category->PayrollCategory->Name) == "bonus leading hand" ||
+            substr(strtolower($category->PayrollCategory->Name), 0, 13) == "car allowance"
+          ) {
+
 
           if (strtolower($category->PayrollCategory->Name) == "bonus foremen" || strtolower($category->PayrollCategory->Name) == "bonus leading hand" || strtolower($category->PayrollCategory->Name) == "foreman") {
             $category->Amount = $bonus;
+          }
+
+          if (substr(strtolower($category->PayrollCategory->Name), 0, 13) == "car allowance") {
+            if ($emp->car_allowance > 0) {
+              $category->Amount = $emp->car_allowance;
+            }
+
           }
 
           $category->Job = (object)array('UID' => $job->myob_id);
