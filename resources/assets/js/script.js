@@ -670,28 +670,34 @@ $(document).ready(function() {
       $('#integration_progress').css('width', '100%').html('Please, wait...');
       $('#btnStartIntegration').attr("disabled", "disabled");
 
-      var running = 0;
+      var arr = [];
+
       $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+        arr.push(this.id.split("-")[1]);        
+      });
 
-        if (running > 5) {
+      console.log(arr);
 
-          var self = this
-          setTimeout(function () {
-                alert($(self).attr("id"));
-          }, 5000);          
-
-          console.log("Waiting running tasks ...." + running);
-
-        } 
+      var running = 0;
+      for (let index = 0; index < arr.length; index++) {        
         
+        while (running > 5) {
+          var today = new Date();
+          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+          var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+          var dateTime = date+' '+time;
+
+              setTimeout(function () {
+                console.log("Waiting running tasks..." + dateTime);
+              }, 1000);        
+        
+        }
+
         running++;
 
-        $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
+        $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: arr[index]}, function(data) {
           progress += step;
-          running--;  
           $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
-
-
           $('#integration_details').append(data.name + ' - ' + data.result + '\n');
           console.log(data);
         })
@@ -704,7 +710,27 @@ $(document).ready(function() {
           .always(function() {
             console.log( "finished" );
           });
+        
+      }
 
+      $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+/*
+        $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
+          progress += step;
+          $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
+          $('#integration_details').append(data.name + ' - ' + data.result + '\n');
+          console.log(data);
+        })
+          .done(function() {
+            console.log( "second success" );
+          })
+          .fail(function() {
+            console.log( "error" );
+          })
+          .always(function() {
+            console.log( "finished" );
+          });
+*/
       });
 
     }
