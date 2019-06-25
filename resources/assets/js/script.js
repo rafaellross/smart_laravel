@@ -669,10 +669,19 @@ $(document).ready(function() {
       var step = 100.00 / selecteds;
       $('#integration_progress').css('width', '100%').html('Please, wait...');
       $('#btnStartIntegration').attr("disabled", "disabled");
+
+      var running = 0;
       $("input[type=checkbox]:checked").not('#chkRow').each(function() {
+
+        if (running > 5) {
+          $(this).delay(500);
+          console.log("Waiting running tasks ...." + running);
+
+        } 
 
         $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
           progress += step;
+          running++;
           $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
 
 

@@ -5,6 +5,12 @@
         <input type="checkbox" class="custom-control-input chk_night_work" name="days[{{$day}}][{{$job_curr}}][night_work]" id="group_{{$day}}_{{$job_curr}}_night" value="1" {{isset(old()['days'][$day][$job_curr]['night_work']) && is_null(old()['days'][$day][$job_curr]['night_work']) ? 'checked' : ''}}>
         <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_night">Night Work?</label>
       </div>
+      
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job_curr}}][tafe]" id="group_{{$day}}_{{$job_curr}}_tafe" value="1" {{isset(old()['days'][$day][$job_curr]['tafe']) && is_null(old()['days'][$day][$job_curr]['tafe']) ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_tafe">Tafe?</label>
+      </div>
+
     </div>
     <div class="form-row" style="text-align: center;">
         <div class="col-md-6 col-12 mb-3">

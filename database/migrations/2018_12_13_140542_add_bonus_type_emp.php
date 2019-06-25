@@ -14,7 +14,7 @@ class AddBonusTypeEmp extends Migration
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->string('bonus_type');
+            $table->string('bonus_type')->default('');
         });
     }
 
