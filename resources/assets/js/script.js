@@ -674,7 +674,7 @@ $(document).ready(function() {
       $("input[type=checkbox]:checked").not('#chkRow').each(function() {
 
         if (running > 5) {
-          $(this).delay(500);
+          $(this).delay(5000);
           console.log("Waiting running tasks ...." + running);
 
         } 
