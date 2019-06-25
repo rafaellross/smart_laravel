@@ -679,11 +679,13 @@ $(document).ready(function() {
           setTimeout(function () {
                 alert($(self).attr("id"));
           }, 5000);          
+
           console.log("Waiting running tasks ...." + running);
 
         } 
-        running++;
         
+        running++;
+
         $.post( "myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1]}, function(data) {
           progress += step;
           running--;  
