@@ -151,8 +151,22 @@ class TimeSheet extends Model
 	            if (!in_array($job, $deductCodes)) {
 	                $siteAllow += $hours;
 	            }
-	        }
-	        return $siteAllow;
+          }
+          
+          $deduction = 0;
+          foreach ($this->days as $day) {
+            foreach ($day->dayJobs as $job) {
+                if (isset($job->job->code)) {
+
+                    if ($job->tafe || $job->sick || $job->public_holiday) {
+                        $deduction += $job->hours();
+                    } 
+
+                }
+            }
+        }
+
+	        return $siteAllow - $deduction;
 		} else {
 			return 0;
 		}

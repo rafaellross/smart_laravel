@@ -7,6 +7,17 @@
       </div>
     </div>
 
+    <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job_curr}}][tafe]" id="group_{{$day}}_{{$job_curr}}_tafe" value="1" {{$job->tafe ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_tafe">Tafe?</label>
+      </div>
+
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job_curr}}][sick]" id="group_{{$day}}_{{$job_curr}}_sick" value="1" {{$job->sick ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_sick">Sick?</label>
+      </div>
+
+
     <div class="form-row" style="text-align: center;">
         <div class="col-md-6 col-12 mb-3">
             <label>Start</label>

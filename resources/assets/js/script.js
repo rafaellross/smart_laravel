@@ -353,7 +353,7 @@ $(document).ready(function() {
   //Define actions on click button Autofill
   $('#btnPreFill').click(function() {
     //Clear all inputs
-    $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn, #preJob_description, #job_description, .chk_night_work').val('');
+    $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn, #preJob_description, #job_description, .chk_night_work, .chk_tafe, .chk_sick, .chk_public_holiday').val('');
 
     let preEnd = $('#preEnd').val();
     $('.end-1').not('#sat_end_1, #sun_end_1').val(preEnd);
@@ -375,6 +375,19 @@ $(document).ready(function() {
       alert("You have to attach a medical certificate at the end of this Time Sheet or this day won't be paid!");
     }
   });
+
+  $(".chk_tafe, .chk_sick, .chk_public_holiday").click(function() {
+
+    if($(this).prop("checked") == true){
+
+      alert("Please, select Job!");      
+
+    }    
+  
+    
+  });
+
+
 
   $(".job, #preJob").change(function() {
     if ($(this).val() == "001" || $(this).val() == "002") {

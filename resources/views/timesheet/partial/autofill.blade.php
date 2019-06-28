@@ -33,7 +33,9 @@
                                 <select class="form-control form-control-lg custom-select " id="preJob">
                                     <option value="" selected>Select Job</option>
                                     @foreach ($jobDB as $job)
-                                        <option value="{{$job->code}}">{{$job->description}}</option>
+                                        @if (!in_array($job->code, ["sick", "tafe", "holiday"]))
+                                            <option value="{{$job->code}}">{{$job->description}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

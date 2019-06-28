@@ -46,7 +46,14 @@ class Day extends Model
 		        			$job->job->code == "rdo" &&	($job->hours() > (6*60))
 		        		)
 
-    				)
+                    )
+                    &&
+                    !$job->tafe
+                    &&
+                    !$job->sick
+                    &&
+                    !$job->public_holiday
+
 	        	)
             {
                 $work = true;
