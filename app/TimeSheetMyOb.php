@@ -321,7 +321,7 @@ class TimeSheetMyOb
 				foreach ($day->dayJobs as $job) {
 					$line = new \stdClass();
 					$deductions = 0;
-					if (isset($job->job->code) && $day->week_day < 9) {
+					if (isset($job->job->code) && $day->week_day < 9 && !$job->tafe && !$job->sick && !$job->public_holiday) {
 						if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld'])) {
 							$dedu_rdo = isset($day->listHours()['rdo']) ? $day->listHours()['rdo'] : 0;
 							$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
