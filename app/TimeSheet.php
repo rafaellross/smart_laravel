@@ -67,11 +67,18 @@ class TimeSheet extends Model
 	}
 
 	public function sickTaken(){
-		if (isset($this->listHours()["sick"])) {
-			return $this->listHours()["sick"] > 0 ? $this->listHours()["sick"]/60 : null;
-		} else {
-			return "";
-		}
+
+      $sick_hours = 0;
+      foreach ($this->days as $day) {
+        foreach ($day->dayJobs as $job) {
+            if (isset($job->job->code)) {
+                if ($job->sick) {
+                  $sick_hours += $job->hours();
+                } 
+            }
+        }
+    }    		
+		return $sick_hours ? $sick_hours/60 : null;		
 	}
 
 	public function normalLessRdo(){
@@ -82,7 +89,21 @@ class TimeSheet extends Model
 				if (in_array($job, $deductCodes)) {
 					$deduction += $time;
 				}
-			}
+      }
+      
+      //$deduction = 0;
+      foreach ($this->days as $day) {
+        foreach ($day->dayJobs as $job) {
+            if (isset($job->job->code)) {
+
+                if ($job->tafe || $job->sick || $job->public_holiday) {
+                    $deduction += $job->hours();
+                } 
+
+            }
+        }
+    }
+
 			$result = (Hour::convertToInteger($this->normal) - (4 * 60) - $deduction)/60.0;
 			return $result < 0 ? "" : $result;
 		} else {

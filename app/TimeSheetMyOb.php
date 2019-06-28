@@ -256,7 +256,13 @@ class TimeSheetMyOb
 
 						}
 					} else {
-							$line->PayrollCategory = (object)array('UID' => $this->config['base_hourly']);
+							if($job->sick) {
+								$line->PayrollCategory = (object)array('UID' => $this->config['sick']);
+							} else {
+								$line->PayrollCategory = (object)array('UID' => $this->config['base_hourly']);
+							}
+							
+
 					}
 
 					if (is_null($job->job->myob_id)) {

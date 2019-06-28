@@ -87,7 +87,7 @@ class Day extends Model
 
         foreach ($this->dayJobs as $job) {
 
-            if ((isset($job->job->code)) && !in_array($job->job->code, $deductCodes)) {
+            if ((isset($job->job->code)) && !in_array($job->job->code, $deductCodes) && !$job->tafe && !$job->sick && !$job->public_holiday) {
                 $work = true;
             }
         }
