@@ -400,16 +400,15 @@ class TimeSheetMyOb
 
 					$line = new \stdClass();
 					$deductions = 0;
-					if (isset($job->job->code) && $day->week_day < 9 && !$job->tafe && !$job->sick && !$job->public_holiday) {
+					if ((isset($job->job->code) && $day->week_day < 9) && (!$job->tafe && !$job->sick && !$job->public_holiday)) {
 						if ((isset($day->listHours()['anl']) || isset($day->listHours()['pld'])) && !$day->work()) {
 
 							$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
 							$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
 							$deductions = $dedu_pld + $dedu_anl;
 							if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
-							$pct_of_total = ($job->hours()) / ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)));
-						}
-
+								$pct_of_total = ($job->hours()) / ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)));
+							}
 
 						} else {
 							if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
@@ -420,10 +419,7 @@ class TimeSheetMyOb
 
 								$pct_of_total = ($job->hours()) / (Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night) - ($dedu_pld + $dedu_anl));
 							}
-
-
 						}
-
 
 						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
 
@@ -435,7 +431,6 @@ class TimeSheetMyOb
 
 						}
 
-
 						$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) && ($jobs > 1) ? 2 : 1 );
 
 						if (is_null($job->job->myob_id)) {
@@ -443,7 +438,6 @@ class TimeSheetMyOb
 						} else {
 							$line->Job = (object)array('UID' => $job->job->myob_id);
 						}
-
 
 						$line->Entries = array();
 						$line->Entries =
