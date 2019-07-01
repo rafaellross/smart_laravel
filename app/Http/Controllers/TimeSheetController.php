@@ -173,8 +173,7 @@ class TimeSheetController extends Controller
                         if ($job["job"] == "anl") {
                             $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
-                        if (isset($job["sick"]) && $job["sick"]) {
-                            return "sick";
+                        if (isset($job["sick"]) && $job["sick"]) {                            
                             $sick += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
 
