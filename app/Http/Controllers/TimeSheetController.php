@@ -173,7 +173,7 @@ class TimeSheetController extends Controller
                         if ($job["job"] == "anl") {
                             $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
-                        if (isset($job["sick"]) && $job["sick"]) {                            
+                        if (isset($job["sick"]) && $job["sick"]) {
                             $sick += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
 
@@ -325,11 +325,13 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
 
         $timeSheet = TimeSheet::find($id);
+
 
         $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
         $timeSheet->emp_signature   = $request->get('emp_signature');
