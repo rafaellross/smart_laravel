@@ -79,7 +79,18 @@ class Day extends Model
         return $nightWork;
     }
 
-
+    public function sick() {
+      $this->loadMissing('dayJobs');
+      $sick_hours = 0;
+      foreach ($this->dayJobs as $job) {
+          if (isset($job->job->code)) {
+              if ($job->sick) {
+                $sick_hours += $job->hours();
+              }
+          }
+      }
+      return $sick_hours;
+    }
 
     public function workForBonus(){
         $work = false;

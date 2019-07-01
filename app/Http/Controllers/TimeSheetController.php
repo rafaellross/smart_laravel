@@ -62,7 +62,7 @@ class TimeSheetController extends Controller
         }
 
 
- 
+
         $timesheets = DB::select(
                     DB::raw(
                         "
@@ -140,7 +140,7 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $this->validate(request(), [
             'week_end' => 'required|date_format:d/m/Y'
         ]);
@@ -161,6 +161,7 @@ class TimeSheetController extends Controller
             $anl += $request->get('anl') > 0 ? $request->get('anl')/60 : 0;
             foreach ($request->get('days') as $key => $day) {
                 foreach ($day as $key => $job) {
+
                     if (isset($job["job"])) {
                         if ($job["job"] == "rdo") {
                             $rdo += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
@@ -172,7 +173,8 @@ class TimeSheetController extends Controller
                         if ($job["job"] == "anl") {
                             $anl += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
-                        if ($job["job"] == "sick") {
+                        if (isset($job["sick"]) && $job["sick"]) {
+                            return "sick";
                             $sick += $job["hours"] > 0 ? Hour::convertToDecimal($job["hours"]) : 0;
                         }
 
@@ -244,7 +246,7 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->save();
 
                 foreach ($day as $key => $job) {
-                    
+
                     if (intval($key)) {
                         $dayJob               = new DayJob();
                         $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
@@ -258,7 +260,7 @@ class TimeSheetController extends Controller
                         $dayJob->sick         = !isset($job['sick']) ? false : true;
                         $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
                         $dayJob->save();
-                        
+
                     }
                 }
             }
@@ -381,7 +383,7 @@ class TimeSheetController extends Controller
                     $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
                     $dayJob->tafe         = !isset($job['tafe']) ? false : true;
                     $dayJob->sick         = !isset($job['sick']) ? false : true;
-                    $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;                    
+                    $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
                     $dayJob->save();
                 }
             }

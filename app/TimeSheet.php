@@ -50,6 +50,33 @@ class TimeSheet extends Model
 	    return ($J<10? '0':'') . $J;
 	}
 
+  public function listHoursNormal() {
+
+    $worked_hours = 0;
+    foreach ($this->listHours() as $job => $value) {
+
+      if (!in_array($job, ['anl', 'rdo', 'pld'])) {
+        $worked_hours += $value;
+      }
+    }
+    $arr = array();
+
+    foreach ($this->listHours() as $job => $value) {
+      $pct_of_total = 0;
+      if (!in_array($job, ['anl', 'rdo', 'pld'])) {
+        $job_myob = \App\Job::where('code', $job)->first();
+        $pct_of_total += $value / ($worked_hours);
+        $arr[$job]['total'] = $value/60;
+        $arr[$job]['pct_of_total'] = $pct_of_total;
+        $arr[$job]['normal'] = $this->normalLessRdo() * $pct_of_total;
+        $arr[$job]['myob_id'] = $job_myob->myob_id;
+
+      }
+    }
+
+    return $arr;
+
+  }
 	public function rdoTaken(){
 		$rdo = Hour::convertToInteger($this->rdo);
 		if (isset($this->listHours()["rdo"])) {
@@ -74,11 +101,11 @@ class TimeSheet extends Model
             if (isset($job->job->code)) {
                 if ($job->sick) {
                   $sick_hours += $job->hours();
-                } 
+                }
             }
         }
-    }    		
-		return $sick_hours ? $sick_hours/60 : null;		
+    }
+		return $sick_hours ? $sick_hours/60 : null;
 	}
 
 	public function normalLessRdo(){
@@ -90,7 +117,7 @@ class TimeSheet extends Model
 					$deduction += $time;
 				}
       }
-      
+
       //$deduction = 0;
       foreach ($this->days as $day) {
         foreach ($day->dayJobs as $job) {
@@ -98,7 +125,7 @@ class TimeSheet extends Model
 
                 if ($job->tafe || $job->sick || $job->public_holiday) {
                     $deduction += $job->hours();
-                } 
+                }
 
             }
         }
@@ -173,7 +200,7 @@ class TimeSheet extends Model
 	                $siteAllow += $hours;
 	            }
           }
-          
+
           $deduction = 0;
           foreach ($this->days as $day) {
             foreach ($day->dayJobs as $job) {
@@ -181,7 +208,7 @@ class TimeSheet extends Model
 
                     if ($job->tafe || $job->sick || $job->public_holiday) {
                         $deduction += $job->hours();
-                    } 
+                    }
 
                 }
             }

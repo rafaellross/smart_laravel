@@ -8,13 +8,19 @@
     </div>
 
     <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job_curr}}][tafe]" id="group_{{$day}}_{{$job_curr}}_tafe" value="1" {{$job->tafe ? 'checked' : ''}}>
-        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_tafe">Tafe?</label>
+        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job->number}}][tafe]" id="group_{{$day}}_{{$job->number}}_tafe" value="1" {{$job->tafe ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_tafe">Tafe?</label>
       </div>
 
       <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job_curr}}][sick]" id="group_{{$day}}_{{$job_curr}}_sick" value="1" {{$job->sick ? 'checked' : ''}}>
-        <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_sick">Sick?</label>
+        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job->number}}][sick]" id="group_{{$day}}_{{$job->number}}_sick" value="1" {{$job->sick ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_sick">Sick?</label>
+      </div>
+
+
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+        <input type="checkbox" class="custom-control-input chk_public_holiday" name="days[{{$day}}][{{$job->number}}][public_holiday]" id="group_{{$day}}_{{$job->number}}_public_holiday" value="1" value="1" {{$job->public_holiday ? 'checked' : ''}}>
+        <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_public_holiday">Public Holiday?</label>
       </div>
 
 
@@ -71,7 +77,7 @@
         </div>
         <div class="col-md-12 mb-3" style="text-align: center;">
             <input readonly="" type="text" id="{{$weekDay->short}}_job_{{$job->number}}_description" class="form-control form-control-lg job_description_{{$job->number}} group_{{$weekDay->short}}_{{$job->number}}" name="days[{{$weekDay->short}}][{{$job->number}}][description]" value="{{$job->description}}"/>
-              
+
         </div>
 
         @if ($first)
