@@ -74,7 +74,7 @@ class FireIdentificationController extends Controller
 
         $fire->save();
 
-        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');;
+        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');
     }
 
     public function multiple($job, Request $request){
@@ -96,7 +96,7 @@ class FireIdentificationController extends Controller
 
         }
 
-        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');;
+        return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been added');
 
     }
 
@@ -144,7 +144,7 @@ class FireIdentificationController extends Controller
         $fire->fire_photo               = $request->get('photo_hidden');
 
         $fire->save();
-        return redirect('/fire_identification/' . $fire->job_id)->with('success', 'Fire Seal has been updated');;
+        return redirect('/fire_identification/' . $fire->job_id)->with('success', 'Fire Seal has been updated');
 
     }
 
@@ -165,7 +165,7 @@ class FireIdentificationController extends Controller
         switch ($action) {
             case 'delete':
                     DB::table('fire_identifications')->whereRaw("id in ($id)")->delete();
-                    return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been deleted');;
+                    return redirect('/fire_identification/' . $job)->with('success', 'Fire Seal has been deleted');
             case 'label':
                 $label = new \App\LabelPenetration ();
                 $label->AddPage('L');

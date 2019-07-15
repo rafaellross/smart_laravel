@@ -1,1 +1,1018 @@
-!function(t){var e={};function n(i){if(e[i])return e[i].exports;var o=e[i]={i:i,l:!1,exports:{}};return t[i].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:i})},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="/",n(n.s=0)}([function(t,e,n){t.exports=n(1)},function(t,e){$(document).ready(function(){function t(t){var e=t.split(":");return e.length>1?60*e[0]+ +e[1]:0}function e(t){function e(t){return(t<10?"0":"")+t}return e(t/60|0)+":"+e(t%60)}$.urlParam=function(t){var e=new RegExp("[?&]"+t+"=([^&#]*)").exec(window.location.href);return null==e?null:decodeURI(e[1])||0},$("form").not("#timesheet_form").submit(function(t){$("#modalLoading").modal({backdrop:"static",keyboard:!1})}),$("#flash-message").fadeOut(15e3),$(".date-picker").datepicker({format:"dd/mm/yyyy"}),showExtra=function(t,e){$(e).css("display","block"),$(t).fadeOut()},$(".hour-start").change(function(){var t=$(this).attr("id").split("_"),n=t[2],i=$("#"+t[0]+"_end_"+n);i.prop("disabled",!1).empty();i.append('<option value="">-</option>');for(var o=$("#group_"+t[0]+"_"+t[2]+"_night").is(":checked")?0:$(this).val(),a=Number(o);a<=1425;a+=15){var c='<option value="'+a+'">'+e(a)+"</option>";$(i).append(c)}}),$(".hour-end").change(function(){var t=$(this).attr("id").split("_"),n=Number(t[2]),i=!1;$("#group_"+t[0]+"_"+t[2]+"_night").is(":checked")&&(i=!0);var o=n+1,a=$("#"+t[0]+"_start_"+o);if(a.length>0){a.prop("disabled",!1).empty(),$("#"+t[0]+"_hours_"+o).val(""),$("#"+t[0]+"_end_"+o).val("");a.append('<option value="">-</option>');for(var c=$(this).val(),l=Number(c);l<=1425;l+=15){var r='<option value="'+l+'">'+e(l)+"</option>";a.append(r)}}var s=$("#"+t[0]+"_hours_"+n),h=Number($("#"+t[0]+"_start_"+n).val()),d=Number($(this).val()),p=1===n?15:0;i&&d<h?s.val(d+1440-h-p>0?e(d+1440-h-p):""):s.val(d-h-p>0?e(d-h-p):""),calcTotalDay(t[0]),calcTotal()}),calcTotalDay=function(n){var i="00:00",o="00:00",a="00:00",c="00:00";$("#"+n+"_hours_1")&&(i=$("#"+n+"_hours_1").val()),$("#"+n+"_hours_2")&&(o=$("#"+n+"_hours_2").val()),$("#"+n+"_hours_3")&&(a=$("#"+n+"_hours_3").val()),$("#"+n+"_hours_4")&&(c=$("#"+n+"_hours_4").val());var l=!!$("#group_"+n+"_1_night").is(":checked"),r=!!$("#group_"+n+"_2_night").is(":checked"),s=!!$("#group_"+n+"_3_night").is(":checked"),h=!!$("#group_"+n+"_4_night").is(":checked");i=t(i),o=t(o),a=t(a),c=t(c);var d=0,p=0;l||(d+=i),r||(d+=o),s||(d+=a),h||(d+=c),l&&(p+=i),r&&(p+=o),s&&(p+=a),h&&(p+=c),$("#"+n+"_nor").val(""),$("#"+n+"_15").val(""),$("#"+n+"_20").val(""),$("#"+n+"_total").val(e(d+p));var u,f=0,m=0;d>480&&"sat"!==n&&"sun"!==n&&(f=Math.min(120,d-480)),(d>600||"sat"==n||"sun"==n)&&(m="sat"==n||"sun"==n?d:d-480-120),u=d-f-m,"sat"!==n&&"sun"!==n&&(f+=Math.min(120,p)),(p>120||"sat"==n||"sun"==n)&&(m+="sat"==n||"sun"==n?p:p-120),$("#"+n+"_15").val(e(f)),$("#"+n+"_20").val(e(m)),$("#"+n+"_nor").val(e(u))},calcTotal=function(){var n=0;$(".horNormal").each(function(){n+=t($(this).val())}),$("#totalNormal").val(e(n));var i=0;$(".hours-total").each(function(){i+=t($(this).val())}),$("#totalWeek").val(e(i));var o=0;$(".hor15").each(function(){o+=t($(this).val())}),$("#total15").val(e(o));var a=0;$(".hor20").each(function(){a+=t($(this).val())}),$("#total20").val(e(a))},$("#btnPreFill").click(function(){$("input, select").not("#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn, #preJob_description, #job_description, .chk_night_work, .chk_tafe, .chk_sick, .chk_public_holiday").val("");var t=$("#preEnd").val();$(".end-1").not("#sat_end_1, #sun_end_1").val(t);var e=$("#preStart").val();$(".start-1").not("#sat_start_1, #sun_start_1").val(e);var n=$("#preJob").val();$(".job-1").not("#sat_job_1, #sun_job_1").val(n);var i=$("#preJob_description").val();$(".job_description_1").not("#sat_job_1_description, #sun_job_1_description").val(i),$(".end-1").not("#sat_end_1, #sun_end_1").trigger("change")}),$(".job").change(function(){"sick"==$(this).val()&&alert("You have to attach a medical certificate at the end of this Time Sheet or this day won't be paid!")}),$(".chk_tafe, .chk_sick, .chk_public_holiday").click(function(){1==$(this).prop("checked")&&alert("Please, select Job!")}),$(".job, #preJob").change(function(){"001"!=$(this).val()&&"002"!=$(this).val()||($("#modalDescription").modal({backdrop:"static",keyboard:!1}),$("#description_destination").val(this.id))}),$("#btnSaveDescription").click(function(){var t=$("#description_destination").val(),e=$("#job_description").val();$("#"+t+"_description").val(e),$("#modalDescription").modal("hide")}),$("#modalDescription").on("hidden.bs.modal",function(t){var e=$("#job_description").val(),n=$("#description_destination").val();""==e&&$("#"+n).val("")}),$(".btnClear").click(function(){$("."+this.id).val(""),$("."+this.id).trigger("change")});$(document).on("change","input[type=file]",function(){!function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:600,n=$(t).prop("name"),i=$("[id*='"+n+"_img']"),o=$("[id*='"+n+"_hidden']");if(t.files&&t.files[0]){var a=new FileReader;a.onload=function(t){var n=new Image;n.onload=function(){var t=document.createElement("canvas"),a=t.getContext("2d");for(t.width=n.width,t.height=n.height,a.drawImage(n,0,0);.5*t.width>e;)t.width*=.5,t.height*=.5,a.drawImage(t,0,0,t.width,t.height);t.width=e,t.height=t.width*n.height/n.width,a.drawImage(n,0,0,t.width,t.height),i.attr("src",t.toDataURL()).show(),o.val(t.toDataURL())},n.src=t.target.result},a.readAsDataURL(t.files[0])}}(this)}),$(document).on("click",".delCert",function(){var t=$(this).prop("id").split("-");if("medical_certificates[1]"==t[0]){var e=$("[id*='"+t[0]+"_img']"),i=$("[name*='"+t[0]+"']"),o=$("[id*='"+t[0]+"_hidden']");e.attr("src","").hide(),o.val(""),i.val("")}else n--,$("[id*='"+t[0]+"_row']").remove()});var n=1;$("#addCert").click(function(){var t='\n        <div class="alert alert-secondary" id="medical_certificates['+ ++n+']_row">\n            <h5 style="text-align: center;">Certificate '+n+'</h5>\n            <div class="input-group col-12 mb-3">\n              <div class="custom-file" id="medical_certificates_list">\n                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates['+n+']" name="medical_certificates['+n+']"/>\n                <label class="custom-file-label" for="medical_certificates['+n+']">Choose files</label>\n              </div>\n            </div>\n            <div class="input-group col-12 mb-3">\n                <img id="medical_certificates['+n+']_img" class="img-fluid" style="">\n            </div>\n            <input id="medical_certificates['+n+']-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">\n            <input type="hidden" class="custom-file-input" id="medical_certificates['+n+']_hidden" name="medical_certificates['+n+']_hidden" value="">\n        </div>';$("#aditional_certificates").append(t)}),$("#timesheet_form").on("submit",function(t){var e=!0,n=[1,2,3,4];if(($.each([{description:"Monday",short:"mon"},{description:"Tuesday",short:"tue"},{description:"Wednesday",short:"wed"},{description:"Thursday",short:"thu"},{description:"Friday",short:"fri"},{description:"Saturday",short:"sat"},{description:"Sunday",short:"sun"}],function(i,o){$.each(n,function(n,i){var a=$("#"+o.short+"_start_"+i).val(),c=$("#"+o.short+"_end_"+i).val(),l=$("#"+o.short+"_job_"+i).val(),r=$("#"+o.short+"_hours_"+i).val();return""!==r&&(""===a&&""===c||""===l)||""!==a&&(""===c||""===l||""===r)||""!==c&&(""===a||""===l||""===r)?(e=!1,t.preventDefault(),alert("Select start, end time and job "+i+" for "+o.description),$("#"+o.short+"_job_"+i).focus(),!1):l.length>0&&(0===a.length||0===c.length||"0"===a&&"0"===c)?(e=!1,t.preventDefault(),alert("Select start, end time and job "+i+" for "+o.description),$("#"+o.short+"_job_"+i).focus(),!1):void 0})}),"00:00"==$("#totalWeek").val())&&0==confirm("The total of hours of this Time Sheet is 00:00, are you sure you want to continue ?"))return e=!1,t.preventDefault(),!1;e&&$("#modalLoading").modal({backdrop:"static",keyboard:!1})}),$("#chkRow").click(function(){var t=$("input[type=checkbox]").not(this);t.prop("checked",!t.prop("checked"))}),$("#btnPrint").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var e=window.location.href.split("/");"timesheets"==e[e.length-1]?window.open(window.location.href+"/action/"+t.join(",")+"/print","_blank"):window.open(window.location.href.replace(/\/[^\/]*$/,"/timesheets/action/"+t.join(",")+"/print","_blank"))}}),$("#btnPrintSummary").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var e=window.location.href.split("/");"timesheets"==e[e.length-1]?window.open(window.location.href+"/action/"+t.join(",")+"/print","_blank"):window.open(window.location.href.replace(/\/[^\/]*$/,"/timesheets/action/"+t.join(",")+"/print_summary","_blank"))}}),$("#btnDelete").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=window.location.pathname+"/action/",e=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){e.push(this.id.split("-")[1])}),1==confirm("Are you sure you want to delete following documents: "+e+"?")&&$(location).attr("href",t+e.join(",")+"/delete")}else alert("Please, selected records you want to delete!")}),$(".delete").click(function(){1==confirm("Are you sure you want to delete this document (#"+$(this).attr("id")+")?")&&$(location).attr("href",window.location.pathname+"/action/"+$(this).attr("id")+"/delete")}),$("#btnStatus").click(function(){$("input[type=checkbox]:checked").not("#chkRow").length>0&&$("#modalChangeStatus").modal("show")}),$("#btnIntegrate").click(function(){$("input[type=checkbox]:checked").not("#chkRow").length>0&&($("#modalIntegrateMyOb").modal({backdrop:"static",keyboard:!1}),$("#btnStartIntegration").removeAttr("disabled"))}),$("#btnStartIntegration").click(function(){var t=$("input[type=checkbox]:checked").not("#chkRow").length;if(t>0){Array();var e=new Date,n=e.getDate()+"/"+(e.getMonth()+1)+"/"+e.getFullYear()+" "+(e.getHours()+":"+e.getMinutes()+":"+e.getSeconds());$("#integration_details").append("Started at: "+n.toString()+"\n\n");var i=0,o=100/t;$("#integration_progress").css("width","100%").html("Please, wait..."),$("#btnStartIntegration").attr("disabled","disabled"),$("input[type=checkbox]:checked").not("#chkRow").each(function(){$.post("myob/integrate",{_token:$("input[name=_token]").val(),id:this.id.split("-")[1]},function(t){i+=o,$("#integration_progress").css("width",i+"%").html(Math.round(i)+"%"),$("#integration_details").append(t.name+" - "+t.result+"\n"),console.log(t)}).done(function(){console.log("second success")}).fail(function(){console.log("error")}).always(function(){console.log("finished")})})}}),$("#btnTextFile").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var e=window.location.href.split("/");"timesheets"==e[e.length-1]?window.open(window.location.href+"/action/"+t.join(",")+"/print","_blank"):window.open(window.location.href.replace(/\/[^\/]*$/,"/timesheets/action/"+t.join(",")+"/file","_blank"))}}),$("#selectLocation").change(function(){window.location=window.location.href+="&type="+$(this).val()}),$("#selectCompany").change(function(){window.location=window.location.href+="&company="+$(this).val()}),$("#selectDrawing").change(function(){var t=window.location.href.split("/");-1!==t[t.length-1].indexOf("?")?window.location=window.location.href+="&drawing="+$(this).val():window.location=window.location.href+="?drawing="+$(this).val()}),$("#selectStatus").change(function(){""!==$(this).val()&&(window.location=window.location.href+="&status="+$(this).val())}),$("#selectWeekEnd").change(function(){""!==$(this).val()&&(window.location=window.location.href+="&week_end="+$(this).val())}),$("#selectJob").change(function(){""!==$(this).val()&&(window.location=window.location.href+="&job="+$(this).val())}),$("#btnSaveStatus").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array(),e=$("select[name=changeStatus]").val();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var n=window.location.href.split("/");"timesheets"==n[n.length-1]?window.location+="/action/"+t.join(",")+"/update/"+e:window.location=window.location.href.replace(/\/[^\/]*$/,"/timesheets/action/"+t.join(",")+"/update/"+e)}});var i=[];if($(document).on("click",".btn-select",function(){-1===i.indexOf(this.id.toString())&&(i.push(this.id),jQuery("#emp-"+this.id).detach().appendTo("#selecteds"),$(this).removeClass("btn-success btn-select").addClass("btn-danger btn-remove").text("Remove"),$("#countSelecteds").text("("+i.length+")"))}),$(document).on("click",".btn-remove",function(){1==confirm("Are you sure you want to unselect this employee?")&&(jQuery("#emp-"+this.id).remove(),i.splice(i.indexOf(this.id),1),$("#countSelecteds").text("("+i.length+")"))}),$("#btn-continue").click(function(){i.length>0&&(window.location="create/"+i.join(","))}),$("#btnSearch").click(function(){$("#employee").empty();var t=$("#search").val(),e=window.location.pathname.replace("timesheets/select","");$.ajax({url:e+"api/employees/"+t,type:"GET",dataType:"json"}).done(function(t){$.each(t,function(t,e){var n='\n\n                      <div id="emp-'+e.id+'" class="active select-employee card '+(null===e.last_timesheet||void 0===e.last_timesheet?"":"bg-warning")+'">\n                        <div class="select-employee card-header" role="tab" id="heading-undefined">\n                        <div class="row">\n                          <div class="'+(null===e.last_timesheet||void 0===e.last_timesheet?"col-md-11 col-lg-11":"col-md-9 col-lg-9")+'">\n                            <h6>\n                                <a href="'+(null===e.last_timesheet||void 0===e.last_timesheet?"create/"+e.id:"#")+'" style="'+(null===e.last_timesheet||void 0===e.last_timesheet?"":"color: white;")+'">\n                                  <span> '+e.name+'</span>\n                                </a>\n                            </h6>\n                            <i style="'+(null===e.last_timesheet||void 0===e.last_timesheet?"display: none":"display: block;")+'">This employee already has a Time Sheet for this week   &#32;</i>\n                          </div>\n                          <div class="col-md-2 col-lg-2" style="'+(null===e.last_timesheet||void 0===e.last_timesheet?"display: none":"display: block;")+'">\n                            <a href="action/'+(null===e.last_timesheet||void 0===e.last_timesheet?"":e.last_timesheet)+'/print" class="btnAdd btn btn-primary" style="color: white;display:'+(null===e.last_timesheet||void 0===e.last_timesheet?"none":"block")+';" target="_blank">View Time Sheet</a>\n                          </div>\n\n                          <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px; '+(null===e.last_timesheet||void 0===e.last_timesheet?"display: block":"display: none;")+'">\n                            <button id="'+e.id+'" class="btn btn-success btn-select" style="'+(-1===i.indexOf(e.id.toString())?"":"display:none;")+'">Select</button>\n                          </div>\n                        </div>\n                      </div>';$("#employee").append(n)})}).fail(function(){console.log("error")})}),$("#btnEntitlements").click(function(){$("#modalUpdateEntitlements").modal("show")}),$("#btn_create_mult_fire").click(function(){$("#modalCreateMultipleFire").modal("show")}),$(".btnPrintEmployee").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});window.location.href.split("/");window.open("employees/action/"+t.join(",")+"/"+this.id,"_blank")}}),$(".btnPrintFireLabel").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var e=window.location.href.split("/"),n=void 0;n=-1===e[e.length-1].indexOf("?")?e[e.length-1]:e[e.length-1].split("?")[0],e.splice(e.length-1,1),window.open(e.join("/")+"/"+n+"/action/"+t.join(",")+"/label","_blank")}}),$(".btnPrintFireReport").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var e=window.location.href.split("/"),n=void 0;n=-1===e[e.length-1].indexOf("?")?e[e.length-1]:e[e.length-1].split("?")[0],e.splice(e.length-1,1),window.open(e.join("/")+"/"+n+"/action/"+t.join(",")+"/report","_blank")}}),$("#btnGenerateTimeSheets").click(function(){$("input[type=checkbox]:checked").not("#chkRow").length>0&&$("input[type=checkbox]:checked").not("#chkRow").each(function(){window.open("employee_entries/generate/"+this.id.split("-")[1],"_blank")})}),$(".chk_night_work").click(function(){var t=$(this).attr("id").split("_");Number(t[2]),t[1];$("#"+this.id).trigger("change")}),1==$.urlParam("generate")){$(".hour-end").trigger("change");var o=$("#timesheet_form").attr("action");$("#timesheet_form").attr("action",o+"?generated=1"),$("#timesheet_form").submit()}$("#btnUpdateJob").click(function(){}),$("#btnChangeJob").click(function(){$("input[type=checkbox]:checked").not("#chkRow").length>0&&$("#modalChangeJob").modal("show")}),$("#btnSaveJob").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array(),e=$("select[name=changeJob]").val();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var n=window.location.href.split("/");"tmv"==n[n.length-1]?window.location+="/change_job/"+t.join(",")+"/"+e:window.location=window.location.href.replace(/\/[^\/]*$/,"/change_job/"+t.join(",")+"/"+e)}}),$("#btnPrintTmv").click(function(){$("input[type=checkbox]:checked").not("#chkRow").length>0&&$("#modalPrintTmv").modal("show")}),$("#btnContinuePrintTmv").click(function(){if($("input[type=checkbox]:checked").not("#chkRow").length>0){var t=Array(),e=$("select[name=selectYear]").val(),n=$("input[name=job]").val();$("input[type=checkbox]:checked").not("#chkRow").each(function(){t.push(this.id.split("-")[1])});var i=window.location.href.split("/");"tmv"==i[i.length-1]?window.location+="/print/"+t.join(",")+"/"+newJob:window.location=window.location.href.replace(/\/[^\/]*$/,"/"+n+"/print/"+t.join(",")+"/"+e)}})})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(1);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+
+  $.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+      return null;
+    } else {
+      return decodeURI(results[1]) || 0;
+    }
+  };
+
+  $('form').not('#timesheet_form').submit(function (event) {
+
+    $('#modalLoading').modal({ backdrop: 'static', keyboard: false });
+  });
+
+  $('#flash-message').fadeOut(15000);
+
+  function addMinutes(time, minsToAdd) {
+
+    function D(J) {
+
+      return (J < 10 ? '0' : '') + J;
+    };
+
+    var piece = time.split(':');
+    var mins = piece[0] * 60 + +piece[1] + +minsToAdd;
+    return D(mins % (24 * 60) / 60 | 0) + ':' + D(mins % 60);
+  }
+
+  function hourToMinutes(hour) {
+
+    var piece = hour.split(':');
+
+    if (piece.length > 1) {
+
+      return piece[0] * 60 + +piece[1];
+    } else {
+
+      return 0;
+    }
+  }
+
+  function minutesToHour(minutes) {
+
+    function D(J) {
+
+      return (J < 10 ? '0' : '') + J;
+    };
+    return D(minutes / 60 | 0) + ':' + D(minutes % 60);
+  }
+
+  //Setup datepicker
+  $('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
+
+  //Show extra jobs for selected day
+  showExtra = function showExtra(btn, extra_inputs) {
+
+    $(extra_inputs).css('display', 'block');
+
+    $(btn).fadeOut();
+  };
+
+  //Update list of hours in accord with current selection
+  $('.hour-start').change(function () {
+
+    var day = $(this).attr('id').split('_');
+    var row = day[2];
+    var destination = $('#' + day[0] + "_end_" + row);
+
+    //Enable and empty select list for end of the row
+    destination.prop('disabled', false).empty();
+    var option = '<option value="">-</option>';
+    destination.append(option);
+
+    //Get the seleted value to be used as minimum for end
+    var startHour = $('#group_' + day[0] + "_" + day[2] + "_night").is(':checked') ? 0 : $(this).val();
+    for (var hour = Number(startHour); hour <= 24 * 60 - 15; hour += 15) {
+      var _option = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
+      $(destination).append(_option);
+    }
+  });
+
+  //Calculate Normal Hours
+  $('.hour-end').change(function () {
+
+    var day = $(this).attr('id').split('_');
+    var row = Number(day[2]);
+
+    var isNight = false;
+
+    if ($('#group_' + day[0] + "_" + day[2] + "_night").is(':checked')) {
+      isNight = true;
+    }
+
+    var next_row = row + 1;
+
+    var next_row_el = $('#' + day[0] + "_start_" + next_row);
+
+    if (next_row_el.length > 0) {
+
+      //Clear next row
+      next_row_el.prop('disabled', false).empty();
+      var next_duration = $('#' + day[0] + '_hours_' + next_row);
+      next_duration.val("");
+      var next_end = $('#' + day[0] + '_end_' + next_row);
+      next_end.val("");
+
+      var option = '<option value="">-</option>';
+      next_row_el.append(option);
+
+      //Get the seleted value to be used as minimum for start on next row
+      var startHour = $(this).val();
+      //Populate select with times
+      for (var hour = Number(startHour); hour <= 24 * 60 - 15; hour += 15) {
+        var _option2 = '<option value="' + hour + '">' + minutesToHour(hour) + '</option>';
+        next_row_el.append(_option2);
+      }
+    }
+
+    //Clear next day
+    var duration = $('#' + day[0] + '_hours_' + row);
+    var start = Number($('#' + day[0] + "_start_" + row).val());
+    var end = Number($(this).val());
+    var lunch = row === 1 ? 15 : 0;
+
+    //Calculate duration of job
+    if (isNight && end < start) {
+
+      duration.val(end + 24 * 60 - start - lunch > 0 ? minutesToHour(end + 24 * 60 - start - lunch) : "");
+    } else {
+
+      duration.val(end - start - lunch > 0 ? minutesToHour(end - start - lunch) : "");
+    }
+
+    calcTotalDay(day[0]);
+    calcTotal();
+  });
+
+  calcTotalDay = function calcTotalDay(day) {
+
+    //Set variables to get hours from every job
+    var hours_job1 = "00:00";
+    var hours_job2 = "00:00";
+    var hours_job3 = "00:00";
+    var hours_job4 = "00:00";
+
+    //Get hours from every job
+    if ($('#' + day + '_hours_1')) {
+      hours_job1 = $('#' + day + '_hours_1').val();
+    }
+
+    if ($('#' + day + '_hours_2')) {
+      hours_job2 = $('#' + day + '_hours_2').val();
+    }
+
+    if ($('#' + day + '_hours_3')) {
+      hours_job3 = $('#' + day + '_hours_3').val();
+    }
+
+    if ($('#' + day + '_hours_4')) {
+      hours_job4 = $('#' + day + '_hours_4').val();
+    }
+
+    //Determine jobs that are night shift
+    var isNight1 = $('#group_' + day + "_1_night").is(':checked') ? true : false;
+    var isNight2 = $('#group_' + day + "_2_night").is(':checked') ? true : false;
+    var isNight3 = $('#group_' + day + "_3_night").is(':checked') ? true : false;
+    var isNight4 = $('#group_' + day + "_4_night").is(':checked') ? true : false;
+
+    hours_job1 = hourToMinutes(hours_job1);
+    hours_job2 = hourToMinutes(hours_job2);
+    hours_job3 = hourToMinutes(hours_job3);
+    hours_job4 = hourToMinutes(hours_job4);
+
+    //Calculate total hours
+
+    var totalHours = 0;
+    var totalHoursNight = 0;
+
+    //Get all hours except night shift
+    if (!isNight1) {
+      totalHours += hours_job1;
+    }
+
+    if (!isNight2) {
+      totalHours += hours_job2;
+    }
+
+    if (!isNight3) {
+      totalHours += hours_job3;
+    }
+
+    if (!isNight4) {
+      totalHours += hours_job4;
+    }
+
+    //Get all hours of night shift
+    if (isNight1) {
+      totalHoursNight += hours_job1;
+    }
+
+    if (isNight2) {
+      totalHoursNight += hours_job2;
+    }
+
+    if (isNight3) {
+      totalHoursNight += hours_job3;
+    }
+
+    if (isNight4) {
+      totalHoursNight += hours_job4;
+    }
+
+    //Clear 1.5 and 2.0 fields
+    $('#' + day + '_nor').val('');
+    $('#' + day + '_15').val('');
+    $('#' + day + '_20').val('');
+
+    $('#' + day + '_total').val(minutesToHour(totalHours + totalHoursNight));
+
+    var hours_15 = 0;
+    var hours_20 = 0;
+    var hours_nor = 0;
+
+    //var job_number = $('#job' + day[0].charAt(0).toUpperCase() + day[0].slice(1) + row).val();
+
+    //Calculate hours 1.5
+    if (totalHours > 8 * 60 && day !== "sat" && day !== "sun") {
+      //If total hours is bigger than 08:00 and day different than sat set 1.5
+      hours_15 = Math.min(2 * 60, totalHours - 8 * 60);
+    }
+
+    //If total hours is bigger than 10:00 or day equal sat set 1.5
+    if (totalHours > 10 * 60 || day == "sat" || day == "sun") {
+
+      if (day == "sat" || day == "sun") {
+
+        hours_20 = totalHours;
+      } else {
+
+        hours_20 = totalHours - 8 * 60 - 2 * 60;
+      }
+    }
+
+    hours_nor = totalHours - hours_15 - hours_20;
+
+    //Working with night shift
+    //Calculate hours 1.5
+    if (day !== "sat" && day !== "sun") {
+      //If total hours is bigger than 08:00 and day different than sat set 1.5
+      hours_15 += Math.min(2 * 60, totalHoursNight);
+    }
+    //Calculate hours 2.0 for night shift
+    //If total hours is bigger than 02:00
+    if (totalHoursNight > 2 * 60 || day == "sat" || day == "sun") {
+
+      if (day == "sat" || day == "sun") {
+
+        hours_20 += totalHoursNight;
+      } else {
+
+        hours_20 += totalHoursNight - 2 * 60;
+      }
+    }
+
+    $('#' + day + '_15').val(minutesToHour(hours_15));
+    $('#' + day + '_20').val(minutesToHour(hours_20));
+    $('#' + day + '_nor').val(minutesToHour(hours_nor));
+  };
+
+  calcTotal = function calcTotal() {
+
+    //Calculate total of normal hours
+    var normalTotal = 0;
+    $('.horNormal').each(function () {
+
+      normalTotal += hourToMinutes($(this).val());
+    });
+    $('#totalNormal').val(minutesToHour(normalTotal));
+
+    //Calculate total of hours
+    var hoursTotal = 0;
+
+    $('.hours-total').each(function () {
+
+      hoursTotal += hourToMinutes($(this).val());
+    });
+
+    $('#totalWeek').val(minutesToHour(hoursTotal));
+
+    //Calculate total of hours 1.5
+    var hours15 = 0;
+    $('.hor15').each(function () {
+
+      hours15 += hourToMinutes($(this).val());
+    });
+
+    $('#total15').val(minutesToHour(hours15));
+
+    //Calculate total of hours 2.0
+    var hours20 = 0;
+    $('.hor20').each(function () {
+      hours20 += hourToMinutes($(this).val());
+    });
+    $('#total20').val(minutesToHour(hours20));
+  };
+
+  //Define actions on click button Autofill
+  $('#btnPreFill').click(function () {
+    //Clear all inputs
+    $('input, select').not('#preStart, #preEnd, #output, #empDate, #preJob, #PreNormal, #Pre15, #Pre20, #preHours, #btnClearSign, #status, #output, #week_end, #empname, select[name=pld], select[name=rdo], select[name=anl], input[name=employee_id], .btnClear, input[type=hidden], .btn, #preJob_description, #job_description, .chk_night_work, .chk_tafe, .chk_sick, .chk_public_holiday').val('');
+
+    var preEnd = $('#preEnd').val();
+    $('.end-1').not('#sat_end_1, #sun_end_1').val(preEnd);
+
+    var preStart = $('#preStart').val();
+    $('.start-1').not('#sat_start_1, #sun_start_1').val(preStart);
+
+    var preJob = $('#preJob').val();
+    $('.job-1').not('#sat_job_1, #sun_job_1').val(preJob);
+
+    var preJobDescription = $('#preJob_description').val();
+    $('.job_description_1').not('#sat_job_1_description, #sun_job_1_description').val(preJobDescription);
+
+    $(".end-1").not('#sat_end_1, #sun_end_1').trigger("change");
+  });
+
+  $(".job").change(function () {
+    if ($(this).val() == "sick") {
+      alert("You have to attach a medical certificate at the end of this Time Sheet or this day won't be paid!");
+    }
+  });
+
+  $(".chk_tafe, .chk_sick, .chk_public_holiday").click(function () {
+
+    if ($(this).prop("checked") == true) {
+
+      alert("Please, select Job!");
+    }
+  });
+
+  $(".job, #preJob").change(function () {
+    if ($(this).val() == "001" || $(this).val() == "002") {
+      $('#modalDescription').modal({ backdrop: 'static', keyboard: false });
+
+      $('#description_destination').val(this.id);
+    }
+  });
+
+  $('#btnSaveDescription').click(function () {
+    var destination = $('#description_destination').val();
+    var description = $('#job_description').val();
+    $("#" + destination + "_description").val(description);
+    $('#modalDescription').modal('hide');
+  });
+
+  $('#modalDescription').on('hidden.bs.modal', function (e) {
+    var description = $('#job_description').val();
+    var destination = $('#description_destination').val();
+    if (description == "") {
+      $('#' + destination).val('');
+    }
+  });
+
+  $('.btnClear').click(function () {
+
+    $('.' + this.id).val('');
+    $('.' + this.id).trigger("change");
+  });
+
+  var qty_medical_certificates = 1;
+
+  function loadCert(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var destination = $(input).prop('name');
+        var preview = $("[id*='" + destination + "_img']");
+        preview.attr('src', e.target.result).show();
+        var hidden = $("#" + destination + "_hidden");
+        hidden.val(e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function resizeImage(input) {
+    var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 600;
+
+    var destination = $(input).prop('name');
+    var preview = $("[id*='" + destination + "_img']");
+    var hidden = $("[id*='" + destination + "_hidden']");
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        var img = new Image();
+        img.onload = function () {
+          var oc = document.createElement('canvas'),
+              octx = oc.getContext('2d');
+          oc.width = img.width;
+          oc.height = img.height;
+          octx.drawImage(img, 0, 0);
+          while (oc.width * 0.5 > width) {
+            oc.width *= 0.5;
+            oc.height *= 0.5;
+            octx.drawImage(oc, 0, 0, oc.width, oc.height);
+          }
+          oc.width = width;
+          oc.height = oc.width * img.height / img.width;
+          octx.drawImage(img, 0, 0, oc.width, oc.height);
+          preview.attr('src', oc.toDataURL()).show();
+          hidden.val(oc.toDataURL());
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  //Load certificates
+  $(document).on("change", "input[type=file]", function () {
+    resizeImage(this);
+  });
+
+  $(document).on("click", ".delCert", function () {
+    var destination = $(this).prop('id').split("-");
+    if (destination[0] == "medical_certificates[1]") {
+      var preview = $("[id*='" + destination[0] + "_img']");
+      var input = $("[name*='" + destination[0] + "']");
+      var hidden = $("[id*='" + destination[0] + "_hidden']");
+      preview.attr('src', "").hide();
+      hidden.val("");
+      input.val("");
+    } else {
+      certificates--;
+      $("[id*='" + destination[0] + "_row']").remove();
+    }
+  });
+
+  var certificates = 1;
+  $("#addCert").click(function () {
+    certificates++;
+    var cert = '\n        <div class="alert alert-secondary" id="medical_certificates[' + certificates + ']_row">\n            <h5 style="text-align: center;">Certificate ' + certificates + '</h5>\n            <div class="input-group col-12 mb-3">\n              <div class="custom-file" id="medical_certificates_list">\n                <input type="file" class="custom-file-input medical_certificates" id="medical_certificates[' + certificates + ']" name="medical_certificates[' + certificates + ']"/>\n                <label class="custom-file-label" for="medical_certificates[' + certificates + ']">Choose files</label>\n              </div>\n            </div>\n            <div class="input-group col-12 mb-3">\n                <img id="medical_certificates[' + certificates + ']_img" class="img-fluid" style="">\n            </div>\n            <input id="medical_certificates[' + certificates + ']-delete" type="button" class="btn btn-danger btn-sm ml-2 delCert" value="Delete">\n            <input type="hidden" class="custom-file-input" id="medical_certificates[' + certificates + ']_hidden" name="medical_certificates[' + certificates + ']_hidden" value="">\n        </div>';
+    $("#aditional_certificates").append(cert);
+  });
+
+  $('#timesheet_form').on('submit', function (event) {
+
+    var isValid = true;
+    var days = [{
+      description: "Monday",
+      short: "mon"
+    }, {
+      description: "Tuesday",
+      short: "tue"
+    }, {
+      description: "Wednesday",
+      short: "wed"
+    }, {
+      description: "Thursday",
+      short: "thu"
+    }, {
+      description: "Friday",
+      short: "fri"
+    }, {
+      description: "Saturday",
+      short: "sat"
+    }, {
+      description: "Sunday",
+      short: "sun"
+    }];
+
+    var jobs = [1, 2, 3, 4];
+    $.each(days, function (keyDay, day) {
+      $.each(jobs, function (key, jobNumber) {
+
+        //Check if job was selected
+        var start = $("#" + day.short + "_start_" + jobNumber).val();
+        var end = $("#" + day.short + "_end_" + jobNumber).val();
+        var job = $("#" + day.short + "_job_" + jobNumber).val();
+        var hours = $("#" + day.short + "_hours_" + jobNumber).val();
+
+        if (hours !== "" && (start === "" && end === "" || job === "") || start !== "" && (end === "" || job === "" || hours === "") || end !== "" && (start === "" || job === "" || hours === "")) {
+          isValid = false;
+          event.preventDefault();
+          alert("Select start, end time and job " + jobNumber + " for " + day.description);
+          $("#" + day.short + "_job_" + jobNumber).focus();
+
+          return false;
+        }
+        if (job.length > 0 && (start.length === 0 || end.length === 0 || start === "0" && end === "0")) {
+          isValid = false;
+          event.preventDefault();
+          alert("Select start, end time and job " + jobNumber + " for " + day.description);
+          $("#" + day.short + "_job_" + jobNumber).focus();
+
+          return false;
+        }
+      });
+    });
+
+    if ($('#totalWeek').val() == "00:00") {
+      var result = confirm("The total of hours of this Time Sheet is 00:00, are you sure you want to continue ?");
+
+      if (result == false) {
+
+        isValid = false;
+        event.preventDefault();
+        return false;
+      }
+    }
+
+    if (isValid) {
+
+      $('#modalLoading').modal({ backdrop: 'static', keyboard: false });
+    }
+  });
+
+  //Select all checkboxes on click
+  $("#chkRow").click(function () {
+    var checkBoxes = $("input[type=checkbox]").not(this);
+    checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+  });
+
+  $('#btnPrint').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/print", '_blank'));
+      }
+    }
+  });
+
+  $('#btnPrintSummary').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/print_summary", '_blank'));
+      }
+    }
+  });
+
+  $('#btnDelete').click(function () {
+
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var url = window.location.pathname + "/action/";
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var result = confirm("Are you sure you want to delete following documents: " + ids + "?");
+      if (result == true) {
+        $(location).attr('href', url + ids.join(",") + "/delete");
+      }
+    } else {
+      alert('Please, selected records you want to delete!');
+    }
+  });
+
+  $('.delete').click(function () {
+    var result = confirm("Are you sure you want to delete this document (#" + $(this).attr('id') + ")?");
+    if (result == true) {
+      $(location).attr('href', window.location.pathname + '/action/' + $(this).attr('id') + "/delete");
+    }
+  });
+
+  $('#btnStatus').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalChangeStatus').modal('show');
+    }
+  });
+
+  $('#btnIntegrate').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalIntegrateMyOb').modal({ backdrop: 'static', keyboard: false });
+      $('#btnStartIntegration').removeAttr('disabled');
+    }
+  });
+
+  $('#btnStartIntegration').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var today = new Date();
+      var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date + ' ' + time;
+
+      $('#integration_details').append('Started at: ' + dateTime.toString() + '\n' + '\n');
+
+      //Get checked timesheets
+      var progress = 0;
+      var step = 100.00 / selecteds;
+      $('#integration_progress').css('width', '100%').html('Please, wait...');
+      $('#btnStartIntegration').attr("disabled", "disabled");
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+
+        $.post("myob/integrate", { _token: $('input[name=_token]').val(), id: this.id.split("-")[1] }, function (data) {
+          progress += step;
+          $('#integration_progress').css('width', progress + '%').html(Math.round(progress) + '%');
+
+          $('#integration_details').append(data.name + ' - ' + data.result + '\n');
+          console.log(data);
+        }).done(function () {
+          console.log("second success");
+        }).fail(function () {
+          console.log("error");
+        }).always(function () {
+          console.log("finished");
+        });
+      });
+    }
+  });
+
+  $('#btnTextFile').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.open(window.location.href + "/action/" + ids.join(",") + "/print", '_blank');
+      } else {
+        window.open(window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/file", '_blank'));
+      }
+    }
+  });
+
+  $('#selectLocation').change(function () {
+    window.location = window.location.href += "&type=" + $(this).val();
+  });
+
+  $('#selectCompany').change(function () {
+    window.location = window.location.href += "&company=" + $(this).val();
+  });
+
+  $('#selectDrawing').change(function () {
+    var urlArray = window.location.href.split("/");
+    if (urlArray[urlArray.length - 1].indexOf("?") !== -1) {
+      window.location = window.location.href += "&drawing=" + $(this).val();
+    } else {
+      window.location = window.location.href += "?drawing=" + $(this).val();
+    }
+  });
+
+  $('#selectStatus').change(function () {
+
+    if ($(this).val() !== "") {
+      window.location = window.location.href += "&status=" + $(this).val();
+    }
+  });
+
+  $('#selectWeekEnd').change(function () {
+
+    if ($(this).val() !== "") {
+      window.location = window.location.href += "&week_end=" + $(this).val();
+    }
+  });
+
+  $('#selectJob').change(function () {
+
+    if ($(this).val() !== "") {
+      window.location = window.location.href += "&job=" + $(this).val();
+    }
+  });
+
+  $('#btnSaveStatus').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var newStatus = $("select[name=changeStatus]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "timesheets") {
+        window.location += '/action/' + ids.join(",") + "/update/" + newStatus;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/timesheets/action/' + ids.join(",") + "/update/" + newStatus);
+      }
+    }
+  });
+
+  function getBaseUrl() {
+    var re = new RegExp(/^.*\//);
+    return re.exec(window.location.href);
+  }
+
+  var employeesSelected = [];
+  $(document).on('click', '.btn-select', function () {
+
+    if (employeesSelected.indexOf(this.id.toString()) === -1) {
+      employeesSelected.push(this.id);
+      jQuery("#emp-" + this.id).detach().appendTo('#selecteds');
+      $(this).removeClass('btn-success btn-select').addClass('btn-danger btn-remove').text('Remove');
+      $("#countSelecteds").text("(" + employeesSelected.length + ")");
+    }
+  });
+
+  $(document).on('click', '.btn-remove', function () {
+    /* Act on the event */
+
+    var result = confirm("Are you sure you want to unselect this employee?");
+    if (result == true) {
+      jQuery("#emp-" + this.id).remove();
+      employeesSelected.splice(employeesSelected.indexOf(this.id), 1);
+      $("#countSelecteds").text("(" + employeesSelected.length + ")");
+    }
+  });
+
+  $("#btn-continue").click(function () {
+    if (employeesSelected.length > 0) {
+      window.location = "create/" + employeesSelected.join(",");
+    }
+  });
+
+  $('#btnSearch').click(function () {
+
+    $('#employee').empty();
+    var name = $('#search').val();
+    var loc = window.location.pathname.replace("timesheets/select", "");
+    $.ajax({
+      url: loc + "api/employees/" + name,
+      type: 'GET',
+      dataType: 'json'
+    }).done(function (data) {
+      $.each(data, function (key, val) {
+        var emp = '\n\n                      <div id="emp-' + val.id + '" class="active select-employee card ' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "bg-warning") + '">\n                        <div class="select-employee card-header" role="tab" id="heading-undefined">\n                        <div class="row">\n                          <div class="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "col-md-11 col-lg-11" : "col-md-9 col-lg-9") + '">\n                            <h6>\n                                <a href="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "create/" + val.id : "#") + '" style="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : "color: white;") + '">\n                                  <span> ' + val.name + '</span>\n                                </a>\n                            </h6>\n                            <i style="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + '">This employee already has a Time Sheet for this week   &#32;</i>\n                          </div>\n                          <div class="col-md-2 col-lg-2" style="' + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: none" : "display: block;") + '">\n                            <a href="action/' + (val.last_timesheet === null || val.last_timesheet === undefined ? "" : val.last_timesheet) + '/print" class="btnAdd btn btn-primary" style="color: white;display:' + (val.last_timesheet === null || val.last_timesheet === undefined ? "none" : "block") + ';" target="_blank">View Time Sheet</a>\n                          </div>\n\n                          <div class="col-md-1 col-lg-1 float-right" style="padding-left: 0px; ' + (val.last_timesheet === null || val.last_timesheet === undefined ? "display: block" : "display: none;") + '">\n                            <button id="' + val.id + '" class="btn btn-success btn-select" style="' + (employeesSelected.indexOf(val.id.toString()) === -1 ? '' : 'display:none;') + '">Select</button>\n                          </div>\n                        </div>\n                      </div>';
+        $('#employee').append(emp);
+      });
+    }).fail(function () {
+      console.log("error");
+    });
+  });
+
+  $('#btnEntitlements').click(function () {
+    $('#modalUpdateEntitlements').modal('show');
+  });
+
+  $('#btn_create_mult_fire').click(function () {
+    $('#modalCreateMultipleFire').modal('show');
+  });
+
+  $('.btnPrintEmployee').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      window.open("employees/action/" + ids.join(",") + "/" + this.id, '_blank');
+    }
+  });
+
+  $('#printMatrix').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      window.open("fire_matrix/action/" + ids.join(",") + "/print", '_blank');
+    }
+  });
+
+  $('.btnPrintFireLabel').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      var job_id = void 0;
+      if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
+
+        job_id = urlArray[urlArray.length - 1];
+      } else {
+        job_id = urlArray[urlArray.length - 1].split("?")[0];
+      }
+      urlArray.splice(urlArray.length - 1, 1);
+
+      window.open(urlArray.join("/") + "/" + job_id + "/action/" + ids.join(",") + "/label", '_blank');
+    }
+  });
+
+  $('.btnPrintFireReport').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      var job_id = void 0;
+      if (urlArray[urlArray.length - 1].indexOf("?") === -1) {
+
+        job_id = urlArray[urlArray.length - 1];
+      } else {
+        job_id = urlArray[urlArray.length - 1].split("?")[0];
+      }
+      urlArray.splice(urlArray.length - 1, 1);
+
+      window.open(urlArray.join("/") + "/" + job_id + "/action/" + ids.join(",") + "/report", '_blank');
+    }
+  });
+
+  $('#btnGenerateTimeSheets').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        window.open("employee_entries/generate/" + this.id.split("-")[1], '_blank');
+      });
+    }
+  });
+
+  //Night Work
+  $(".chk_night_work").click(function () {
+
+    var group = $(this).attr('id').split('_');
+
+    var row = Number(group[2]);
+    var day = group[1];
+    //mon_end_1
+    //$('#' + day + "_end_" + row).trigger("change", [true]);
+
+    $('#' + this.id).trigger("change");
+
+    //Add night class to hours
+
+    /*
+    
+        if($(this).is(':checked')){
+    
+          $('#' + day + "_hours_" + row).addClass('night');
+    
+        } else {
+    
+          $('#' + day + "_hours_" + row).removeClass('night');
+    
+        }
+    
+    */
+    //$('#' + this.id.replace("_night", "")).trigger("click");
+  });
+
+  //Check if page is being executed via controller
+  if ($.urlParam('generate') == 1) {
+    $(".hour-end").trigger("change");
+    var action = $("#timesheet_form").attr("action");
+    $("#timesheet_form").attr("action", action + "?generated=1");
+    $('#timesheet_form').submit();
+  }
+
+  $('#btnUpdateJob').click(function () {});
+
+  $('#btnChangeJob').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalChangeJob').modal('show');
+    }
+  });
+
+  $('#btnSaveJob').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var _newJob = $("select[name=changeJob]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/change_job/' + ids.join(",") + "/" + _newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/change_job/' + ids.join(",") + "/" + _newJob);
+      }
+    }
+  });
+
+  $('#btnPrintTmv').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      $('#modalPrintTmv').modal('show');
+    }
+  });
+
+  $('#btnContinuePrintTmv').click(function () {
+    var selecteds = $("input[type=checkbox]:checked").not('#chkRow').length;
+    if (selecteds > 0) {
+      var ids = Array();
+      var selectYear = $("select[name=selectYear]").val();
+      var job = $("input[name=job]").val();
+      //Get checked timesheets
+      $("input[type=checkbox]:checked").not('#chkRow').each(function () {
+        ids.push(this.id.split("-")[1]);
+      });
+
+      var urlArray = window.location.href.split("/");
+      if (urlArray[urlArray.length - 1] == "tmv") {
+        window.location += '/print/' + ids.join(",") + "/" + newJob;
+      } else {
+        window.location = window.location.href.replace(/\/[^\/]*$/, '/' + job + '/print/' + ids.join(",") + "/" + selectYear);
+      }
+    }
+  });
+});
+
+/***/ })
+/******/ ]);

@@ -74,6 +74,12 @@ Route::group(['middleware' => ['test']], function () {
 
 	Route::resource('annual_leave', 'AnnualLeaveController');
 	Route::get('/annual_leave/action/{id?}/{action?}', 'AnnualLeaveController@action');
+
+	//Fire Matrix
+	Route::resource('/fire_matrix', 'FireMatrixController');
+	Route::get('/fire_matrix/action/{id}/{action}', 'FireMatrixController@action');
+
+
 });
 
 
