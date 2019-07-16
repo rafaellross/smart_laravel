@@ -355,8 +355,7 @@ class TimeSheetController extends Controller
                 }
                 $day->delete();
         }
-
-        return $request->get('days');
+        
 
         foreach ($request->get('days') as $key => $day) {
 
