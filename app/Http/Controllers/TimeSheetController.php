@@ -356,38 +356,43 @@ class TimeSheetController extends Controller
                 $day->delete();
         }
 
+        return $request->get('days');
+
         foreach ($request->get('days') as $key => $day) {
 
-            $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
-            $dayTimeSheet                   = new Day();
-            $dayTimeSheet->week_day         = $weekDay->number;
-            $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);
-            $dayTimeSheet->total           = $day['total']['total'];
-            $dayTimeSheet->normal          = $day['total']['normal'];
-            $dayTimeSheet->total_15        = $day['total']['1.5'];
-            $dayTimeSheet->total_20        = $day['total']['2.0'];
-
-            $dayTimeSheet->time_sheet_id    = $timeSheet->id;
-            $dayTimeSheet->save();
-
-            foreach ($day as $key => $job) {
-
-                if (intval($key)) {
-                    //return $job;
-                    $dayJob               = new DayJob();
-                    $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
-                    $dayJob->day_id       = $dayTimeSheet->id;
-                    $dayJob->number       = $key;
-                    $dayJob->description  = $job["description"];
-                    $dayJob->start        = $job["start"];
-                    $dayJob->end          = $job["end"];
-                    $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
-                    $dayJob->tafe         = !isset($job['tafe']) ? false : true;
-                    $dayJob->sick         = !isset($job['sick']) ? false : true;
-                    $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
-                    $dayJob->save();
-                }
+            if (in_array($key, ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]) ) {
+                $weekDay                        = WeekDay::where("short", "=", $key)->get()->first();
+                $dayTimeSheet                   = new Day();
+                $dayTimeSheet->week_day         = $weekDay->number;
+                $dayTimeSheet->day_dt           = Carbon::instance($timeSheet->week_end)->subDays($weekDay->days_to_end);
+                $dayTimeSheet->total           = $day['total']['total'];
+                $dayTimeSheet->normal          = $day['total']['normal'];
+                $dayTimeSheet->total_15        = $day['total']['1.5'];
+                $dayTimeSheet->total_20        = $day['total']['2.0'];
+    
+                $dayTimeSheet->time_sheet_id    = $timeSheet->id;
+                $dayTimeSheet->save();
+    
+                foreach ($day as $key => $job) {
+    
+                    if (intval($key)) {
+                        //return $job;
+                        $dayJob               = new DayJob();
+                        $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
+                        $dayJob->day_id       = $dayTimeSheet->id;
+                        $dayJob->number       = $key;
+                        $dayJob->description  = $job["description"];
+                        $dayJob->start        = $job["start"];
+                        $dayJob->end          = $job["end"];
+                        $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
+                        $dayJob->tafe         = !isset($job['tafe']) ? false : true;
+                        $dayJob->sick         = !isset($job['sick']) ? false : true;
+                        $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
+                        $dayJob->save();
+                    }
+                }                    
             }
+
         }
 
         $certificates = TimeSheetCertificate::where('time_sheet_id', $timeSheet->id)->get();
