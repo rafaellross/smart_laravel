@@ -30,7 +30,7 @@ class Day extends Model
 
     public function work(){
         $work = false;
-        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday");
+        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday", "rdo");
 
         foreach ($this->dayJobs as $job) {
 
@@ -43,7 +43,7 @@ class Day extends Model
 		        		)
 		        		||
 		        		(
-		        			$job->job->code == "rdo" &&	($job->hours() > (6*60))
+		        			$job->job->code == "rdo" &&	($job->hours() >= (6*60))
 		        		)
 
                     )

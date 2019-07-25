@@ -110,7 +110,7 @@ class TimeSheet extends Model
 
 	public function normalLessRdo(){
 		if ($this->employee->rdo) {
-			$deduction = 0;
+			$deduction =   0;
 			$deductCodes = array("sick", "rdo", "anl", "pld");
 			foreach ($this->listHours() as $job => $time) {
 				if (in_array($job, $deductCodes)) {
