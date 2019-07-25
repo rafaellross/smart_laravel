@@ -133,7 +133,7 @@ class TimeSheet extends Model
 
 			$result = (Hour::convertToInteger($this->normal) - (4 * 60) - $deduction)/60.0;
 			return $result < 0 ? "" : $result;
-		} else {
+		} else {        
 			return Hour::convertToInteger($this->normal) == 0 ? null : Hour::convertToInteger($this->normal)/60;
 		}
 	}
