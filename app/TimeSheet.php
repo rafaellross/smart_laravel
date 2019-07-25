@@ -123,7 +123,7 @@ class TimeSheet extends Model
         foreach ($day->dayJobs as $job) {
             if (isset($job->job->code)) {
 
-                if ($job->tafe || $job->sick || $job->public_holiday) {
+                if ($job->sick || $job->public_holiday) {
                     $deduction += $job->hours();
                 }
 
