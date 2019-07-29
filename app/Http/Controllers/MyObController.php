@@ -148,7 +148,8 @@ class MyObController extends Controller
         }
 
       }
-
+      
+      $companies = $myob_auth->_makeGetRequest();
       return view('myob.index', ['companies' => $companies])->with('success','Jobs has been updated');
 
     }
