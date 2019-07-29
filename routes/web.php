@@ -20,31 +20,31 @@ Route::get('test', function () {
 
 	$report = new App\TimeSheetReport();
 	$report->SetCompression(true);
-	
-	$timesheet = App\TimeSheet::find(6454);
+
+		$timesheet = App\TimeSheet::find(6980);
 	/*
 	if ($timesheet) {
 		$report->add($timesheet);
 	}
-	
+
 	return $report->output();
 	*/
 	$arr = array();
 	foreach ($timesheet->days as $day) {
-		
+
 		foreach ($day->dayJobs as $job) {
 			if ($job->percentageOfDay() > 0) {
 				array_push(
-					$arr, 
+					$arr,
 					[
-						"day" => $day->day_dt, 
-						"percentage" => $day->percentageOfWeek(), 
+						"day" => $day->day_dt,
+						"percentage" => $day->percentageOfWeek(),
 						"Job Number" => $job->number,
 						"Job Code" => $job->job->code,
 						"Travel" => $job->travel()
 
-					]);					
-			}		
+					]);
+			}
 		}
 	}
 

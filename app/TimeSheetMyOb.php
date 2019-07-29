@@ -62,7 +62,54 @@ class TimeSheetMyOb
 
 		//Travel day
 		if ($this->timesheet->employee->travel) {
-			
+
+			foreach ($this->timesheet->days as $day) {
+
+				foreach ($day->dayJobs as $job) {
+					if ($job->travel() > 0) {
+						$line = new \stdClass();
+
+						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
+
+							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['apprentice'][$this->timesheet->employee->apprentice_year]);
+
+						} else {
+
+							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['tradesman']);
+
+						}
+
+						if (!isset($job->job->myob_id)) {
+
+			        $line->Job = (object)array('UID' => $this->config['default_job']);
+
+			      } else {
+
+			        $line->Job = (object)array('UID' => $job->job->myob_id);
+
+			      }
+
+
+						$line->Entries = array();
+			      $line->Entries =
+			        array(array(
+			            'UID' => '00000000-0000-0000-0000-000000000000',
+			            'Date' => Carbon::parse($day->day_dt)->toDateTimeString(),
+			            'Hours' => $job->travel(),
+			            'Processed' => false
+			          ))
+			        ;
+
+		        $line->Entries = $line->Entries;
+
+						array_push($arr_lines, $line);
+						
+					}
+
+
+				}
+			}
+
 		}
 
 
