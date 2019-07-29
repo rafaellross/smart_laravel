@@ -19,7 +19,7 @@ class MyObController extends Controller
         $companies = $myob_auth->_makeGetRequest();
         
         return redirect('myob/jobs');
-        //return view('myob.index', ['companies' => $companies]);
+        
 
     }
 
@@ -148,6 +148,8 @@ class MyObController extends Controller
         }
 
       }
+
+      return view('myob.index', ['companies' => $companies])->with('success','Jobs has been updated');
 
     }
 
