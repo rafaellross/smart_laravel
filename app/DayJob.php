@@ -50,11 +50,11 @@ class DayJob extends Model
             return true;
         } else {
             return false;
-        }        
+        }
     }
 
     public function percentageOfDay() {
-        
+
         $total = 0;
         $percentage = 0;
         foreach ($this->day->dayJobs as $job) {
@@ -65,7 +65,7 @@ class DayJob extends Model
 
         }
 
-        if ($this->work()) {
+        if ($this->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) ) ) {
             $percentage = $this->hours() / $total;
         }
 
@@ -73,8 +73,9 @@ class DayJob extends Model
     }
 
     public function travel() {
-        
-        if ($this->work()) {
+
+        if ($this->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) && !$this->day->workForTravel()) ) {
+
             return 1 * $this->percentageOfDay();
         } else {
             return 0;

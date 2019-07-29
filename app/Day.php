@@ -67,6 +67,37 @@ class Day extends Model
         return $work;
     }
 
+    public function workForTravel(){
+        $work = false;
+        $deductCodes = array("sick", "anl", "pld", "tafe", "holiday", "rdo");
+
+        foreach ($this->dayJobs as $job) {
+
+            if (
+            		isset($job->job->code) &&
+    				(
+		            	(
+
+			        		!in_array($job->job->code, $deductCodes)
+		        		)
+
+                    )
+                    &&
+                    !$job->tafe
+                    &&
+                    !$job->sick
+                    &&
+                    !$job->public_holiday
+
+	        	)
+            {
+                $work = true;
+            }
+        }
+        return $work;
+    }
+
+
     public function hasNight(){
 
         $nightWork = false;
@@ -161,7 +192,7 @@ class Day extends Model
     }
 
     public function percentageOfWeek() {
-        
+
         $total = 0;
         $percentage = 0;
         foreach ($this->timeSheet->days as $day) {
@@ -178,6 +209,6 @@ class Day extends Model
         return $percentage;
     }
 
-    
+
 
 }
