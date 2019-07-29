@@ -17,8 +17,9 @@ class MyObController extends Controller
         $myob_auth = new \App\MYOB\AccountRightV2();
 
         $companies = $myob_auth->_makeGetRequest();
-
-        return view('myob.index', ['companies' => $companies]);
+        
+        return redirect('myob/jobs');
+        //return view('myob.index', ['companies' => $companies]);
 
     }
 

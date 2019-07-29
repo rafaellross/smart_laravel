@@ -15,6 +15,47 @@ Auth::routes();
 
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('test', function () {
+
+	$report = new App\TimeSheetReport();
+	$report->SetCompression(true);
+	
+	$timesheet = App\TimeSheet::find(6454);
+	/*
+	if ($timesheet) {
+		$report->add($timesheet);
+	}
+	
+	return $report->output();
+	*/
+	$arr = array();
+	foreach ($timesheet->days as $day) {
+		
+		foreach ($day->dayJobs as $job) {
+			//$dayJob = App\DayJob::find($job->id);
+			//array_push($arr, $dayJob->percentageOfDay());
+			if ($job->percentageOfDay() > 0) {
+				array_push(
+					$arr, 
+					[
+						"day" => $day->day_dt, 
+						"percentage" => $day->percentageOfWeek(), 
+						"Job Number" => $job->number,
+						"Job Code" => $job->job->code,
+						"Travel" => $job->travel()
+
+					]);
+					
+			}
+		
+		}
+	}
+
+	dd($arr);
+
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('mail/send', 'MailController@send');
@@ -172,6 +213,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 });
+
+
+
 
 
 	Route::get('/users/{id}/edit', function ($id) {

@@ -243,7 +243,7 @@ class TimeSheetMyOb
 					if (isset($day->listHours()['rdo'])) {
 						Log::debug($day->listHours());
 					}
-*/
+					*/
 					if (isset($day->listHours()['rdo']) || isset($day->listHours()['anl']) || isset($day->listHours()['pld']) ) {
 
 						$dedu_rdo = isset($day->listHours()['rdo']) ? $day->listHours()['rdo'] : 0;

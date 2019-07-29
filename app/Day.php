@@ -8,6 +8,11 @@ use App\Hour;
 class Day extends Model
 {
 
+    public function timeSheet(){
+        return $this->belongsTo('App\TimeSheet');
+    }
+
+
     public function dayJobs(){
         return $this->hasMany('App\DayJob')->orderBy('number');
     }
@@ -142,5 +147,37 @@ class Day extends Model
         $this->save();
         return ["normal" => $normal, "total_15" => $extra_15, "total_20" => $extra_20];
     }
+
+    public function hours() {
+        $total = 0;
+
+        foreach ($this->dayJobs as $job) {
+            if ($job->work()) {
+                $total += $job->hours();
+            }
+        }
+
+        return $total;
+    }
+
+    public function percentageOfWeek() {
+        
+        $total = 0;
+        $percentage = 0;
+        foreach ($this->timeSheet->days as $day) {
+
+            if ($day->work()) {
+                $total += $day->hours();
+            }
+        }
+
+        if ($this->work()) {
+            $percentage = $this->hours() / $total;
+        }
+
+        return $percentage;
+    }
+
+    
 
 }
