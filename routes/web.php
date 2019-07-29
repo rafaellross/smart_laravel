@@ -33,8 +33,6 @@ Route::get('test', function () {
 	foreach ($timesheet->days as $day) {
 		
 		foreach ($day->dayJobs as $job) {
-			//$dayJob = App\DayJob::find($job->id);
-			//array_push($arr, $dayJob->percentageOfDay());
 			if ($job->percentageOfDay() > 0) {
 				array_push(
 					$arr, 
@@ -45,10 +43,8 @@ Route::get('test', function () {
 						"Job Code" => $job->job->code,
 						"Travel" => $job->travel()
 
-					]);
-					
-			}
-		
+					]);					
+			}		
 		}
 	}
 

@@ -332,14 +332,15 @@ class TimeSheetController extends Controller
 
         $timeSheet = TimeSheet::find($id);
 
+        $timeSheet->integrated          = false;            
+        $timesheet->integration_message = "";
+        $timeSheet->week_end            = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
+        $timeSheet->emp_signature       = $request->get('emp_signature');
+        $timeSheet->rdo                 = $request->get('rdo');
+        $timeSheet->pld                 = $request->get('pld');
+        $timeSheet->anl                 = $request->get('anl');
 
-        $timeSheet->week_end        = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
-        $timeSheet->emp_signature   = $request->get('emp_signature');
-        $timeSheet->rdo             = $request->get('rdo');
-        $timeSheet->pld             = $request->get('pld');
-        $timeSheet->anl             = $request->get('anl');
-
-        $totals = $request->get('totals');
+        $totals                     = $request->get('totals');
         $timeSheet->total           = $totals['total'];
         $timeSheet->normal          = $totals['normal'];
         $timeSheet->total_15        = $totals['1.5'];

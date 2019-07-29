@@ -60,6 +60,12 @@ class TimeSheetMyOb
 			array_push($arr_lines, $line);
 		}
 
+		//Travel day
+		if ($this->timesheet->employee->travel) {
+			
+		}
+
+
 		foreach ($this->timesheet->days as $day) {
 			$total_15 = 0;
 			$total_20 = 0;
@@ -472,79 +478,80 @@ class TimeSheetMyOb
 			}
 
 			//Travel Days
-			if ($this->timesheet->employee->travel) {
+				/*
+				if ($this->timesheet->employee->travel) {
 
-				$jobs = 0;
-				foreach ($day->dayJobs as $job) {
-					if (!is_null($job->start) && !$job->tafe && !$job->sick && !$job->public_holiday) {
-							$jobs++;
+					$jobs = 0;
+					foreach ($day->dayJobs as $job) {
+						if (!is_null($job->start) && !$job->tafe && !$job->sick && !$job->public_holiday) {
+								$jobs++;
+						}
 					}
-				}
 
-				foreach ($day->dayJobs as $job) {
+					foreach ($day->dayJobs as $job) {
 
-					$line = new \stdClass();
-					$deductions = 0;
-					if ((isset($job->job->code) && $day->week_day < 9) && (!$job->tafe && !$job->sick && !$job->public_holiday)) {
-						if ((isset($day->listHours()['anl']) || isset($day->listHours()['pld'])) && !$day->work()) {
-
-							$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
-							$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
-							$deductions = $dedu_pld + $dedu_anl;
-							if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
-								$pct_of_total = ($job->hours()) / ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) - $day->sick());
-							}
-
-						} else {
-							if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
+						$line = new \stdClass();
+						$deductions = 0;
+						if ((isset($job->job->code) && $day->week_day < 9) && (!$job->tafe && !$job->sick && !$job->public_holiday)) {
+							if ((isset($day->listHours()['anl']) || isset($day->listHours()['pld'])) && !$day->work()) {
 
 								$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
 								$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
+								$deductions = $dedu_pld + $dedu_anl;
+								if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
+									$pct_of_total = ($job->hours()) / ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) - $day->sick());
+								}
+
+							} else {
+								if ((Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night)) > 0) {
+
+									$dedu_pld = isset($day->listHours()['pld']) ? $day->listHours()['pld'] : 0;
+									$dedu_anl = isset($day->listHours()['anl']) ? $day->listHours()['anl'] : 0;
 
 
-								$pct_of_total = ($job->hours()) / (Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night) - ($dedu_pld + $dedu_anl + $day->sick()));
+									$pct_of_total = ($job->hours()) / (Hour::convertToInteger($day->total) + Hour::convertToInteger($day->total_night) - ($dedu_pld + $dedu_anl + $day->sick()));
+								}
 							}
+
+							if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
+
+								$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['apprentice'][$this->timesheet->employee->apprentice_year]);
+
+							} else {
+
+								$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['tradesman']);
+
+							}
+
+							$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) && ($jobs > 1) ? 2 : 1 );
+
+							if (is_null($job->job->myob_id)) {
+								$line->Job = (object)array('UID' => $this->config['default_job']);
+							} else {
+								$line->Job = (object)array('UID' => $job->job->myob_id);
+							}
+
+							$line->Entries = array();
+							$line->Entries =
+								array(array(
+										'UID' => '00000000-0000-0000-0000-000000000000',
+										'Date' => Carbon::parse($day->day_dt)->toDateTimeString(),
+										'Hours' => (in_array($job->job->code, ['sick', 'anl', 'tafe', 'pld', 'holiday']) ? 0 : $total_travel * $pct_of_total),
+										'Processed' => false
+									))
+								;
+
+								$line->Entries = $line->Entries;
+
+							if ((in_array($job->job->code, ['sick', 'anl', 'tafe', 'pld', 'holiday']) ? 0 : $total_travel * $pct_of_total)) {
+								array_push($arr_lines, $line);
+							}
+
+
 						}
-
-						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
-
-							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['apprentice'][$this->timesheet->employee->apprentice_year]);
-
-						} else {
-
-							$line->PayrollCategory = (object)array('UID' => $this->config['travel_days']['tradesman']);
-
-						}
-
-						$total_travel = ($day->hasNight() && !in_array($job->job->code, ['anl', 'tafe', 'pld', 'holiday']) && ($jobs > 1) ? 2 : 1 );
-
-						if (is_null($job->job->myob_id)) {
-							$line->Job = (object)array('UID' => $this->config['default_job']);
-						} else {
-							$line->Job = (object)array('UID' => $job->job->myob_id);
-						}
-
-						$line->Entries = array();
-						$line->Entries =
-							array(array(
-									'UID' => '00000000-0000-0000-0000-000000000000',
-									'Date' => Carbon::parse($day->day_dt)->toDateTimeString(),
-									'Hours' => (in_array($job->job->code, ['sick', 'anl', 'tafe', 'pld', 'holiday']) ? 0 : $total_travel * $pct_of_total),
-									'Processed' => false
-								))
-							;
-
-							$line->Entries = $line->Entries;
-
-						if ((in_array($job->job->code, ['sick', 'anl', 'tafe', 'pld', 'holiday']) ? 0 : $total_travel * $pct_of_total)) {
-							array_push($arr_lines, $line);
-						}
-
-
 					}
 				}
-			}
-
+				*/
 			}
 
 		//Travel day extra (RDO)
