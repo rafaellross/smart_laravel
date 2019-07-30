@@ -16,12 +16,12 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('test', function () {
+Route::get('test/{id}', function ($id) {
 
 	$report = new App\TimeSheetReport();
 	$report->SetCompression(true);
 
-		$timesheet = App\TimeSheet::find(6980);
+		$timesheet = App\TimeSheet::find($id);
 	/*
 	if ($timesheet) {
 		$report->add($timesheet);
@@ -33,7 +33,7 @@ Route::get('test', function () {
 	foreach ($timesheet->days as $day) {
 
 		foreach ($day->dayJobs as $job) {
-			if ($job->percentageOfDay() > 0) {
+			if ($job->travel() > 0) {
 				array_push(
 					$arr,
 					[

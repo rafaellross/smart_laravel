@@ -332,8 +332,8 @@ class TimeSheetController extends Controller
 
         $timeSheet = TimeSheet::find($id);
 
-        $timeSheet->integrated          = false;            
-        $timesheet->integration_message = "";
+        $timeSheet->integrated          = false;
+        $timeSheet->integration_message = "";
         $timeSheet->week_end            = Carbon::createFromFormat('d/m/Y', $request->get('week_end'));
         $timeSheet->emp_signature       = $request->get('emp_signature');
         $timeSheet->rdo                 = $request->get('rdo');
@@ -356,7 +356,7 @@ class TimeSheetController extends Controller
                 }
                 $day->delete();
         }
-        
+
 
         foreach ($request->get('days') as $key => $day) {
 
@@ -369,12 +369,12 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->normal          = $day['total']['normal'];
                 $dayTimeSheet->total_15        = $day['total']['1.5'];
                 $dayTimeSheet->total_20        = $day['total']['2.0'];
-    
+
                 $dayTimeSheet->time_sheet_id    = $timeSheet->id;
                 $dayTimeSheet->save();
-    
+
                 foreach ($day as $key => $job) {
-    
+
                     if (intval($key)) {
                         //return $job;
                         $dayJob               = new DayJob();
@@ -390,7 +390,7 @@ class TimeSheetController extends Controller
                         $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
                         $dayJob->save();
                     }
-                }                    
+                }
             }
 
         }
