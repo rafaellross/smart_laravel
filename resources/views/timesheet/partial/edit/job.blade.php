@@ -8,18 +8,18 @@
     </div>
 
     <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job->number}}][tafe]" id="group_{{$day}}_{{$job->number}}_tafe" value="1" {{$job->tafe ? 'checked' : ''}}>
+        <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$weekDay->short}}][{{$job->number}}][tafe]" id="group_{{$day}}_{{$job->number}}_tafe" value="1" {{$job->tafe ? 'checked' : ''}}>
         <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_tafe">Tafe?</label>
       </div>
 
       <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job->number}}][sick]" id="group_{{$day}}_{{$job->number}}_sick" value="1" {{$job->sick ? 'checked' : ''}}>
+        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$weekDay->short}}][{{$job->number}}][sick]" id="group_{{$day}}_{{$job->number}}_sick" value="1" {{$job->sick ? 'checked' : ''}}>
         <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_sick">Sick?</label>
       </div>
 
 
       <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_public_holiday" name="days[{{$day}}][{{$job->number}}][public_holiday]" id="group_{{$day}}_{{$job->number}}_public_holiday" value="1" value="1" {{$job->public_holiday ? 'checked' : ''}}>
+        <input type="checkbox" class="custom-control-input chk_public_holiday" name="days[{{$weekDay->short}}][{{$job->number}}][public_holiday]" id="group_{{$day}}_{{$job->number}}_public_holiday" value="1" value="1" {{$job->public_holiday ? 'checked' : ''}}>
         <label class="custom-control-label" for="group_{{$day}}_{{$job->number}}_public_holiday">Public Holiday?</label>
       </div>
 
