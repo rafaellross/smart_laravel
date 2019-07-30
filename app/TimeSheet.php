@@ -65,11 +65,14 @@ class TimeSheet extends Model
       $pct_of_total = 0;
       if (!in_array($job, ['anl', 'rdo', 'pld'])) {
         $job_myob = \App\Job::where('code', $job)->first();
-        $pct_of_total += $value / ($worked_hours);
-        $arr[$job]['total'] = $value/60;
-        $arr[$job]['pct_of_total'] = $pct_of_total;
-        $arr[$job]['normal'] = $this->normalLessRdo() * $pct_of_total;
-        $arr[$job]['myob_id'] = $job_myob->myob_id;
+        $check_normal = $this->normalLessRdo() > 0 ? $this->normalLessRdo() * $pct_of_total : 0;
+        if ($check_normal > 0) {
+          $pct_of_total += $value / ($worked_hours);
+          $arr[$job]['total'] = $value/60;
+          $arr[$job]['pct_of_total'] = $pct_of_total;
+          $arr[$job]['normal'] = $this->normalLessRdo() > 0 ? $this->normalLessRdo() * $pct_of_total : 0;
+          $arr[$job]['myob_id'] = $job_myob->myob_id;          
+        }
 
       }
     }
@@ -133,7 +136,7 @@ class TimeSheet extends Model
 
 			$result = (Hour::convertToInteger($this->normal) - (4 * 60) - $deduction)/60.0;
 			return $result < 0 ? "" : $result;
-		} else {        
+		} else {
 			return Hour::convertToInteger($this->normal) == 0 ? null : Hour::convertToInteger($this->normal)/60;
 		}
 	}

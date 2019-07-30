@@ -46,7 +46,7 @@ class DayJob extends Model
     }
 
     public function work() {
-        if ($this->hours() > 0 && !in_array($this->job->code, ["rdo", "pld", "anl", "sick", "tafe", "holiday"])) {
+        if ($this->hours() > 0 && !in_array($this->job->code, ["rdo", "pld", "anl", "sick", "tafe", "holiday"]) && !$this->sick && !$this->tafe) {
             return true;
         } else {
             return false;
