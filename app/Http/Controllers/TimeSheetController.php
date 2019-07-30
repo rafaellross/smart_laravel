@@ -245,7 +245,7 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->save();
 
                 foreach ($day as $key => $job) {
-                    
+
                     if (intval($key)) {
                         $dayJob               = new DayJob();
                         $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
@@ -374,7 +374,7 @@ class TimeSheetController extends Controller
                 $dayTimeSheet->save();
 
                 foreach ($day as $key => $job) {
-                    return $job;
+
                     if (intval($key)) {
                         //return $job;
                         $dayJob               = new DayJob();
