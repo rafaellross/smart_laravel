@@ -46,6 +46,25 @@ class TimeSheet extends Model
       return $result;
   }
 
+  public function listHoursForMyOb(){
+
+      $result = array();
+      foreach ($this->days as $day) {
+          foreach ($day->dayJobs as $job) {
+              if (isset($job->job->code) && !$job->sick) {
+                  if (isset($result[$job->job->code])) {
+                      $result[$job->job->code] += $job->hours();
+                  } else {
+                      $result[$job->job->code] = $job->hours();
+                  }
+              }
+          }
+      }
+      return $result;
+  }
+
+
+
 	public static function D($J){
 	    return ($J<10? '0':'') . $J;
 	}
@@ -53,26 +72,32 @@ class TimeSheet extends Model
   public function listHoursNormal() {
 
     $worked_hours = 0;
-    foreach ($this->listHours() as $job => $value) {
+    foreach ($this->listHoursForMyOb() as $job => $value) {
 
       if (!in_array($job, ['anl', 'rdo', 'pld'])) {
+
         $worked_hours += $value;
+
       }
+
     }
+
     $arr = array();
 
-    foreach ($this->listHours() as $job => $value) {
+    foreach ($this->listHoursForMyOb() as $job => $value) {
+
       $pct_of_total = 0;
       if (!in_array($job, ['anl', 'rdo', 'pld'])) {
-        $job_myob = \App\Job::where('code', $job)->first();
-        $check_normal = $this->normalLessRdo() > 0 ? $this->normalLessRdo() * $pct_of_total : 0;
-        if ($check_normal > 0) {
+
+          $job_myob = \App\Job::where('code', $job)->first();
+          $check_normal = $this->normalLessRdo() > 0 ? $this->normalLessRdo() * $pct_of_total : 0;
+
           $pct_of_total += $value / ($worked_hours);
           $arr[$job]['total'] = $value/60;
           $arr[$job]['pct_of_total'] = $pct_of_total;
           $arr[$job]['normal'] = $this->normalLessRdo() > 0 ? $this->normalLessRdo() * $pct_of_total : 0;
-          $arr[$job]['myob_id'] = $job_myob->myob_id;          
-        }
+          $arr[$job]['myob_id'] = $job_myob->myob_id;
+
 
       }
     }

@@ -8,7 +8,7 @@ use App\TimeSheetMyOb;
 use App\Employee;
 use App\Job;
 use App\ExpensesMyob;
-
+use Carbon\Carbon;
 
 class MyObController extends Controller
 {
@@ -17,9 +17,8 @@ class MyObController extends Controller
         $myob_auth = new \App\MYOB\AccountRightV2();
 
         $companies = $myob_auth->_makeGetRequest();
-        
+
         return redirect('myob/jobs');
-        
 
     }
 
@@ -89,38 +88,53 @@ class MyObController extends Controller
 
       $employees = $myob_auth->_makeGetRequest("Contact/Employee" . '?$orderby=LastName');
 
-
-
-      $count = 0;
-/*
-      foreach ($employees->Items as $emp) {
-        $count++;
-        if ($count > 300) {
-          break;
-        } else {
-            echo $emp->LastName . ", " .$emp->FirstName . "<br>";
-            $myob_auth->_makeDeleteRequest($myob_auth->_uid ."/Contact/Employee/" . $emp->UID, $emp);
-        }
-
-      }
-*/
-
-
-
+      //Update ID from MYOB on system
       foreach ($employees->Items as $employee_myob) {
 
         $emp = Employee::where('name', $employee_myob->LastName . ', ' . $employee_myob->FirstName)->get()->first();
 
-        echo $employee_myob->LastName . ', ' . $employee_myob->FirstName . " | " . $employee_myob->UID . "<br>";
+
+        if (count($emp) > 0) {
+          $emp->myob_id = $employee_myob->UID;
+          $emp->save();
+        }
+      }
+
+      //Update employee details
+
+      $employeesDetails = $myob_auth->_makeGetRequest("Contact/EmployeePayrollDetails");
+
+      foreach ($employeesDetails->Items as $employeeDetails) {
+
+        $emp = Employee::where('myob_id', $employeeDetails->Employee->UID)->get()->first();
+
         if (count($emp) > 0) {
 
-          $emp->myob_id = $employee_myob->UID;
+          $emp->dob = Carbon::parse($employeeDetails->DateOfBirth);
+
+
+          $arr_apprentices = ["1st Year Apprentice", "2nd Year Apprentice", "3rd Year Apprentice", "4th Year Apprentice"];
+
+          //Check apprentice year
+
+          if (isset($employeeDetails->EmploymentClassification->Name) && in_array($employeeDetails->EmploymentClassification->Name, $arr_apprentices)) {
+
+            $year = $employeeDetails->EmploymentClassification->Name[0];
+            $emp->location = 'A';
+            $emp->apprentice_year = $year;
+
+
+          }
 
           $emp->save();
-          //echo $emp->name . "<br>";
+
         }
 
       }
+
+      $companies = $myob_auth->_makeGetRequest();
+      
+      return view('myob.index', ['companies' => $companies])->with('success','Jobs has been updated');
 
     }
 
@@ -148,9 +162,8 @@ class MyObController extends Controller
         }
 
       }
-      
-      $companies = $myob_auth->_makeGetRequest();
-      return view('myob.index', ['companies' => $companies])->with('success','Jobs has been updated');
+
+      return redirect('myob/entitlements');
 
     }
 
@@ -214,9 +227,12 @@ class MyObController extends Controller
     }
 
     public function entitlements() {
+
       $myob_auth = new \App\MYOB\AccountRightV2();
       $entitlements = $myob_auth->_makeGetRequest("Contact/EmployeePayrollDetails");
+
       $result = array();
+
       foreach ($entitlements->Items as $entitlement) {
         $emp_entitlements = array();
         foreach ($entitlement->Entitlements as $emp_entitlement) {
@@ -225,7 +241,35 @@ class MyObController extends Controller
         array_push($result, ['employee' => $entitlement->Employee->UID, 'employee_name' => $entitlement->Employee->Name, 'entitlements' => $emp_entitlements]);
 
       }
-      return json_encode($result);
+
+      foreach ($result as $employee) {
+        $emp = Employee::where('myob_id', $employee['employee'])->get()->first();
+        if (isset($emp) ) {
+          foreach ($employee['entitlements'] as $entitlement) {
+              if ($entitlement['Name'] == "Sick Leave Accrual") {
+                $emp->sick_bal = $entitlement['Total'];
+              }
+
+              if ($entitlement['Name'] == "Holiday Leave Accrual") {
+                $emp->anl = $entitlement['Total'];
+              }
+
+              if ($entitlement['Name'] == "RDO-Tradesman Accrual") {
+                $emp->rdo_bal = $entitlement['Total'];
+              }
+
+              if ($entitlement['Name'] == "PLD - Tradesmen Accrual") {
+                $emp->pld = $entitlement['Total'];
+              }
+
+              $emp->save();
+
+          }
+        }
+      }
+
+      return redirect('myob/employees');
+
     }
 
     public function stdPays() {
@@ -254,5 +298,17 @@ class MyObController extends Controller
 
 
       }
+    }
+
+    public function updateAllData(Request $request) {
+
+      // Entitlements
+      $this->entitlements();
+      // Employee Details
+      $this->employees($request);
+      // Jobs
+      $this->jobs($request);
+
+
     }
 }

@@ -15,7 +15,17 @@ class JobController extends Controller
      */
     public function index()
     {
-        return view('job.index', ['jobs' => Job::orderByRaw("code * 1")->get()]);
+        $show_inactives = filter_input(INPUT_GET, 'inactives', FILTER_SANITIZE_SPECIAL_CHARS);
+        if ($show_inactives) {
+
+            return view('job.index', ['jobs' => Job::orderByRaw("code * 1")->get(), 'show_inactives' => $show_inactives]);
+
+        } else {
+
+            return view('job.index', ['jobs' => Job::where('inactive', 0)->orderByRaw("code * 1")->get(), 'show_inactives' => $show_inactives]);
+
+        }
+
     }
 
     /**

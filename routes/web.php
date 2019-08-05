@@ -38,9 +38,10 @@ Route::get('test/{id}', function ($id) {
 					$arr,
 					[
 						"day" => $day->day_dt,
-						"percentage" => $day->percentageOfWeek(),
+						"percentage" => $job->percentageOfDay(),
 						"Job Number" => $job->number,
 						"Job Code" => $job->job->code,
+						"Work?" => $job->work(),
 						"Travel" => $job->travel()
 
 					]);
@@ -68,6 +69,7 @@ Route::group(['middleware' => ['test']], function () {
 	Route::get('/myob/payroll', 'MyObController@payroll');
 	Route::get('/myob/entitlements', 'MyObController@entitlements');
 	Route::get('/myob/stdpays', 'MyObController@stdPays');
+
 
 	//QA
 	Route::get('/qa_types/action/{id}/{action}', 'QATypesController@action');

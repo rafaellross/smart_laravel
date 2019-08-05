@@ -9,6 +9,7 @@
         <div class="col-md-12 col-lg-12 col-12">
             <a href="{{ URL::to('/jobs/create') }}" class="btn btn-primary">Create New</a>
             <button class="btn btn-danger mobile" id="btnDelete">Delete Selected(s)</button>
+            <a href="{{ URL::to('/jobs?inactives=' . ($show_inactives ? 0 : 1)) }}" class="btn {{$show_inactives ? 'btn-dark' : 'btn-light'}}">{{ $show_inactives ? 'Hide' : 'Show'}} Inactives</a>
         </div>
 
     </div>

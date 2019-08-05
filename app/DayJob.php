@@ -59,13 +59,20 @@ class DayJob extends Model
         $percentage = 0;
         foreach ($this->day->dayJobs as $job) {
 
-            if ($job->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) ) ) {
+            if ($job->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) && !$job->sick)  ) {
                 $total += $job->hours();
             }
 
         }
 
-        if ($this->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) ) ) {
+        if (
+            $this->work() ||
+
+            (
+              isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) && !$this->sick
+            )
+           )
+          {
             $percentage = $this->hours() / $total;
         }
 
@@ -75,8 +82,7 @@ class DayJob extends Model
     public function travel() {
 
         if ($this->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) && !$this->day->workForTravel()) ) {
-
-            return 1 * $this->percentageOfDay();
+            return ( $this->day->hasNight() ? 2 : 1 ) * $this->percentageOfDay();
         } else {
             return 0;
         }

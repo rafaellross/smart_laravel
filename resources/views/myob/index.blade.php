@@ -6,9 +6,9 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header">Company Files</div>
-                <div class="card-body">                    
+                <div class="card-body">
                     @foreach ($companies as $company)
-                        <a href="/home" class="list-group-item list-group-item-action ">{{ $company->Name . " | " . $company->Id }}</a>
+                        <a href="/home" class="list-group-item list-group-item-action ">{{ $company->Name }}</a>
                     @endforeach
                 </div>
             </div>

@@ -149,7 +149,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
+
         $employee = $this->validate(request(), [
             'name' => 'required|string|max:255',
             'bonus' => 'required|numeric|min:0',
@@ -459,6 +459,7 @@ class EmployeeController extends Controller
                                   when emp.location = 'A' then 'Apprentice'
                                   when emp.location = 'L' then 'Labourer'
                                   end location,
+                                  jobs.code as job_id,
                                   emp.anniversary_dt,
                                   emp.apprentice_year,
                                   emp.company,
@@ -468,6 +469,9 @@ class EmployeeController extends Controller
                                   if(YEARWEEK(emp.anniversary_dt) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1))-1, 1, 0) as rollover,
                                   (select id from time_sheets where employee_id = emp.id and YEARWEEK(week_end) = YEARWEEK((SELECT week_end_timesheet FROM parameters LIMIT 1)) order by id desc limit 1) as last_timesheet
                                   from employees emp
+                                  left join jobs
+                                  on emp.job_id = jobs.id
+
                                   where
                                   emp.id in ($id)
                                   order by emp.name asc

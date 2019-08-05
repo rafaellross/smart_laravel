@@ -47,7 +47,7 @@ class EmployeesList extends Fpdf
       $y = $this->GetY();
       $x = $this->GetX();
 
-      $this->MultiCell(25 , $header_height, 'Company', 'LTB', 'C', 1);
+      $this->MultiCell(25 , $header_height, 'Job', 'LTB', 'C', 1);
       $this->SetXY($x+25, $y);
       $y = $this->GetY();
       $x = $this->GetX();
@@ -65,6 +65,7 @@ class EmployeesList extends Fpdf
     function Footer()
     {
         // Position at 1.5 cm from bottom
+
         $this->SetY(-15);
         // Arial italic 8
         $this->SetFont('Arial','I',8);
@@ -89,7 +90,7 @@ class EmployeesList extends Fpdf
 
         $this->Cell(20 , 5, $employee->location, 'LB', 0, 'C', $this->odd);
 
-        $this->Cell(25 , 5, ($employee->company == 'M' ? 'Maintenance' : 'Construction'), 'LB', 0, 'C', $this->odd);
+        $this->Cell(25 , 5, isset($employee->job_id) ? $employee->job_id : '', 'LB', 0, 'C', $this->odd);
 
         $this->Cell(25 , 5, $employee->apprentice_year, 'LB', 0, 'C', $this->odd);
         $this->Cell(30 , 5, (is_null($employee->anniversary_dt) ? '' : Carbon::parse($employee->anniversary_dt)->format('d/m/Y')), 'LBR', 1, 'C', $this->odd);
