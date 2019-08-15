@@ -1,3 +1,4 @@
+<!-- Comment-->
 <div class="alert alert-secondary" style="text-align: center;">
     <h4>Job {{$job_curr}}</h4>
     <div class="form-row">
@@ -7,17 +8,17 @@
         <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_night">Night Work?</label>
       </div>
       
-      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1" style="display: none;">
         <input type="checkbox" class="custom-control-input chk_tafe" name="days[{{$day}}][{{$job_curr}}][tafe]" id="group_{{$day}}_{{$job_curr}}_tafe" value="1" {{isset(old()['days'][$day][$job_curr]['tafe']) && is_null(old()['days'][$day][$job_curr]['tafe']) ? 'checked' : ''}} />
         <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_tafe">Tafe?</label>
       </div>
 
-      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
-        <input type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job_curr}}][sick]" id="group_{{$day}}_{{$job_curr}}_sick" value="1" {{isset(old()['days'][$day][$job_curr]['sick']) && is_null(old()['days'][$day][$job_curr]['sick']) ? 'checked' : ''}} />
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1" style="display: none;">
+        <input  type="checkbox" class="custom-control-input chk_sick" name="days[{{$day}}][{{$job_curr}}][sick]" id="group_{{$day}}_{{$job_curr}}_sick" value="1" {{isset(old()['days'][$day][$job_curr]['sick']) && is_null(old()['days'][$day][$job_curr]['sick']) ? 'checked' : ''}} />
         <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_sick">Sick?</label>
       </div>
 
-      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1">
+      <div class="col-md-2 offset-md-10 bg-secondary custom-control custom-checkbox text-light rounded mt-1" style="display: none;">
         <input type="checkbox" class="custom-control-input chk_public_holiday" name="days[{{$day}}][{{$job_curr}}][public_holiday]" id="group_{{$day}}_{{$job_curr}}_public_holiday" value="4" {{isset(old()['days'][$day][$job_curr]['public_holiday']) && is_null(old()['days'][$day][$job_curr]['public_holiday']) ? 'checked' : ''}} />
         <label class="custom-control-label" for="group_{{$day}}_{{$job_curr}}_public_holiday">Public Holiday?</label>
       </div>
