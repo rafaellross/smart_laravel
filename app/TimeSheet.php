@@ -137,7 +137,7 @@ class TimeSheet extends Model
 	}
 
 	public function normalLessRdo(){
-		if ($this->employee->rdo) {
+		if ($this->employee->rdo || $this->employee->travel || $this->employee->site_allow) {
 			$deduction = 0;
 			$deductCodes = array("sick", "rdo", "anl", "pld");
 			foreach ($this->listHours() as $job => $time) {
@@ -151,15 +151,15 @@ class TimeSheet extends Model
         foreach ($day->dayJobs as $job) {
             if (isset($job->job->code)) {
 
-                if ($job->sick || $job->public_holiday) {
+                if ($job->sick) {
                     $deduction += $job->hours();
                 }
 
             }
         }
     }
-
-			$result = (Hour::convertToInteger($this->normal) - (4 * 60) - $deduction)/60.0;
+      $four_hours = (!$this->employee->rdo || !$this->employee->travel || !$this->employee->site_allow) ? 0 : 4;
+			$result = (Hour::convertToInteger($this->normal) - ($four_hours * 60) - $deduction)/60.0;
 			return $result < 0 ? "" : $result;
 		} else {
 			return Hour::convertToInteger($this->normal) == 0 ? null : Hour::convertToInteger($this->normal)/60;

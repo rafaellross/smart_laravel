@@ -16,6 +16,12 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('integratetest/{id}', function ($id) {
+
+});
+
+Route::get('/integrate/test/{id}', 'MyObController@integrateTest');
+
 Route::get('test/{id}', function ($id) {
 
 	$report = new App\TimeSheetReport();

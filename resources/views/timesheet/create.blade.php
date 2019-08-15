@@ -172,4 +172,5 @@
     </div>
 
 @include('timesheet.partial.description')
+@include('timesheet.partial.jobselector')
 @endsection

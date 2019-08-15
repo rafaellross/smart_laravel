@@ -62,7 +62,7 @@
                 <option value="">Select Job</option>
                 @foreach ($jobDB as $job)
                     @if ($day != "sat")
-                        @if (!in_array($job->code, ["sick", "tafe", "holiday"]))
+                        @if (!in_array($job->code, [""]))
                             <option value="{{$job->code}}" {{isset(old()['days'][$day][$job_curr]['job']) && old()['days'][$day][$job_curr]['job'] == $job->code ? 'selected' : ''}}>{{$job->description}}</option>
                         @endif
                     @else

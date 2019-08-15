@@ -309,6 +309,28 @@ class MyObController extends Controller
       // Jobs
       $this->jobs($request);
 
-
     }
+
+
+    public function integrateTest($id) {
+      
+      $timesheet = TimeSheet::find($id);
+
+      
+
+
+
+      $timesheet_myob = new TimeSheetMyOb($timesheet);
+
+
+      //Determine employee job
+
+        
+      
+
+      return response()->json($timesheet_myob);
+
+
+
+    }    
 }

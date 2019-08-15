@@ -421,6 +421,11 @@ $(document).ready(function () {
       $('#modalDescription').modal({ backdrop: 'static', keyboard: false });
 
       $('#description_destination').val(this.id);
+    } else if ($(this).val() == "sick" || $(this).val() == "tafe" || $(this).val() == "holiday") {
+
+      $('#modalJobSelector').modal({ backdrop: 'static', keyboard: false });
+
+      $('#description_destination').val(this.id);
     }
   });
 
@@ -431,11 +436,30 @@ $(document).ready(function () {
     $('#modalDescription').modal('hide');
   });
 
+  $('#btnSaveTafeSickJob').click(function () {
+    var destination = $('#description_destination').val();
+    var description = $('#job_tafesickholiday').val();
+    $("#" + destination + "_description").val(description);
+    $('#modalJobSelector').modal('hide');
+  });
+
   $('#modalDescription').on('hidden.bs.modal', function (e) {
     var description = $('#job_description').val();
     var destination = $('#description_destination').val();
     if (description == "") {
       $('#' + destination).val('');
+      $("#" + destination + "_description").val('');
+    }
+  });
+
+  $('#modalJobSelector').on('hidden.bs.modal', function (e) {
+    var description = $('#job_tafesickholiday').val();
+    var destination = $('#description_destination').val();
+
+    var description_job = $("#" + destination + "_description").val();
+    if (description !== description_job || description == "") {
+      $('#' + destination).val('');
+      $("#" + destination + "_description").val('');
     }
   });
 

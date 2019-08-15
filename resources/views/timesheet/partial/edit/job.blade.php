@@ -60,8 +60,29 @@
             @endif
                     <option value="">Select Job</option>
                 @foreach ($jobDB as $jobList)
-                    @if ($weekDay->short != "sat" && !in_array($jobList->code, ["sick", "tafe", "holiday"]))
-                        <option value="{{$jobList->code}}" {{$job->job_id == $jobList->id ? 'selected' : ''}}>{{$jobList->description}}</option>
+                    @if ($weekDay->short != "sat" && !in_array($jobList->code, [""]))
+                        <?php
+                            $selected = '';
+
+                            if ($job->sick && ($jobList->code == "sick")) {
+
+                                $selected = 'selected';
+
+                                
+                            } elseif ($job->tafe && ($jobList->code == "tafe")) {
+
+                                $selected = 'selected';
+
+                            } elseif ($job->public_holiday && ($jobList->code == "holiday")) {
+
+                                $selected = 'selected';
+
+                            } elseif ($job->job_id == $jobList->id && (!$job->sick && !$job->tafe && !$job->public_holiday )) {
+                                $selected = 'selected';
+                            }
+                        ?>
+                            <option value="{{$jobList->code}}" {{$selected}}>{{$jobList->description}}</option>
+
                     @else
                         @if (!in_array($jobList->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
                             <option value="{{$jobList->code}}" {{$job->job_id == $jobList->id ? 'selected' : ''}}>{{$jobList->description}}</option>

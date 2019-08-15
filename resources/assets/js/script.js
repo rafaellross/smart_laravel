@@ -306,9 +306,6 @@ $(document).ready(function() {
 
 
 
-
-
-
   calcTotal = function() {
 
     //Calculate total of normal hours
@@ -394,6 +391,14 @@ $(document).ready(function() {
       $('#modalDescription').modal({backdrop: 'static', keyboard: false});
 
       $('#description_destination').val(this.id);
+
+    } else if ($(this).val() == "sick" || $(this).val() == "tafe" || $(this).val() == "holiday") {
+
+      $('#modalJobSelector').modal({backdrop: 'static', keyboard: false});
+
+      $('#description_destination').val(this.id);
+
+      
     }
   });
 
@@ -404,13 +409,33 @@ $(document).ready(function() {
     $('#modalDescription').modal('hide');
   });
 
+  $('#btnSaveTafeSickJob').click(function() {
+    let destination = $('#description_destination').val();
+    let description = $('#job_tafesickholiday').val();
+    $("#" + destination + "_description").val(description);
+    $('#modalJobSelector').modal('hide');
+  });
+
   $('#modalDescription').on('hidden.bs.modal', function(e) {
     let description = $('#job_description').val();
     let destination = $('#description_destination').val();
     if (description == "") {
       $('#' + destination).val('');
+      $("#" + destination + "_description").val('');
     }
   });
+
+  $('#modalJobSelector').on('hidden.bs.modal', function(e) {
+    let description = $('#job_tafesickholiday').val();
+    let destination = $('#description_destination').val();
+    
+    let description_job = $("#" + destination + "_description").val();
+    if (description !== description_job || description == "") {
+      $('#' + destination).val('');
+      $("#" + destination + "_description").val('')
+    }
+  });
+
 
   $('.btnClear').click(function() {
 
