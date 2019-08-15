@@ -14,7 +14,7 @@
           </div>
           <div class="col-md-12">            
             <select class="hour-start form-control form-control-lg custom-select start " id="job_tafesickholiday" name="job_tafesickholiday">
-                <option selected value="">-</option>
+                <option selected value="">Select Job</option>
                     @foreach ($jobDB as $job)
                             @if (!in_array($job->code, ["sick", "anl", "pld", "tafe", "holiday", "rdo"]))
                                 <option value="{{$job->code}}">{{$job->description}}</option>
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btnSaveTafeSickJob">Save</button>
+        <button type="button" class="btn btn-primary" id="btnSaveTafeSickJob" disabled>Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

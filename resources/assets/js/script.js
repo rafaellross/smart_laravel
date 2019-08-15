@@ -387,7 +387,9 @@ $(document).ready(function() {
 
 
   $(".job, #preJob").change(function() {
+
     if ($(this).val() == "001" || $(this).val() == "002") {
+
       $('#modalDescription').modal({backdrop: 'static', keyboard: false});
 
       $('#description_destination').val(this.id);
@@ -396,10 +398,14 @@ $(document).ready(function() {
 
       $('#modalJobSelector').modal({backdrop: 'static', keyboard: false});
 
-      $('#description_destination').val(this.id);
-
+      $('#description_destination').val(this.id);      
       
     }
+
+    //alert('#' + this.id + "_description" + "here");
+    $('#' + this.id + "_description").val('');
+    
+    
   });
 
   $('#btnSaveDescription').click(function() {
@@ -434,6 +440,20 @@ $(document).ready(function() {
       $('#' + destination).val('');
       $("#" + destination + "_description").val('')
     }
+  });
+
+  $('#job_tafesickholiday').change(function(){
+
+      if ($(this).val() == "") {
+
+        $('#btnSaveTafeSickJob').prop("disabled", true);
+
+      } else {
+
+        $('#btnSaveTafeSickJob').removeAttr("disabled");      
+
+      }
+                  
   });
 
 
