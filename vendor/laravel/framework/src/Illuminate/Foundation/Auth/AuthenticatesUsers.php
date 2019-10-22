@@ -141,7 +141,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'email';
+        return 'username';
     }
 
     /**
@@ -156,18 +156,7 @@ trait AuthenticatesUsers
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/');
-    }
-
-    /**
-     * The user has logged out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
-    protected function loggedOut(Request $request)
-    {
-        //
+        return redirect('/');
     }
 
     /**

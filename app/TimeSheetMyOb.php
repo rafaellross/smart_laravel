@@ -66,7 +66,7 @@ class TimeSheetMyOb
 			foreach ($this->timesheet->days as $day) {
 
 				foreach ($day->dayJobs as $job) {
-					if ($job->travel() > 0) {
+					if ($job->travel() > 0 && !$job->public_holiday) {
 						$line = new \stdClass();
 
 						if ($this->timesheet->employee->location == 'A' && (in_array($this->timesheet->employee->apprentice_year, ['1', '2', '3', '4']))) {
@@ -103,7 +103,7 @@ class TimeSheetMyOb
 		        $line->Entries = $line->Entries;
 
 						array_push($arr_lines, $line);
-						
+
 					}
 
 

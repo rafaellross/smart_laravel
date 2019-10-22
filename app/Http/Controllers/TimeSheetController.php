@@ -248,24 +248,24 @@ class TimeSheetController extends Controller
 
                     if (intval($key)) {
                         $dayJob               = new DayJob();
-                                                
+
                         //Check if job was set and if it's sick
-                        
+
                         if (isset($job["job"]) && $job["job"] == "sick") {
-                            
-                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id'); 
+
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
                             $dayJob->sick = true;
-                            
+
                         } elseif (isset($job["job"]) && $job["job"] == "tafe") {
 
-                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id'); 
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
                             $dayJob->tafe = true;
-                                                                            
+
                         } elseif (isset($job["job"]) && $job["job"] == "holiday") {
 
-                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id'); 
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
                             $dayJob->public_holiday = true;
-                            
+
                         } else {
 
                             $job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
@@ -274,7 +274,7 @@ class TimeSheetController extends Controller
                             $dayJob->public_holiday = false;
 
                         }
-                        
+
                         $dayJob->job_id       =  isset($job_id) && !is_null($job_id) ? $job_id : null;
 
                         $dayJob->day_id       = $dayTimeSheet->id;
@@ -404,18 +404,44 @@ class TimeSheetController extends Controller
                     if (intval($key)) {
 
                         $dayJob               = new DayJob();
-                        $dayJob->job_id       = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
+
+
+
+                        //Check if job was set and if it's sick
+
+                        if (isset($job["job"]) && $job["job"] == "sick") {
+
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
+                            $dayJob->sick = true;
+
+                        } elseif (isset($job["job"]) && $job["job"] == "tafe") {
+
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
+                            $dayJob->tafe = true;
+
+                        } elseif (isset($job["job"]) && $job["job"] == "holiday") {
+
+                            $job_id = !isset($job["description"]) ? null : Job::where("code", $job["description"])->value('id');
+                            $dayJob->public_holiday = true;
+
+                        } else {
+
+                            $job_id = !isset($job["job"]) ? null : Job::where("code", $job["job"])->value('id');
+                            $dayJob->sick = false;
+                            $dayJob->tafe = false;
+                            $dayJob->public_holiday = false;
+
+                        }
+
+                        $dayJob->job_id       =  isset($job_id) && !is_null($job_id) ? $job_id : null;
                         $dayJob->day_id       = $dayTimeSheet->id;
                         $dayJob->number       = $key;
                         $dayJob->description  = $job["description"];
                         $dayJob->start        = $job["start"];
                         $dayJob->end          = $job["end"];
                         $dayJob->night_work   = !isset($job["night_work"]) ? false : true;
-                        $dayJob->tafe         = !isset($job['tafe']) ? false : true;
-                        $dayJob->sick         = !isset($job['sick']) ? false : true;
-                        $dayJob->public_holiday = !isset($job['public_holiday']) ? false : true;
                         $dayJob->save();
-                        
+
                     }
                 }
             }

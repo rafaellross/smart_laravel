@@ -59,7 +59,7 @@ class DayJob extends Model
         $percentage = 0;
         foreach ($this->day->dayJobs as $job) {
 
-            if ($job->work() || (isset($this->job->code) && $this->job->code == "rdo" && $this->hours() >= (6 * 60) && !$job->sick)  ) {
+            if ($job->work() || (isset($job->job->code) && $job->job->code == "rdo" && $job->hours() >= (6 * 60) && !$job->sick)  ) {
                 $total += $job->hours();
             }
 
