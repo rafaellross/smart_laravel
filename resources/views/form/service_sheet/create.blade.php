@@ -153,15 +153,15 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="authority_signature" class="col-form-label text-md-right">{{ __('Signature:') }}</label>
-                                        <input type="hidden" name="authority_signature_hidden" id="img_authority_signature" value="">
+                                        <input type="hidden" name="authority_signature_hidden" id="img_signature_1" value="">
                                     </div>
                                     <div class="col-md-4">
-                                        <button id="authority_signature" type="button" class="btn btn-secondary btn-block btn-signature">
+                                        <button id="signature_1" type="button" class="btn btn-secondary btn-block btn-signature">
                                             {{ __('Sign') }}
                                         </button>
                                     </div>
                                     <div class="col-md-8">
-                                        <img class="ml-1" id="preview_authority_signature" src="" style="width: 100%;" />
+                                        <img class="ml-1" id="preview_signature_1" src="" style="width: 100%;" />
                                     </div>
 
                                 </div>
@@ -212,7 +212,7 @@
                         <div class="form-group row">
                             <div class="col-md-3">
                                 <label for="time_sheet_dt_1" class="col-form-label text-md-right">{{ __('Date:') }}</label>
-                                <input type="text" class="form-control" name="time_sheet_dt_1" value="" >
+                                <input type="text" class="form-control date-picker" name="time_sheet_dt_1" value="" >
                             </div>
                             <div class="col-md-2">
                                 <label for="time_sheet_start_1" class="col-form-label text-md-right">{{ __('Start Time:') }}</label>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" name="time_sheet_dt_2" value="" >
+                                <input type="text" class="form-control date-picker" name="time_sheet_dt_2" value="" >
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_2" value="" >
@@ -250,7 +250,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" name="time_sheet_dt_3" value="" >
+                                <input type="text" class="form-control date-picker" name="time_sheet_dt_3" value="" >
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_3" value="" >
@@ -267,7 +267,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" name="time_sheet_dt_4" value="" >
+                                <input type="text" class="form-control date-picker" name="time_sheet_dt_4" value="" >
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_4" value="" >
@@ -284,7 +284,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" name="time_sheet_dt_5" value="" >
+                                <input type="text" class="form-control date-picker" name="time_sheet_dt_5" value="" >
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control" name="time_sheet_start_5" value="" >
@@ -299,6 +299,43 @@
                                 <input type="text" class="form-control" name="time_sheet_initial_5" value="" >
                             </div>
                         </div>
+
+
+                        <hr/>
+                        <h4 class="row text-center font-weight-bold card-header mb-1">
+                            <strong>JOB CONFIRMATION:</strong>
+                        </h4>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label for="purchase_no_1" class="col-form-label text-md-right">{{ __('Tradesman Signature:') }}</label>
+                                <input type="hidden" name="signature_2_hidden" id="img_signature_2" value="">
+                                <div class="col-md-12">
+                                    <button id="signature_2" type="button" class="btn btn-secondary btn-block btn-signature">
+                                        {{ __('Sign') }}
+                                    </button>
+                                </div>
+                                <div class="col-md-12">
+                                    <img class="ml-1" id="preview_signature_2" src="" style="width: 100%;" />
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label for="material_no_1" class="col-form-label text-md-right">{{ __('Customer Signature:') }}</label>
+                                <input type="hidden" name="signature_3_hidden" id="img_signature_3" value="">
+                                <div class="col-md-12">
+                                    <button id="signature_3" type="button" class="btn btn-secondary btn-block btn-signature">
+                                        {{ __('Sign') }}
+                                    </button>
+                                </div>
+                                <div class="col-md-12">
+                                    <img class="ml-1" id="preview_signature_3" src="" style="width: 100%;" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr/>
+
 
                         <div class="form-group row mb-0">
                             <div class="col-md-3 offset-md-9">

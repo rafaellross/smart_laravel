@@ -203,6 +203,22 @@ class FormServiceSheetReport extends \TCPDI
 			$this->SetX(175);
 			$this->Cell(30, 6, $service_sheet->total, $border_on, 0, 'C');
 
+			//Signatures
+
+			if (!is_null($service_sheet->authority_signature)) {
+				$this->Image($service_sheet->authority_signature, 127,109.7,40,0,'png');
+			}
+
+			if (!is_null($service_sheet->tradesman_signature)) {
+				$this->Image($service_sheet->tradesman_signature, 152,183.7,34,0,'png');
+			}
+
+			if (!is_null($service_sheet->customer_signature)) {
+				$this->Image($service_sheet->customer_signature, 152,191.9,34,0,'png');
+			}
+
+
+
 /*
 			//Payment by Cash
 			$this->Image('img/tick.png', 55.5, 248.5, 5);

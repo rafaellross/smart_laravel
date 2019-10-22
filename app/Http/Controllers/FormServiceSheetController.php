@@ -119,7 +119,17 @@ class FormServiceSheetController extends Controller
       $service_sheet->card_expiry_dt      = is_null($request->get('card_expiry_dt')) ? null : Carbon::createFromFormat('d/m/Y', $request->get('card_expiry_dt'));
       $service_sheet->card_name           = $request->get('card_name');
       $service_sheet->card_id             = $request->get('card_id');
+
+      //Signatures
+      $service_sheet->authority_signature = $request->get('authority_signature_hidden');
+      $service_sheet->tradesman_signature = $request->get('signature_2_hidden');
+      $service_sheet->customer_signature = $request->get('signature_3_hidden');
+
+
       $service_sheet->save();
+
+
+
 
       return redirect('/form_service_sheet')->with('success', 'Service Sheet added with success');
     }
@@ -143,7 +153,7 @@ class FormServiceSheetController extends Controller
      */
     public function edit(FormServiceSheet $formServiceSheet)
     {
-        //
+        return view('form.service_sheet.edit', ['service_sheet' => $formServiceSheet]);
     }
 
     /**
@@ -181,7 +191,7 @@ class FormServiceSheetController extends Controller
                     $timesheet->delete();
 
                 }
-                return redirect('timesheets')->with('success','Time Sheet(s) has been deleted');
+                return redirect('form_service_sheet')->with('success','Service Sheet(s) has been deleted');
                 break;
             case 'print':
 
