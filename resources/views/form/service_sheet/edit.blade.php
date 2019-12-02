@@ -308,7 +308,7 @@
                         <div class="form-group row">
                             <div class="col-md-6 col-sm-12 col-xs-12">
                                 <label for="purchase_no_1" class="col-form-label text-md-right">{{ __('Tradesman Signature:') }}</label>
-                                <input type="hidden" name="signature_2_hidden" id="img_signature_2" value="">
+                                <input type="hidden" name="signature_2_hidden" id="img_signature_2" value="{{ $service_sheet->tradesman_signature }}">
                                 <div class="col-md-12">
                                     <button id="signature_2" type="button" class="btn btn-secondary btn-block btn-signature">
                                         {{ __('Sign') }}

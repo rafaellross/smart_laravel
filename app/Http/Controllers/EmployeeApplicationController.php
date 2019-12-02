@@ -56,7 +56,7 @@ class EmployeeApplicationController extends Controller
             $employee_application->pants_size               = $request->get('pants_size');
             $employee_application->shirt_size               = $request->get('shirt_size');
             $employee_application->role                     = $request->get('role');
-            
+
             $employee_application->dob                      = is_null($request->get('dob')) ? null : Carbon::createFromFormat('Y-m-d', $request->get('dob'));
             $employee_application->street_address           = $request->get('street_address');
             $employee_application->suburb                   = $request->get('suburb');
@@ -220,21 +220,24 @@ class EmployeeApplicationController extends Controller
                           foreach ($employee_application->licenses as $license) {
                               $license->delete();
                           }
+                          if (array_has($request, 'license')) {
+                            foreach ($request->get('license') as $key => $value) {
+                                $issue_date = $value['issue_date'];
 
-                          foreach ($request->get('license') as $key => $value) {
-                              $issue_date = $value['issue_date'];
+                                $application_license = new EmployeeLicense();
+                                $application_license->application_id = $employee_application->id;
+                                $application_license->license_id = $value["license_id"];
+                                $application_license->issue_date = is_null($issue_date) ? null : Carbon::createFromFormat('d/m/Y', $issue_date);
+                                $application_license->issuer = $value["issuer"];
+                                $application_license->number = $value["number"];
+                                $application_license->image_front = $value["image"]["front"]["img"];
+                                $application_license->image_back = $value["image"]["back"]["img"];
+                                $application_license->save();
+                            }
 
-                              $application_license = new EmployeeLicense();
-                              $application_license->application_id = $employee_application->id;
-                              $application_license->license_id = $value["license_id"];
-                              $application_license->issue_date = is_null($issue_date) ? null : Carbon::createFromFormat('d/m/Y', $issue_date);
-                              $application_license->issuer = $value["issuer"];
-                              $application_license->number = $value["number"];
-                              $application_license->image_front = $value["image"]["front"]["img"];
-                              $application_license->image_back = $value["image"]["back"]["img"];
-                              $application_license->save();
                           }
-                          //return redirect('employee_application');
+
+
                           return redirect('employee_application/' . $employee_application->id);
             }
 

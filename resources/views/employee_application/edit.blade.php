@@ -353,7 +353,7 @@
                                         <label>
                                             <strong>Date Employment Commenced:</strong>
                                         </label>
-                                        <input type="date" class="form-control form-control-lg date-picker" name="date_commenced" value="{{$employee_application->date_commenced}}" required>
+                                        <input type="date" class="form-control form-control-lg" name="date_commenced" value="{{$employee_application->date_commenced}}" required>
                                     </div>
                                     <div class="col-md-4 col-4 mb-3">
                                         <label>
@@ -438,7 +438,7 @@
                                           <label>
                                               <strong>Issue Date:</strong>
                                           </label>
-                                          <input type="date" class="form-control form-control-lg date-picker" name="license[{{$license->id}}][issue_date]" placeholder="dd/mm/yyyy" value="{{Carbon::parse($license->issue_date)->format('d/m/Y')}}"  maxlength="10" required>
+                                          <input type="text" class="form-control form-control-lg date-picker" name="license[{{$license->id}}][issue_date]" placeholder="dd/mm/yyyy" value="{{Carbon::parse($license->issue_date)->format('d/m/Y')}}"  maxlength="10" required>
                                       </div>
                                       <div class="col-md-4 col-12 mb-3 ml-auto">
                                           <label>
