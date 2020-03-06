@@ -10,7 +10,7 @@ $(document).ready(function() {
       }
   }
 
-  $('form').not('#timesheet_form').submit(function(event) {
+  $('form').not('#timesheet_form', '#form-ppes').submit(function(event) {
 
     $('#modalLoading').modal({backdrop: 'static', keyboard: false});
 
@@ -377,11 +377,11 @@ $(document).ready(function() {
 
     if($(this).prop("checked") == true){
 
-      alert("Please, select Job!");      
+      alert("Please, select Job!");
 
-    }    
-  
-    
+    }
+
+
   });
 
 
@@ -398,14 +398,14 @@ $(document).ready(function() {
 
       $('#modalJobSelector').modal({backdrop: 'static', keyboard: false});
 
-      $('#description_destination').val(this.id);      
-      
+      $('#description_destination').val(this.id);
+
     }
 
     //alert('#' + this.id + "_description" + "here");
     $('#' + this.id + "_description").val('');
-    
-    
+
+
   });
 
   $('#btnSaveDescription').click(function() {
@@ -434,7 +434,7 @@ $(document).ready(function() {
   $('#modalJobSelector').on('hidden.bs.modal', function(e) {
     let description = $('#job_tafesickholiday').val();
     let destination = $('#description_destination').val();
-    
+
     let description_job = $("#" + destination + "_description").val();
     if (description !== description_job || description == "") {
       $('#' + destination).val('');
@@ -450,10 +450,10 @@ $(document).ready(function() {
 
       } else {
 
-        $('#btnSaveTafeSickJob').removeAttr("disabled");      
+        $('#btnSaveTafeSickJob').removeAttr("disabled");
 
       }
-                  
+
   });
 
 
@@ -953,7 +953,7 @@ $(document).ready(function() {
     }
   });
 
-  
+
 
 
   $('.btnPrintFireLabel').click(function() {

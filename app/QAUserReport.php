@@ -214,14 +214,17 @@ class QAUserReport extends Fpdf
 
 		if ($qa_user->photos->count() > 0) {
 			foreach ($qa_user->photos as $photo) {
-					list($width, $height, $type, $attr) = getimagesize($photo->qa_photo);
-					if ($width > $height) {
-						$this->AddPage('L');
-					} else {
-						$this->AddPage('P');
+					if (!is_null($photo->qa_photo) ) {
+						list($width, $height, $type, $attr) = getimagesize($photo->qa_photo);
+						if ($width > $height) {
+							$this->AddPage('L');
+						} else {
+							$this->AddPage('P');
+						}
+						$this->Cell($this->GetPageWidth(),5,"Photo #" . $photo->photo_number,0,0,'C');
+						$this->Image($photo->qa_photo, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
+
 					}
-					$this->Cell($this->GetPageWidth(),5,"Photo #" . $photo->photo_number,0,0,'C');
-					$this->Image($photo->qa_photo, 15,25, min($this->GetPageWidth()-70, $width-70),0, str_replace("image/", "", image_type_to_mime_type($type)));
 			}
 		}
 

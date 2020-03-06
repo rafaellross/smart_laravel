@@ -231,3 +231,18 @@ Route::group(['middleware' => ['auth']], function () {
 		}
 
 	});
+
+
+	/*
+		//List Of PPE
+		Route::get('/ppe_list/scan', function () {
+			return view('job.ppe_list.scan');
+		});
+*/
+	Route::get('/ppe_list/{job_id}', 'PPEListController@index');
+		Route::get('/ppe_list/create/{job_id}', 'PPEListController@create');
+	Route::get('/ppe_list/edit/{id}', 'PPEListController@edit');
+	Route::post('/ppe_list/{job_id}', 'PPEListController@store');
+
+
+	Route::patch('/ppe_list/{id}', 'PPEListController@update');

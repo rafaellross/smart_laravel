@@ -99,6 +99,11 @@ class AnnualLeaveReport extends \TCPDI
       $this->SetFont('Helvetica', 'B', 12);
       $this->Ln(10);
 
+      $this->Cell(0, 5, "Comments:",'B',1,'L', 0);
+      $this->Ln(1);
+      $this->SetFont('Helvetica', '', 12);
+      $this->MultiCell(0, 5, $annualLeave->comments);
+
 
     }
 }

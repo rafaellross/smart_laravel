@@ -133,7 +133,7 @@ class MyObController extends Controller
       }
 
       $companies = $myob_auth->_makeGetRequest();
-      
+
       return view('myob.index', ['companies' => $companies])->with('success','Jobs has been updated');
 
     }
@@ -262,6 +262,10 @@ class MyObController extends Controller
                 $emp->pld = $entitlement['Total'];
               }
 
+              if ($entitlement['Name'] == "PLD - OFFICE" && !$emp->site_allow) {
+                $emp->pld = $entitlement['Total'];
+              }
+
               $emp->save();
 
           }
@@ -313,10 +317,10 @@ class MyObController extends Controller
 
 
     public function integrateTest($id) {
-      
+
       $timesheet = TimeSheet::find($id);
 
-      
+
 
 
 
@@ -325,12 +329,12 @@ class MyObController extends Controller
 
       //Determine employee job
 
-        
-      
+
+
 
       return response()->json($timesheet_myob);
 
 
 
-    }    
+    }
 }

@@ -36,7 +36,7 @@ class CertificateAwareness extends Fpdf
 		$this->Cell($this->width * $this->zoom , 5 * $this->zoom, 'ID No OD-002124', 0, 1, 'C');
 
     $this->Cell((($this->width/2)+5) * $this->zoom , 6.98 * $this->zoom, '   D.O.B.: ' . (is_null($employee->dob) ? '' : Carbon::parse($employee->dob)->format('d/m/Y')), 0, 0, 'L');
-    $this->Cell(($this->width/2 -5) * $this->zoom, 6.98 * $this->zoom, '   Expiry: ' . Carbon::now()->addYears(5)->format('d/m/Y'), 0, 0, 'L');
+    $this->Cell(($this->width/2 -5) * $this->zoom, 6.98 * $this->zoom, '   Expiry: 28/07/2024',0, 0, 'L');// . Carbon::now()->addYears(5)->format('d/m/Y'), 0, 0, 'L');
     $this->SetXY($positions['X'] + $this->width, $positions['Y']);
     $this->Cell(5 * $this->zoom , $this->height * $this->zoom, '', 0, 0, 'C');
     return $positions;

@@ -60,6 +60,15 @@
                                             </label>
                                             <input type="date" class="form-control form-control-lg" name="return_dt" value="" required>
                                         </div>
+                                        <br/>
+                                        <br/>
+                                        <div class="col-md-12 col-12 mt-3">
+                                            <label>
+                                                <strong>Comments:</strong>
+                                            </label>
+                                            <textarea class="form-control form-control-lg" id="comments" name="comments" rows="5" style="resize: none;"></textarea>
+                                        </div>
+
                                     </div>
                                     <!-- End Card -->
                                 </div>

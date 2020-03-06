@@ -180,6 +180,8 @@ class EmployeeController extends Controller
         $employee->rdo = false;
         $employee->travel = false;
         $employee->site_allow = false;
+        $employee->entitled_anl = false;
+        $employee->entitled_pld = false;
         $employee->bonus_type = $request->get('bonus_type');
 
         if ($request->get('entitlements') !== null) {
@@ -189,6 +191,7 @@ class EmployeeController extends Controller
         }
 
         $employee->save();
+
         return redirect('/employees?params=true')->with('success', 'Employee has been updated');
     }
 

@@ -131,6 +131,15 @@
                                   <input class="form-check-input" type="checkbox" id="site_allow" name="entitlements[]" value="site_allow" {{$employee->site_allow ? 'checked' : ''}}/>
                                   <label class="form-check-label" for="site_allow">Site Allowance</label>
                                 </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="entitled_anl" name="entitlements[]" value="entitled_anl" {{$employee->entitled_anl ? 'checked' : ''}}/>
+                                  <label class="form-check-label" for="entitled_anl">Annual Leave</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="entitled_pld" name="entitlements[]" value="entitled_pld" {{$employee->entitled_pld ? 'checked' : ''}}/>
+                                  <label class="form-check-label" for="entitled_anl">PLD</label>
+                                </div>
+
                             </div>
                         </div>
                         <div class="form-group row">
